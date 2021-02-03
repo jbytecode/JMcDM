@@ -1,5 +1,7 @@
 module JMCDM
 
+using DataFrames
+
 # includes 
 include("types.jl")
 include("utilities.jl")
