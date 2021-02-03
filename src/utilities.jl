@@ -45,3 +45,13 @@ function Base.:*(w::Array{Float64,1}, data::DataFrame)::DataFrame
     return newdf
 end
 
+function makeDecisionMatrix(mat::Array{T,2} where T <: Number)::DataFrame
+    _, m = size(mat)
+    df = DataFrame()
+    for i in 1:m
+        name = string("Crt", i)
+        df[:,Symbol(name)] = convert(Array{Float64,1}, mat[:, i])     
+    end
+    return df
+end
+

@@ -46,6 +46,14 @@ end
     @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
 end
 
+@testset "Make Decision Matrix" begin
+    m = rand(5, 10)
+    df = makeDecisionMatrix(m)
+
+    @test isa(df, DataFrame)
+    @test size(df) == (5, 10)
+end
+
 @testset "TOPSIS" begin
     tol = 0.00001
     df = DataFrame()
@@ -57,5 +65,25 @@ end
     t::TopsisResult = topsis(df, w)
     @test t.bestIndex == 2
     @test isapprox(t.scores, [0.3876870, 0.6503238, 0.0834767], atol=tol)
+end
+
+@testset "VIKOR" begin
+    tol = 0.00001
+    w =  [0.110, 0.035, 0.379, 0.384, 0.002, 0.002, 0.010, 0.077]
+    Amat = [
+      100 92 10 2 80 70 95 80 ;
+      80  70 8  4 100 80 80 90 ;
+      90 85 5 0 75 95 70 70 ; 
+      70 88 20 18 60 90 95 85
+    ]
+    dmat = makeDecisionMatrix(Amat)
+    result = vikor(dmat, w)
+
+    @test result.bestIndex == 4
+    
+    @test isapprox(result.scores[1], 0.1975012087551764, atol=tol)
+    @test isapprox(result.scores[2], 0.2194064473270817, atol=tol)
+    @test isapprox(result.scores[3], 0.3507643203516215, atol=tol)
+    @test isapprox(result.scores[4], -0.16727341435277993, atol=tol) 
 end
 

@@ -1,4 +1,4 @@
-function topsis(decisionMat::DataFrame, weights::Array{Float64,1})
+function topsis(decisionMat::DataFrame, weights::Array{Float64,1})::TopsisResult
     
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -16,9 +16,10 @@ function topsis(decisionMat::DataFrame, weights::Array{Float64,1})
     scores = zeros(Float64, nalternatives)
 
     @inbounds for i in 1:nalternatives
-		distances_plus[i]  = euclidean(col_max, weightednormalizedMat[i,:] |> Array{Float64,1})
-		distances_minus[i] = euclidean(col_min, weightednormalizedMat[i,:] |> Array{Float64,1})
-		scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
+        ithrow = weightednormalizedMat[i,:] |> Array{Float64,1}
+		    distances_plus[i]  = euclidean(col_max, ithrow)
+		    distances_minus[i] = euclidean(col_min, ithrow)
+		    scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
     end
     
     best_index = sortperm(scores) |> last
