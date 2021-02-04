@@ -62,9 +62,11 @@ end
     df[:, :z] = Float64[6, 9, 6]
     df[:, :q] = Float64[7, 6, 6]
     w = Float64[4, 2, 6, 8]
-    t::TopsisResult = topsis(df, w)
-    @test t.bestIndex == 2
-    @test isapprox(t.scores, [0.3876870, 0.6503238, 0.0834767], atol=tol)
+    result = topsis(df, w)
+
+    @test isa(result, TopsisResult)
+    @test result.bestIndex == 2
+    @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol=tol)
 end
 
 @testset "VIKOR" begin
@@ -79,6 +81,7 @@ end
     dmat = makeDecisionMatrix(Amat)
     result = vikor(dmat, w)
 
+    @test isa(result, VikorResult)
     @test result.bestIndex == 4
     
     @test isapprox(result.scores[1], 0.1975012087551764, atol=tol)
@@ -87,3 +90,23 @@ end
     @test isapprox(result.scores[4], -0.16727341435277993, atol=tol) 
 end
 
+
+@testset "ELECTRE" begin
+    tol = 0.00001
+    w =  [0.110, 0.035, 0.379, 0.384, 0.002, 0.002, 0.010, 0.077]
+    Amat = [
+      100 92 10 2 80 70 95 80 ;
+      80  70 8  4 100 80 80 90 ;
+      90 85 5 0 75 95 70 70 ; 
+      70 88 20 18 60 90 95 85
+    ]
+    dmat = makeDecisionMatrix(Amat)
+    result = electre(dmat, w)
+
+    @test isa(result, ElectreResult)
+    @test isa(result.bestIndex, Tuple)
+    @test result.bestIndex[1] == 4
+    
+    @test isapprox(result.C, [0.36936937,  0.01501502, -2.47347347,  2.08908909], atol=tol)
+    @test isapprox(result.D, [0.1914244, -0.1903929,  2.8843076, -2.8853391], atol=tol)
+end

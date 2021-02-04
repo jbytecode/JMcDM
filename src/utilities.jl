@@ -45,6 +45,12 @@ function Base.:*(w::Array{Float64,1}, data::DataFrame)::DataFrame
     return newdf
 end
 
+function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Array{Float64,1}
+    v1 = convert(Array{Float64,1}, r1)
+    v2 = convert(Array{Float64,1}, r2)
+    return v1 .- v2
+end
+
 function makeDecisionMatrix(mat::Array{T,2} where T <: Number)::DataFrame
     _, m = size(mat)
     df = DataFrame()
