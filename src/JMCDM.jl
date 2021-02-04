@@ -12,7 +12,7 @@ include("vikor.jl")
 include("electre.jl")
 include("moora.jl")
 include("dematel.jl")
-
+include("ahp.jl")
 
 # export types
 export MCDMResult
@@ -20,6 +20,7 @@ export TopsisResult
 export VikorResult
 export ElectreResult
 export MooraResult
+export AHPConsistencyResult
 
 # export utility functions
 export euclidean
@@ -35,5 +36,6 @@ export vikor
 export electre
 export moora 
 export dematel
+export ahp_RI, ahp_consistency
 
 end # module

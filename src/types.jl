@@ -55,3 +55,14 @@ struct DematelResult <: MCDMResult
     weights::Array{Float64,1}
 end
 
+struct AHPConsistencyResult <: MCDMResult
+    comparisonMatrix::DataFrame
+    normalizedComparisonMatrix::DataFrame
+    consistencyVector::Array{Float64,1}
+    pc::Array{Float64,1}
+    lambda_max::Float64
+    CI::Float64
+    RI::Float64
+    CR::Float64
+    isConsistent::Bool
+end

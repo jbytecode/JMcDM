@@ -36,6 +36,10 @@ function colsums(data)::Array{Float64,1}
     return apply_columns(sum, data)
 end
 
+function colmeans(data)::Array{Float64,1}
+    return apply_columns(mean, data)
+end
+
 function apply_rows(f::Function, data::Union{DataFrame,Array{T,2}} where T <: Number)
     return [f(c) for c in eachrow(data)]
 end
@@ -50,6 +54,14 @@ end
 
 function rowsums(data)::Array{Float64,1}
     return apply_rows(sum, data)
+end
+
+function rowmeans(data)::Array{Float64,1}
+    return apply_rows(mean, data)
+end
+
+function mean(v)::Float64
+    return sum(v) / length(v)
 end
 
 function unitize(v::Array{Float64,1})::Array{Float64,1}

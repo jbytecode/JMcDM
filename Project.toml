@@ -1,8 +1,12 @@
+authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>"]
 name = "JMCDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
-authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>"]
 version = "0.1.0"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[compat]
+DataFrames = "^0.22.0"
+julia = "^1.4"
