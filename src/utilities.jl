@@ -32,6 +32,18 @@ function colmaxs(data::DataFrame)::Array{Float64,1}
     return apply_columns(maximum, data)
 end
 
+function apply_rows(f::Function, data::DataFrame)
+    return [f(c) for c in eachrow(data)]
+end
+
+function rowmins(data::DataFrame)::Array{Float64,1}
+    return apply_rows(minimum, data)
+end
+
+function rowmaxs(data::DataFrame)::Array{Float64,1}
+    return apply_rows(maximum, data)
+end
+
 function unitize(v::Array{Float64,1})::Array{Float64,1}
     return v ./ sum(v)
 end
@@ -50,6 +62,12 @@ function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Array{Float64,1}
     v2 = convert(Array{Float64,1}, r2)
     return v1 .- v2
 end
+
+function Base.:-(r1::Array{Float64,1}, r2::DataFrameRow)::Array{Float64,1}
+    v2 = convert(Array{Float64,1}, r2)
+    return r1 .- v2
+end
+
 
 function makeDecisionMatrix(mat::Array{T,2} where T <: Number)::DataFrame
     _, m = size(mat)

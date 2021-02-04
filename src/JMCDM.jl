@@ -8,6 +8,7 @@ include("utilities.jl")
 include("topsis.jl")
 include("vikor.jl")
 include("electre.jl")
+include("moora.jl")
 
 
 # export types
@@ -15,6 +16,7 @@ export MCDMResult
 export TopsisResult
 export VikorResult
 export ElectreResult
+export MooraResult
 
 # export utility functions
 export euclidean
@@ -28,5 +30,6 @@ export makeDecisionMatrix
 export topsis 
 export vikor
 export electre
+export moora 
 
 end # module

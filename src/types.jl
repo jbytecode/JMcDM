@@ -31,3 +31,12 @@ struct ElectreResult <: MCDMResult
     bestIndex::Tuple
 end
 
+
+struct MooraResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    weightedDecisionMatrix::DataFrame
+    referenceMatrix::DataFrame
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end

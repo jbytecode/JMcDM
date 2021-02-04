@@ -5,8 +5,8 @@ include("../utilities.jl")
 include("../topsis.jl")
 include("../vikor.jl")
 include("../electre.jl")
+include("../moora.jl")
 
-#= 
 w =  [0.110, 0.035, 0.379, 0.384, 0.002, 0.002, 0.010, 0.077]
 Amat = [
       100 92 10 2 80 70 95 80 ;
@@ -15,4 +15,6 @@ Amat = [
       70 88 20 18 60 90 95 85
     ]
 dmat = makeDecisionMatrix(Amat)
-result = electre(dmat, w) =#
+result = moora(dmat, w) 
+
+
