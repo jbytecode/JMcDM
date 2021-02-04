@@ -1,6 +1,8 @@
 module JMCDM
 
 using DataFrames
+using LinearAlgebra
+
 
 # includes 
 include("types.jl")
@@ -9,6 +11,7 @@ include("topsis.jl")
 include("vikor.jl")
 include("electre.jl")
 include("moora.jl")
+include("dematel.jl")
 
 
 # export types
@@ -31,5 +34,6 @@ export topsis
 export vikor
 export electre
 export moora 
+export dematel
 
 end # module

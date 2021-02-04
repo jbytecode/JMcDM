@@ -40,3 +40,18 @@ struct MooraResult <: MCDMResult
     scores::Array{Float64,1}
     bestIndex::Int64
 end
+
+
+struct DematelResult <: MCDMResult
+    comparisonMatrix::DataFrame
+    NDMatrix::Array{Float64,2}
+    relationShipMatrix::Array{Float64,2}
+    c::Array{Float64,1}
+    r::Array{Float64,1}
+    c_plus_r::Array{Float64,1}
+    c_minus_r::Array{Float64,1}
+    threshold::Float64 
+    influenceMatrix::Array{Float64,2}
+    weights::Array{Float64,1}
+end
+

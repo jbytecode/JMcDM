@@ -1,4 +1,5 @@
 using DataFrames
+using LinearAlgebra
 
 include("../types.jl")
 include("../utilities.jl")
@@ -6,15 +7,22 @@ include("../topsis.jl")
 include("../vikor.jl")
 include("../electre.jl")
 include("../moora.jl")
+include("../dematel.jl")
 
-w =  [0.110, 0.035, 0.379, 0.384, 0.002, 0.002, 0.010, 0.077]
-Amat = [
-      100 92 10 2 80 70 95 80 ;
-      80  70 8  4 100 80 80 90 ;
-      90 85 5 0 75 95 70 70 ; 
-      70 88 20 18 60 90 95 85
-    ]
-dmat = makeDecisionMatrix(Amat)
-result = moora(dmat, w) 
+
+
+K = [0 3 0 2 0 0 0 0 3 0;
+                3 0 0 0 0 0 0 0 0 2;
+                4 1 0 2 1 3 1 2 3 2;
+                4 1 4 0 1 2 0 1 0 0;
+                3 2 3 1 0 3 0 2 0 0;
+                4 1 4 4 0 0 0 1 1 3;
+                3 0 0 0 0 2 0 0 0 0;
+                3 0 4 3 2 3 1 0 0 0;
+                4 3 2 0 0 1 0 0 0 2;
+                2 1 0 0 0 0 0 0 3 0]
+dmat = makeDecisionMatrix(K)
+result = dematel(dmat)
+
 
 

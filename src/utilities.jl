@@ -20,7 +20,7 @@ function normalize(data::DataFrame)::DataFrame
     return df
 end
 
-function apply_columns(f::Function, data::DataFrame)
+function apply_columns(f::Function, data::Union{DataFrame,Array{T,2}} where T <: Number)
     return [f(c) for c in eachcol(data)]
 end
 
@@ -32,7 +32,11 @@ function colmaxs(data::DataFrame)::Array{Float64,1}
     return apply_columns(maximum, data)
 end
 
-function apply_rows(f::Function, data::DataFrame)
+function colsums(data)::Array{Float64,1}
+    return apply_columns(sum, data)
+end
+
+function apply_rows(f::Function, data::Union{DataFrame,Array{T,2}} where T <: Number)
     return [f(c) for c in eachrow(data)]
 end
 
@@ -42,6 +46,10 @@ end
 
 function rowmaxs(data::DataFrame)::Array{Float64,1}
     return apply_rows(maximum, data)
+end
+
+function rowsums(data)::Array{Float64,1}
+    return apply_rows(sum, data)
 end
 
 function unitize(v::Array{Float64,1})::Array{Float64,1}
