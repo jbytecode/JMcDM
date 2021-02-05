@@ -30,5 +30,10 @@ A package for Multiple criteria decision-making techniques in Julia
 - Game solver for zero sum games
 
 ## Unimplemented methods
-- will be updated soon
+- PROMETHEE
+- UTA
+- MAUT
+- ANP
+- Goal Programming
+- will be updated soon. 
 
