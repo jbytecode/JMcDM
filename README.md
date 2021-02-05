@@ -13,10 +13,19 @@ A package for Multiple criteria decision-making techniques in Julia
 - Vikor
 - AHP
   
-# SCDM Tools
+## SCDM Tools
 
-- minimax, maximin, minimin, maximax, Savage, Hurwicz, MLE, Laplace, Expected Regret
+- minimax
+- maximin
+- minimin
+- maximax
+- Savage
+- Hurwicz
+- MLE
+- Laplace
+- Expected Regret
 
-# Game
+## Game
 
 - Game solver for zero sum games
+
