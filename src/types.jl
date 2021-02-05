@@ -110,3 +110,27 @@ struct MiniminResult <: SCDMResult
     bestIndex::Int64
 end
 
+struct SavageResult <: SCDMResult
+    regretMatrix::DataFrame
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct HurwiczResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MLEResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct ExpectedRegretResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+
+
+

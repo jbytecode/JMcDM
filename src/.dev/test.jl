@@ -424,3 +424,106 @@ end
      
     @test result.bestIndex in [1, 2]
 end
+
+
+
+@testset "Savage" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = savage(dm)
+
+    @test isa(result, SavageResult)
+     
+    @test result.bestIndex == 4
+
+end
+
+
+
+
+
+@testset "Hurwicz" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = hurwicz(dm)
+
+    @test isa(result, HurwiczResult)
+     
+    @test result.bestIndex == 3
+
+end
+
+
+
+@testset "Maximum likelihood for single criterion" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    weights = [0.2, 0.5, 0.2, 0.1]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = mle(dm, weights)
+
+    @test isa(result, MLEResult)
+     
+    @test result.bestIndex == 2
+    
+    @test isapprox(result.scores, [24, 29.2, 27, 27], atol=tol) 
+end
+
+
+
+@testset "Expected Regret" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    weights = [0.2, 0.5, 0.2, 0.1]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = expectedregret(dm, weights)
+
+    @test isa(result, ExpectedRegretResult)
+     
+    @test result.bestIndex == 2
+    
+    @test isapprox(result.scores, [8, 2.8, 5, 5], atol=tol) 
+end
+
+
+

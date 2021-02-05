@@ -14,7 +14,7 @@ include("moora.jl")
 include("dematel.jl")
 include("ahp.jl")
 include("nds.jl")
-include("singlecriteria.jl")
+include("singlecriterion.jl")
 
 # export MCDM types
 export MCDMResult
@@ -33,6 +33,10 @@ export MaximinResult
 export MaximaxResult
 export MinimaxResult
 export MiniminResult
+export SavageResult
+export HurwiczResult
+export MLEResult
+export ExpectedRegretResult
 
 # export utility functions
 export euclidean
@@ -57,5 +61,9 @@ export maximin
 export maximax
 export minimax
 export minimin
+export savage
+export hurwicz
+export mle
+export expectedregret
 
 end # module

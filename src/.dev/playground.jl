@@ -10,5 +10,5 @@ include("../moora.jl")
 include("../dematel.jl")
 include("../ahp.jl")
 include("../nds.jl")
-include("../singlecriteria.jl")
+include("../singlecriterion.jl")
 
