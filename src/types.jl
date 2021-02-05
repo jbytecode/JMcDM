@@ -89,3 +89,7 @@ struct LaplaceResult <: SCDMResult
     bestIndex::Int64 
 end
 
+struct MaximinResult <: SCDMResult
+    rowmins::Array{Float64,1}
+    bestIndex::Int64
+end

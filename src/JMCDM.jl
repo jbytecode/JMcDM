@@ -29,6 +29,7 @@ export NDSResult
 #  export SCDM types
 export SCDMResult
 export LaplaceResult
+export MaximinResult
 
 # export utility functions
 export euclidean
@@ -49,5 +50,6 @@ export nds
 
 #  export SCDM tools
 export laplace
+export maximin
 
 end # module

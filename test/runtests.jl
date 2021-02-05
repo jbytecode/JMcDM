@@ -333,3 +333,25 @@ end
     @test result.bestIndex == 3
 end
 
+
+@testset "Maximin" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = maximin(dm)
+
+    @test isa(result, MaximinResult)
+
+    @test isapprox(result.rowmins, [18, 18, 24, 20], atol=tol) 
+     
+    @test result.bestIndex == 3
+end

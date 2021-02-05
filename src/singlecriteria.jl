@@ -22,3 +22,25 @@ function laplace(decisionMatrix::DataFrame)::LaplaceResult
     return result
 end
 
+
+
+
+function maximin(decisionMatrix::DataFrame)::MaximinResult
+
+    n, p = size(decisionMatrix)
+
+    m = convert(Array{Float64,2}, decisionMatrix)
+
+    rmins = rowmins(decisionMatrix)
+
+    bestIndex = sortperm(rmins) |> last
+
+    result = MaximinResult(
+        rmins,
+        bestIndex
+    )
+
+    return result
+end
+
+
