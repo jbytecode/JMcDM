@@ -2,7 +2,8 @@ module JMCDM
 
 using DataFrames
 using LinearAlgebra
-
+using JuMP
+using Cbc
 
 # includes 
 include("types.jl")
@@ -15,6 +16,7 @@ include("dematel.jl")
 include("ahp.jl")
 include("nds.jl")
 include("singlecriterion.jl")
+include("game.jl")
 
 # export MCDM types
 export MCDMResult
@@ -25,6 +27,9 @@ export MooraResult
 export AHPConsistencyResult
 export AHPResult
 export NDSResult
+
+# export game type
+export GameResult
 
 #  export SCDM types
 export SCDMResult
@@ -65,5 +70,8 @@ export savage
 export hurwicz
 export mle
 export expectedregret
+
+# export game solver
+export game
 
 end # module

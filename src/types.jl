@@ -131,6 +131,10 @@ struct ExpectedRegretResult <: SCDMResult
     bestIndex::Int64
 end
 
+struct GameResult <: MCDMResult
+    row_player_probabilities::Array{Float64,1}
+    value::Float64
+end
 
 
 

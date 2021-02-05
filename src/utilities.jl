@@ -99,3 +99,6 @@ function makeDecisionMatrix(mat::Array{T,2} where T <: Number)::DataFrame
     return df
 end
 
+function Base.minimum(df::DataFrame)
+    df |> x -> convert(Matrix, x) |> minimum
+end
