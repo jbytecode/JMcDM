@@ -35,5 +35,6 @@ A package for Multiple criteria decision-making techniques in Julia
 - MAUT
 - ANP
 - Goal Programming
+- MACBETH
 - will be updated soon. 
 
