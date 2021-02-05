@@ -77,3 +77,8 @@ struct AHPResult <: MCDMResult
     weights::Array{Float64,1}
     bestIndex::Int64
 end
+
+struct NDSResult <: MCDMResult
+    ranks::Array{Int64,1}
+    bestIndex::Int64
+end

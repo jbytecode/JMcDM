@@ -13,6 +13,7 @@ include("electre.jl")
 include("moora.jl")
 include("dematel.jl")
 include("ahp.jl")
+include("nds.jl")
 
 # export types
 export MCDMResult
@@ -22,6 +23,7 @@ export ElectreResult
 export MooraResult
 export AHPConsistencyResult
 export AHPResult
+export NDSResult
 
 # export utility functions
 export euclidean
@@ -38,5 +40,6 @@ export electre
 export moora 
 export dematel
 export ahp_RI, ahp_consistency, ahp
+export nds
 
 end # module

@@ -64,7 +64,7 @@ end
 
 
 
-function ahp(comparisonMatrixList::Array{DataFrame,1}, criteriaComparisonMatrix::DataFrame)
+function ahp(comparisonMatrixList::Array{DataFrame,1}, criteriaComparisonMatrix::DataFrame)::AHPResult
     
     result_list = map(ahp_consistency, comparisonMatrixList)
 

@@ -290,3 +290,25 @@ end
     @test isapprox(result.scores, [0.2801050, 0.1482273, 0.3813036, 0.1903641], atol=tol) 
 end
 
+
+@testset "NDS" begin
+    cases = [
+        1.0 2.0 3.0;
+        2.0 1.0 3.0;
+        1.0 3.0 2.0;
+        4.0 5.0 6.0
+    ]
+
+    nd = makeDecisionMatrix(cases)
+
+    result = nds(nd)
+
+    @test isa(result, NDSResult)
+
+    @test result.bestIndex == 4
+
+    @test result.ranks == [0, 0, 0, 3]
+    
+end
+
+
