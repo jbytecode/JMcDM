@@ -48,6 +48,7 @@ function ahp_consistency(comparisonMatrix::DataFrame)::AHPConsistencyResult
         comparisonMatrix,
         makeDecisionMatrix(normalizedComparisonMatrix),
         consistency_vector,
+        priority_vector,
         pc_matrix,
         lambda_max,
         CI,
@@ -58,5 +59,46 @@ function ahp_consistency(comparisonMatrix::DataFrame)::AHPConsistencyResult
 
     return result
 
+end
+
+
+
+
+function ahp(comparisonMatrixList::Array{DataFrame,1}, criteriaComparisonMatrix::DataFrame)
+    
+    result_list = map(ahp_consistency, comparisonMatrixList)
+
+    n = length(result_list)
+
+    ncriteria, _ = size(criteriaComparisonMatrix)
+
+    ncandidates, _ = size(comparisonMatrixList[1])
+
+    decision_matrix = zeros(Float64, ncandidates, ncriteria)
+
+    @inbounds for i in 1:n
+        decision_matrix[:,i] = result_list[i].priority
+    end
+
+    criteria_consistency = ahp_consistency(criteriaComparisonMatrix)
+
+    weights = criteria_consistency.priority
+
+    decision_matrix_df = makeDecisionMatrix(decision_matrix)
+    ordering_result =  decision_matrix * weights
+    
+    bestIndex = sortperm(ordering_result) |> last
+
+    result = AHPResult(
+        comparisonMatrixList,
+        criteriaComparisonMatrix,
+        criteria_consistency,
+        decision_matrix_df,
+        ordering_result,
+        weights,
+        bestIndex
+    )
+
+    return result
 end
 

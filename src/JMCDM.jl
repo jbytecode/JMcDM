@@ -21,6 +21,7 @@ export VikorResult
 export ElectreResult
 export MooraResult
 export AHPConsistencyResult
+export AHPResult
 
 # export utility functions
 export euclidean
@@ -36,6 +37,6 @@ export vikor
 export electre
 export moora 
 export dematel
-export ahp_RI, ahp_consistency
+export ahp_RI, ahp_consistency, ahp
 
 end # module
