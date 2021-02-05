@@ -14,8 +14,9 @@ include("moora.jl")
 include("dematel.jl")
 include("ahp.jl")
 include("nds.jl")
+include("singlecriteria.jl")
 
-# export types
+# export MCDM types
 export MCDMResult
 export TopsisResult
 export VikorResult
@@ -24,6 +25,10 @@ export MooraResult
 export AHPConsistencyResult
 export AHPResult
 export NDSResult
+
+#  export SCDM types
+export SCDMResult
+export LaplaceResult
 
 # export utility functions
 export euclidean
@@ -41,5 +46,8 @@ export moora
 export dematel
 export ahp_RI, ahp_consistency, ahp
 export nds
+
+#  export SCDM tools
+export laplace
 
 end # module

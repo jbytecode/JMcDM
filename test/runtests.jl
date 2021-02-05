@@ -312,3 +312,24 @@ end
 end
 
 
+@testset "Laplace" begin
+    
+    tol = 0.00001
+
+    mat = [
+        3000 2750 2500 2250;
+        1500 4750 8000 7750;
+        2000 5250 8500 11750
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = laplace(dm)
+
+    @test isa(result, LaplaceResult)
+
+    @test isapprox(result.expected_values, [2625.0, 5500, 6875], atol=tol)
+
+    @test result.bestIndex == 3
+end
+

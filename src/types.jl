@@ -1,4 +1,5 @@
 abstract type MCDMResult end 
+abstract type SCDMResult end
 
 struct TopsisResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -82,3 +83,9 @@ struct NDSResult <: MCDMResult
     ranks::Array{Int64,1}
     bestIndex::Int64
 end
+
+struct LaplaceResult <: SCDMResult
+    expected_values::Array{Float64,1}
+    bestIndex::Int64 
+end
+
