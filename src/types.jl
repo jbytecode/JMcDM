@@ -93,3 +93,20 @@ struct MaximinResult <: SCDMResult
     rowmins::Array{Float64,1}
     bestIndex::Int64
 end
+
+
+struct MaximaxResult <: SCDMResult
+    rowmaxs::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MinimaxResult <: SCDMResult
+    rowmaxs::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MiniminResult <: SCDMResult
+    rowmins::Array{Float64,1}
+    bestIndex::Int64
+end
+

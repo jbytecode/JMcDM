@@ -30,6 +30,9 @@ export NDSResult
 export SCDMResult
 export LaplaceResult
 export MaximinResult
+export MaximaxResult
+export MinimaxResult
+export MiniminResult
 
 # export utility functions
 export euclidean
@@ -51,5 +54,8 @@ export nds
 #  export SCDM tools
 export laplace
 export maximin
+export maximax
+export minimax
+export minimin
 
 end # module

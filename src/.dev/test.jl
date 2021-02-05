@@ -352,6 +352,75 @@ end
     @test isa(result, MaximinResult)
 
     @test isapprox(result.rowmins, [18, 18, 24, 20], atol=tol) 
-     
+
     @test result.bestIndex == 3
+end
+
+
+@testset "Maximax" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = maximax(dm)
+
+    @test isa(result, MaximaxResult)
+
+    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
+     
+    @test result.bestIndex in [2, 3]
+end
+
+
+@testset "Minimax" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = minimax(dm)
+
+    @test isa(result, MinimaxResult)
+
+    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
+     
+    @test result.bestIndex == 1
+end
+
+
+@testset "Minimin" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = minimin(dm)
+
+    @test isa(result, MiniminResult)
+
+    @test isapprox(result.rowmins, [18, 18,24,20], atol=tol) 
+     
+    @test result.bestIndex in [1, 2]
 end

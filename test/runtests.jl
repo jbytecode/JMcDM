@@ -355,3 +355,27 @@ end
      
     @test result.bestIndex == 3
 end
+
+
+@testset "Maximax" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = maximax(dm)
+
+    @test isa(result, MaximaxResult)
+
+    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
+     
+    @test result.bestIndex in [2, 3]
+end
+
