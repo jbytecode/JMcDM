@@ -2,9 +2,9 @@
 A package for Multiple criteria decision-making techniques in Julia
 
 
-# Implemented methods
+## Implemented methods
 
-## MCDM Tools
+### MCDM Tools
 
 - Topsis
 - Electre
@@ -13,7 +13,7 @@ A package for Multiple criteria decision-making techniques in Julia
 - Vikor
 - AHP
   
-## SCDM Tools
+### SCDM Tools
 
 - minimax
 - maximin
@@ -25,7 +25,10 @@ A package for Multiple criteria decision-making techniques in Julia
 - Laplace
 - Expected Regret
 
-## Game
+### Game
 
 - Game solver for zero sum games
+
+## Unimplemented methods
+- will be updated soon
 
