@@ -2,7 +2,7 @@ using Test
 using DataFrames
 
 
-using JMCDM
+using McDM
 
 @testset "Euclidean distance" begin
     @test euclidean([0.0, 1.0, 2.0], [0.0, 1.0, 2.0]) == 0.0
