@@ -1,5 +1,5 @@
-# JMCDM
-A package for Multiple criteria decision-making techniques in Julia
+# JMcDM
+A package for Multiple-criteria decisio  making techniques in Julia
 
 
 ## Implemented methods
