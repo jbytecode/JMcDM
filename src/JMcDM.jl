@@ -1,4 +1,4 @@
-module McDM
+module JMcDM
 
 using DataFrames
 using LinearAlgebra
