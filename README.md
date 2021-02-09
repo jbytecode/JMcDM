@@ -1,5 +1,5 @@
 # JMcDM
-A package for Multiple-criteria decisio  making techniques in Julia
+A package for Multiple-criteria decision making techniques in Julia
 
 
 ## Implemented methods
@@ -33,9 +33,14 @@ A package for Multiple-criteria decisio  making techniques in Julia
 - PROMETHEE
 - UTA
 - MAUT
-- ANP
+- UTA
+- STEM
+- PAPRIKA
+- ANP (Analytic Network Process)
 - Goal Programming
 - MACBETH
 - COMET
+- Data Envolopment
+
 - will be updated soon. 
 
