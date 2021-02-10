@@ -56,7 +56,8 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-    function topsis(decisionMat::DataFrame, weights::Array{Float64,1})::TopsisResult
+
+function topsis(decisionMat::DataFrame, weights::Array{Float64,1})::TopsisResult
     
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -75,9 +76,9 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
     @inbounds for i in 1:nalternatives
         ithrow = weightednormalizedMat[i,:] |> Array{Float64,1}
-		    distances_plus[i]  = euclidean(col_max, ithrow)
-		    distances_minus[i] = euclidean(col_min, ithrow)
-		    scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
+		distances_plus[i]  = euclidean(col_max, ithrow)
+		distances_minus[i] = euclidean(col_min, ithrow)
+		scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
     end
     
     best_index = sortperm(scores) |> last
