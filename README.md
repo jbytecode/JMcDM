@@ -12,6 +12,8 @@ A package for Multiple-criteria decision making techniques in Julia
 - Moora
 - Vikor
 - AHP
+- Data Envelopment Analysis
+
   
 ### SCDM Tools
 
@@ -29,6 +31,7 @@ A package for Multiple-criteria decision making techniques in Julia
 
 - Game solver for zero sum games
 
+
 ## Unimplemented methods
 - PROMETHEE
 - UTA
@@ -40,7 +43,6 @@ A package for Multiple-criteria decision making techniques in Julia
 - Goal Programming
 - MACBETH
 - COMET
-- Data Envolopment
 
 - will be updated soon. 
 
