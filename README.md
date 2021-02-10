@@ -45,3 +45,22 @@ A package for Multiple-criteria decision making techniques in Julia
 
 - will be updated soon. 
 
+
+## Installation
+
+Please type 
+
+```julia
+]add JMcDM
+```
+
+or
+
+```julia
+> using Pkg
+> Pkg.add("JMcDM")
+```
+
+in Julia REPL.
+
+
