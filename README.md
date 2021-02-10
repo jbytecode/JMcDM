@@ -14,7 +14,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - AHP
 - Data Envelopment Analysis
 
-  
+
 ### SCDM Tools
 
 - minimax
@@ -36,10 +36,9 @@ A package for Multiple-criteria decision making techniques in Julia
 - PROMETHEE
 - UTA
 - MAUT
-- UTA
 - STEM
 - PAPRIKA
-- ANP (Analytic Network Process)
+- ANP (Analytical Network Process)
 - Goal Programming
 - MACBETH
 - COMET
