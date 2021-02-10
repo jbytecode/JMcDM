@@ -17,6 +17,7 @@ include("ahp.jl")
 include("nds.jl")
 include("singlecriterion.jl")
 include("game.jl")
+include("dataenvelop.jl")
 
 # export MCDM types
 export MCDMResult
@@ -42,6 +43,7 @@ export SavageResult
 export HurwiczResult
 export MLEResult
 export ExpectedRegretResult
+export DataEnvelopResult
 
 # export utility functions
 export euclidean
@@ -73,5 +75,9 @@ export expectedregret
 
 # export game solver
 export game
+
+# export data envelop
+export dataenvelop
+
 
 end # module

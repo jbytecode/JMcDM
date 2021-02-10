@@ -136,5 +136,9 @@ struct GameResult <: MCDMResult
     value::Float64
 end
 
-
+struct DataEnvelopResult <: MCDMResult
+    efficiencies::Array{Float64,1}
+    references::DataFrame
+    orderedcases::Array{Symbol,1}
+end
 

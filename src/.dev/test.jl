@@ -565,3 +565,32 @@ end
         
 end
 
+
+@testset "Data Envelop" begin
+    
+    tol = 0.00001
+
+    x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95]
+    x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306]
+
+    out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165]
+    inp = hcat(x1, x2)
+
+    result::DataEnvelopResult = dataenvelop(inp, out)
+
+    @test isa(result, DataEnvelopResult)
+
+
+    @test result.orderedcases == [:Case8, :Case2, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3]
+
+    @test isapprox(result.efficiencies, 
+        [0.9879815986198964, 0.9999999999999999, 
+        0.8959653733189055, 0.9421686746987951, 
+        0.9659435120753173, 0.9715662650602411, 
+        0.9911164465786314, 1.0, 0.9841048789857857], atol=tol)
+
+   @test isapprox(result.references[:, :Case1],
+        [0.0, 0.544106, 0.0, 0.0, 0.0, 
+        0.0, 0.0, 0.496377, 0.0], atol=tol) 
+
+end
