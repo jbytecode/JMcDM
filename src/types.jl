@@ -142,3 +142,13 @@ struct DataEnvelopResult <: MCDMResult
     orderedcases::Array{Symbol,1}
 end
 
+struct GreyResult <: MCDMResult
+    referenceRow::Array{Float64,1}
+    normalizedMat::Matrix
+    absoluteValueMat::Matrix
+    greyTable::Matrix
+    scores::Array{Float64,1}
+    ordering::Array{Int64,1}
+    bestIndex::Int64             
+end
+    

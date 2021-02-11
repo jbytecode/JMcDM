@@ -20,6 +20,11 @@ function normalize(data::DataFrame)::DataFrame
     return df
 end
 
+function apply_columns(fs::Array{Function,1}, data::Union{DataFrame,Array{T,2}} where T <: Number)
+    _, m = size(data)
+    return [fs[i](data[:,i]) for i in 1:m]
+end
+
 function apply_columns(f::Function, data::Union{DataFrame,Array{T,2}} where T <: Number)
     return [f(c) for c in eachcol(data)]
 end

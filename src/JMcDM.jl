@@ -18,6 +18,7 @@ include("nds.jl")
 include("singlecriterion.jl")
 include("game.jl")
 include("dataenvelop.jl")
+include("grey.jl")
 
 # export MCDM types
 export MCDMResult
@@ -28,6 +29,7 @@ export MooraResult
 export AHPConsistencyResult
 export AHPResult
 export NDSResult
+export GreyResult
 
 # export game type
 export GameResult
@@ -45,6 +47,7 @@ export MLEResult
 export ExpectedRegretResult
 export DataEnvelopResult
 
+
 # export utility functions
 export euclidean
 export normalize
@@ -61,6 +64,7 @@ export moora
 export dematel
 export ahp_RI, ahp_consistency, ahp
 export nds
+export grey
 
 #  export SCDM tools
 export laplace

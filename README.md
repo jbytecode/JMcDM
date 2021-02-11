@@ -13,7 +13,9 @@ A package for Multiple-criteria decision making techniques in Julia
 - Vikor
 - AHP
 - Data Envelopment Analysis
-
+- Grey Relational Analysis
+- Non-dominated Sorting 
+  
 
 ### SCDM Tools
 

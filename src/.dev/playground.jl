@@ -16,13 +16,23 @@ include("../nds.jl")
 include("../singlecriterion.jl")
 include("../game.jl")
 include("../dataenvelop.jl")
+include("../grey.jl")
+
+
+#= 
+df = DataFrame(
+    :K1 => [105000.0, 120000, 150000, 115000, 135000],
+    :K2 => [105.0, 110, 120, 105, 115],
+    :K3 => [10.0, 15, 12, 20, 15],
+    :K4 => [4.0, 4, 3, 4, 5],
+    :K5 => [300.0, 500, 550, 600, 400],
+    :K6 => [10.0, 8, 12, 9, 9]
+)
+functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
 
 
 
-x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95]
-x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306]
+w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165]
-inp = hcat(x1, x2)
-
-result = dataenvelop(inp, out)
+@info df
+result = grey(df, w, fs=functionlist) =#
