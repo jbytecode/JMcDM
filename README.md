@@ -53,14 +53,15 @@ A package for Multiple-criteria decision making techniques in Julia
 Please type 
 
 ```julia
-]add JMcDM
+julia> ]
+(@v1.5) pkg> add JMcDM
 ```
 
 or
 
 ```julia
-> using Pkg
-> Pkg.add("JMcDM")
+julia> using Pkg
+julia> Pkg.add("JMcDM")
 ```
 
 in Julia REPL.
