@@ -160,3 +160,13 @@ struct SawResult <: MCDMResult
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
+
+struct ARASResult <: MCDMResult
+    referenceRow::Array{Float64,1}
+    extendMat::Array{Float64,2}
+    normalizedMat::Array{Float64,2}
+    optimalitydegrees::Array{Float64,1}
+    scores::Array{Float64,1}
+    orderings::Array{Int64,1}
+    bestIndex::Int64
+end
