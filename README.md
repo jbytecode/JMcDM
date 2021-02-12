@@ -16,6 +16,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - Grey Relational Analysis
 - Non-dominated Sorting 
 - SAW (Simple Additive Weighting)  
+- ARAS (Additive Ratio Assessment)
 
 ### SCDM Tools
 
