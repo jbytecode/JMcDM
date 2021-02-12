@@ -19,6 +19,7 @@ include("singlecriterion.jl")
 include("game.jl")
 include("dataenvelop.jl")
 include("grey.jl")
+include("saw.jl")
 
 # export MCDM types
 export MCDMResult
@@ -30,6 +31,7 @@ export AHPConsistencyResult
 export AHPResult
 export NDSResult
 export GreyResult
+export SawResult
 
 # export game type
 export GameResult
@@ -65,6 +67,7 @@ export dematel
 export ahp_RI, ahp_consistency, ahp
 export nds
 export grey
+export saw 
 
 #  export SCDM tools
 export laplace

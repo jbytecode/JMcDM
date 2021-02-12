@@ -151,4 +151,12 @@ struct GreyResult <: MCDMResult
     ordering::Array{Int64,1}
     bestIndex::Int64             
 end
-    
+
+struct SawResult <: MCDMResult
+    decisionMatrix::DataFrame
+    normalizedDecisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end

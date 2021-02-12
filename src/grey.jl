@@ -1,4 +1,4 @@
-function grey(decisionMat::DataFrame, weights::Array{Float64,1}; fs::Array{Function,1}, zeta::Float64=0.5)::GreyResult
+function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1}, zeta::Float64=0.5)::GreyResult
 
     mat = convert(Matrix, decisionMat)
 

@@ -15,7 +15,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - Data Envelopment Analysis
 - Grey Relational Analysis
 - Non-dominated Sorting 
-  
+- SAW (Simple Additive Weighting)  
 
 ### SCDM Tools
 
