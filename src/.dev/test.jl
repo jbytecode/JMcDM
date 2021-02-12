@@ -687,3 +687,28 @@ end
         @test result.ranking == [3, 2, 5, 1, 4]
     end
 end
+
+@testset "ARAS Additive Ratio Assessment" begin
+    
+    tol = 0.0001
+    
+    df = DataFrame(
+        :K1 => [105000.0, 120000, 150000, 115000, 135000],
+        :K2 => [105.0, 110, 120, 105, 115],
+        :K3 => [10.0, 15, 12, 20, 15],
+        :K4 => [4.0, 4, 3, 4, 5],
+        :K5 => [300.0, 500, 550, 600, 400],
+        :K6 => [10.0, 8, 12, 9, 9]
+    )
+    functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
+
+    w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
+
+    result = aras(df, w, functionlist)
+
+    @test isa(result, ARASResult)
+    
+    @test isapprox(result.scores, [0.81424068, 0.89288620, 0.76415790, 0.84225462, 0.86540635], atol=tol)
+
+    @test result.bestIndex == 2
+end

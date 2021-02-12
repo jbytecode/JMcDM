@@ -20,6 +20,7 @@ include("game.jl")
 include("dataenvelop.jl")
 include("grey.jl")
 include("saw.jl")
+include("aras.jl")
 
 # export MCDM types
 export MCDMResult
@@ -32,6 +33,7 @@ export AHPResult
 export NDSResult
 export GreyResult
 export SawResult
+export ARASResult
 
 # export game type
 export GameResult
@@ -68,6 +70,7 @@ export ahp_RI, ahp_consistency, ahp
 export nds
 export grey
 export saw 
+export aras
 
 #  export SCDM tools
 export laplace
