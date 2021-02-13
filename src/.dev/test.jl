@@ -688,6 +688,7 @@ end
     end
 end
 
+
 @testset "ARAS Additive Ratio Assessment" begin
     
     tol = 0.0001
@@ -711,4 +712,26 @@ end
     @test isapprox(result.scores, [0.81424068, 0.89288620, 0.76415790, 0.84225462, 0.86540635], atol=tol)
 
     @test result.bestIndex == 2
+end
+
+@testset "WPM" begin
+    tol = 0.0001
+    decmat = [3	12.5	2	120	14	3;
+                5	15	3	110	38	4;
+                3	13	2	120	19	3;
+                4	14	2	100	31	4;
+                3	15	1.5	125	40	4]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
+
+    fns = [maximum, minimum, minimum, maximum, minimum, maximum]
+    
+    result = wpm(df, weights, fns)
+
+    @test result isa WPMResult
+
+    @test isapprox(result.scores, [0.7975224331331, 0.7532541470585, 0.7647463553356, 0.7873956894791, 0.7674278741782], atol=tol)
+    
 end

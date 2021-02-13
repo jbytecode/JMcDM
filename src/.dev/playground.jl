@@ -19,18 +19,19 @@ include("../dataenvelop.jl")
 include("../grey.jl")
 include("../saw.jl")
 include("../aras.jl")
+include("../wpm.jl")
 
 
-decmat = [4.0  7  3  2  2  2  2;
-    4.0  4  6  4  4  3  7;
-    7.0  6  4  2  5  5  3;
-    3.0  2  5  3  3  2  5;
-    4.0  2  2  5  5  3  6]
+decmat = [3	12.5	2	120	14	3;
+5	15	3	110	38	4;
+3	13	2	120	19	3;
+4	14	2	100	31	4;
+3	15	1.5	125	40	4]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
+weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
 
-fns = convert(Array{Function,1}, [maximum for i in 1:7])
+fns = [maximum, minimum, minimum, maximum, minimum, maximum]
 
-result = saw(df, weights, fns)
+result = wpm(df, weights, fns)
