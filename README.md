@@ -15,8 +15,9 @@ A package for Multiple-criteria decision making techniques in Julia
 - Data Envelopment Analysis
 - Grey Relational Analysis
 - Non-dominated Sorting 
-- SAW (Simple Additive Weighting)  
+- SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
+- WPM (Weighted Product Model)
 
 ### SCDM Tools
 
