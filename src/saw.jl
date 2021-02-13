@@ -2,7 +2,7 @@
         saw(decisionMat, weights, fns)
 
 Apply SAW (Simple Additive Weighting) method for a given matrix and weights.
-
+This method also known as WSM (Weighted Sum Model)
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.

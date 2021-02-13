@@ -170,3 +170,12 @@ struct ARASResult <: MCDMResult
     orderings::Array{Int64,1}
     bestIndex::Int64
 end
+
+struct WPMResult <: MCDMResult
+    decisionMatrix::DataFrame
+    normalizedDecisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
