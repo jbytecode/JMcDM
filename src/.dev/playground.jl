@@ -20,6 +20,7 @@ include("../grey.jl")
 include("../saw.jl")
 include("../aras.jl")
 include("../wpm.jl")
+include("../waspas.jl")
 
 
 decmat = [3	12.5	2	120	14	3;
@@ -30,8 +31,8 @@ decmat = [3	12.5	2	120	14	3;
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
+weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201];
 
-fns = [maximum, minimum, minimum, maximum, minimum, maximum]
+fns = [maximum, minimum, minimum, maximum, minimum, maximum];
 
-result = wpm(df, weights, fns)
+result = waspas(df, weights, fns)

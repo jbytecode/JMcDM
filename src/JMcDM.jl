@@ -22,6 +22,7 @@ include("grey.jl")
 include("saw.jl")
 include("aras.jl")
 include("wpm.jl")
+include("waspas.jl")
 
 # export MCDM types
 export MCDMResult
@@ -36,6 +37,7 @@ export GreyResult
 export SawResult
 export ARASResult
 export WPMResult
+export WASPASResult
 
 # export game type
 export GameResult
@@ -74,6 +76,7 @@ export grey
 export saw 
 export aras
 export wpm
+export waspas
 
 #  export SCDM tools
 export laplace
