@@ -24,6 +24,7 @@ include("aras.jl")
 include("wpm.jl")
 include("waspas.jl")
 include("edas.jl")
+include("marcos.jl")
 
 # export MCDM types
 export MCDMResult
@@ -40,6 +41,7 @@ export ARASResult
 export WPMResult
 export WASPASResult
 export EDASResult
+export MARCOSResult
 
 # export game type
 export GameResult
@@ -80,6 +82,7 @@ export aras
 export wpm
 export waspas
 export edas
+export marcos
 
 #  export SCDM tools
 export laplace
