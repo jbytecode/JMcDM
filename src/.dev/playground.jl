@@ -21,18 +21,22 @@ include("../saw.jl")
 include("../aras.jl")
 include("../wpm.jl")
 include("../waspas.jl")
+include("../edas.jl")
 
 
-decmat = [3	12.5	2	120	14	3;
-5	15	3	110	38	4;
-3	13	2	120	19	3;
-4	14	2	100	31	4;
-3	15	1.5	125	40	4]
+decmat = [5000 5 5300 450;
+4500 5 5000 400;
+4500 4 4700 400;
+4000 4 4200 400;
+5000 4 7100 500;
+5000 5 5400 450;
+5500 5 6200 500;
+5000 4 5800 450]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201];
+weights = [0.25, 0.25, 0.25, 0.25];
 
-fns = [maximum, minimum, minimum, maximum, minimum, maximum];
+fns = [maximum, maximum, minimum, minimum];
 
-result = waspas(df, weights, fns)
+result = edas(df, weights, fns)

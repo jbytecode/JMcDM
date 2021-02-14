@@ -23,6 +23,7 @@ include("saw.jl")
 include("aras.jl")
 include("wpm.jl")
 include("waspas.jl")
+include("edas.jl")
 
 # export MCDM types
 export MCDMResult
@@ -38,6 +39,7 @@ export SawResult
 export ARASResult
 export WPMResult
 export WASPASResult
+export EDASResult
 
 # export game type
 export GameResult
@@ -77,6 +79,7 @@ export saw
 export aras
 export wpm
 export waspas
+export edas
 
 #  export SCDM tools
 export laplace
