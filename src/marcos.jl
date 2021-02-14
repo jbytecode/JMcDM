@@ -9,7 +9,7 @@ Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solut
  - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
-marcos() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
+marcos() applies the MARCOS method to rank n alterntives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
