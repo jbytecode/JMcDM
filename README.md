@@ -18,6 +18,8 @@ A package for Multiple-criteria decision making techniques in Julia
 - SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
 - WPM (Weighted Product Model)
+- WASPAS (Weighted Aggregated Sum Product ASsessment)
+- EDAS (Evaluation based on Distance from Average Solution)
 
 ### SCDM Tools
 
