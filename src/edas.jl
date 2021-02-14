@@ -9,7 +9,7 @@ Apply EDAS (Evaluation based on Distance from Average Solution) for a given matr
  - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
-edas() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
+edas() applies the EDAS method to rank n alterntives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
