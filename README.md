@@ -20,6 +20,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - WPM (Weighted Product Model)
 - WASPAS (Weighted Aggregated Sum Product ASsessment)
 - EDAS (Evaluation based on Distance from Average Solution)
+- MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
 
 ### SCDM Tools
 
