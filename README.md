@@ -21,6 +21,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - WASPAS (Weighted Aggregated Sum Product ASsessment)
 - EDAS (Evaluation based on Distance from Average Solution)
 - MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
+- MABAC (Multi-Attributive Border Approximation area Comparison)
 
 ### SCDM Tools
 
