@@ -70,6 +70,7 @@ export colmaxs
 export colmins
 export unitize
 export makeDecisionMatrix
+export reverseminmax
 
 #  export MCDM tools
 export topsis 

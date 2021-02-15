@@ -65,10 +65,6 @@ function rowmeans(data)::Array{Float64,1}
     return apply_rows(mean, data)
 end
 
-function mean(v)::Float64
-    return sum(v) / length(v)
-end
-
 function unitize(v::Array{Float64,1})::Array{Float64,1}
     return v ./ sum(v)
 end
@@ -106,4 +102,9 @@ end
 
 function Base.minimum(df::DataFrame)
     df |> x -> convert(Matrix, x) |> minimum
+end
+
+function reverseminmax(fns::Array{Function,1})::Array{Function,1}
+    newfs = map(x -> if x == minimum maximum else minimum end, fns)
+    return newfs
 end

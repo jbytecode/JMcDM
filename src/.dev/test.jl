@@ -796,7 +796,7 @@ end
 
     fns = [maximum, maximum, maximum, maximum, maximum, maximum];
 
-    Fns = convert(Array{Function, 1} , fns)
+    Fns = convert(Array{Function,1}, fns)
 
     result = marcos(df, weights, Fns)
 
@@ -828,4 +828,15 @@ end
 
     @test isapprox(result.scores, [-0.31132, -0.10898, 0.20035, 0.04218, 0.34452, 0.20035], atol=tol)
     
+end
+
+
+@testset "Reverse minimum & maximum array" begin
+
+    fns = [minimum, maximum, maximum, minimum, maximum]
+    revfns = [maximum, minimum, minimum, maximum, minimum]
+
+    @test reverseminmax(fns) == revfns 
+
+    @test reverseminmax(revfns) == fns 
 end

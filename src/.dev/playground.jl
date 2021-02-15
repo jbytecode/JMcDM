@@ -1,7 +1,16 @@
+@info "Loading DataFrames"
 using DataFrames
+
+@info "Loading LinearAlgebra"
 using LinearAlgebra
+
+@info "Loading JuMP"
 using JuMP
+
+@info "Loading Cbc"
 using Cbc
+
+@info "Loading StatsBase"
 using StatsBase
 
 include("../types.jl")
