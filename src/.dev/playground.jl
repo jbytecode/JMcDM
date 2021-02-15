@@ -23,19 +23,20 @@ include("../wpm.jl")
 include("../waspas.jl")
 include("../edas.jl")
 include("../marcos.jl")
+include("../mabac.jl")
 
 
-decmat = [8.675 8.433 8.000 7.800 8.025 8.043;
-8.825 8.600 7.420 7.463 7.825 8.229;
-8.325 7.600 8.040 7.700 7.925 7.600;
-8.525 8.667 7.180 7.375 7.750 8.071]
+decmat = [2 1 4 7 6 6 7 3000;
+4 1 5 6 7 7 6 3500;
+3 2 6 6 5 6 8 4000;
+5 1 5 7 6 7 7 3000;
+4 2 5 6 7 7 6 3000;
+3 2 6 6 6 6 6 3500]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.19019, 0.15915, 0.19819, 0.19019, 0.15115, 0.11111];
+weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
 
-fns = [maximum, maximum, maximum, maximum, maximum, maximum];
+fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-Fns = convert(Array{Function, 1} , fns)
-
-result = marcos(df, weights, Fns)
+#result = marcos(df, weights, fns)
