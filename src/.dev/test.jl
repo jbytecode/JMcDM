@@ -681,7 +681,7 @@ end
 
         df = makeDecisionMatrix(decmat)
         weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
-        fns = convert(Array{Function,1}, [maximum for i in 1:7])
+        fns = makeminmax([maximum for i in 1:7])
         result = saw(df, weights, fns)
 
         @test result isa SawResult
