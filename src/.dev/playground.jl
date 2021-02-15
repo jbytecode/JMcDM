@@ -35,8 +35,8 @@ decmat = [2 1 4 7 6 6 7 3000;
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
+weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053];
 
 fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-#result = marcos(df, weights, fns)
+result = mabac(df, weights, fns)

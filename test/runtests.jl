@@ -822,7 +822,7 @@ end
 
     fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-    result = marcos(df, weights, fns)
+    result = mabac(df, weights, fns)
 
     @test result isa MABACResult
 

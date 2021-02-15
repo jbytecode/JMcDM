@@ -4,12 +4,12 @@
 Apply MABAC (Multi-Attributive Border Approximation area Comparison) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
-mabac() applies the MABAC method to rank n alterntives subject to m criteria which are supposed to be 
+mabac() applies the MABAC method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
@@ -17,57 +17,50 @@ either maximized or minimized.
 
 # Examples
 ```julia-repl
-julia> decmat = [5000 5 5300 450;
-       4500 5 5000 400;
-       4500 4 4700 400;
-       4000 4 4200 400;
-       5000 4 7100 500;
-       5000 5 5400 450;
-       5500 5 6200 500;
-       5000 4 5800 450]
-8×4 Array{Int64,2}:
- 5000  5  5300  450
- 4500  5  5000  400
- 4500  4  4700  400
- 4000  4  4200  400
- 5000  4  7100  500
- 5000  5  5400  450
- 5500  5  6200  500
- 5000  4  5800  450
+julia> decmat = [2 1 4 7 6 6 7 3000;
+       4 1 5 6 7 7 6 3500;
+       3 2 6 6 5 6 8 4000;
+       5 1 5 7 6 7 7 3000;
+       4 2 5 6 7 7 6 3000;
+       3 2 6 6 6 6 6 3500]
+6×8 
+Array{Int64,2}:
+ 2  1  4  7  6  6  7  3000
+ 4  1  5  6  7  7  6  3500
+ 3  2  6  6  5  6  8  4000
+ 5  1  5  7  6  7  7  3000
+ 4  2  5  6  7  7  6  3000
+ 3  2  6  6  6  6  6  3500
 
 julia> df = makeDecisionMatrix(decmat)
-8×4 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4    
-     │ Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────
-   1 │  5000.0      5.0   5300.0    450.0
-   2 │  4500.0      5.0   5000.0    400.0
-   3 │  4500.0      4.0   4700.0    400.0
-   4 │  4000.0      4.0   4200.0    400.0
-   5 │  5000.0      4.0   7100.0    500.0
-   6 │  5000.0      5.0   5400.0    450.0
-   7 │  5500.0      5.0   6200.0    500.0
-   8 │  5000.0      4.0   5800.0    450.0
+6×8 DataFrame
+ Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7     Crt8    
+     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64  Float64 
+─────┼────────────────────────────────────────────────────────────────────────
+   1 │     2.0      1.0      4.0      7.0      6.0      6.0      7.0   3000.0
+   2 │     4.0      1.0      5.0      6.0      7.0      7.0      6.0   3500.0
+   3 │     3.0      2.0      6.0      6.0      5.0      6.0      8.0   4000.0
+   4 │     5.0      1.0      5.0      7.0      6.0      7.0      7.0   3000.0
+   5 │     4.0      2.0      5.0      6.0      7.0      7.0      6.0   3000.0
+   6 │     3.0      2.0      6.0      6.0      6.0      6.0      6.0   3500.0
 
-julia> weights = [0.25, 0.25, 0.25, 0.25];
+julia> weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053];
 
-julia> fns = [maximum, maximum, minimum, minimum];
+julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
 julia> result = mabac(df, weights, fns);
 
 julia> result.scores
-8-element Array{Float64,1}:
- 0.7595941163602383
- 0.8860162461306114
- 0.6974721951442592
- 0.739657763190231
- 0.05908329207449442
- 0.7318326305342363
- 0.6416913873322523
- 0.38519414045559647
+6-element Array{Float64,1}:
+ -0.3113160790692055
+ -0.10898274573587217
+  0.2003505875974611
+  0.0421839209307945
+  0.3445172542641278
+  0.2003505875974611
 
 julia> result.bestIndex
-2
+5
 ```
 
 # References
@@ -78,42 +71,39 @@ Ulutaş, A. (2019). Entropi ve MABAC yöntemleri ile personel seçimi. OPUS–In
 """
 function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MABACResult
 
-    df= convert(Matrix, decisionMat)
-
-    row, col = size(df)
+    row, col = size(decisionMat)
 
     w = unitize(weights)
 
-    PDAMatrix = copy(df)
-    NDAMatrix = copy(df)
+    colMax = colmaxs(decisionMat)
+    colMin = colmins(decisionMat)
 
-    AV = zeros(Float64, col)
-
-    @inbounds for i in 1:col
-        AV[i] = mean(df[:, i])
-        for j in 1:row
-            if fns[i] == maximum
-                PDAMatrix[j, i] = max(0, df[j, i]-AV[i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, AV[i]-df[j, i]) ./ AV[i]
-            elseif fns[i] == minimum 
-                PDAMatrix[j, i] = max(0, AV[i]-df[j, i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, df[j, i]-AV[i]) ./ AV[i]
-            end
-        end
-    end 
-
-    SP = zeros(Float64, row)
-    SN = zeros(Float64, row)
+    A = copy(decisionMat)
 
     for i in 1:row
-        SP[i] = w .* PDAMatrix[i, :] |> sum
-        SN[i] = w .* NDAMatrix[i, :] |> sum
+        for j in 1:col
+            if fns[j] == maximum
+                @inbounds A[i, j] = (A[i, j]- colMin[j]) / (colMax[j] - colMin[j])
+            elseif fns[j] == minimum
+                @inbounds A[i, j] = (A[i, j]- colMax[j]) / (colMin[j] - colMax[j])
+            end                    
+        end
     end
 
-    NSP = SP ./ maximum(SP)
-    NSN = 1 .- SN ./ maximum(SN)
+    wA = w * (A .+1)
 
-    scores = (NSP .+ NSN) ./ 2 
+    g = zeros(Float64, col)
+
+    for i in 1:col
+        g[i] = prod(wA[:, i])^(1.0/row)
+    end
+
+    Q = wA .- g'
+
+    scores = zeros(Float64, row)
+    for i in 1:row
+        scores[i] = sum(Q[i, :])
+    end 
 
     rankings = sortperm(scores)
     
