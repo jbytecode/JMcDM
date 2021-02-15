@@ -2,7 +2,7 @@ using DataFrames
 using LinearAlgebra
 using JuMP
 using Cbc
-
+using StatsBase
 
 include("../types.jl")
 include("../utilities.jl")

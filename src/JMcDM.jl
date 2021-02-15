@@ -4,6 +4,7 @@ using DataFrames
 using LinearAlgebra
 using JuMP
 using Cbc
+using StatsBase
 
 # includes 
 include("types.jl")

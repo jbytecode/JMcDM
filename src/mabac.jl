@@ -83,19 +83,19 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
     for i in 1:row
         for j in 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (A[i, j]- colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] = (A[i, j] - colMin[j]) / (colMax[j] - colMin[j])
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (A[i, j]- colMax[j]) / (colMin[j] - colMax[j])
+                @inbounds A[i, j] = (A[i, j] - colMax[j]) / (colMin[j] - colMax[j])
             end                    
         end
     end
 
-    wA = w * (A .+1)
+    wA = w * (A .+ 1)
 
     g = zeros(Float64, col)
 
     for i in 1:col
-        g[i] = prod(wA[:, i])^(1.0/row)
+        g[i] = geomean(wA[:, i])
     end
 
     Q = wA .- g'
