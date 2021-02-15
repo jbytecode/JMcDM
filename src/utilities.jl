@@ -108,3 +108,7 @@ function reverseminmax(fns::Array{Function,1})::Array{Function,1}
     newfs = map(x -> if x == minimum maximum else minimum end, fns)
     return newfs
 end
+
+function makeminmax(fns::Array{K,1} where K)::Array{Function,1}
+    return convert(Array{Function,1}, fns)
+end

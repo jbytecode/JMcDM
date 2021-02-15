@@ -1,5 +1,5 @@
 """
-        topsis(decisionMat, weights)
+        topsis(decisionMat, weights, fns)
 
 Apply TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method 
 for a given matrix and weights.
@@ -7,9 +7,10 @@ for a given matrix and weights.
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
+ - `fns::Array{Function, 1}`: m-vector of function that are either minimize or maximize.
 
 # Description 
-topsis() applies the TOPSIS method to rank n strategies subject to m criteria which are supposed to be maximized.
+topsis() applies the TOPSIS method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
 - `::TopsisResult`: TopsisResult object that holds multiple outputs including scores and best index.
@@ -33,8 +34,8 @@ julia> df
    2 │     8.0      7.0      9.0      6.0
    3 │     7.0      8.0      6.0      6.0
 
-
-julia> result = topsis(df, w);
+julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
+julia> result = topsis(df, w, fns);
 
 julia> result.bestIndex
 2
@@ -56,7 +57,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-    function topsis(decisionMat::DataFrame, weights::Array{Float64,1})::TopsisResult
+    function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
     
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -65,8 +66,10 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
     
     weightednormalizedMat = w * normalizedMat
     
-    col_max = colmaxs(weightednormalizedMat)
-    col_min = colmins(weightednormalizedMat)
+    # col_max = colmaxs(weightednormalizedMat)
+    # col_min = colmins(weightednormalizedMat)
+    col_max = apply_columns(fns, weightednormalizedMat)
+    col_min = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
     distances_plus  = zeros(Float64, nalternatives)
     distances_minus = zeros(Float64, nalternatives)

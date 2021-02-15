@@ -62,7 +62,10 @@ end
     df[:, :z] = Float64[6, 9, 6]
     df[:, :q] = Float64[7, 6, 6]
     w = Float64[4, 2, 6, 8]
-    result = topsis(df, w)
+
+    fns = makeminmax([maximum, maximum, maximum, maximum])
+
+    result = topsis(df, w, fns)
 
     @test isa(result, TopsisResult)
     @test result.bestIndex == 2
@@ -839,4 +842,15 @@ end
     @test reverseminmax(fns) == revfns 
 
     @test reverseminmax(revfns) == fns 
+end
+
+@testset "Make Array of minimum and maximum" begin
+    result1 = makeminmax([maximum, maximum, maximum, maximum])
+
+    @test typeof(result1) == Array{Function,1}
+
+    @test typeof(result1[1]([1.0, 2.0, 3.0])) == Float64 
+
+    @test result1[1]([1.0, 2.0, 3.0]) == 3.0 
+
 end
