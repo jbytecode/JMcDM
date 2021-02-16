@@ -20,7 +20,7 @@ julia> Pkg.add("JMcDM")
 
 in Julia REPL.
 
-## Documentation
+## Documentation
 
 Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/docs/build/).
 
