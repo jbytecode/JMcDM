@@ -854,3 +854,25 @@ end
     @test result1[1]([1.0, 2.0, 3.0]) == 3.0 
 
 end
+
+@testset "MAIRCA" begin
+    
+    tol = 0.0001
+    decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
+    7.319 7.319 6.604 7.319 8.000 7.652 5.313;
+    7.000 7.319 7.652 6.952 7.652 6.952 4.642;
+    7.319 6.952 6.649 7.319 7.652 6.649 5.000]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
+
+    fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
+
+    result = mairca(df, weights, fns)
+
+    @test result isa MAIRCAResult
+
+    @test isapprox(result.scores, [0.1205, 0.0806, 0.1457, 0.1453], atol=tol)
+    
+end

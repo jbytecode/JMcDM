@@ -33,19 +33,18 @@ include("../waspas.jl")
 include("../edas.jl")
 include("../marcos.jl")
 include("../mabac.jl")
+include("../mairca.jl")
 
 
-decmat = [2 1 4 7 6 6 7 3000;
-4 1 5 6 7 7 6 3500;
-3 2 6 6 5 6 8 4000;
-5 1 5 7 6 7 7 3000;
-4 2 5 6 7 7 6 3000;
-3 2 6 6 6 6 6 3500]
+decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
+7.319 7.319 6.604 7.319 8.000 7.652 5.313;
+7.000 7.319 7.652 6.952 7.652 6.952 4.642;
+7.319 6.952 6.649 7.319 7.652 6.649 5.000]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053];
+weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
 
-fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
+fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-result = mabac(df, weights, fns)
+result = mairca(df, weights, fns)
