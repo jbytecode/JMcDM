@@ -27,17 +27,15 @@ julia> decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
  7.0    7.319  7.652  6.952  7.652  6.952  4.642
  7.319  6.952  6.649  7.319  7.652  6.649  5.0
 
-julia> df = makeDecisionMatrix(decmat)
-6×8 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7     Crt8    
-     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────────────────────────────────────────
-   1 │     2.0      1.0      4.0      7.0      6.0      6.0      7.0   3000.0
-   2 │     4.0      1.0      5.0      6.0      7.0      7.0      6.0   3500.0
-   3 │     3.0      2.0      6.0      6.0      5.0      6.0      8.0   4000.0
-   4 │     5.0      1.0      5.0      7.0      6.0      7.0      7.0   3000.0
-   5 │     4.0      2.0      5.0      6.0      7.0      7.0      6.0   3000.0
-   6 │     3.0      2.0      6.0      6.0      6.0      6.0      6.0   3500.0
+ julia> df = makeDecisionMatrix(decmat)
+ 4×7 DataFrame
+  Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7    
+      │ Float64  Float64  Float64  Float64  Float64  Float64  Float64 
+ ─────┼───────────────────────────────────────────────────────────────
+    1 │   6.952    8.0      6.649    7.268    8.0      7.652    6.316
+    2 │   7.319    7.319    6.604    7.319    8.0      7.652    5.313
+    3 │   7.0      7.319    7.652    6.952    7.652    6.952    4.642
+    4 │   7.319    6.952    6.649    7.319    7.652    6.649    5.0
 
 julia> weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
 
@@ -46,16 +44,14 @@ julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 julia> result = mairca(df, weights, fns);
 
 julia> result.scores
-6-element Array{Float64,1}:
- -0.3113160790692055
- -0.10898274573587217
-  0.2003505875974611
-  0.0421839209307945
-  0.3445172542641278
-  0.2003505875974611
+4-element Array{Float64,1}:
+ 0.12064543054088471
+ 0.08066456363291889
+ 0.14586265389012484
+ 0.14542366685864686
 
 julia> result.bestIndex
-5
+2
 ```
 
 # References
@@ -70,6 +66,12 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     w = unitize(weights)
 
+    T = zeros(Float64, row, col)
+
+    for i in 1:col
+        T[:, i] .= w[i] * (1/row)
+    end 
+
     colMax = colmaxs(decisionMat)
     colMin = colmins(decisionMat)
 
@@ -78,31 +80,23 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     for i in 1:row
         for j in 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (A[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] = T[i,j] * ((A[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (A[i, j] - colMax[j]) / (colMin[j] - colMax[j])
+                @inbounds A[i, j] = T[i,j] * ((A[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
             end                    
         end
     end
 
-    wA = w * (A .+ 1)
-
-    g = zeros(Float64, col)
-
-    for i in 1:col
-        g[i] = geomean(wA[:, i])
-    end
-
-    Q = wA .- g'
+    S = T .- A
 
     scores = zeros(Float64, row)
     for i in 1:row
-        scores[i] = sum(Q[i, :])
+        scores[i] = sum(S[i, :])
     end 
 
     rankings = sortperm(scores)
     
-    bestIndex = rankings |> last
+    bestIndex = rankings |> first
     
     result = MAIRCAResult(
         decisionMat,

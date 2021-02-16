@@ -874,7 +874,7 @@ end
 
     @test result isa MAIRCAResult
 
-    @test isapprox(result.scores, [0.1205, 0.0806, 0.1457, 0.1453], atol=tol)
+    @test isapprox(result.scores, [0.1206454, 0.0806646, 0.1458627, 0.1454237], atol=tol)
     
 end
 
