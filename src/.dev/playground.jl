@@ -1,8 +1,17 @@
+@info "Loading DataFrames"
 using DataFrames
+
+@info "Loading LinearAlgebra"
 using LinearAlgebra
+
+@info "Loading JuMP"
 using JuMP
+
+@info "Loading Cbc"
 using Cbc
 
+@info "Loading StatsBase"
+using StatsBase
 
 include("../types.jl")
 include("../utilities.jl")
@@ -20,18 +29,22 @@ include("../grey.jl")
 include("../saw.jl")
 include("../aras.jl")
 include("../wpm.jl")
+include("../waspas.jl")
+include("../edas.jl")
+include("../marcos.jl")
+include("../mabac.jl")
+include("../mairca.jl")
 
 
-decmat = [3	12.5	2	120	14	3;
-5	15	3	110	38	4;
-3	13	2	120	19	3;
-4	14	2	100	31	4;
-3	15	1.5	125	40	4]
+decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
+7.319 7.319 6.604 7.319 8.000 7.652 5.313;
+7.000 7.319 7.652 6.952 7.652 6.952 4.642;
+7.319 6.952 6.649 7.319 7.652 6.649 5.000]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
+weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
 
-fns = [maximum, minimum, minimum, maximum, minimum, maximum]
+fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-result = wpm(df, weights, fns)
+result = mairca(df, weights, fns)

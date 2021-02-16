@@ -1,18 +1,18 @@
-function euclidean(v1::Array{Float64,1}, v2::Array{Float64,1})::Float64 
+function euclidean(v1::Array{T,1}, v2::Array{T,1})::T where T <: Number 
     (v1 .- v2).^2.0 |> sum |> sqrt
 end
 
-function euclidean(v1::Array{Float64,1})::Float64
-    v2 = zeros(Float64, length(v1))
+function euclidean(v1::Array{T,1})::T where T <: Number
+    v2 = zeros(T, length(v1))
     return euclidean(v1, v2)
 end
 
-function normalize(v1::Array{Float64,1})::Array{Float64,1}
+function normalize(v1::Array{T,1})::Array{T,1} where T <: Number
     return v1 ./ euclidean(v1) 
 end
 
 function normalize(data::DataFrame)::DataFrame
-    df = copy(data)
+    df = similar(data)
     _, p = size(df)
     for i in 1:p
         df[:, i] = normalize(data[:, i])
@@ -29,19 +29,19 @@ function apply_columns(f::Function, data::Union{DataFrame,Array{T,2}} where T <:
     return [f(c) for c in eachcol(data)]
 end
 
-function colmins(data::DataFrame)::Array{Float64,1}
+function colmins(data::DataFrame) 
     return apply_columns(minimum, data)
 end
 
-function colmaxs(data::DataFrame)::Array{Float64,1}
+function colmaxs(data::DataFrame)
     return apply_columns(maximum, data)
 end
 
-function colsums(data)::Array{Float64,1}
+function colsums(data)::Array{Number,1} 
     return apply_columns(sum, data)
 end
 
-function colmeans(data)::Array{Float64,1}
+function colmeans(data)::Array{Number,1}
     return apply_columns(mean, data)
 end
 
@@ -65,16 +65,12 @@ function rowmeans(data)::Array{Float64,1}
     return apply_rows(mean, data)
 end
 
-function mean(v)::Float64
-    return sum(v) / length(v)
-end
-
 function unitize(v::Array{Float64,1})::Array{Float64,1}
     return v ./ sum(v)
 end
 
-function Base.:*(w::Array{Float64,1}, data::DataFrame)::DataFrame
-    newdf = copy(data)
+function Base.:*(w::Array{T,1}, data::DataFrame)::DataFrame where {T <: Number}
+    newdf = similar(data)
     _, p = size(newdf)
     for i in 1:p
         newdf[:, i] = w[i] .* data[:, i]
@@ -82,13 +78,13 @@ function Base.:*(w::Array{Float64,1}, data::DataFrame)::DataFrame
     return newdf
 end
 
-function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Array{Float64,1}
+function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Array{Number,1}
     v1 = convert(Array{Float64,1}, r1)
     v2 = convert(Array{Float64,1}, r2)
     return v1 .- v2
 end
 
-function Base.:-(r1::Array{Float64,1}, r2::DataFrameRow)::Array{Float64,1}
+function Base.:-(r1::Array{T,1}, r2::DataFrameRow)::Array{T,1} where T <: Number
     v2 = convert(Array{Float64,1}, r2)
     return r1 .- v2
 end
@@ -106,4 +102,13 @@ end
 
 function Base.minimum(df::DataFrame)
     df |> x -> convert(Matrix, x) |> minimum
+end
+
+function reverseminmax(fns::Array{Function,1})::Array{Function,1}
+    newfs = map(x -> if x == minimum maximum else minimum end, fns)
+    return newfs
+end
+
+function makeminmax(fns::Array{K,1} where K)::Array{Function,1}
+    return convert(Array{Function,1}, fns)
 end

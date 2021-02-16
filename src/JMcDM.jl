@@ -4,6 +4,7 @@ using DataFrames
 using LinearAlgebra
 using JuMP
 using Cbc
+using StatsBase
 
 # includes 
 include("types.jl")
@@ -22,6 +23,11 @@ include("grey.jl")
 include("saw.jl")
 include("aras.jl")
 include("wpm.jl")
+include("waspas.jl")
+include("edas.jl")
+include("marcos.jl")
+include("mabac.jl")
+include("mairca.jl")
 
 # export MCDM types
 export MCDMResult
@@ -36,6 +42,11 @@ export GreyResult
 export SawResult
 export ARASResult
 export WPMResult
+export WASPASResult
+export EDASResult
+export MARCOSResult
+export MABACResult
+export MAIRCAResult
 
 # export game type
 export GameResult
@@ -61,6 +72,8 @@ export colmaxs
 export colmins
 export unitize
 export makeDecisionMatrix
+export reverseminmax
+export makeminmax
 
 #  export MCDM tools
 export topsis 
@@ -74,6 +87,11 @@ export grey
 export saw 
 export aras
 export wpm
+export waspas
+export edas
+export marcos
+export mabac
+export mairca
 
 #  export SCDM tools
 export laplace

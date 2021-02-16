@@ -62,7 +62,10 @@ end
     df[:, :z] = Float64[6, 9, 6]
     df[:, :q] = Float64[7, 6, 6]
     w = Float64[4, 2, 6, 8]
-    result = topsis(df, w)
+
+    fns = makeminmax([maximum, maximum, maximum, maximum])
+
+    result = topsis(df, w, fns)
 
     @test isa(result, TopsisResult)
     @test result.bestIndex == 2
@@ -678,7 +681,7 @@ end
 
         df = makeDecisionMatrix(decmat)
         weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
-        fns = convert(Array{Function,1}, [maximum for i in 1:7])
+        fns = makeminmax([maximum for i in 1:7])
         result = saw(df, weights, fns)
 
         @test result isa SawResult
@@ -735,3 +738,170 @@ end
     @test isapprox(result.scores, [0.7975224331331, 0.7532541470585, 0.7647463553356, 0.7873956894791, 0.7674278741782], atol=tol)
     
 end
+
+@testset "WASPAS" begin
+    tol = 0.0001
+    decmat = [3	12.5	2	120	14	3;
+                5	15	3	110	38	4;
+                3	13	2	120	19	3;
+                4	14	2	100	31	4;
+                3	15	1.5	125	40	4]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
+
+    fns = [maximum, minimum, minimum, maximum, minimum, maximum]
+    
+    result = waspas(df, weights, fns)
+
+    @test result isa WASPASResult
+
+    @test isapprox(result.scores, [0.805021, 0.775060, 0.770181, 0.796424, 0.788239], atol=tol)
+    
+end
+
+@testset "EDAS" begin
+    tol = 0.0001
+    decmat = [5000 5 5300 450;
+    4500 5 5000 400;
+    4500 4 4700 400;
+    4000 4 4200 400;
+    5000 4 7100 500;
+    5000 5 5400 450;
+    5500 5 6200 500;
+    5000 4 5800 450]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.25, 0.25, 0.25, 0.25];
+
+    fns = [maximum, maximum, minimum, minimum];
+
+    result = edas(df, weights, fns)
+
+    @test result isa EDASResult
+
+    @test isapprox(result.scores, [0.759594, 0.886016, 0.697472, 0.739658, 0.059083, 0.731833, 0.641691, 0.385194], atol=tol)
+    
+end
+
+@testset "MARCOS" begin
+    tol = 0.0001
+    decmat = [8.675 8.433 8.000 7.800 8.025 8.043;
+    8.825 8.600 7.420 7.463 7.825 8.229;
+    8.325 7.600 8.040 7.700 7.925 7.600;
+    8.525 8.667 7.180 7.375 7.750 8.071]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.19019, 0.15915, 0.19819, 0.19019, 0.15115, 0.11111];
+
+    fns = [maximum, maximum, maximum, maximum, maximum, maximum];
+
+    Fns = convert(Array{Function,1}, fns)
+
+    result = marcos(df, weights, Fns)
+
+    @test result isa MARCOSResult
+
+    @test isapprox(result.scores, [0.684865943528, 0.672767106696, 0.662596906139, 0.661103207660], atol=tol)
+    
+end
+
+@testset "MABAC" begin
+    
+    tol = 0.0001
+    decmat = [2 1 4 7 6 6 7 3000;
+    4 1 5 6 7 7 6 3500;
+    3 2 6 6 5 6 8 4000;
+    5 1 5 7 6 7 7 3000;
+    4 2 5 6 7 7 6 3000;
+    3 2 6 6 6 6 6 3500]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
+
+    fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
+
+    result = mabac(df, weights, fns)
+
+    @test result isa MABACResult
+
+    @test isapprox(result.scores, [-0.31132, -0.10898, 0.20035, 0.04218, 0.34452, 0.20035], atol=tol)
+    
+end
+
+
+@testset "Reverse minimum & maximum array" begin
+
+    fns = [minimum, maximum, maximum, minimum, maximum]
+    revfns = [maximum, minimum, minimum, maximum, minimum]
+
+    @test reverseminmax(fns) == revfns 
+
+    @test reverseminmax(revfns) == fns 
+end
+
+@testset "Make Array of minimum and maximum" begin
+    result1 = makeminmax([maximum, maximum, maximum, maximum])
+
+    @test typeof(result1) == Array{Function,1}
+
+    @test typeof(result1[1]([1.0, 2.0, 3.0])) == Float64 
+
+    @test result1[1]([1.0, 2.0, 3.0]) == 3.0 
+
+end
+
+@testset "MAIRCA" begin
+    
+    tol = 0.0001
+    decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
+    7.319 7.319 6.604 7.319 8.000 7.652 5.313;
+    7.000 7.319 7.652 6.952 7.652 6.952 4.642;
+    7.319 6.952 6.649 7.319 7.652 6.649 5.000]
+
+    df = makeDecisionMatrix(decmat)
+
+    weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
+
+    fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
+
+    result = mairca(df, weights, fns)
+
+    @test result isa MAIRCAResult
+
+    @test isapprox(result.scores, [0.1206454, 0.0806646, 0.1458627, 0.1454237], atol=tol)
+    
+end
+
+
+#= 
+@testset "PROMETHEE" begin
+    tol = 0.0001
+    decmat = [42.0 35 43 51; 
+              89 72 92 85;
+              14 85 17 40;
+              57 60 45 80;
+              48 32 43 40;
+              71 45 60 85;
+              69 40 72 55;
+              64 35 70 60]
+    df = makeDecisionMatrix(decmat)
+    qs = [49, nothing, 45, 30]
+    ps = [100, 98, 95, 80]
+    weights = [0.25, 0.35, 0.22, 0.18]
+    fns = makeminmax([maximum, maximum, maximum, maximum])
+    prefs = [prometLinear, prometVShape, prometLinear, prometLinear]
+
+    result = promethee(df, weights, fns, qs, ps)
+
+    @test result == PrometheeResult
+
+    @test isapprox(result.scores, [0.07, -0.15, -0.06, -0.05, 0.10, 0.0, 0.03, 0.06], atol = tol)
+
+    @test result.bestIndex == 1
+end =#
+

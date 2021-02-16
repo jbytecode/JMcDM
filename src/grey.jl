@@ -10,7 +10,7 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
 
     normalizedReferenceRow = zeros(Float64, ncols)
 
-    normalizedMat = copy(mat)
+    normalizedMat = similar(mat)
     for col in 1:ncols
         mmax = maximum(mat[:, col])
         mmin = minimum(mat[:, col])
@@ -32,7 +32,7 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
         end
     end
 
-    absoluteValueMat = copy(mat)
+    absoluteValueMat = similar(mat)
     for row in 1:nrows
         absoluteValueMat[row,:] = normalizedReferenceRow .- normalizedMat[row, :]  .|> abs 
     end
@@ -41,7 +41,7 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
     deltamax = absoluteValueMat |> maximum
     zetadeltamax = zeta * deltamax
 
-    greytable = copy(absoluteValueMat)
+    greytable = similar(absoluteValueMat)
     for row in 1:nrows
         for col in 1:ncols
             greytable[row, col] = (deltamin + zetadeltamax) / (absoluteValueMat[row, col] + zetadeltamax) 

@@ -18,6 +18,12 @@ A package for Multiple-criteria decision making techniques in Julia
 - SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
 - WPM (Weighted Product Model)
+- WASPAS (Weighted Aggregated Sum Product ASsessment)
+- EDAS (Evaluation based on Distance from Average Solution)
+- MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
+- MABAC (Multi-Attributive Border Approximation area Comparison)
+- MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
+
 
 ### SCDM Tools
 
@@ -46,6 +52,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - Goal Programming
 - MACBETH
 - COMET
+- COPRAS
 
 - will be updated soon. 
 
