@@ -58,19 +58,19 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
         end
     end
 
-    normalizedMat = copy(extendMat)
+    normalizedMat = similar(extendMat)
 
     for col in 1:ncols
-        for row in 1:nrows+1
+        for row in 1:nrows + 1
             normalizedMat[row, col] = extendMat[row, col] ./ sum(extendMat[:, col])
         end
     end
 
-    optimality = copy(normalizedMat)
+    # optimality = similar(normalizedMat)
 
-    optimality_degrees = zeros(Float64, nrows+1)
-    for i in 1:nrows+1
-        optimality_degrees[i] = w .* optimality[i, :] |> sum 
+    optimality_degrees = zeros(Float64, nrows + 1)
+    for i in 1:nrows + 1
+        optimality_degrees[i] = w .* normalizedMat[i, :] |> sum 
     end
 
     utility_degrees = zeros(Float64, nrows)

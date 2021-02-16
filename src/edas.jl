@@ -79,14 +79,15 @@ Ulutaş, A. (2017). EDAS Yöntemi Kullanılarak Bir Tekstil Atölyesi İçin Dik
 """
 function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::EDASResult
 
-    df= convert(Matrix, decisionMat)
+    df = convert(Matrix, decisionMat)
 
     row, col = size(df)
 
     w = unitize(weights)
 
-    PDAMatrix = copy(df)
-    NDAMatrix = copy(df)
+        
+        PDAMatrix = similar(df)
+    NDAMatrix = similar(df)
 
     AV = zeros(Float64, col)
 
@@ -94,11 +95,11 @@ function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Func
         AV[i] = mean(df[:, i])
         for j in 1:row
             if fns[i] == maximum
-                PDAMatrix[j, i] = max(0, df[j, i]-AV[i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, AV[i]-df[j, i]) ./ AV[i]
+                PDAMatrix[j, i] = max(0, df[j, i] - AV[i]) ./ AV[i]
+                NDAMatrix[j, i] = max(0, AV[i] - df[j, i]) ./ AV[i]
             elseif fns[i] == minimum 
-                PDAMatrix[j, i] = max(0, AV[i]-df[j, i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, df[j, i]-AV[i]) ./ AV[i]
+                PDAMatrix[j, i] = max(0, AV[i] - df[j, i]) ./ AV[i]
+                NDAMatrix[j, i] = max(0, df[j, i] - AV[i]) ./ AV[i]
             end
         end
     end 

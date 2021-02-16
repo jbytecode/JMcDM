@@ -68,7 +68,7 @@ Aytaç Adalı, E. & Tuş Işık, A.. (2017). Bir Tedarikçi Seçim Problemi İç
 function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}, lambda::Float64=0.5):WASPASResult
    
     row, col = size(decisionMat)
-    normalizedDecisionMat = copy(decisionMat)
+    normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
     colminmax = zeros(Float64, col)
     @inbounds for i in 1:col
@@ -77,11 +77,11 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
             normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
         elseif fns[i] == minimum 
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-        end
+    end
     end    
-    scoreMat = copy(normalizedDecisionMat)
+    scoreMat = similar(normalizedDecisionMat)
     for i in 1:col
-        scoreMat[:, i] = normalizedDecisionMat[:, i] .^ w[i]
+        scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
     end
 
     scoresWPM = zeros(Float64, row)
@@ -93,7 +93,7 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     
     scoreTable = [scoresWSM  scoresWPM]
 
-    l = unitize([lambda, 1-lambda])
+    l = unitize([lambda, 1 - lambda])
 
     scores = l' .*  scoreTable |> rowsums
 

@@ -64,7 +64,7 @@ Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Op
 function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::WPMResult
    
     row, col = size(decisionMat)
-    normalizedDecisionMat = copy(decisionMat)
+    normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
     colminmax = zeros(Float64, col)
     @inbounds for i in 1:col
@@ -75,9 +75,9 @@ function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
         end
     end    
-    scoreMat = copy(normalizedDecisionMat)
+    scoreMat = similar(normalizedDecisionMat)
     for i in 1:col
-        scoreMat[:, i] = normalizedDecisionMat[:, i] .^ w[i]
+        scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
     end
 
     scores = zeros(Float64, row)

@@ -68,7 +68,7 @@ function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
     
     n, p = size(decisionMat)
     
-    normalizedDecisionMat = copy(decisionMat)
+    normalizedDecisionMat = similar(decisionMat)
         
         w = unitize(weights)
             
@@ -79,6 +79,9 @@ function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
             normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
         elseif fns[i] == minimum 
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
+        else
+            @error fns[i]
+            error("Function not found")
         end
     end
     

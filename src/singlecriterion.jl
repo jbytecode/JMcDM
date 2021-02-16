@@ -112,10 +112,10 @@ function savage(decisionMatrix::DataFrame)::SavageResult
 
     cmaxs = colmaxs(decisionMatrix)
 
-    newDecisionMatrix = copy(decisionMatrix)
+    newDecisionMatrix = similar(decisionMatrix)
 
     @inbounds for i in 1:p
-        newDecisionMatrix[:, i] = cmaxs[i] .- newDecisionMatrix[:, i]
+        newDecisionMatrix[:, i] = cmaxs[i] .- decisionMatrix[:, i]
     end
 
     rmaxs = scores = rowmaxs(newDecisionMatrix)
@@ -185,7 +185,7 @@ function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
 
     cmaxs = colmaxs(decisionMatrix)
 
-    regretmat = copy(decisionMatrix)
+    regretmat = similar(decisionMatrix)
 
     for i in 1:p
         regretmat[:, i] = cmaxs[i] .- decisionMatrix[:, i]

@@ -72,35 +72,35 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     AAI = zeros(Float64, col)
     AI  = zeros(Float64, col)
-
+            
     temp = [df; AI'; AAI']
 
-    normalizedDecisionMat = copy(temp)
+    normalizedDecisionMat = similar(temp)
 
     @inbounds for i in 1:col
         if fns[i] == maximum
             AI[i] = maximum(df[:, i])
-            temp[row+1, i] = AI[i]
+            temp[row + 1, i] = AI[i]
             AAI[i] = minimum(df[:, i])
-            temp[row+2, i] = AAI[i]
+            temp[row + 2, i] = AAI[i]
             normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i] 
         elseif fns[i] == minimum
             AI[i] = minimum(df[:, i])
-            temp[row+1, i] = AI[i]
+            temp[row + 1, i] = AI[i]
             AAI[i] = maximum(df[:, i])
-            temp[row+2, i] = AAI[i]
+            temp[row + 2, i] = AAI[i]
             normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
         end
     end
     
     S  = zeros(Float64, col)
 
-    for i in 1:row+2
+    for i in 1:row + 2
         S[i] = w .* normalizedDecisionMat[i, :] |> sum
     end
 
-    KPlus  = S[1:row] ./ S[row+1]
-    KMinus  = S[1:row] ./ S[row+2]
+    KPlus  = S[1:row] ./ S[row + 1]
+    KMinus  = S[1:row] ./ S[row + 2]
 
     fKPlus = KPlus ./ (KPlus .+ KMinus)
     fKMinus = KMinus ./ (KPlus .+ KMinus)

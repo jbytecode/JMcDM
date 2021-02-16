@@ -78,14 +78,14 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
     colMax = colmaxs(decisionMat)
     colMin = colmins(decisionMat)
 
-    A = copy(decisionMat)
+    A = similar(decisionMat)
 
     for i in 1:row
         for j in 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (A[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] = (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (A[i, j] - colMax[j]) / (colMin[j] - colMax[j])
+                @inbounds A[i, j] = (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
             end                    
         end
     end

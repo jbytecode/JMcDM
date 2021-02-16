@@ -1,6 +1,6 @@
 function game(decisionMatrix::DataFrame; verbose=false)::GameResult
     
-    newDecisionMatrix = copy(decisionMatrix)
+    newDecisionMatrix = similar(decisionMatrix)
     
     nrow, ncol = size(decisionMatrix)
 
@@ -9,7 +9,7 @@ function game(decisionMatrix::DataFrame; verbose=false)::GameResult
 
     if minmat < 0
         modified = true
-        newDecisionMatrix = newDecisionMatrix .- minmat    
+        newDecisionMatrix = decisionMatrix .- minmat    
     end
 
     dm = convert(Matrix, newDecisionMatrix)
