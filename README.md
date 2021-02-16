@@ -2,6 +2,29 @@
 A package for Multiple-criteria decision making techniques in Julia
 
 
+## Installation
+
+Please type 
+
+```julia
+julia> ]
+(@v1.5) pkg> add JMcDM
+```
+
+or
+
+```julia
+julia> using Pkg
+julia> Pkg.add("JMcDM")
+```
+
+in Julia REPL.
+
+## Documentation
+
+Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/docs/build/).
+
+
 ## Implemented methods
 
 ### MCDM Tools
@@ -56,23 +79,5 @@ A package for Multiple-criteria decision making techniques in Julia
 
 - will be updated soon. 
 
-
-## Installation
-
-Please type 
-
-```julia
-julia> ]
-(@v1.5) pkg> add JMcDM
-```
-
-or
-
-```julia
-julia> using Pkg
-julia> Pkg.add("JMcDM")
-```
-
-in Julia REPL.
 
 
