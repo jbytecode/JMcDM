@@ -47,7 +47,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - MABAC (Multi-Attributive Border Approximation area Comparison)
 - MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
 - COPRAS (COmplex PRoportional ASsessment)
-
+- PROMETHEE
 
 ### SCDM Tools
 
@@ -67,7 +67,6 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 
 
 ## Unimplemented methods
-- PROMETHEE
 - UTA
 - MAUT
 - STEM
