@@ -34,6 +34,7 @@ include("../edas.jl")
 include("../marcos.jl")
 include("../mabac.jl")
 include("../mairca.jl")
+include("../promethee.jl")
 
 
 decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
