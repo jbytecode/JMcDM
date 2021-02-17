@@ -28,6 +28,7 @@ include("edas.jl")
 include("marcos.jl")
 include("mabac.jl")
 include("mairca.jl")
+include("copras.jl")
 
 # export MCDM types
 export MCDMResult
@@ -47,6 +48,7 @@ export EDASResult
 export MARCOSResult
 export MABACResult
 export MAIRCAResult
+export COPRASResult
 
 # export game type
 export GameResult
@@ -92,6 +94,7 @@ export edas
 export marcos
 export mabac
 export mairca
+export copras
 
 #  export SCDM tools
 export laplace
