@@ -1,5 +1,5 @@
 # Contents 
 ```@contents
-Pages = ["index.md", "algorithms.md"]
+Pages = ["index.md", "mcdms.md"]
 Depth = 3
 ```

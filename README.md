@@ -2,18 +2,41 @@
 A package for Multiple-criteria decision making techniques in Julia
 
 
+## Installation
+
+Please type 
+
+```julia
+julia> ]
+(@v1.5) pkg> add JMcDM
+```
+
+or
+
+```julia
+julia> using Pkg
+julia> Pkg.add("JMcDM")
+```
+
+in Julia REPL.
+
+## Documentation
+
+Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/docs/build/).
+
+
 ## Implemented methods
 
 ### MCDM Tools
 
-- Topsis
-- Electre
-- Dematel
-- Moora
-- Vikor
-- AHP
-- Data Envelopment Analysis
-- Grey Relational Analysis
+- TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
+- ELECTRE (Elemination and Choice Translating Reality)
+- DEMATEL (The Decision Making Trial and Evaluation Laboratory)
+- MOORA (Multi-Objective Optimization By Ratio Analysis)
+- VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
+- AHP (Analytic Hierarchy Process)
+- DEA (Data Envelopment Analysis)
+- GRA (Grey Relational Analysis)
 - Non-dominated Sorting 
 - SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
@@ -23,6 +46,7 @@ A package for Multiple-criteria decision making techniques in Julia
 - MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
 - MABAC (Multi-Attributive Border Approximation area Comparison)
 - MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
+- COPRAS (COmplex PRoportional ASsessment)
 
 
 ### SCDM Tools
@@ -52,27 +76,8 @@ A package for Multiple-criteria decision making techniques in Julia
 - Goal Programming
 - MACBETH
 - COMET
-- COPRAS
 
 - will be updated soon. 
 
-
-## Installation
-
-Please type 
-
-```julia
-julia> ]
-(@v1.5) pkg> add JMcDM
-```
-
-or
-
-```julia
-julia> using Pkg
-julia> Pkg.add("JMcDM")
-```
-
-in Julia REPL.
 
 
