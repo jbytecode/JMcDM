@@ -29,14 +29,14 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 
 ### MCDM Tools
 
-- Topsis
-- Electre
-- Dematel
-- Moora
-- Vikor
-- AHP
-- Data Envelopment Analysis
-- Grey Relational Analysis
+- TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
+- ELECTRE (Elemination and Choice Translating Reality)
+- DEMATEL (The Decision Making Trial and Evaluation Laboratory)
+- MOORA (Multi-Objective Optimization By Ratio Analysis)
+- VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
+- AHP (Analytic Hierarchy Process)
+- DEA (Data Envelopment Analysis)
+- GRA (Grey Relational Analysis)
 - Non-dominated Sorting 
 - SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
@@ -46,6 +46,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
 - MABAC (Multi-Attributive Border Approximation area Comparison)
 - MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
+- COPRAS (COmplex PRoportional ASsessment)
 
 
 ### SCDM Tools
@@ -75,7 +76,6 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - Goal Programming
 - MACBETH
 - COMET
-- COPRAS
 
 - will be updated soon. 
 
