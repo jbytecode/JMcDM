@@ -94,6 +94,23 @@ JMcDM.mairca
 ```
 
 
+## COPRAS
+```@docs
+JMcDM.copras
+```
+
+## PROMETHEE
+```@docs
+JMcDM.promethee
+```
+
+
+## CoCoSo
+```@docs
+JMcDM.cocoso
+```
+
+
 
 
 
