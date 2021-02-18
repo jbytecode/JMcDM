@@ -26,13 +26,6 @@ function prometUsual(d::Number, q::Any, p::Any)::Float64
     end
 end
 
-function prometUsual(d::Number, q::Any, p::Any)::Float64
-    if (d == 0)
-        0
-    else
-        1
-    end
-end
 
 function prometQuasi(d::Number, q::Number, p::Any)::Float64
     if (d <= q)

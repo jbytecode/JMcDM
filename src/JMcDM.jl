@@ -29,6 +29,7 @@ include("marcos.jl")
 include("mabac.jl")
 include("mairca.jl")
 include("copras.jl")
+include("promethee.jl")
 
 # export MCDM types
 export MCDMResult
@@ -49,6 +50,7 @@ export MARCOSResult
 export MABACResult
 export MAIRCAResult
 export COPRASResult
+export PrometheeResult
 
 # export game type
 export GameResult
@@ -95,6 +97,7 @@ export marcos
 export mabac
 export mairca
 export copras
+export promethee, prometLinear, prometVShape, prometUsual, prometQuasi, prometLevel
 
 #  export SCDM tools
 export laplace
