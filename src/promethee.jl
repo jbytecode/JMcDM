@@ -72,7 +72,7 @@ function promethee(decisionMatrix::DataFrame, prefs::Array{Function,1}, weights:
 
     rankings = scores |> sortperm
     
-    bestIndex = rankings |> first
+    bestIndex = rankings |> last
 
     return PrometheeResult(decisionMatrix, weights, scores, rankings, bestIndex)
 
