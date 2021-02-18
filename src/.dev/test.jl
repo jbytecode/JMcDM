@@ -933,9 +933,9 @@ end
     
 end
 
-#= 
+
 @testset "PROMETHEE" begin
-    tol = 0.0001
+    tol = 0.005
     decmat = [42.0 35 43 51; 
               89 72 92 85;
               14 85 17 40;
@@ -949,14 +949,14 @@ end
     ps = [100, 98, 95, 80]
     weights = [0.25, 0.35, 0.22, 0.18]
     fns = makeminmax([maximum, maximum, maximum, maximum])
-    prefs = [prometLinear, prometVShape, prometLinear, prometLinear]
+    prefs = convert(Array{Function,1}, [prometLinear, prometVShape, prometLinear, prometLinear])
 
-    result = promethee(df, weights, fns, qs, ps)
+    result = promethee(df, prefs, weights, fns, qs, ps)
 
-    @test result == PrometheeResult
+    @test result isa PrometheeResult
 
-    @test isapprox(result.scores, [0.07, -0.15, -0.06, -0.05, 0.10, 0.0, 0.03, 0.06], atol = tol)
+    @test isapprox(result.scores, [0.07, -0.15, -0.06, -0.05, 0.10, 0.0, 0.03, 0.06], atol=tol)
 
-    @test result.bestIndex == 1
-end =#
+    @test result.bestIndex == 2
+end
 
