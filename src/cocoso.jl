@@ -50,60 +50,70 @@ julia> lambda = 0.5;
 julia> result = cocoso(df, weights, fns, lambda);
 
 julia> result.scores
-5-element Array{Float64,1}:
- 0.8050212165665626
- 0.7750597051081832
- 0.770180748518019
- 0.7964243424353943
- 0.7882389370890854
+7-element Array{Float64,1}:
+ 2.0413128390265998
+ 2.787989783418825
+ 2.8823497955972495
+ 2.4160457689259287
+ 1.2986918936013303
+ 1.4431429073391682
+ 2.519094173200623
 
- julia> result.bestIndex
- 1
+julia> result.bestIndex
+3
 ```
 # References
 
 Yazdani, M., Zarate, P., Kazimieras Zavadskas, E. and Turskis, Z. (2019), "A combined compromise solution (CoCoSo) method for multi-criteria decision-making problems", Management Decision, Vol. 57 No. 9, pp. 2501-2519. https://doi.org/10.1108/MD-05-2017-0458
 
 """
-function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}, lambda::Float64=0.5):WASPASResult
+function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}, lambda::Float64=0.5):CoCoSoResult
    
     row, col = size(decisionMat)
-    normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
-    colminmax = zeros(Float64, col)
-    @inbounds for i in 1:col
-        colminmax[i] = decisionMat[:, i] |> fns[i]
-        if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
-        elseif fns[i] == minimum 
-            normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-    end
-    end    
-    scoreMat = similar(normalizedDecisionMat)
-    for i in 1:col
-        scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
-    end
+    colMax = colmaxs(decisionMat)
+    colMin = colmins(decisionMat)
 
-    scoresWPM = zeros(Float64, row)
+    A = similar(decisionMat)
+
     for i in 1:row
-        scoresWPM[i] = prod(scoreMat[i, :])
+        for j in 1:col
+            if fns[j] == maximum
+                @inbounds A[i, j] = (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+            elseif fns[j] == minimum
+                @inbounds A[i, j] = (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
+            end                    
+        end
     end
 
-    scoresWSM = w * normalizedDecisionMat |> rowsums
+    scoreMat = similar(A)
+    for i in 1:col
+        scoreMat[:, i] = A[:, i].^w[i]
+    end
+
+    P = zeros(Float64, row)
+    for i in 1:row
+        P[i] = sum(scoreMat[i, :])
+    end
+
+    S = w * A |> rowsums
     
-    scoreTable = [scoresWSM  scoresWPM]
+    scoreTable = [S P]
 
-    l = unitize([lambda, 1 - lambda])
+    kA = (S .+ P) ./ sum(scoreTable)
 
-    scores = l' .*  scoreTable |> rowsums
+    kB = (S ./ minimum(S)) .+ (P ./ minimum(P))
+
+    kC = ((lambda .* S) .+ ((1-lambda) .* P)) ./ ((lambda .* maximum(S)) .+ ((1-lambda) * maximum(P)))
+
+    scores = (kA .+ kB .+ kC) ./ 3 .+ (kA .* kB .* kC) .^ (1/3)
 
     rankings = sortperm(scores)
     
     bestIndex = rankings |> last
     
-    result = WASPASResult(
+    result = CoCoSoResult(
         decisionMat,
-        normalizedDecisionMat,
         w,
         scores,
         rankings,
