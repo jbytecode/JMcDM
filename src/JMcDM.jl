@@ -33,6 +33,7 @@ include("mairca.jl")
 include("copras.jl")
 include("promethee.jl")
 include("cocoso.jl")
+include("critic.jl")
 
 # export MCDM types
 export MCDMResult
@@ -55,6 +56,7 @@ export MAIRCAResult
 export COPRASResult
 export PrometheeResult
 export CoCoSoResult
+export CRITICResult
 
 # export game type
 export GameResult
@@ -103,6 +105,7 @@ export mairca
 export copras
 export promethee, prometLinear, prometVShape, prometUsual, prometQuasi, prometLevel
 export cocoso
+export critic
 
 #  export SCDM tools
 export laplace
