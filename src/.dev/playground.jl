@@ -41,22 +41,16 @@ include("../mairca.jl")
 include("../copras.jl")
 include("../promethee.jl")
 include("../cocoso.jl")
+include("../critic.jl")
 
-decmat = [60.00 0.40 2540.00 500.00 990.00;
-6.35 0.15 1016.00 3000.00 1041.00;
-6.80 0.10 1727.20 1500.00 1676.00;
-10.00 0.20 1000.00 2000.00 965.00;
-2.50 0.10 560.00 500.00 915.00;
-4.50 0.08 1016.00 350.00 508.00;
-3.00 0.10 1778.00 1000.00 920.00]
-
+decmat = [12.9918 0.7264 -1.1009 1.598139592;
+4.1201 5.8824 3.4483 1.021563567;
+4.1039 0.0000 -0.5076 0.984469444]
 
 df = makeDecisionMatrix(decmat)
 
-weights = [0.036, 0.192, 0.326, 0.326, 0.120];
+#weights = [0.036, 0.192, 0.326, 0.326, 0.120];
 
-fns = [maximum, minimum, maximum, maximum, maximum];
+fns = [maximum, maximum, minimum, maximum];
 
-lambda = 0.5;
-
-result = cocoso(df, weights, fns, lambda)
+result = critic(df, fns)

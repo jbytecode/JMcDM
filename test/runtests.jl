@@ -986,3 +986,21 @@ end
     @test isapprox(result.scores, [2.0413128390265998, 2.787989783418825, 2.8823497955972495, 2.4160457689259287, 1.2986918936013303, 1.4431429073391682, 2.519094173200623], atol=tol)
     
 end
+
+@testset "CRITIC" begin
+    tol = 0.0001
+    decmat = [12.9918 0.7264 -1.1009 1.598139592;
+    4.1201 5.8824 3.4483 1.021563567;
+    4.1039 0.0000 -0.5076 0.984469444]
+
+    df = makeDecisionMatrix(decmat)
+
+    fns = [maximum, maximum, minimum, maximum];
+
+    result = critic(df, fns)
+
+    @test result isa CRITICResult
+
+    @test isapprox(result.w, [0.16883925, 0.418444976, 0.249124763, 0.163591012], atol=tol)
+    
+end

@@ -49,6 +49,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - COPRAS (COmplex PRoportional ASsessment)
 - PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)
 - CoCoSo (Combined Compromise Solution)
+- CRITIC (CRiteria Importance Through Intercriteria Correlation)
 
 ### SCDM Tools
 
