@@ -13,6 +13,10 @@ using Cbc
 @info "Loading StatsBase"
 using StatsBase
 
+@info "Statistics"
+using Statistics
+
+
 include("../types.jl")
 include("../utilities.jl")
 include("../topsis.jl")

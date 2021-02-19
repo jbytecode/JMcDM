@@ -5,6 +5,8 @@ using LinearAlgebra
 using JuMP
 using Cbc
 using StatsBase
+using Statistics
+
 
 # includes 
 include("types.jl")
