@@ -1,3 +1,7 @@
+"""
+    Apply Laplace method for a given decision matrix
+
+"""
 function laplace(decisionMatrix::DataFrame)::LaplaceResult
 
     n, p = size(decisionMatrix)
@@ -24,7 +28,10 @@ end
 
 
 
+"""
+    Apply maximin method for a given decision matrix
 
+"""
 function maximin(decisionMatrix::DataFrame)::MaximinResult
 
     n, p = size(decisionMatrix)
@@ -44,7 +51,10 @@ function maximin(decisionMatrix::DataFrame)::MaximinResult
 end
 
 
+"""
+    Apply maximax method for a given decision matrix
 
+"""
 function maximax(decisionMatrix::DataFrame)::MaximaxResult
 
     n, p = size(decisionMatrix)
@@ -64,7 +74,10 @@ function maximax(decisionMatrix::DataFrame)::MaximaxResult
 end
 
 
+"""
+    Apply minimax method for a given decision matrix
 
+"""
 function minimax(decisionMatrix::DataFrame)::MinimaxResult
 
     n, p = size(decisionMatrix)
@@ -85,7 +98,10 @@ end
 
 
 
+"""
+    Apply minimin method for a given decision matrix
 
+"""
 function minimin(decisionMatrix::DataFrame)::MiniminResult
 
     n, p = size(decisionMatrix)
@@ -105,7 +121,10 @@ function minimin(decisionMatrix::DataFrame)::MiniminResult
 end
 
 
+"""
+    Apply Savage method for a given decision matrix
 
+"""
 function savage(decisionMatrix::DataFrame)::SavageResult
 
     n, p = size(decisionMatrix)
@@ -131,7 +150,10 @@ function savage(decisionMatrix::DataFrame)::SavageResult
     return result
 end
 
+"""
+    Apply Hurwicz method for a given decision matrix
 
+"""
 function hurwicz(decisionMatrix::DataFrame; alpha::Float64=0.5)::HurwiczResult
 
     n, p = size(decisionMatrix)
@@ -154,7 +176,10 @@ end
 
 
 
+"""
+    Apply MLE (Maximum Likelihood) method for a given decision matrix
 
+"""
 function mle(decisionMatrix::DataFrame, weights::Array{Float64,1})::MLEResult
 
     w = unitize(weights)
@@ -176,7 +201,10 @@ end
 
 
 
+"""
+    Apply Expected Regret method for a given decision matrix
 
+"""
 function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
 
     _, p = size(decisionMatrix)
