@@ -126,7 +126,8 @@ end
       70 88 20 18 60 90 95 85
     ]
     dmat = makeDecisionMatrix(Amat)
-    result = moora(dmat, w)
+    fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum])
+    result = moora(dmat, w, fns)
 
     @test isa(result, MooraResult)
     @test isa(result.bestIndex, Int64)

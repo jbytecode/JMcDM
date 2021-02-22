@@ -1,4 +1,4 @@
-function moora(decisionMat::DataFrame, weights::Array{Float64,1})
+function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})
 
     w = unitize(weights)
 
@@ -7,12 +7,21 @@ function moora(decisionMat::DataFrame, weights::Array{Float64,1})
     normalizedMat = normalize(decisionMat)
     weightednormalizedMat = w * normalizedMat
 
-    cmaxs = colmaxs(weightednormalizedMat)
+    # cmaxs = colmaxs(weightednormalizedMat)
+    cmaxs = apply_columns(fns, weightednormalizedMat)
+    cmins = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
     refmat = similar(weightednormalizedMat)
     
     for rowind in 1:nalternatives
-        refmat[rowind, :] .= cmaxs - weightednormalizedMat[rowind, :]
+        if fns[rowind] == maximum 
+            refmat[rowind, :] .= cmaxs - weightednormalizedMat[rowind, :]
+        elseif fns[rowind] == minimum
+            refmat[rowind, :] .= weightednormalizedMat[rowind, :] - cmins
+        else
+            @warn fns[rowind]
+            error("Function must be either maximize or minimize")
+        end
     end
 
     scores = rmaxs = rowmaxs(refmat)

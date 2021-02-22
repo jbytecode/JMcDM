@@ -4,7 +4,7 @@
 Apply CRITIC (Combined Compromise Solution) method for a given matrix and criteria types.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
