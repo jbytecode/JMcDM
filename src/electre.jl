@@ -1,4 +1,4 @@
-function electre(decisionMat::DataFrame, weights::Array{Float64,1})::ElectreResult
+function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::ElectreResult
 
     w = unitize(weights)
 
@@ -16,10 +16,18 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1})::ElectreResu
                 betterlist = []
                 worselist = []
                 for h in 1:ncriteria
-                    if weightednormalizedMat[i, h] >= weightednormalizedMat[j, h]
-                        push!(betterlist, h)    
+                    if fns[h] == maximum
+                        if weightednormalizedMat[i, h] >= weightednormalizedMat[j, h]
+                            push!(betterlist, h)    
+                        else
+                            push!(worselist, h)
+                        end
                     else
-                        push!(worselist, h)
+                        if weightednormalizedMat[i, h] <= weightednormalizedMat[j, h]
+                            push!(betterlist, h)    
+                        else
+                            push!(worselist, h)
+                        end
                     end
                 end
                 fitnesstableelement = Dict(:i => i, :j => j, :set => betterlist)
