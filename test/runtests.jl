@@ -82,7 +82,8 @@ end
       70 88 20 18 60 90 95 85
     ]
     dmat = makeDecisionMatrix(Amat)
-    result = vikor(dmat, w)
+    fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum])
+    result = vikor(dmat, w, fns)
 
     @test isa(result, VikorResult)
     @test result.bestIndex == 4
@@ -92,6 +93,7 @@ end
     @test isapprox(result.scores[3], 0.3507643203516215, atol=tol)
     @test isapprox(result.scores[4], -0.16727341435277993, atol=tol) 
 end
+
 
 
 @testset "ELECTRE" begin

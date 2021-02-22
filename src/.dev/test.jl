@@ -82,7 +82,8 @@ end
       70 88 20 18 60 90 95 85
     ]
     dmat = makeDecisionMatrix(Amat)
-    result = vikor(dmat, w)
+    fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum])
+    result = vikor(dmat, w, fns)
 
     @test isa(result, VikorResult)
     @test result.bestIndex == 4
