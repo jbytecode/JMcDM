@@ -53,7 +53,7 @@ end
 """
     ndsranks(data)
 
-    Sort multidimensional data usin non-dominated sorting algorithm.
+    Sort multidimensional data using non-dominated sorting algorithm.
 
 # Arguments
 - `data::Matrix`: n x k matrix of observations where n is number of observations and k is number of variables.
@@ -89,8 +89,55 @@ function ndsranks(data::Matrix)::Array{Int64}
 end
 
 
+"""
+    nds(data)
 
-function nds(data::DataFrame)
+    Sort multidimensional data using non-dominated sorting algorithm.
+
+# Arguments
+- `data::DataFrame`: n x k desicion matrix with n cases and k critera.
+
+# Output 
+- `::NDSResult`: NDSResult object that holds multiple outputs including ranks and best index.
+
+
+# Examples
+```julia-repl
+ julia> cases = [
+               1.0 2.0 3.0;
+               2.0 1.0 3.0;
+               1.0 3.0 2.0;
+               4.0 5.0 6.0
+           ];
+
+julia> nd = makeDecisionMatrix(cases)
+4×3 DataFrame
+ Row │ Crt1     Crt2     Crt3    
+     │ Float64  Float64  Float64 
+─────┼───────────────────────────
+   1 │     1.0      2.0      3.0
+   2 │     2.0      1.0      3.0
+   3 │     1.0      3.0      2.0
+   4 │     4.0      5.0      6.0
+
+julia> result = nds(nd);
+
+julia> result.ranks
+4-element Array{Int64,1}:
+ 0
+ 0
+ 0
+ 3
+
+julia> result.bestIndex
+4 
+```
+
+# References
+Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
+International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
+"""
+function nds(data::DataFrame)::NDSResult
 
     ranks = ndsranks(data)
 
