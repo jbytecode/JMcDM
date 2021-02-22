@@ -104,8 +104,9 @@ end
       70 88 20 18 60 90 95 85
     ]
     dmat = makeDecisionMatrix(Amat)
-    result = electre(dmat, w)
-
+    fns = makeminmax([maximum for i in 1:8])
+    result = electre(dmat, w, fns)
+    
     @test isa(result, ElectreResult)
     @test isa(result.bestIndex, Tuple)
     @test result.bestIndex[1] == 4
