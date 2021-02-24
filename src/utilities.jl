@@ -89,6 +89,10 @@ function Base.:-(r1::Array{T,1}, r2::DataFrameRow)::Array{T,1} where T <: Number
     return r1 .- v2
 end
 
+function Base.:-(r1::DataFrameRow, r2::Array{T,1})::Array{T,1} where T <: Number
+    v1 = convert(Array{Float64,1}, r1)
+    return v1 .- r2
+end
 
 function makeDecisionMatrix(mat::Array{T,2} where T <: Number)::DataFrame
     _, m = size(mat)

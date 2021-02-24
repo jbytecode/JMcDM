@@ -35,6 +35,10 @@ include("promethee.jl")
 include("cocoso.jl")
 include("critic.jl")
 
+
+include("summary.jl")
+
+
 # export MCDM types
 export MCDMResult
 export TopsisResult
@@ -124,5 +128,7 @@ export game
 # export data envelop
 export dataenvelop
 
+#  export summary function
+export summary
 
 end # module

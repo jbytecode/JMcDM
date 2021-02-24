@@ -42,15 +42,23 @@ include("../copras.jl")
 include("../promethee.jl")
 include("../cocoso.jl")
 include("../critic.jl")
+include("../summary.jl")
 
-decmat = [12.9918 0.7264 -1.1009 1.598139592;
-4.1201 5.8824 3.4483 1.021563567;
-4.1039 0.0000 -0.5076 0.984469444]
+df = DataFrame(
+:age        => [6.0, 4, 12],
+:size       => [140.0, 90, 140],
+:price      => [150000.0, 100000, 75000],
+:distance   => [950.0, 1500, 550],
+:population => [1500.0, 2000, 1100]);
 
-df = makeDecisionMatrix(decmat)
+w  = [0.35, 0.15, 0.25, 0.20, 0.05];
+fns = [minimum, maximum, minimum, minimum, maximum];
 
-#weights = [0.036, 0.192, 0.326, 0.326, 0.120];
+methods1 = [:topsis, :electre, :vikor, :moora, :cocoso, :wpm, :waspas]
+methods2 = [:aras, :saw, :edas, :marcos, :mabac, :mairca, :grey]
 
-fns = [maximum, maximum, minimum, maximum];
+result1 = summary(df, w, fns, methods1);
+result2 = summary(df, w, fns, methods2);
 
-result = critic(df, fns)
+@info result1
+@info result2
