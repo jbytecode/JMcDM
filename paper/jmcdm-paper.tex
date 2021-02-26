@@ -152,15 +152,10 @@ C9 & Support email for questions & mhsatman@istanbul.edu.tr\\
 \linenumbers
 
 %% main text
-
 %The permanent link to code/repository or the zip archive should include the following requirements: 
-
 %README.txt and LICENSE.txt.
-
 %Source code in a src/ directory, not the root of the repository.
-
 %Tag corresponding with the version of the software that is reviewed.
-
 %Documentation in the repository in a docs/ directory, and/or READMEs, as appropriate.
 
 
@@ -168,11 +163,14 @@ C9 & Support email for questions & mhsatman@istanbul.edu.tr\\
 
 \section{Motivation and significance}
 \label{section::Motivation_and_Significance}
-%Introduce the scientific background and the motivation for developing the software.
-%Explain why the software is important, and describe the exact (scientific) problem(s) it %solves.
-%Indicate in what way the software has contributed (or how it will contribute in the future) to %the process of scientific discovery; if available, this is to be supported by citing a research paper using the software.
-%Provide a description of the experimental setting (how does the user use the software?).
-%Introduce related work in literature (cite or list algorithms used, other software etc.).
+
+{\color{red}Introduce the scientific background and the motivation for developing the software.
+Explain why the software is important, and describe the exact (scientific) problem(s) it %solves.
+Indicate in what way the software has contributed (or how it will contribute in the future) to %the process of scientific discovery; if available, this is to be supported by citing a research paper using the software.
+Provide a description of the experimental setting (how does the user use the software?).
+Introduce related work in literature (cite or list algorithms used, other software etc.).
+}
+
 The one-dimensional array a is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points.
 
 In multi-dimensional case, the binary domination operator $\succ$ applied on points $a$ and $b$, $a \succ b$, is true iif each item in $a$ is not worse than the correspoing item in $b$ and at least one item is better than the corresponding item in $b$ \cite{Deb_2002}. On the other hand, the more relaxed operator $\succeq$ returns true if each item in $a$ is as good as the corresponding item in $b$ \cite{greco2016multiple}. Several outranking methdods in MCDA (Multiple-Criteria Decision Analysis) define a unique ranking mechanism to select the best alternative among others.
@@ -220,8 +218,10 @@ Multiple-criteria decision-making (MCDM) tools provide several algorithms for or
 
 
 \subsection{Software Architecture}
-\label{}
-%Give a short overview of the overall software architecture; provide a pictorial component overview or similar (if possible). If necessary provide implementation details.
+\label{section:softwareArch}
+{\color{red}Give a short overview of the overall software architecture; provide a pictorial component 
+overview or similar (if possible). If necessary provide implementation details.}
+
 \emph{JMcDM} provides a framework for performing multi-criteria decision analysis as well as it includes utility functions for development of new methods. Each single MCDM method returns an object in subtype of \texttt{MCDMResult} which is defined as 
 
 \begin{verbatim}
@@ -270,8 +270,9 @@ julia> \]
 
 
 \subsection{Software Functionalities}
-\label{}
-%Present the major functionalities of the software.
+\label{section:softwareFunc}
+{\color{red}Present the major functionalities of the software.}
+
 The package implements methods for 
 TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)\cite{topsis}, 
 ELECTRE (Elemination and Choice Translating Reality)\cite{topsis}, 
@@ -299,7 +300,8 @@ and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{topsis} 
 
 
 \subsection{Sample code snippets analysis}
-\label{}
+\label{section:sample_code}
+
 Suppose a decision problem is given in Table \ref{table:example_problem}.
 
 \begin{table}[H]
@@ -414,9 +416,9 @@ the different results produced by the methods together also helps to discover wh
 to and the reasons for them.   
 
 \section{Conclusions}
-\label{}
+\label{section:conclusion}
+{\color{red}Set out the conclusion of this original software publication.}
 
-Set out the conclusion of this original software publication.
 
 \section{Conflict of Interest}
 %Please select the appropriate text:
