@@ -232,12 +232,12 @@ Multiple-criteria decision-making (MCDM) tools provide several algorithms for or
 
 \begin{verbatim}
 struct TopsisResult <: MCDMResult
-	decisionMatrix::DataFrame
-	weights::Array{Float64,1}
-	normalizedDecisionMatrix::DataFrame
-	normalizedWeightedDecisionMatrix::DataFrame 
-	bestIndex::Int64 
-	scores::Array{Float64,1}
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    normalizedDecisionMatrix::DataFrame
+    normalizedWeightedDecisionMatrix::DataFrame 
+    bestIndex::Int64 
+    scores::Array{Float64,1}
 end
 \end{verbatim}
 
@@ -272,7 +272,27 @@ julia> \]
 \subsection{Software Functionalities}
 \label{}
 %Present the major functionalities of the software.
-The package implements methods for TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)\cite{topsis}, ELECTRE (Elemination and Choice Translating Reality)\cite{Citation_Comes_Here}, PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)\cite{Citation_Comes_Here}, DEMATEL (The Decision Making Trial and Evaluation Laboratory)\cite{Citation_Comes_Here}, MOORA (Multi-Objective Optimization By Ratio Analysis)\cite{Citation_Comes_Here}, VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)\cite{Citation_Comes_Here}, AHP (Analytic Hierarchy Process)\cite{Citation_Comes_Here}, GRA (Grey Relational Analysis)\cite{Citation_Comes_Here}, NDS (Non-dominated Sorting)\cite{Citation_Comes_Here}, SAW (Simple Additive Weighting)\cite{Citation_Comes_Here}, ARAS (Additive Ratio Assessment)\cite{Citation_Comes_Here}, WPM (Weighted Product Model)\cite{Citation_Comes_Here}, WASPAS (Weighted Aggregated Sum Product ASsessment)\cite{Citation_Comes_Here}, EDAS (Evaluation based on Distance from Average Solution)\cite{Citation_Comes_Here}, MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)\cite{Citation_Comes_Here}, MABAC (Multi-Attributive Border Approximation area Comparison)\cite{Citation_Comes_Here}, MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)\cite{Citation_Comes_Here}, COPRAS (COmplex PRoportional ASsessment)\cite{Citation_Comes_Here}, COCOSO (Combined Compromise Solution)\cite{Citation_Comes_Here}, and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{Citation_Comes_Here} for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis\cite{Citation_Comes_Here} and includes a method for zero-sum game solver.  
+The package implements methods for 
+TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)\cite{topsis}, 
+ELECTRE (Elemination and Choice Translating Reality)\cite{topsis}, 
+PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)\cite{topsis}, 
+DEMATEL (The Decision Making Trial and Evaluation Laboratory)\cite{topsis}, 
+MOORA (Multi-Objective Optimization By Ratio Analysis)\cite{topsis}, 
+VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)\cite{topsis}, 
+AHP (Analytic Hierarchy Process)\cite{topsis}, 
+GRA (Grey Relational Analysis)\cite{topsis}, 
+NDS (Non-dominated Sorting)\cite{topsis}, 
+SAW (Simple Additive Weighting)\cite{topsis}, 
+ARAS (Additive Ratio Assessment)\cite{topsis}, 
+WPM (Weighted Product Model)\cite{topsis}, 
+WASPAS (Weighted Aggregated Sum Product ASsessment)\cite{topsis}, 
+EDAS (Evaluation based on Distance from Average Solution)\cite{topsis}, 
+MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)\cite{topsis}, 
+MABAC (Multi-Attributive Border Approximation area Comparison)\cite{topsis}, 
+MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)\cite{topsis}, 
+COPRAS (COmplex PRoportional ASsessment)\cite{topisis}, 
+COCOSO (Combined Compromise Solution)\cite{topsis}, 
+and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{topsis} for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis\cite{Citation_Comes_Here} and includes a method for zero-sum game solver.  
 
 
 
@@ -349,25 +369,49 @@ For any method, \texttt{?methodname} shows the documentation as in the same way 
 
 \section{Illustrative Examples}
 \label{}
+{\color{red}Provide at least one illustrative example to demonstrate the major functions.}
 
-Provide at least one illustrative example to demonstrate the major functions.
+\begin{verbatim}
+julia> methods1 = [:topsis, :electre, :vikor, :moora, :cocoso, :wpm, :waspas]
+julia> result1 = summary(df, w, fns, methods1);
+\end{verbatim}
+
+\begin{verbatim}
+julia> methods2 = [:aras, :saw, :edas, :marcos, :mabac, :mairca, :grey];
+julia> result2 = summary(df, w, fns, methods2);
+\end{verbatim}
+
+\begin{figure}
+	\includegraphics[width=\columnwidth]{images/result1}
+	\caption{Image A}
+	\label{fig:imagea}
+	\end{figure}
+
+	\begin{figure}
+		\includegraphics[width=\columnwidth]{images/result2}
+		\caption{Image A}
+		\label{fig:imagea}
+		\end{figure}
 
 %Optional: you may include one explanatory video that will appear next to your article, in the right hand side panel. (Please upload any video as a single supplementary file with your article. Only one MP4 formatted, with 50MB maximum size, video is possible per article. Recommended video dimensions are 640 x 480 at a maximum of 30 frames/second. Prior to submission please test and validate your .mp4 file at $ http://elsevier-apps.sciverse.com/GadgetVideoPodcastPlayerWeb/verification$. This tool will display your video exactly in the same way as it will appear on ScienceDirect.).
 
 \section{Impact}
-\label{}
-
+\label{section:impact}
+{\color{red}
 \textbf{This is the main section of the article and the reviewers weight the description here appropriately}
-
 Indicate in what way new research questions can be pursued as a result of the software (if any).
-
 Indicate in what way, and to what extent, the pursuit of existing research questions is improved (if so).
-
 Indicate in what way the software has changed the daily practice of its users (if so).
-
 Indicate how widespread the use of the software is within and outside the intended user group.
-
 Indicate in what way the software is used in commercial settings and/or how it led to the creation of spin-off companies (if so).
+}
+
+\emph{JMcDM} provides a moderate number of MCDA tools and utility functions for developing new methods as well as performing
+decision analysis using a single function call for each method. A researcher can easly perform sequantial analysis by changing 
+the problem parameters and can compare results of many tools. Existing software packages are mainly focused on providing a 
+small subset of methods. \emph{JMcDM} is an all-in-one solution and has potential for increasing user productivity. Seeing 
+the different results produced by the methods together also helps to discover which parameters the research is more sensitive 
+to and the reasons for them.   
 
 \section{Conclusions}
 \label{}
