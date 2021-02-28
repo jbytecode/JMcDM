@@ -1,13 +1,13 @@
-function euclidean(v1::Array{T,1}, v2::Array{T,1})::T where T <: Number 
+function euclidean(v1::Array{T1,1}, v2::Array{T2,1})::Float64 where {T1 <: Number,T2 <: Number} 
     (v1 .- v2).^2.0 |> sum |> sqrt
 end
 
-function euclidean(v1::Array{T,1})::T where T <: Number
-    v2 = zeros(T, length(v1))
+function euclidean(v1::Array{T,1})::Float64 where T <: Number
+    v2 = zeros(Float64, length(v1))
     return euclidean(v1, v2)
 end
 
-function normalize(v1::Array{T,1})::Array{T,1} where T <: Number
+function normalize(v1::Array{T,1})::Array{Float64,1} where T <: Number
     return v1 ./ euclidean(v1) 
 end
 

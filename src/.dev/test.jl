@@ -9,6 +9,10 @@ include("playground.jl")
     @test euclidean([0.0, 0.0, 0.0]) == 0.0
     @test euclidean([0.0, 0.0, 1.0]) == 1.0
     @test euclidean([0.0, 0.0, 1.0], [0.0, 0.0, 2.0]) == 1.0
+    @test euclidean([0, 0, 0]) == 0.0
+    @test euclidean([0, 0, 0, 0], [1, 0, 0, 0]) == 1.0
+    @test euclidean([0, 0, 0, 0], [1, 0, 0, 0]) isa Float64
+    @test euclidean([0, 0, 0, 0], [1.0, 0, 0, 0]) isa Float64
 end
 
 @testset "Normalization" begin
@@ -19,6 +23,13 @@ end
     @test isapprox(nz[3], 0.7745967, atol=tol)
     @test isapprox(nz[4], -0.2581989, atol=tol)
     @test isapprox(nz[5], 0.0000000, atol=tol)
+
+    nzint = normalize([1, 2, 3, -1, 0])
+    @test isapprox(nzint[1], 0.2581989, atol=tol)
+    @test isapprox(nzint[2], 0.5163978, atol=tol)
+    @test isapprox(nzint[3], 0.7745967, atol=tol)
+    @test isapprox(nzint[4], -0.2581989, atol=tol)
+    @test isapprox(nzint[5], 0.0000000, atol=tol)
 end
 
 @testset "Column min and max vectors" begin
