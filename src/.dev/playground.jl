@@ -57,8 +57,8 @@ fns = [minimum, maximum, minimum, minimum, maximum];
 methods1 = [:topsis, :electre, :vikor, :moora, :cocoso, :wpm, :waspas]
 methods2 = [:aras, :saw, :edas, :marcos, :mabac, :mairca, :grey]
 
-result1 = summary(df, w, fns, methods1);
-result2 = summary(df, w, fns, methods2);
+# result1 = summary(df, w, fns, methods1);
+# result2 = summary(df, w, fns, methods2);
 
-@info result1
-@info result2
+# @info result1
+# @info result2

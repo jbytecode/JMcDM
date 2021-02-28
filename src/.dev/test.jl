@@ -44,6 +44,18 @@ end
     x = [1.0, 2.0, 3.0, 4.0, 5.0]
     result = x |> unitize |> sum
     @test result == 1.0
+
+    x = [1, 2, 3, 4, 5]
+    result = x |> unitize |> sum 
+    @test result == 1.0
+
+    x = [1, 1, 1, 1, 1]
+    result = x |> unitize 
+    @test result == [0.20, 0.20, 0.20, 0.20, 0.20]
+
+    x = [0.20, 0.20, 0.20, 0.20, 0.20]
+    result = x |> unitize 
+    @test result == [0.20, 0.20, 0.20, 0.20, 0.20]
 end
 
 @testset "Product weights with DataFrame" begin
@@ -52,7 +64,14 @@ end
     df[:, :y] = [10.0, 20.0, 30.0, 40.0]
     w = [0.60, 0.40]
     result = w * df 
+    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
+    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
 
+    dfint = DataFrame()
+    dfint[:, :x] = [1, 2, 4, 8]
+    dfint[:, :y] = [10, 20, 30, 40]
+    w = [0.60, 0.40]
+    result = w * dfint 
     @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
     @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
 end
@@ -63,6 +82,22 @@ end
 
     @test isa(df, DataFrame)
     @test size(df) == (5, 10)
+    @test df[:, 1] isa Array{Float64,1}
+    @test df[:, 2] isa Array{Float64,1}
+    @test df[:, 3] isa Array{Float64,1}
+    @test df[:, 4] isa Array{Float64,1}
+    @test df[:, 5] isa Array{Float64,1}
+
+    @test names(df)[1] == "Crt1"
+    @test names(df)[2] == "Crt2"
+
+    m = rand(3, 5)
+    dfwithnames = makeDecisionMatrix(m, names=["A1", "B", "CD", "EE", "FG"])
+    @test names(dfwithnames)[1] == "A1"
+    @test names(dfwithnames)[2] == "B"
+    @test names(dfwithnames)[3] == "CD"
+    @test names(dfwithnames)[4] == "EE"
+    @test names(dfwithnames)[5] == "FG"
 end
 
 @testset "TOPSIS" begin
