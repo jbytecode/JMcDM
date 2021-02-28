@@ -112,10 +112,10 @@ keyword 1 \sep keyword 2 \sep keyword 3
 \end{frontmatter}
 
 \section*{Required Metadata}
-\label{}
+\label{required_metadata}
 
 \section*{Current code version}
-\label{}
+\label{section:current_code_version}
 
 Ancillary data table required for subversion of the codebase. Kindly replace examples in right column with the correct information about your current code, and leave the left column as it is.
 
@@ -145,7 +145,7 @@ C9 & Support email for questions & mhsatman@istanbul.edu.tr\\
 \hline
 \end{tabular}
 \caption{Code metadata (mandatory)}
-\label{} 
+\label{code_metadata_mandatory} 
 \end{table}
 
 
@@ -213,7 +213,7 @@ Multiple-criteria decision-making (MCDM) tools provide several algorithms for or
 \emph{JMcDM} is designed to provide a developer-friendly library for solving multiple-criteria decision problems in Julia \cite{julia}. Since Julia is a dynamic language, it is also useful for researchers that familiar with REPL environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games and methods for single criterion methods. 
 
 \section{Software description}
-\label{}
+\label{sec:software_description}
 %Describe the software in as much as is necessary to establish a vocabulary needed to explain its impact. 
 
 
@@ -266,7 +266,7 @@ julia> Pkg.add("JMcDM")
 \noindent and 
 
 \begin{verbatim}
-julia> \]
+julia> ]
 (@v1.5) pkg> add JMcDM
 \end{verbatim}
 
@@ -295,9 +295,9 @@ EDAS (Evaluation based on Distance from Average Solution)\cite{topsis},
 MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)\cite{topsis}, 
 MABAC (Multi-Attributive Border Approximation area Comparison)\cite{topsis}, 
 MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)\cite{topsis}, 
-COPRAS (COmplex PRoportional ASsessment)\cite{topisis}, 
+COPRAS (COmplex PRoportional ASsessment)\cite{topsis}, 
 COCOSO (Combined Compromise Solution)\cite{topsis}, 
-and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{topsis} for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis\cite{Citation_Comes_Here} and includes a method for zero-sum game solver.  
+and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{topsis} for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis\cite{topsis} and includes a method for zero-sum game solver.  
 
 
 
@@ -374,29 +374,40 @@ julia> result.bestIndex
 For any method, \texttt{?methodname} shows the documentation as in the same way in other Julia packages.
 
 \section{Illustrative Examples}
-\label{}
+\label{sec:Illustrative_examples}
 {\color{red}Provide at least one illustrative example to demonstrate the major functions.}
 
+Since \emph{JMcDM} is designed as a software library and for REPL use, it does not implement
+a significant user interface. However, the \texttt{summary()} function provides a useful way
+to perform a list of methods and returns a text based result to compare results. 
+
 \begin{verbatim}
-julia> methods1 = [:topsis, :electre, :vikor, :moora, :cocoso, :wpm, :waspas]
+julia> methods1 = [:topsis, :electre, :vikor, 
+:moora, :cocoso, :wpm, :waspas]
 julia> result1 = summary(df, w, fns, methods1);
 \end{verbatim}
 
-\begin{verbatim}
-julia> methods2 = [:aras, :saw, :edas, :marcos, :mabac, :mairca, :grey];
-julia> result2 = summary(df, w, fns, methods2);
-\end{verbatim}
+Figure \ref{fig:imagea} represents the output of the \texttt{summary()} call for methods TOPSIS, ELECTRE, VIKOR, MOORA, COCOSO, WPM,  and WASPAS, respectively.
 
 \begin{figure}
 	\includegraphics[width=\columnwidth]{images/result1}
-	\caption{Image A}
+	\caption{Results of TOPSIS, ELECTRE, VIKOR, MOORA, COCOSO, WPM, and WASPAS}
 	\label{fig:imagea}
 	\end{figure}
 
+\begin{verbatim}
+	julia> methods2 = [:aras, :saw, :edas, :marcos, 
+	:mabac, :mairca, :grey];
+	julia> result2 = summary(df, w, fns, methods2);
+\end{verbatim}
+
+Figure \ref{fig:imageb} represents the output of the \texttt{summary()} call for methods ARAS, SAW, EDAS, MARCOS, MABAC, MAIRCA, and GREY, respectively.
+
+
 	\begin{figure}
 		\includegraphics[width=\columnwidth]{images/result2}
-		\caption{Image A}
-		\label{fig:imagea}
+		\caption{Results of ARAS, SAW, EDAS, MARCOS, MABAC, MAIRCA, and GREY}
+		\label{fig:imageb}
 		\end{figure}
 
 %Optional: you may include one explanatory video that will appear next to your article, in the right hand side panel. (Please upload any video as a single supplementary file with your article. Only one MP4 formatted, with 50MB maximum size, video is possible per article. Recommended video dimensions are 640 x 480 at a maximum of 30 frames/second. Prior to submission please test and validate your .mp4 file at $ http://elsevier-apps.sciverse.com/GadgetVideoPodcastPlayerWeb/verification$. This tool will display your video exactly in the same way as it will appear on ScienceDirect.).
@@ -433,7 +444,7 @@ We wish to confirm that there are no known conflicts of interest associated with
 
 
 \section*{Acknowledgements}
-\label{}
+\label{section:Acknowledgements}
 
 The authors would like to thankt he Editor-in-Chief, editors, reviewers for providing extremely insightful comments, and other stuff  of the SoftwareX Journal.
 
@@ -466,7 +477,7 @@ The authors would like to thankt he Editor-in-Chief, editors, reviewers for prov
 %Please add the reference to the software repository if DOI for software  is available. 
 
 \section*{Current executable software version}
-\label{}
+\label{sec:current_executable_version}
 
 Ancillary data table required for sub version of the executable software: (x.1, x.2 etc.) kindly replace examples in right column with the correct information about your executables, and leave the left column as it is.
 
@@ -491,7 +502,7 @@ S7 & Support email for questions & \\
 \hline
 \end{tabular}
 \caption{Software metadata (optional)}
-\label{} 
+\label{software_metadata} 
 \end{table}
 
 \end{document}
