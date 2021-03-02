@@ -208,7 +208,7 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eith
 MCDA is used in location selection of facilities (Ref), selection of suppliers (Ref)....
 .}
 
-Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. \emph{PyTOPS} is a Python tool for TOPSIS \cite{Yadav_2019}. \emph{Super Decisions} is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) \cite{adams2003super}. \emph{Visual Promethee} implements Promethee method on Windows platforms \cite{Mareschal_2009}. \emph{M-BACBETH} is an other commericial software product that implements MACBETH with a easy to use GUI.  \cite{macbeth}. {\color{red} [Add SANNA here (Excel).]}
+Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. \emph{PyTOPS} is a Python tool for TOPSIS \cite{PyTOPS}. \emph{Super Decisions} is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) \cite{superdecision}. \emph{Visual Promethee} implements Promethee method on Windows platforms \cite{visualpromethee}. \emph{M-BACBETH} is an other commercial software product that implements MACBETH with a easy to use GUI.  \cite{macbeth}. {\color{blue} \emph{Sanna} is a standard MS Excel add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) \cite{sanna}. \emph{DEAFrontier} software requires Excel add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard MS Excel Solver) \cite{deafrontier}. }
 
 \emph{JMcDM} is designed to provide a developer-friendly library for solving multiple-criteria decision problems in Julia \cite{julia}. Since Julia is a dynamic language, it is also useful for researchers that familiar with REPL environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games and methods for single criterion methods. 
 
@@ -276,26 +276,26 @@ julia> ]
 
 The package implements methods for 
 TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)\cite{topsis}, 
-ELECTRE (Elemination and Choice Translating Reality)\cite{Roy1968}, 
-PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)\cite{Mareschal_2009}, 
-DEMATEL (The Decision Making Trial and Evaluation Laboratory)\cite{Gabus1972}, 
-MOORA (Multi-Objective Optimization By Ratio Analysis)\cite{brauers2006moora}, 
-VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)\cite{opricovic1998multicriteria, opricovic2002multicriteria}, 
-AHP (Analytic Hierarchy Process)\cite{saaty1977scaling}, 
-GRA (Grey Relational Analysis)\cite{ju1982control}, 
+ELECTRE (Elemination and Choice Translating Reality)\cite{electre}, 
+PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)\cite{promethee}, 
+DEMATEL (The Decision Making Trial and Evaluation Laboratory)\cite{demateş}, 
+MOORA (Multi-Objective Optimization By Ratio Analysis)\cite{moora}, 
+VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)\cite{vikor_1, vikor_2}, 
+AHP (Analytic Hierarchy Process)\cite{ahp}, 
+GRA (Grey Relational Analysis)\cite{gra}, 
 NDS (Non-dominated Sorting)\cite{Deb_2002}, 
-SAW (Simple Additive Weighting)\cite{RM-4823-ARPA, triantaphyllou1989examination}, 
-ARAS (Additive Ratio Assessment)\cite{zavadskas2010new}, 
-WPM (Weighted Product Model)\cite{RM-4823-ARPA, triantaphyllou1989examination}, 
-WASPAS (Weighted Aggregated Sum Product ASsessment)\cite{Zavadskas_Turskis_Antucheviciene_Zakarevicius_2012}, 
-EDAS (Evaluation based on Distance from Average Solution)\cite{keshavarz2015multi}, 
-MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)\cite{stevic2020sustainable}, 
-MABAC (Multi-Attributive Border Approximation area Comparison)\cite{pamuvcar2015selection}, 
-MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)\cite{pamuvcar2014selection}, 
-COPRAS (COmplex PRoportional ASsessment)\cite{vsaparauskas2011selection}, 
-COCOSO (Combined Compromise Solution)\cite{yazdani2019combined}, 
-and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{diakoulaki1995determining} for multiple-criteria tools. 
-The package also performs DEA for Data Envelopment Analysis\cite{charnes1978measuring} and includes a method for zero-sum game solver.  
+SAW (Simple Additive Weighting)\cite{saw, wsm_wpm}, 
+ARAS (Additive Ratio Assessment)\cite{aras}, 
+WPM (Weighted Product Model)\cite{wsm_wpm}, 
+WASPAS (Weighted Aggregated Sum Product ASsessment)\cite{waspas}, 
+EDAS (Evaluation based on Distance from Average Solution)\cite{edas}, 
+MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)\cite{marcos}, 
+MABAC (Multi-Attributive Border Approximation area Comparison)\cite{mabac}, 
+MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)\cite{mairca}, 
+COPRAS (COmplex PRoportional ASsessment)\cite{copras}, 
+COCOSO (Combined Compromise Solution)\cite{cocoso}, 
+and CRITIC (CRiteria Importance Through Intercriteria Correlation)\cite{critic} for multiple-criteria tools. 
+The package also performs DEA for Data Envelopment Analysis\cite{dea} and includes a method for zero-sum game solver.  
 
 
 
