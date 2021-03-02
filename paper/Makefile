@@ -10,6 +10,9 @@ clean:
 	rm -f jmcdm-paper.spl
 	rm -f jmcdm-paper.blg
 
+bib:
+	bibtex jmcdm-paper.aux
+
 pdf:
 	pdflatex jmcdm-paper.tex
 
