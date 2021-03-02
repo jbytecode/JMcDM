@@ -321,9 +321,9 @@ Suppose a decision problem is given in Table \ref{table:example_problem}.
 		\hline
 		{$A_1$} & {$6$} & {$140$} & $150000$ & {$950$} & $1500$\\
 		\hline
-		{$A_1$} & {$4$} & {$90$} & $100000$ & {$1500$} & $2000$\\
+		{$A_2$} & {$4$} & {$90$} & $100000$ & {$1500$} & $2000$\\
 		\hline
-		{$A_1$} & {$12$} & {$140$} & $75000$ & {$550$} & $1100$\\
+		{$A_3$} & {$12$} & {$140$} & $75000$ & {$550$} & $1100$\\
 		\hline
 	\end{tabular}
 	\caption{Decision matrix}
@@ -355,7 +355,7 @@ julia> result.bestIndex
 2
 \end{verbatim}
 
-The same analysis can be performed using \texttt{saw()} for the method of Simple Additive Weighting
+In the output above it is shown that the alternative $A_2$ has a score of $0.65179$ and it is selected as the best. The same analysis can be performed using \texttt{saw()} for the method of Simple Additive Weighting
 
 \begin{verbatim}
 julia> result = saw(df, w, fns);
