@@ -50,6 +50,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)
 - CoCoSo (Combined Compromise Solution)
 - CRITIC (CRiteria Importance Through Intercriteria Correlation)
+- Entropy
 
 ### SCDM Tools
 
