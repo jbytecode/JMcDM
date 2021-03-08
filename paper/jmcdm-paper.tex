@@ -267,7 +267,7 @@ julia> ]
 (@v1.5) pkg> add JMcDM
 \end{verbatim}
 
-\noindent present two distinct ways of install the package.
+\noindent present two distinct ways of downloading and installing the package.
 
 
 \subsection{Software Functionalities}
@@ -296,7 +296,7 @@ COPRAS\footnote{COmplex PRoportional ASsessment} \cite{copras},
 COCOSO\footnote{Combined Compromise Solution} \cite{cocoso}, 
 CRITIC\footnote{CRiteria Importance Through Intercriteria Correlation} \cite{critic},
 and Entropy\cite{entropy} for multiple-criteria tools. 
-The package also performs DEA for Data Envelopment Analysis \cite{dea} and includes a method for zero-sum game solver.  
+The package also performs DEA for Data Envelopment Analysis \cite{dea} and includes a method for zero-sum game solver.  The list of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
 
 
@@ -327,7 +327,7 @@ Suppose a decision problem is given in Table \ref{table:example_problem}.
 	\label{table:example_problem} 
 \end{table}
 
-In this sample problem, a decision maker is subject to select an apartment by considering age of the building, size (in $m^2$s), price (in \$), distance to city centre, and nearby population.
+In this sample problem, a decision maker is subject to select an apartment by considering age of the building, size (in $m^2$s), price (in \$), distance to city centre (in $m$s), and nearby population.
 The data can be entered as a two-dimensional array (matrix) or as a DataFrame object:
 
 \begin{verbatim}
@@ -338,7 +338,11 @@ julia> df = DataFrame(
 :price      => [150000.0, 100000, 75000],
 :distance   => [950.0, 1500, 550],
 :population => [1500.0, 2000, 1100]);
+\end{verbatim}
 
+\noindent The weight vector \texttt{w}, vector of directions \texttt{fns}, and \texttt{topsis()} function call can be performed using the \emph{Julia} REPL.
+
+\begin{verbatim}
 julia> w  = [0.35, 0.15, 0.25, 0.20, 0.05];
 julia> fns = [minimum, maximum, minimum, minimum, maximum];
 julia> result = topsis(df, w, fns);
@@ -373,7 +377,7 @@ For any method, \texttt{?methodname} shows the documentation as in the same way 
 \subsubsection{Game Solver}
 
 A two-player zero-sum game is not a multi-criteria decision method. On the other hand, assuming the column player's choices are natural states for the row player, the game matrix represents gains or costs for the 
-row player depending on the alternative she plays. Table \ref{table:game_matrix} represents the gains of the row player.
+row player depending on the alternative she plays. Table \ref{table:game_matrix} represents the gains of the row player for a Rock \& Paper \% Scissors game. Each time the game is played, the winner takes 1 point.  
 
 \begin{table}[H]
 	\centering
