@@ -94,7 +94,7 @@
 
 \begin{abstract}
 %% Text of abstract 
-\emph{JMcDM} is a \emph{Julia} package that implements some leading multiple-criteria decision making tools for both researchers and developers. \emph{Julia}'s REPL is well suited for researchers to perform their analysis using different methods and compare their results. The package also provides the necessary infrastructure and utility functions for writing recently published methods.  The proposed package has also brought MCDA tools to a relatively new language such as Julia with its significant performance promises. The methods developed in the package are also designed to be familiar to users who previously used R and Python languages. The paper presents the basics of the design, example usage, and code snippets.
+\emph{JMcDM} is a \emph{Julia} package that implements some leading multiple-criteria decision making tools for both researchers and developers. \emph{Julia}'s REPL is well suited for researchers to perform their analysis using different methods and compare their results. The package also provides the necessary infrastructure and utility functions for writing recently published methods.  The proposed package has brought MCDA tools to a relatively new language such as Julia with its significant performance promises. The methods developed in the package are also designed to be familiar to users who previously used R and Python languages. The paper presents the basics of the design, example usage, and code snippets.
 
 \end{abstract}
 
@@ -117,7 +117,7 @@ julia  \sep multiple-criteria \sep decision-making \sep outranking
 \section*{Current code version}
 \label{section:current_code_version}
 
-Ancillary data table required for subversion of the codebase. Kindly replace examples in right column with the correct information about your current code, and leave the left column as it is.
+%Ancillary data table required for subversion of the codebase. Kindly replace examples in right column with the %correct information about your current code, and leave the left column as it is.
 
 \begin{table}[H]
 \begin{tabular}{|l|p{6.5cm}|p{6.5cm}|}
@@ -171,7 +171,7 @@ C9 & Support email for questions & mhsatman@istanbul.edu.tr\\
 %Introduce related work in literature (cite or list algorithms used, other software etc.).
 %}
 
-The one-dimensional array a is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points.
+The one-dimensional array $a$ is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points.
 
 In multi-dimensional case, the binary domination operator $\succ$ applied on points $a$ and $b$, $a \succ b$, is true iif each item in $a$ is not worse than the correspoing item in $b$ and at least one item is better than the corresponding item in $b$ \cite{Deb_2002}. On the other hand, the more relaxed operator $\succeq$ returns true if each item in $a$ is as good as the corresponding item in $b$ \cite{greco2016multiple}. Several outranking methdods in MCDA (Multiple-Criteria Decision Analysis) define a unique ranking mechanism to select the best alternative among others.
 
@@ -206,9 +206,9 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eith
 
 {\color{blue}MCDA is used in material selection \cite{material, material2}, supplier selection \cite{marcos, allocation1}, personnel selection \cite{personnel}, inventory classification \cite{edas}, service provider selection \cite{3PL, reverse, service, service2}, strategy selection \cite{strategy1, strategy2, strategy3}, location selection \cite{loc1, loc2}, project selection \cite{project1, project2, project3}, performance evaluation \cite{performance1, performance2, performance3}, risk evaluation \cite{risk1, risk2}, allocation problems \cite{allocation1, allocation2, allocation3}, and site selection \cite{site1, site2, site3} problems in the literature.}
 
-Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. \emph{PyTOPS} is a Python tool for TOPSIS \cite{PyTOPS}. \emph{Super Decisions} is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) \cite{superdecision}. \emph{Visual Promethee} implements Promethee method on Windows platforms \cite{visualpromethee}. \emph{M-BACBETH} is an other commercial software product that implements MACBETH with a easy to use GUI.  \cite{macbeth}. \emph{Sanna} is a standard MS Excel add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) \cite{sanna}. \emph{DEAFrontier} software requires Excel add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard MS Excel Solver) \cite{deafrontier}.
+Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. \emph{PyTOPS} is a Python tool for TOPSIS \cite{PyTOPS}. \emph{Super Decisions} is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) \cite{superdecision}. \emph{Visual Promethee} implements Promethee method on Windows platforms \cite{visualpromethee}. \emph{M-BACBETH} is an other commercial software product that implements MACBETH with an easy to use GUI.  \cite{macbeth}. \emph{Sanna} is a standard MS Excel add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) \cite{sanna}. \emph{DEAFrontier} software requires an Excel add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard MS Excel Solver) \cite{deafrontier}.
 
-\emph{JMcDM} is designed to provide a developer-friendly library for solving multiple-criteria decision problems in Julia \cite{julia}. Since Julia is a dynamic language, it is also useful for researchers that familiar with REPL environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games and methods for single criterion methods. 
+\emph{JMcDM} is designed to provide a developer-friendly library for solving multiple-criteria decision problems in \emph{Julia} \cite{julia}. Since Julia is a dynamic language, it is also useful for researchers that familiar with REPL environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games, and methods for single criterion methods. 
 
 \section{Software description}
 \label{sec:software_description}
@@ -251,7 +251,7 @@ function topsis(
 
 \noindent where \texttt{decisionMat} is the decision matrix, \texttt{weights} are weights of criteria, and \texttt{fns} is an array of functions (either \texttt{minimum} or \texttt{maximum}) that determine the optimization directions. 
 
-The package is registered in Julia package repository and it is available for downloading and installing using Julia's package manager.  
+The package is registered in \emph{Julia} package repository and it is available for downloading and installing using \emph{Julia}'s package manager.  
 
 \begin{verbatim}
 julia> using Pkg
@@ -294,7 +294,7 @@ COPRAS\footnote{COmplex PRoportional ASsessment} \cite{copras},
 COCOSO\footnote{Combined Compromise Solution} \cite{cocoso}, 
 CRITIC\footnote{CRiteria Importance Through Intercriteria Correlation} \cite{critic},
 and Entropy\cite{entropy} for multiple-criteria tools. 
-The package also performs DEA for Data Envelopment Analysis \cite{dea} and includes a method for zero-sum game solver.  The list of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
+The package also performs DEA for Data Envelopment Analysis \cite{dea} and includes a method for zero-sum game solver.  The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
 
 
@@ -354,7 +354,7 @@ julia> result.bestIndex
 2
 \end{verbatim}
 
-In the output above it is shown that the alternative $A_2$ has a score of $0.65179$ and it is selected as the best. The same analysis can be performed using \texttt{saw()} for the method of Simple Additive Weighting
+\noindent In the output above, it is shown that the alternative $A_2$ has a score of $0.65179$ and it is selected as the best. The same analysis can be performed using \texttt{saw()} for the method of Simple Additive Weighting
 
 \begin{verbatim}
 julia> result = saw(df, w, fns);
@@ -370,12 +370,12 @@ julia> result.bestIndex
 2
 \end{verbatim}
 
-For any method, \texttt{?methodname} shows the documentation as in the same way in other Julia packages.
+\noindent For any method, \texttt{?methodname} shows the documentation as in the same way in other \emph{Julia} packages.
 
 \subsubsection{Game Solver}
 
 A two-player zero-sum game is not a multi-criteria decision method. On the other hand, assuming the column player's choices are natural states for the row player, the game matrix represents gains or costs for the 
-row player depending on the alternative she plays. Table \ref{table:game_matrix} represents the gains of the row player for a Rock \& Paper \% Scissors game. Each time the game is played, the winner takes 1 point.  
+row player depending on the alternative she plays. Table \ref{table:game_matrix} represents the gains of the row player for a Rock \& Paper \& Scissors game. Each time the game is played, the winner takes 1 point.  
 
 \begin{table}[H]
 	\centering
@@ -395,9 +395,9 @@ row player depending on the alternative she plays. Table \ref{table:game_matrix}
 	\label{table:game_matrix} 
 \end{table}
 
-\noindent Table \ref{table:game_matrix} shows that the row player wins the game if she selects \textbf{Rock} and the column player selects \textbf{Paper}. Similarly, she loses the game if she selects
+\noindent Table \ref{table:game_matrix} shows that the row player wins the game if she selects \textbf{Rock} and the column player selects \textbf{Scissors}. Similarly, she loses the game if she selects
 \textbf{Scissors} and the column player selects \textbf{Rock}. A tie has a zero gain for both players. The problem is selecting the best strategy for the row player. \emph{JMcDM} implements 
-the \texttt{game()} method for calculating value and the best strategy of this kind of games. The code snippet below represent the problem.
+the \texttt{game()} method for calculating value and the best strategy of this kind of games. The code snippet below represents the problem.
 
 \begin{verbatim}
 julia> mat = [0 -1 1; 1 0 -1; -1 1 0];
@@ -418,7 +418,7 @@ julia> result.row_player_probabilities
 0.3333333333333333
 \end{verbatim}
 
-It is shown that the value of the game is zero and the row player should selects the alternatives with equal probability of  $\frac{1}{3}$.
+\noindent It is shown that the value of the game is zero and the row player should select the alternatives with equal probability of  $\frac{1}{3}$ in each iteration.
 
 
 
@@ -428,11 +428,11 @@ It is shown that the value of the game is zero and the row player should selects
 
 Since \emph{JMcDM} is designed as a software library and for REPL use, it does not implement
 a significant user interface. However, the \texttt{summary()} function provides a useful way
-to perform a list of methods and returns a text based result to compare results. 
+to perform a list of methods and it returns a text based result to compare results. 
 
 \begin{verbatim}
 julia> methods1 = [:topsis, :electre, :vikor, 
-:moora, :cocoso, :wpm, :waspas]
+                   :moora, :cocoso, :wpm, :waspas];
 julia> result1 = summary(df, w, fns, methods1);
 \end{verbatim}
 
@@ -446,11 +446,11 @@ Figure \ref{fig:imagea} represents the output of the \texttt{summary()} call for
 
 \begin{verbatim}
 	julia> methods2 = [:aras, :saw, :edas, :marcos, 
-	:mabac, :mairca, :grey];
+	                   :mabac, :mairca, :grey];
 	julia> result2 = summary(df, w, fns, methods2);
 \end{verbatim}
 
-Figure \ref{fig:imageb} represents the output of the \texttt{summary()} call for methods ARAS, SAW, EDAS, MARCOS, MABAC, MAIRCA, and GREY, respectively.
+Figure \ref{fig:imageb} represents the output of the \texttt{summary()} call for methods ARAS, SAW, EDAS, MARCOS, MABAC, MAIRCA, and GREY, respectively. Figure \ref{fig:imagea} and Figure \ref{fig:imageb} also show the necessity of using more than one decision-making tool as they produce different results for the same analysis.
 
 
 	\begin{figure}
@@ -482,7 +482,7 @@ to and the reasons for them.
 \section{Conclusions}
 \label{section:conclusion}
 %{\color{red}Set out the conclusion of this original software publication.}
-Multiple-criteria decision-making tools are used in various disciplines in the literature. Since it is difficult to calculate these tools manually, many software packages and programs have been developed. However, these packages include a selected subset of methods. \emph{JMcDM} is a \emph{Julia} package that contains a significant amount of tools in the literature. Implementations of these tools are straightforward to use in \emph{Julia} REPL for researchers. \emph{JMcDM} also provides the necessary infrastructure for the development of new methods in the literature with its utility functions, comprehensive documentation, and unit tests compiled from many text books. The proposed package has also brought MCDA tools to a relatively new language such as Julia with significant performance promises. The methods in the package are also designed to be familiar to users who previously used R and Python languages.
+Multiple-criteria decision-making tools are used in various disciplines in the literature. Since it is difficult to compute these tools manually, many software packages and programs have been developed. However, these packages include a selected subset of methods. \emph{JMcDM} is a \emph{Julia} package that contains a significant amount of tools in the literature. Implementations of these tools are straightforward to use in \emph{Julia} REPL for researchers. \emph{JMcDM} also provides the necessary infrastructure for the development of new methods in the literature with its utility functions, comprehensive documentation, and unit tests compiled from many text books. The proposed package has also brought MCDA tools to a relatively new language such as \emph{Julia} with significant performance promises. The methods in the package are also designed to be familiar to users who previously used R and Python languages.
 
 \section{Conflict of Interest}
 %Please select the appropriate text:
