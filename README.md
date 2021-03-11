@@ -51,6 +51,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - CoCoSo (Combined Compromise Solution)
 - CRITIC (CRiteria Importance Through Intercriteria Correlation)
 - Entropy
+- CODAS (COmbinative Distance-based ASsessment)
 
 ### SCDM Tools
 
