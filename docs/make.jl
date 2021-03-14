@@ -8,7 +8,7 @@ push!(LOAD_PATH,"../src/")
 makedocs(
 	sitename="JMcDM",
 	pages=[
-		"mcdms.md"
+		"mcdms.md", "game.md"
 	]
 )
 
