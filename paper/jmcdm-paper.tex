@@ -343,7 +343,7 @@ julia> df = DataFrame(
 
 \begin{verbatim}
 julia> w  = [0.35, 0.15, 0.25, 0.20, 0.05];
-julia> fns = [minimum, maximum, minimum, minimum, maximum];
+julia> fns = makeminmax([minimum, maximum, minimum, minimum, maximum]);
 julia> result = topsis(df, w, fns);
 julia> result.scores
 3-element Array{Float64,1}:
