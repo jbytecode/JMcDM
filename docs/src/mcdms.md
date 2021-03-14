@@ -110,8 +110,16 @@ JMcDM.promethee
 JMcDM.cocoso
 ```
 
+## Critic
+````@docs
+JMcDM.critic
+```
 
 
+## CODAS
+````@docs
+JMcDM.codas
+```
 
 
 
