@@ -36,12 +36,6 @@ JMcDM.ahp
 ```
 
 
-
-## Data Envelopment Analysis
-```@docs
-JMcDM.dataenvelop
-```
-
 ## Grey Relational Analysis
 ```@docs
 JMcDM.grey
