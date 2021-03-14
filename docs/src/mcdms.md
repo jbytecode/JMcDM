@@ -111,13 +111,13 @@ JMcDM.cocoso
 ```
 
 ## Critic
-````@docs
+```@docs
 JMcDM.critic
 ```
 
 
 ## CODAS
-````@docs
+```@docs
 JMcDM.codas
 ```
 
