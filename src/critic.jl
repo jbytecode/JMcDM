@@ -71,7 +71,9 @@ function critic(decisionMat::DataFrame, fns::Array{Function,1}):CRITICResult
         end
     end
 
-    normalizedMat = convert(Matrix, A)
+    # normalizedMat = convert(Matrix, A)
+    normalizedMat = Matrix(A)
+    
     corMat = 1 .- cor(normalizedMat)
 
     scores = zeros(Float64, col)

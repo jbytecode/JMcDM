@@ -10,8 +10,9 @@ function laplace(decisionMatrix::DataFrame)::LaplaceResult
 
     expecteds = zeros(Float64, n)
 
-    m = convert(Array{Float64,2}, decisionMatrix)
-
+    # m = convert(Array{Float64,2}, decisionMatrix)
+    m = Matrix{Float64}(decisionMatrix)
+    
     for i in 1:n
         expecteds[i] = (m[i,:] .* probs)  |> sum
     end
@@ -36,8 +37,9 @@ function maximin(decisionMatrix::DataFrame)::MaximinResult
 
     n, p = size(decisionMatrix)
 
-    m = convert(Array{Float64,2}, decisionMatrix)
-
+    # m = convert(Array{Float64,2}, decisionMatrix)
+    m = Matrix{Float64}(decisionMatrix)
+    
     rmins = rowmins(decisionMatrix)
 
     bestIndex = sortperm(rmins) |> last
@@ -59,8 +61,9 @@ function maximax(decisionMatrix::DataFrame)::MaximaxResult
 
     n, p = size(decisionMatrix)
 
-    m = convert(Array{Float64,2}, decisionMatrix)
-
+    # m = convert(Array{Float64,2}, decisionMatrix)
+    m = Matrix{Float64}(decisionMatrix)
+    
     rmaxs = rowmaxs(decisionMatrix)
 
     bestIndex = sortperm(rmaxs) |> last
@@ -82,8 +85,9 @@ function minimax(decisionMatrix::DataFrame)::MinimaxResult
 
     n, p = size(decisionMatrix)
 
-    m = convert(Array{Float64,2}, decisionMatrix)
-
+    # m = convert(Array{Float64,2}, decisionMatrix)
+    m = Matrix{Float64}(decisionMatrix)
+    
     rmaxs = rowmaxs(decisionMatrix)
 
     bestIndex = sortperm(rmaxs) |> first
@@ -106,8 +110,9 @@ function minimin(decisionMatrix::DataFrame)::MiniminResult
 
     n, p = size(decisionMatrix)
 
-    m = convert(Array{Float64,2}, decisionMatrix)
-
+    # m = convert(Array{Float64,2}, decisionMatrix)
+    m = Matrix{Float64}(decisionMatrix)
+    
     rmins = rowmins(decisionMatrix)
 
     bestIndex = sortperm(rmins) |> first

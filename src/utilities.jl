@@ -80,13 +80,16 @@ function Base.:*(w::Array{Float64,1}, data::DataFrame)::DataFrame
 end
 
 function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Array{Number,1}
-    v1 = convert(Array{Float64,1}, r1)
-    v2 = convert(Array{Float64,1}, r2)
+    # v1 = convert(Array{Float64,1}, r1)
+    v1 = Vector{Float64}(r1)
+    # v2 = convert(Array{Float64,1}, r2)
+    v2 = Vector{Float64}(r2)
     return v1 .- v2
 end
 
 function Base.:-(r1::Array{T,1}, r2::DataFrameRow)::Array{T,1} where T <: Number
-    v2 = convert(Array{Float64,1}, r2)
+    # v2 = convert(Array{Float64,1}, r2)
+    v2 = Vector{Float64}(r2)
     return r1 .- v2
 end
 
@@ -110,7 +113,7 @@ function makeDecisionMatrix(mat::Array{T,2}; names::Union{Nothing,Array{String,1
 end
 
 function Base.minimum(df::DataFrame)
-    df |> x -> convert(Matrix, x) |> minimum
+    df |> Matrix |> minimum
 end
 
 function reverseminmax(fns::Array{Function,1})::Array{Function,1}

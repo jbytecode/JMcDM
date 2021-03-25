@@ -63,7 +63,8 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1}, zeta::Float64=0.5)::GreyResult
 
-    mat = convert(Matrix, decisionMat)
+    #mat = convert(Matrix, decisionMat)
+    mat = Matrix(decisionMat)
 
     nrows, ncols = size(mat)
 

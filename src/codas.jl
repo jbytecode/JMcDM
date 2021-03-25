@@ -53,7 +53,9 @@ Keshavarz Ghorabaee, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (20
 """
 function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Function,1}, tau::Float64=0.02)::CODASResult
 
-    mat = convert(Matrix, decisionMat)
+    #mat = convert(Matrix, decisionMat)
+    mat = Matrix(decisionMat)
+    
     nrows, ncols = size(decisionMat)
     w = unitize(weight)
 

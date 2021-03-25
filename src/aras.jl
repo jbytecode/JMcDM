@@ -46,7 +46,9 @@ Yıldırım, B. F. (2015). "Çok Kriterli Karar Verme Problemlerinde ARAS Yönte
 """
 function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1})::ARASResult
 
-    mat = convert(Matrix, decisionMat)
+    # mat = convert(Matrix, decisionMat)
+    mat = Matrix(decisionMat)
+    
     nrows, ncols = size(mat)
     w = unitize(weights)
     referenceRow = apply_columns(fs, mat)

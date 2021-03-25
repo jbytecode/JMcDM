@@ -98,7 +98,8 @@ function ahp_consistency(comparisonMatrix::DataFrame)::AHPConsistencyResult
     end
 
     priority_vector = rowmeans(normalizedComparisonMatrix)
-    mcomparisonMatrix = convert(Array{Float64,2}, comparisonMatrix)
+    #mcomparisonMatrix = convert(Array{Float64,2}, comparisonMatrix)
+    mcomparisonMatrix = Matrix{Float64}(comparisonMatrix)
 
     consistency_vector = mcomparisonMatrix * priority_vector
 

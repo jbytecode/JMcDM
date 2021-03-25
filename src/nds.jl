@@ -42,8 +42,8 @@ International conference on parallel problem solving from nature. Springer, Berl
 """
 function ndsranks(data::DataFrame)::Array{Int}
     
-    mat = convert(Matrix, data)
-    
+    #mat = convert(Matrix, data)
+    mat = Matrix(data)
     return ndsranks(mat)
 
 end

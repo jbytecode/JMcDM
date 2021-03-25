@@ -59,7 +59,8 @@ function dematel(comparisonMat::DataFrame; threshold::Union{Nothing,Float64}=not
 
     largest = maximum(vcat(csums, rsums))
 
-    K = convert(Array{Float64,2}, comparisonMat)
+    # K = convert(Array{Float64,2}, comparisonMat)
+    K = Matrix{Float64}(comparisonMat)
     ND = K ./ largest
   
     T = ND * inv(I(n) - ND)

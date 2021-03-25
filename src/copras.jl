@@ -142,7 +142,9 @@ Yıldırım, B. F., Timor, M. (2019). "Bulanık ve Gri COPRAS Yöntemleri Kullan
 """
 function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::COPRASResult
 
-    mat = convert(Matrix, decisionMat)
+    #mat = convert(Matrix, decisionMat)
+    mat = Matrix(decisionMat)
+    
     nrows, ncols = size(mat)
     w = unitize(weights)
     normalizedMat = copy(mat)

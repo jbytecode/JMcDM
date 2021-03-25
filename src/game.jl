@@ -63,8 +63,9 @@ Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (20
         newDecisionMatrix = decisionMatrix .- minmat    
     end
 
-    dm = convert(Matrix, newDecisionMatrix)
-
+    # dm = convert(Matrix, newDecisionMatrix)
+    dm = Matrix(newDecisionMatrix)
+    
     model = Model(Cbc.Optimizer);
     MOI.set(model, MOI.Silent(), !verbose)
 
