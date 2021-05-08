@@ -90,6 +90,14 @@ julia> using Pkg
 julia> Pkg.add("JMcDM")
 ```
 
+and can be loaded before using any functions by typing
+
+```julia
+julia> using JMcDM
+```
+
+in ```Julia``` REPL.
+
 Suppose a decision problem is given in the table below.
 
   | **Criteria**  |  Age   |  Size  |  Price   | Distance | Population |
