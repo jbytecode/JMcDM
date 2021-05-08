@@ -82,5 +82,42 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 
 - will be updated soon. 
 
+## Example
 
+```julia
+julia> using JMcDM, DataFrames
+julia> df = DataFrame(
+:age        => [6.0, 4, 12],
+:size       => [140.0, 90, 140],
+:price      => [150000.0, 100000, 75000],
+:distance   => [950.0, 1500, 550],
+:population => [1500.0, 2000, 1100]);
+```
+
+
+```julia
+julia> df
+3×5 DataFrame
+ Row │ age      size     price     distance  population 
+     │ Float64  Float64  Float64   Float64   Float64    
+─────┼──────────────────────────────────────────────────
+   1 │     6.0    140.0  150000.0     950.0      1500.0
+   2 │     4.0     90.0  100000.0    1500.0      2000.0
+   3 │    12.0    140.0   75000.0     550.0      1100.0
+```
+
+
+```julia
+julia> w  = [0.35, 0.15, 0.25, 0.20, 0.05];
+julia> fns = makeminmax([minimum, maximum, minimum, minimum, maximum]);
+julia> result = topsis(df, w, fns);
+julia> result.scores
+3-element Array{Float64,1}:
+0.5854753145549456
+0.6517997936899308
+0.41850223305822903
+
+julia> result.bestIndex
+2
+```
 
