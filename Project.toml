@@ -1,7 +1,7 @@
 authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>"]
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
-version = "0.1.7"
+version = "0.1.8"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
@@ -12,8 +12,8 @@ Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
-Cbc = "0.1 - 0.8"
-DataFrames = "0.22.5"
-JuMP = "0.21.6"
-StatsBase = "0.33"
+Cbc = "^0.8"
+DataFrames = "^0.22"
+JuMP = "^0.21"
+StatsBase = "^0.33"
 julia = "^1.4"
