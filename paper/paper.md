@@ -83,7 +83,7 @@ and Entropy [@entropy] for multiple-criteria tools. The package also performs DE
 
 # Installation and basic usage
 
-`LinRegOutliers` can be downloaded and installed using the Julia package manager by typing
+`JMcDM` can be downloaded and installed using the Julia package manager by typing
 
 ```julia
 julia> using Pkg
