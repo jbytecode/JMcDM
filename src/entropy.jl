@@ -7,7 +7,7 @@ Apply Entropy method for a given matrix and criteria types.
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
 
 # Description 
-entropy() applies the Entropy method to calculate bjective weights which are obtained through multi-step calculations of the decision matrix constructed from the actual information about the evaluation criteria of the alternatives.
+entropy() applies the Entropy method to calculate objective weights which are obtained through multi-step calculations of the decision matrix constructed from the actual information about the evaluation criteria of the alternatives.
 
 # Output 
 - `::EntropyResult`: EntropyResult object that holds multiple outputs including weighting and best index.

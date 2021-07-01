@@ -37,9 +37,14 @@ include("critic.jl")
 include("entropy.jl")
 include("codas.jl")
 
-
 include("summary.jl")
 
+include("mcdm.jl")
+
+# export MCDM methods
+export MCDMMethod 
+export TopsisMethod
+export VikorMethod
 
 # export MCDM types
 export MCDMResult
@@ -94,15 +99,15 @@ export reverseminmax
 export makeminmax
 
 #  export MCDM tools
-export topsis 
+export topsis
 export vikor
 export electre
-export moora 
+export moora
 export dematel
 export ahp_RI, ahp_consistency, ahp
 export nds
 export grey
-export saw 
+export saw
 export aras
 export wpm
 export waspas

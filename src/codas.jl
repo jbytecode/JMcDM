@@ -51,7 +51,7 @@ julia> result.scores
 # References
 Keshavarz Ghorabaee, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2016). A new combinative distance-based assessment (CODAS) method for multi-criteria decision-making. Economic Computation & Economic Cybernetics Studies & Research, 50(3), 25-44.
 """
-function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Function,1}, tau::Float64=0.02)::CODASResult
+function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Function,1}; tau::Float64=0.02)::CODASResult
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)

@@ -1,3 +1,4 @@
+using Base: Float64
 using Test
 using DataFrames
 
@@ -1028,7 +1029,7 @@ end
 
     fns = [maximum, minimum, maximum, maximum, maximum];
 
-    result = cocoso(df, weights, fns, lambda)
+    result = cocoso(df, weights, fns, lambda = lambda)
 
     @test result isa CoCoSoResult
 

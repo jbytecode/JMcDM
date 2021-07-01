@@ -61,7 +61,7 @@ julia> result.bestIndex
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1}, zeta::Float64=0.5)::GreyResult
+function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1}; zeta::Float64=0.5)::GreyResult
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)

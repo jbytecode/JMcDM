@@ -18,6 +18,7 @@ using Statistics
 
 
 include("../types.jl")
+include("../mcdm.jl")
 include("../utilities.jl")
 include("../topsis.jl")
 include("../vikor.jl")
