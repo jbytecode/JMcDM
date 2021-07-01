@@ -162,3 +162,11 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
 
     return result
 end
+
+function electre(setting::MCDMSetting)::ElectreResult
+    electre(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

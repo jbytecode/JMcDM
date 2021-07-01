@@ -57,15 +57,15 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-    function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
-    
-    w = unitize(weights)
-    nalternatives, ncriteria = size(decisionMat)
-    
-    normalizedMat = normalize(decisionMat)
-    
-    weightednormalizedMat = w * normalizedMat
-    
+function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
+
+w = unitize(weights)
+nalternatives, ncriteria = size(decisionMat)
+
+normalizedMat = normalize(decisionMat)
+
+weightednormalizedMat = w * normalizedMat
+
     # col_max = colmaxs(weightednormalizedMat)
     # col_min = colmins(weightednormalizedMat)
     col_max = apply_columns(fns, weightednormalizedMat)
@@ -96,3 +96,12 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
     return topsisresult
 end
+
+
+function topsis(setting::MCDMSetting)::TopsisResult
+    topsis(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

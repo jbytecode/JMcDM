@@ -132,3 +132,12 @@ function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Func
 
     return result
 end
+
+
+function edas(setting::MCDMSetting)::EDASResult
+    edas(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

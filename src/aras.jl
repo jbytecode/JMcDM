@@ -95,3 +95,12 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
     
     return result
 end
+
+
+function aras(setting::MCDMSetting)::ARASResult
+    aras(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end

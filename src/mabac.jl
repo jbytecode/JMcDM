@@ -119,3 +119,12 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     return result
 end
+
+
+function mabac(setting::MCDMSetting)::MABACResult
+    mabac(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

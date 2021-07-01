@@ -124,3 +124,12 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     return result
 end
+
+
+function marcos(setting::MCDMSetting)::MARCOSResult
+    marcos(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

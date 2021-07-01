@@ -102,3 +102,12 @@ function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
 
     return result
 end
+
+
+function saw(setting::MCDMSetting)::SawResult
+    saw(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

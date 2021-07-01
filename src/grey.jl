@@ -132,3 +132,13 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
     
     return result
 end
+
+
+
+function grey(setting::MCDMSetting; zeta::Float64=0.5)::GreyResult
+    grey(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

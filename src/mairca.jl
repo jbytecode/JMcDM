@@ -108,3 +108,12 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     return result
 end
+
+
+function mairca(setting::MCDMSetting)::MAIRCAResult
+    mairca(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

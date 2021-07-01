@@ -99,3 +99,12 @@ function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
 
     return result
 end
+
+
+function wpm(setting::MCDMSetting)::WPMResult
+    wpm(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

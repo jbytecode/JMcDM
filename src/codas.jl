@@ -138,3 +138,13 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Func
     
     return result
 end
+
+
+function codas(setting::MCDMSetting; tau::Float64=0.02)::CODASResult
+    codas(
+        setting.df,
+        setting.weights,
+        setting.fns,
+        tau = tau
+    )
+end

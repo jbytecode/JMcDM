@@ -1,5 +1,12 @@
 abstract type MCDMResult end 
 abstract type SCDMResult end
+abstract type MCDMMethod end 
+
+struct MCDMSetting 
+    df::DataFrame
+    weights::Array{Float64, 1}
+    fns::Array{Function, 1}
+end
 
 struct TopsisResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -267,4 +274,91 @@ struct CODASResult <: MCDMResult
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
+
+struct TopsisMethod <: MCDMMethod end
+
+struct ElectreMethod <: MCDMMethod 
+end 
+
+
+struct ArasMethod <: MCDMMethod 
+end 
+
+
+struct CocosoMethod <: MCDMMethod
+    lambda::Float64
+end
+
+CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
+CocosoMethod(lambda::Float64)::CocosoMethod = CocosoMethod(lambda)
+
+struct CodasMethod <: MCDMMethod
+    tau::Float64
+end
+
+CodasMethod()::CodasMethod = CodasMethod(0.02)
+CodasMethod(tau::Float64)::CodasMethod = CodasMethod(tau)
+
+struct CoprasMethod <: MCDMMethod 
+end 
+
+
+struct CriticMethod <: MCDMMethod 
+end 
+
+
+struct EdasMethod <: MCDMMethod 
+end 
+
+
+struct GreyMethod <: MCDMMethod 
+    zeta::Float64
+end 
+
+GreyMethod() :: GreyMethod = GreyMethod(0.5)
+GreyMethod(zeta::Float64) :: GreyMethod = GreyMethod(zeta)
+
+struct MabacMethod <: MCDMMethod 
+end 
+
+
+struct MaircaMethod <: MCDMMethod 
+end 
+
+
+struct MooraMethod <: MCDMMethod 
+end 
+
+
+struct PrometheeMethod <: MCDMMethod 
+    pref::Array{Function, 1}
+    qs::Array{Float64, 1}
+    ps::Array{Float64, 1}
+end 
+
+PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
+
+struct SawMethod <: MCDMMethod 
+end 
+
+
+struct VikorMethod <: MCDMMethod
+    v::Float64
+end 
+
+VikorMethod()::VikorMethod = VikorMethod(0.5)
+VikorMethod(v::Float64)::VikorMethod = VikorMethod(v)
+
+
+struct WaspasMethod <: MCDMMethod
+    lambda::Float64
+end
+
+WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
+WaspasMethod(lambda::Float64) ::WaspasMethod = WaspasMethod(lambda) 
+
+struct WPMMethod <: MCDMMethod
+end 
+
+
 

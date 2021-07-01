@@ -99,3 +99,13 @@ function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     return result
 end
+
+
+
+function moora(setting::MCDMSetting)::MooraResult
+    moora(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 

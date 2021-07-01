@@ -67,7 +67,7 @@ julia> result.bestIndex
 Yazdani, M., Zarate, P., Kazimieras Zavadskas, E. and Turskis, Z. (2019), "A combined compromise solution (CoCoSo) method for multi-criteria decision-making problems", Management Decision, Vol. 57 No. 9, pp. 2501-2519. https://doi.org/10.1108/MD-05-2017-0458
 
 """
-function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5):CoCoSoResult
+function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::CoCoSoResult
    
     row, col = size(decisionMat)
     w = unitize(weights)
@@ -121,4 +121,15 @@ function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     )
 
     return result
+end
+
+
+
+function cocoso(setting::MCDMSetting; lambda::Float64=0.5)::CoCoSoResult
+    cocoso(
+        setting.df,
+        setting.weights,
+        setting.fns,
+        lambda = lambda
+    )
 end

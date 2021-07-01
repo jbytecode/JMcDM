@@ -110,3 +110,13 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
     )
     return result
 end
+
+
+function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
+    vikor(
+        setting.df,
+        setting.weights,
+        setting.fns,
+        v = v
+    )
+end 

@@ -65,15 +65,15 @@ function prometLevel(d::Number, q::Number, p::Number)::Float64
 end
 
 """
-        promethee(decisionMatrix, prefs, weights, fns, qs, ps)
+        promethee(decisionMatrix, weights, fns, prefs, qs, ps)
 
 Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations) method for a given matrix and weights.
 
 # Arguments:
  - `decisionMatrix::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
- - `pref::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{Function, 1}`: m-vector of functions that are either maximum or minimum.
+ - `pref::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
  - `qs::Array{Float64, 1}`: m-vector of q parameters that is used in corresponding preference function.
  - `ps::Array{Float64, 1}`: m-vector of p parameters that is used in corresponding preference function
  
@@ -118,7 +118,7 @@ julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
 
 julia> prefs = convert(Array{Function,1}, [prometLinear, prometVShape, prometLinear, prometLinear]);
 
-julia> result = promethee(df, prefs, weights, fns, qs, ps);
+julia> result = promethee(df, weights, fns, prefs, qs, ps);
 
 julia> result.scores
 8-element Array{Float64,1}:
@@ -140,7 +140,13 @@ julia> result.bestIndex
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function promethee(decisionMatrix::DataFrame, prefs::Array{Function,1}, weights::Array{Float64,1}, fns::Array{Function,1}, qs::Array, ps::Array)::PrometheeResult
+function promethee(
+    decisionMatrix::DataFrame, 
+    weights::Array{Float64,1}, 
+    fns::Array{Function,1}, 
+    prefs::Array{Function,1}, 
+    qs::Array, 
+    ps::Array)::PrometheeResult
 
     actionCount, criteriaCount = size(decisionMatrix)
 
@@ -177,3 +183,17 @@ function promethee(decisionMatrix::DataFrame, prefs::Array{Function,1}, weights:
         bestIndex)
 
 end
+
+
+
+
+function promethee(setting::MCDMSetting, prefs::Array{Function,1}, qs::Array, ps::Array)::PrometheeResult
+    promethee(
+        setting.df,
+        setting.weights,
+        setting.fns,
+        prefs,
+        qs,
+        ps
+    )
+end 

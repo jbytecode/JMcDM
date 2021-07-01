@@ -1,5 +1,5 @@
 """
-        waspas(decisionMat, weights, fns, lambda)
+        waspas(decisionMat, weights, fns; lambda = 0.5)
 
 Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix and weights.
 
@@ -65,7 +65,7 @@ julia> result.scores
 Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of Weighted Aggregated Sum Product Assessment. Elektronika Ir Elektrotechnika, 122(6), 3-6. https://doi.org/10.5755/j01.eee.122.6.1810
 Aytaç Adalı, E. & Tuş Işık, A.. (2017). Bir Tedarikçi Seçim Problemi İçin SWARA ve WASPAS Yöntemlerine Dayanan Karar Verme Yaklaşımı. International Review of Economics and Management, 5 (4) , 56-77. DOI: 10.18825/iremjournal.335408
 """
-function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}, lambda::Float64=0.5):WASPASResult
+function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::WASPASResult
    
     row, col = size(decisionMat)
     normalizedDecisionMat = similar(decisionMat)
@@ -112,3 +112,14 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     return result
 end
+
+
+
+function waspas(setting::MCDMSetting; lambda::Float64=0.5)::WASPASResult
+    waspas(
+        setting.df,
+        setting.weights,
+        setting.fns,
+        lambda = lambda 
+    )
+end 

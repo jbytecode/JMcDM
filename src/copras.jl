@@ -189,3 +189,12 @@ function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     
     return result
 end
+
+
+function copras(setting::MCDMSetting)::COPRASResult
+    copras(
+        setting.df,
+        setting.weights,
+        setting.fns
+    )
+end 
