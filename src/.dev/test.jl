@@ -1002,7 +1002,7 @@ end
     fns = makeminmax([maximum, maximum, maximum, maximum])
     prefs = convert(Array{Function,1}, [prometLinear, prometVShape, prometLinear, prometLinear])
 
-    result = promethee(df, prefs, weights, fns, qs, ps)
+    result = promethee(df, weights, fns, prefs, qs, ps)
 
     @test result isa PrometheeResult
 

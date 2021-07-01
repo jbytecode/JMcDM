@@ -2,6 +2,37 @@ abstract type MCDMResult end
 abstract type SCDMResult end
 abstract type MCDMMethod end 
 
+
+"""
+    struct MCDMSetting 
+        df::DataFrame
+        weights::Array{Float64, 1}
+        fns::Array{Function, 1}
+    end
+
+    Immutable data structure for a MCDM setting.
+
+# Arguments
+- `df::DataFrame`: The decision matrix in type of DataFrame.
+- `weights::Array{Float64,1}`: Array of weights for each criterion.
+- `fns::Array{Function, 1}`: Array of functions. The elements are either minimum or maximum.
+
+# Examples
+```julia-repl
+julia> df = DataFrame();
+julia> df[:, :x] = Float64[9, 8, 7];
+julia> df[:, :y] = Float64[7, 7, 8];
+julia> df[:, :z] = Float64[6, 9, 6];
+julia> df[:, :q] = Float64[7, 6, 6];
+
+julia> w = Float64[4, 2, 6, 8];
+
+julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
+
+julia> setting = MCDMSetting(df, w, fns)
+
+julia> result = topsis(setting);
+"""
 struct MCDMSetting 
     df::DataFrame
     weights::Array{Float64, 1}

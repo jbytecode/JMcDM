@@ -42,3 +42,16 @@ function mcdm(df::DataFrame,
         error("Method is not defined") 
     end 
 end 
+
+
+
+function mcdm(setting::MCDMSetting, 
+    method::T1)::MCDMResult where {T1 <: MCDMMethod}
+
+    mcdm(
+        setting.df,
+        setting.weights,
+        setting.fns, 
+        method
+    )
+end 
