@@ -36,3 +36,5 @@ jobs:
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
 
+after_success:
+- julia -e 'using Pkg; cd(Pkg.dir("JMcDM")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
