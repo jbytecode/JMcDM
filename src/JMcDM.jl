@@ -40,6 +40,7 @@ include("codas.jl")
 include("summary.jl")
 
 include("mcdm.jl")
+include("print.jl")
 
 # export MCDM methods
 export MCDMMethod 

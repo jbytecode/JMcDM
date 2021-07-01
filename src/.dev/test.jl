@@ -130,6 +130,7 @@ end
     ]
     dmat = makeDecisionMatrix(Amat)
     fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum])
+    
     result = vikor(dmat, w, fns)
 
     @test isa(result, VikorResult)

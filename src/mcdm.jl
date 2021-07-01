@@ -72,7 +72,18 @@ struct VikorMethod <: MCDMMethod
 end 
 
 VikorMethod()::VikorMethod = VikorMethod(0.5)
-VikorMethod(v::Float64) = VikorMethod(v)
+VikorMethod(v::Float64)::VikorMethod = VikorMethod(v)
+
+
+struct WaspasMethod <: MCDMMethod
+    lambda::Float64
+end
+
+WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
+WaspasMethod(lambda::Float64) ::WaspasMethod = WaspasMethod(lambda) 
+
+struct WPMMethod <: MCDMMethod
+end 
 
 
 function mcdm(df::DataFrame, 
@@ -110,6 +121,10 @@ function mcdm(df::DataFrame,
         saw(df, w, fns)
     elseif method isa VikorMethod
         vikor(df, w, fns, v = method.v)
+    elseif method isa WaspasMethod
+        waspas(df, w, fns, method.lambda)
+    elseif method isa WPMMethod 
+        wpm(df, w, fns)
     else
         error("Method is not defined") 
     end 
