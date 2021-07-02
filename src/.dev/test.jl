@@ -123,6 +123,11 @@ end
 	@test isa(result2, TopsisResult)
 	@test result2.bestIndex == result.bestIndex
 	@test result.scores == result2.scores
+
+    result3 = mcdm(setting, TopsisMethod())
+    @test isa(result3, TopsisResult)
+	@test result3.bestIndex == result.bestIndex
+	@test result3.scores == result.scores
 end
 
 @testset "VIKOR" begin
@@ -151,6 +156,10 @@ end
 	result2 = vikor(setting)
 	@test result.scores == result2.scores
 	@test result.bestIndex == result2.bestIndex
+
+    result3 = mcdm(setting, VikorMethod())
+    @test result.scores == result3.scores
+    @test result.bestIndex == result3.bestIndex 
 end
 
 
@@ -173,6 +182,15 @@ end
     
     @test isapprox(result.C, [0.36936937,  0.01501502, -2.47347347,  2.08908909], atol=tol)
     @test isapprox(result.D, [0.1914244, -0.1903929,  2.8843076, -2.8853391], atol=tol)
+
+    setting = MCDMSetting(dmat, w, fns)
+    result2 = electre(setting)
+    @test result isa ElectreResult
+    @test result.bestIndex == result2.bestIndex
+    
+    result3 = mcdm(setting, ElectreMethod())
+    @test result3 isa  ElectreResult
+    @test result3.bestIndex == result.bestIndex
 end
 
 
@@ -194,6 +212,17 @@ end
     @test result.bestIndex == 4
 
     @test isapprox(result.scores, [0.33159387, 0.29014464, 0.37304311, 0.01926526], atol=tol)
+
+    setting = MCDMSetting(dmat, w, fns)
+    result2 = moora(setting)
+    @test result2 isa MooraResult
+    @test result2.bestIndex == result.bestIndex
+    @test result2.scores == result.scores
+    
+    result3 = mcdm(setting, MooraMethod())
+    @test result3 isa MooraResult
+    @test result3.bestIndex == result.bestIndex
+    @test result3.scores == result.scores
 end
 
 
@@ -711,6 +740,17 @@ end
     0.5464285714285715, 0.5762820512820512, 0.650952380952381], atol=tol)
 
     @test result.bestIndex == 2
+
+    setting = MCDMSetting(df, w, functionlist)
+    result2 = grey(setting)
+    @test result2 isa GreyResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, GreyMethod())
+    @test result3 isa GreyResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 
@@ -750,6 +790,17 @@ end
         @test isapprox(result.scores, [0.553228, 0.713485, 0.837428, 0.514657, 0.579342], atol=tol)
         @test result.bestIndex == 3
         @test result.ranking == [3, 2, 5, 1, 4]
+
+        setting = MCDMSetting(df, weights, fns)
+        result2 = saw(setting)
+        @test result2 isa SawResult
+        @test result2.scores == result.scores 
+        @test result2.bestIndex == result.bestIndex
+
+        result3 = mcdm(setting, SawMethod())
+        @test result3 isa SawResult
+        @test result3.scores == result.scores 
+        @test result3.bestIndex == result.bestIndex
     end
 end
 
@@ -771,13 +822,22 @@ end
     w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
     result = aras(df, w, functionlist)
-
     @test isa(result, ARASResult)
-    
     @test isapprox(result.scores, [0.81424068, 0.89288620, 0.76415790, 0.84225462, 0.86540635], atol=tol)
-
     @test result.bestIndex == 2
+
+    setting = MCDMSetting(df, w, functionlist)
+    result2 = aras(setting)
+    @test result2 isa ARASResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, ArasMethod())
+    @test result3 isa ARASResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
+
 
 @testset "WPM" begin
     tol = 0.0001
@@ -794,11 +854,20 @@ end
     fns = [maximum, minimum, minimum, maximum, minimum, maximum]
     
     result = wpm(df, weights, fns)
-
     @test result isa WPMResult
-
     @test isapprox(result.scores, [0.7975224331331, 0.7532541470585, 0.7647463553356, 0.7873956894791, 0.7674278741782], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = wpm(setting)
+    @test result2 isa WPMResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, WPMMethod())
+    @test result3 isa MCDMResult
+    @test result3 isa WPMResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "WASPAS" begin
@@ -816,11 +885,19 @@ end
     fns = [maximum, minimum, minimum, maximum, minimum, maximum]
     
     result = waspas(df, weights, fns)
-
     @test result isa WASPASResult
-
     @test isapprox(result.scores, [0.805021, 0.775060, 0.770181, 0.796424, 0.788239], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = waspas(setting)
+    @test result2 isa WASPASResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, WaspasMethod())
+    @test result3 isa WASPASResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "EDAS" begin
@@ -841,11 +918,19 @@ end
     fns = [maximum, maximum, minimum, minimum];
 
     result = edas(df, weights, fns)
-
     @test result isa EDASResult
-
     @test isapprox(result.scores, [0.759594, 0.886016, 0.697472, 0.739658, 0.059083, 0.731833, 0.641691, 0.385194], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = edas(setting)
+    @test result2 isa EDASResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, EdasMethod())
+    @test result3 isa EDASResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex 
 end
 
 @testset "MARCOS" begin
@@ -864,11 +949,19 @@ end
     Fns = convert(Array{Function,1}, fns)
 
     result = marcos(df, weights, Fns)
-
     @test result isa MARCOSResult
-
     @test isapprox(result.scores, [0.684865943528, 0.672767106696, 0.662596906139, 0.661103207660], atol=tol)
     
+    setting = MCDMSetting(df, weights, Fns)
+    result2 = marcos(setting)
+    @test result2 isa MARCOSResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, MarcosMethod())
+    @test result3 isa MARCOSResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "MABAC" begin
@@ -888,11 +981,19 @@ end
     fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
     result = mabac(df, weights, fns)
-
     @test result isa MABACResult
-
     @test isapprox(result.scores, [-0.31132, -0.10898, 0.20035, 0.04218, 0.34452, 0.20035], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = mabac(setting)
+    @test result2 isa MABACResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, MabacMethod())
+    @test result3 isa MABACResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 
@@ -932,11 +1033,19 @@ end
     fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
     result = mairca(df, weights, fns)
-
     @test result isa MAIRCAResult
-
     @test isapprox(result.scores, [0.1206454, 0.0806646, 0.1458627, 0.1454237], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = mairca(setting)
+    @test result2 isa MAIRCAResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, MaircaMethod())
+    @test result3 isa MAIRCAResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "COPRAS" begin
@@ -988,11 +1097,19 @@ end
     fns = [maximum, maximum, maximum, maximum, maximum, minimum];
 
     result = copras(df, weights, fns)
-
     @test result isa COPRASResult
-
     @test isapprox(result.scores, [0.44194, 0.44395, 0.41042, 0.44403, 0.48177, 0.44074, 0.42430, 0.41737, 0.43474, 0.44382, 0.46625, 0.48602, 0.45019, 0.45825, 0.51953, 0.54265, 0.56134, 0.45588, 0.49532, 0.44788, 0.45014, 0.48126, 0.51586, 0.56243, 0.58709, 0.60091, 0.51850, 0.61085, 0.65888, 0.75650, 0.61430, 0.63486, 0.65542, 0.72065, 0.77680, 0.82379, 0.88253, 1.00000], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = copras(setting)
+    @test result2 isa COPRASResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, CoprasMethod())
+    @test result3 isa COPRASResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 
@@ -1016,10 +1133,20 @@ end
     result = promethee(df, weights, fns, prefs, qs, ps)
 
     @test result isa PrometheeResult
-
     @test isapprox(result.scores, [0.07, -0.15, -0.06, -0.05, 0.10, 0.0, 0.03, 0.06], atol=tol)
-
     @test result.bestIndex == 5
+
+    setting = MCDMSetting(df, weights, fns)
+    result2 = promethee(setting, prefs, qs, ps)
+    @test result2 isa PrometheeResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, PrometheeMethod(prefs, qs, ps))
+    @test result3 isa PrometheeResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
+
 end
 
 @testset "CoCoSo" begin
@@ -1042,11 +1169,19 @@ end
     fns = [maximum, minimum, maximum, maximum, maximum];
 
     result = cocoso(df, weights, fns, lambda = lambda)
-
     @test result isa CoCoSoResult
-
     @test isapprox(result.scores, [2.0413128390265998, 2.787989783418825, 2.8823497955972495, 2.4160457689259287, 1.2986918936013303, 1.4431429073391682, 2.519094173200623], atol=tol)
     
+    setting = MCDMSetting(df, weights, fns)
+    result2 = cocoso(setting)
+    @test result2 isa CoCoSoResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, CocosoMethod())
+    @test result3 isa CoCoSoResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "CRITIC" begin
@@ -1060,11 +1195,19 @@ end
     fns = [maximum, maximum, minimum, maximum];
 
     result = critic(df, fns)
-
     @test result isa CRITICResult
-
     @test isapprox(result.w, [0.16883925, 0.418444976, 0.249124763, 0.163591012], atol=tol)
     
+    setting = MCDMSetting(df, zeros(4), fns)
+    result2 = critic(setting)
+    @test result2 isa CRITICResult
+    @test result2.ranking == result.ranking 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, CriticMethod())
+    @test result3 isa CRITICResult
+    @test result3.ranking == result.ranking 
+    @test result3.bestIndex == result.bestIndex
 end
 
 @testset "Entropy" begin
@@ -1104,9 +1247,15 @@ end
     fns = [maximum, minimum, maximum, maximum, maximum];
 
     result = codas(df, w, fns)
-
     @test result isa CODASResult
-
     @test isapprox(result.scores, [0.512176491, 1.463300035, 1.07153259, -0.212467998, -1.851520552, -1.17167677, 0.188656204], atol=tol)
     
+    setting = MCDMSetting(df, w, fns)
+    result2 = codas(setting)
+    @test result2 isa CODASResult
+    @test result2.scores == result.scores 
+
+    result3 = mcdm(setting, CodasMethod())
+    @test result3 isa CODASResult
+    @test result3.scores == result.scores 
 end

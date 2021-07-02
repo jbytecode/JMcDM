@@ -35,9 +35,11 @@ function mcdm(df::DataFrame,
     elseif method isa VikorMethod
         vikor(df, w, fns, v = method.v)
     elseif method isa WaspasMethod
-        waspas(df, w, fns, method.lambda)
+        waspas(df, w, fns, lambda = method.lambda)
     elseif method isa WPMMethod 
         wpm(df, w, fns)
+    elseif method isa MarcosMethod
+        marcos(df, w, fns)
     else
         error("Method is not defined") 
     end 

@@ -321,14 +321,12 @@ struct CocosoMethod <: MCDMMethod
 end
 
 CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
-CocosoMethod(lambda::Float64)::CocosoMethod = CocosoMethod(lambda)
 
 struct CodasMethod <: MCDMMethod
     tau::Float64
 end
 
 CodasMethod()::CodasMethod = CodasMethod(0.02)
-CodasMethod(tau::Float64)::CodasMethod = CodasMethod(tau)
 
 struct CoprasMethod <: MCDMMethod 
 end 
@@ -347,7 +345,6 @@ struct GreyMethod <: MCDMMethod
 end 
 
 GreyMethod() :: GreyMethod = GreyMethod(0.5)
-GreyMethod(zeta::Float64) :: GreyMethod = GreyMethod(zeta)
 
 struct MabacMethod <: MCDMMethod 
 end 
@@ -363,8 +360,8 @@ end
 
 struct PrometheeMethod <: MCDMMethod 
     pref::Array{Function, 1}
-    qs::Array{Float64, 1}
-    ps::Array{Float64, 1}
+    qs::Array{Union{Nothing, Float64}, 1}
+    ps::Array{Union{Nothing, Float64}, 1}
 end 
 
 PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
@@ -378,7 +375,6 @@ struct VikorMethod <: MCDMMethod
 end 
 
 VikorMethod()::VikorMethod = VikorMethod(0.5)
-VikorMethod(v::Float64)::VikorMethod = VikorMethod(v)
 
 
 struct WaspasMethod <: MCDMMethod
@@ -386,10 +382,10 @@ struct WaspasMethod <: MCDMMethod
 end
 
 WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
-WaspasMethod(lambda::Float64) ::WaspasMethod = WaspasMethod(lambda) 
 
 struct WPMMethod <: MCDMMethod
 end 
 
 
-
+struct MarcosMethod <: MCDMMethod
+end

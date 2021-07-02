@@ -44,8 +44,25 @@ include("print.jl")
 
 # export MCDM methods
 export MCDMMethod 
+export ArasMethod
+export CocosoMethod
+export CodasMethod
+export CoprasMethod
+export CriticMethod
+export EdasMethod
+export ElectreMethod
+export GreyMethod
+export MabacMethod
+export MaircaMethod
+export MooraMethod
+export PrometheeMethod
+export SawMethod
 export TopsisMethod
 export VikorMethod
+export WPMMethod
+export WaspasMethod
+export MarcosMethod
+
 export MCDMSetting
 
 # export MCDM types
@@ -143,5 +160,6 @@ export dataenvelop
 
 #  export summary function
 export summary
+export mcdm
 
 end # module
