@@ -46,6 +46,7 @@ include("print.jl")
 export MCDMMethod 
 export TopsisMethod
 export VikorMethod
+export MCDMSetting
 
 # export MCDM types
 export MCDMResult

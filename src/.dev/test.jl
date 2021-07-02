@@ -117,6 +117,12 @@ end
     @test isa(result, TopsisResult)
     @test result.bestIndex == 2
     @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol=tol)
+
+	setting = MCDMSetting(df, w, fns)
+	result2 = topsis(setting)
+	@test isa(result2, TopsisResult)
+	@test result2.bestIndex == result.bestIndex
+	@test result.scores == result2.scores
 end
 
 @testset "VIKOR" begin
@@ -140,6 +146,11 @@ end
     @test isapprox(result.scores[2], 0.2194064473270817, atol=tol)
     @test isapprox(result.scores[3], 0.3507643203516215, atol=tol)
     @test isapprox(result.scores[4], -0.16727341435277993, atol=tol) 
+
+	setting = MCDMSetting(dmat, w, fns)
+	result2 = vikor(setting)
+	@test result.scores == result2.scores
+	@test result.bestIndex == result2.bestIndex
 end
 
 
