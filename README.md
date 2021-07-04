@@ -142,6 +142,27 @@ julia> result.bestIndex
 2
 ```
 
+alternatively
+
+```julia
+julia> result = mcdm(df, w, fns, TopsisMethod())
+```
+
+or 
+
+```julia
+julia> setting = MCDMSetting(df, w, fns)
+julia> result = topsis(setting)
+```
+
+or
+
+```julia
+julia> setting = MCDMSetting(df, w, fns)
+julia> result = mcdm(setting, TopsisMethod())
+```
+
+
 
 ## Community guidelines
 
