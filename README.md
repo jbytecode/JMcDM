@@ -122,7 +122,7 @@ julia> result.bestIndex
 ```
 
 
-## Community guidelines
+## Community guidelines
 
 Do you want to contribute?
 
