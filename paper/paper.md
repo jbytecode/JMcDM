@@ -77,7 +77,7 @@ NDS [@Deb_2002],
 PROMETHEE [@promethee], 
 SAW [@saw; @wsm_wpm],  
 TOPSIS [@topsis],
-VIKOR [@vikor_1, @vikor_2],  
+VIKOR [@vikor_1; @vikor_2],  
 WASPAS [@waspas], 
 and
 WPM [@wsm_wpm]
