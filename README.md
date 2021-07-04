@@ -21,7 +21,7 @@ The package mainly focused on solving these kind of decision problems.
 
 ## For whom?
 
-multiple-criteria decision-making is a inter-discipline subject and there a vast amount of research in the literature in this area. However, the development software is this area is generally focused on a small subset of tools. JMcDM is a developer and researcher friendly Julia package that combines the developed methods, utility functions for implementing new ones, and serves an environment for comparing results of multiple analysis.  
+Multiple-criteria decision-making is an inter-discipline subject and there is a vast amount of research in the literature in this area. However, the development software packages in this area are generally focused on a small subset of tools. JMcDM is a developer and researcher friendly Julia package that combines the developed methods, utility functions for implementing new ones, and serves an environment for comparing results of multiple analysis.  
 
 ## Installation
 
