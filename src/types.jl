@@ -32,6 +32,8 @@ julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
 julia> setting = MCDMSetting(df, w, fns)
 
 julia> result = topsis(setting);
+julia> # Same result can be obtained using
+julia> result2 = mcdm(setting, TopsisMethod())
 """
 struct MCDMSetting 
     df::DataFrame

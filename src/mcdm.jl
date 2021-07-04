@@ -1,4 +1,53 @@
+"""
+        mcdm(df, w, fns, method)
 
+    Perform selected method for a given decision matrix, weight vector, and function list.
+
+# Arguments:
+ - `df::DataFrame`: n × m matrix of decision matrix in type of DataFrame. 
+ - `weights::Array{Float64, 1}`: m-vector of weights for criteria.
+ - `fs::Array{Function, 1}`: m-vector of functions that are either maximize or minimize for each single criterion.
+ - `method::MCDMMethod`: Preferred MCDMMethod.
+ 
+# Description 
+The method is one of the subtypes of MCDMMethod type. See examples.
+
+# Output 
+- `::MCDMResult`: An object derived from subtypes of MCDMResult type.
+
+# Examples
+```julia-repl
+julia> subtypes(MCDMMethod)
+18-element Vector{Any}:
+ ArasMethod
+ CocosoMethod
+ CodasMethod
+ CoprasMethod
+ CriticMethod
+ EdasMethod
+ ElectreMethod
+ GreyMethod
+ MabacMethod
+ MaircaMethod
+ MarcosMethod
+ MooraMethod
+ PrometheeMethod
+ SawMethod
+ TopsisMethod
+ VikorMethod
+ WPMMethod
+ WaspasMethod
+
+julia> # mcdm() for Topsis:
+julia> # mcdm(df, w, fns, TopsisMethod())
+
+julia> # mcdm() for Saw:
+julia> # mcdm(df, w, fns, SawMethod())
+
+julia> # mcdm() with optional parameters:
+julia> # mcdm(df, w, fns, GreyMethod(0.6))
+```
+"""
 function mcdm(df::DataFrame, 
     w::Array{Float64, 1}, 
     fns::Array{Function, 1}, 
@@ -47,6 +96,32 @@ end
 
 
 
+"""
+        mcdm(setting, method)
+
+    Perform selected method for a given decision matrix, weight vector, and function list.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object that holds the decision matrix, weight vector, and functions.
+ - `method::MCDMMethod`: Preferred MCDMMethod.
+ 
+# Description 
+The method is one of the subtypes of MCDMMethod type. See examples.
+
+# Output 
+- `::MCDMResult`: An object derived from subtypes of MCDMResult type.
+
+# Examples
+julia> # mcdm() for Topsis:
+julia> # mcdm(setting, TopsisMethod())
+
+julia> # mcdm() for Saw:
+julia> # mcdm(setting, SawMethod())
+
+julia> # mcdm() with optional parameters:
+julia> # mcdm(setting, GreyMethod(0.6))
+```
+"""
 function mcdm(setting::MCDMSetting, 
     method::T1)::MCDMResult where {T1 <: MCDMMethod}
 
