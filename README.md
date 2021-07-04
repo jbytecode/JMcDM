@@ -1,7 +1,7 @@
 # JMcDM
 A package for Multiple-criteria decision making techniques in Julia.
 
-# The problem
+## The problem
 
 Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 <= w_i <= 1$ where sum of w_i is 1. f_i is either maximum or minimum. g_j(.) is evolution function and it is taken as g_j(x) = x in many methods. A multiple criteria decision problem can be represented using the decision table 
 
@@ -19,6 +19,9 @@ without loss of generality. When A_1, A_2, ..., A_n are alternatives and C_1, C_
 
 The package mainly focused on solving these kind of decision problems.
 
+## For whom?
+
+multiple-criteria decision-making is a inter-discipline subject and there a vast amount of research in the literature in this area. However, the development software is this area is generally focused on a small subset of tools. JMcDM is a developer and researcher friendly Julia package that combines the developed methods, utility functions for implementing new ones, and serves an environment for comparing results of multiple analysis.  
 
 ## Installation
 
