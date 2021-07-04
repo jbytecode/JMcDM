@@ -9,3 +9,9 @@ JMcDM.mcdm
 ```@docs
 JMcDM.summary
 ```
+
+
+## makeDecisionMatrix
+```@docs
+JMcDM.makeDecisionMatrix
+```

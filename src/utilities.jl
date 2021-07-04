@@ -98,6 +98,16 @@ function Base.:-(r1::DataFrameRow, r2::Array{T,1})::Array{T,1} where T <: Number
     return v1 .- r2
 end
 
+"""
+    makeDecisionMatrix(mat; names)
+
+    Create a DataFrame using a decision matrix optionally using column names.
+
+# Arguments:
+ - `mat::Array{T,2}`: Matrix of numbers in any set
+ - `names::Union{Nothing,Array{String,1}}`: Column names. Default is nothing. If column names are not given, they are labelled as Crt 1, Crt 2, ..., etc.
+ 
+"""
 function makeDecisionMatrix(mat::Array{T,2}; names::Union{Nothing,Array{String,1}}=nothing)::DataFrame where {T <: Number}
     _, m = size(mat)
     df = DataFrame()
