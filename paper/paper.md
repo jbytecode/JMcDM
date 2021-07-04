@@ -76,10 +76,10 @@ MOORA [@moora],
 NDS [@Deb_2002], 
 PROMETHEE [@promethee], 
 SAW [@saw; @wsm_wpm],  
-TOPSIS [@topsis], 
+TOPSIS [@topsis],
 VIKOR [@vikor_1, @vikor_2],  
 WASPAS [@waspas], 
-and,
+and
 WPM [@wsm_wpm]
 for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver.  The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
