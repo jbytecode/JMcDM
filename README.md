@@ -14,7 +14,7 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eith
    |       ⋮       |     ⋮     |     ⋮      | ...      |     ⋮      |
    |     A_n     | g_1(A_n)   |  g_2(A_n)  | ...      |  g_m(A_n)  |
 
-\noindent without loss of generality. When A_1, A_2, ..., A_n are alternatives and C_1, C_2, ..., C_m are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If A_i and C_j are strategies of two game players then g_j(A_i) is the gain of the row player when she selects the strategy *i* and the column player selects the strategy C_j. 
+without loss of generality. When A_1, A_2, ..., A_n are alternatives and C_1, C_2, ..., C_m are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If A_i and C_j are strategies of two game players then g_j(A_i) is the gain of the row player when she selects the strategy *i* and the column player selects the strategy C_j. 
 
 
 The package mainly focused on solving these kind of decision problems.
