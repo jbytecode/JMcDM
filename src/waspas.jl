@@ -114,7 +114,22 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 end
 
 
+"""
+        waspas(setting; lambda = 0.5)
 
+Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
+
+# Description 
+waspas() applies the WASPAS method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::WASPASResult`: WASPASResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function waspas(setting::MCDMSetting; lambda::Float64=0.5)::WASPASResult
     waspas(
         setting.df,
