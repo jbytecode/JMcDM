@@ -1,14 +1,18 @@
 """
     aras(decisionMat, weights, fs)
 Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, type of criteria.
+
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
-# Description 
+
+ # Description 
 aras() applies the ARAS method to rank n alternatives subject to m criteria and criteria type vector.
+
 # Output 
 - `::ARASResult`: ARASResult object that holds multiple outputs including scores and best index.
+
 # Examples
 ```julia-repl
 julia> df = DataFrame(
@@ -96,7 +100,16 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
     return result
 end
 
+"""
+    aras(setting)
+Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, type of criteria.
 
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+ # Description 
+aras() applies the ARAS method to rank n alternatives subject to m criteria and criteria type vector.
+"""
 function aras(setting::MCDMSetting)::ARASResult
     aras(
         setting.df,
