@@ -111,7 +111,21 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
     return result
 end
 
+"""
+        vikor(setting; v = 0.5)
 
+Apply VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian) method for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ - `v::Float64`: Optional algorithm parameter. Default is 0.5.
+
+# Description 
+vikor() applies the VIKOR method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
+
+# Output 
+- `::VikorResult`: VikorResult object that holds multiple outputs including scores and best index.
+"""
 function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
     vikor(
         setting.df,
