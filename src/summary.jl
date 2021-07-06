@@ -149,7 +149,18 @@ end
 
 
 
+"""
+        summary(setting, methods)
 
+Apply more methods for a given decision problem. The methods accept standart number of arguments.   
+
+# Arguments:
+ - `setting::MCDMSetting`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `methods::Array{Symbol, 1}`: Array of symbols. The elements can be :topsis, :electre, :cocoso, :copras, :moora, :vikor, :grey, :aras, :saw, :wpm, :waspas, :edas, :marcos, :mabac, :mairca, :copras, :critic
+
+# Description 
+    This method outputs a summarized output using more than MCDM methods in a comparable way. 
+"""
 function summary(setting::MCDMSetting, methods::Array{Symbol,1})
     summary(
         setting.df,
