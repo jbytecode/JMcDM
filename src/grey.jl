@@ -13,7 +13,7 @@
 Applies GRA (Grey Relational Analysis).
 
 # Output 
-- `::GameResult`: GreyResult object that holds many values including ordering of strategies or candidates and best index.
+- `::GreyResult`: GreyResult object that holds many values including ordering of strategies or candidates and best index.
 
 # Examples
 ```julia-repl
@@ -134,7 +134,21 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
 end
 
 
+"""
+        grey(setting; zeta)
 
+    Perform GRA (Grey Relational Analysis) for a given decision matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ - `zeta::Float64`: zeta parameter for the algorithm. The default is 0.5.
+ 
+# Description 
+Applies GRA (Grey Relational Analysis).
+
+# Output 
+- `::GreyResult`: GreyResult object that holds many values including ordering of strategies or candidates and best index.
+"""
 function grey(setting::MCDMSetting; zeta::Float64=0.5)::GreyResult
     grey(
         setting.df,
