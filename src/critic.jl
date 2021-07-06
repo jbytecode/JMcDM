@@ -102,6 +102,21 @@ function critic(decisionMat::DataFrame, fns::Array{Function,1})::CRITICResult
 end
 
 
+"""
+        critic(setting)
+
+Apply CRITIC (Combined Compromise Solution) method for a given matrix and criteria types.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+critic() applies the CRITIC method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::CRITICResult`: CRITICResult object that holds multiple outputs including weighting and best index.
+"""
 function critic(setting::MCDMSetting)::CRITICResult
     critic(
         setting.df, 
