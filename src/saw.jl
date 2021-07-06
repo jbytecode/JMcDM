@@ -3,6 +3,7 @@
 
 Apply SAW (Simple Additive Weighting) method for a given matrix and weights.
 This method also known as WSM (Weighted Sum Model)
+
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
@@ -103,7 +104,22 @@ function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
     return result
 end
 
+"""
+        saw(setting)
 
+Apply SAW (Simple Additive Weighting) method for a given matrix and weights.
+This method also known as WSM (Weighted Sum Model)
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+saw() applies the SAW method to rank n strategies subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::SawResult`: SawResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function saw(setting::MCDMSetting)::SawResult
     saw(
         setting.df,
