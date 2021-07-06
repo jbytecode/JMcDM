@@ -16,7 +16,9 @@ The method is one of the subtypes of MCDMMethod type. See examples.
 - `::MCDMResult`: An object derived from subtypes of MCDMResult type.
 
 # Examples
+
 ```julia-repl
+
 julia> subtypes(MCDMMethod)
 18-element Vector{Any}:
  ArasMethod
@@ -47,6 +49,7 @@ julia> # mcdm(df, w, fns, SawMethod())
 julia> # mcdm() with optional parameters:
 julia> # mcdm(df, w, fns, GreyMethod(0.6))
 ```
+
 """
 function mcdm(df::DataFrame, 
     w::Array{Float64, 1}, 
@@ -97,7 +100,7 @@ end
 
 
 """
-        mcdm(setting, method)
+    mcdm(setting, method)
 
     Perform selected method for a given decision matrix, weight vector, and function list.
 
@@ -112,6 +115,8 @@ The method is one of the subtypes of MCDMMethod type. See examples.
 - `::MCDMResult`: An object derived from subtypes of MCDMResult type.
 
 # Examples
+
+```julia-repl
 julia> # mcdm() for Topsis:
 julia> # mcdm(setting, TopsisMethod())
 
@@ -121,6 +126,7 @@ julia> # mcdm(setting, SawMethod())
 julia> # mcdm() with optional parameters:
 julia> # mcdm(setting, GreyMethod(0.6))
 ```
+
 """
 function mcdm(setting::MCDMSetting, 
     method::T1)::MCDMResult where {T1 <: MCDMMethod}
