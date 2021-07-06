@@ -97,7 +97,21 @@ weightednormalizedMat = w * normalizedMat
     return topsisresult
 end
 
+"""
+        topsis(setting)
 
+Apply TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method 
+for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+topsis() applies the TOPSIS method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
+
+# Output 
+- `::TopsisResult`: TopsisResult object that holds multiple outputs including scores and best index.
+"""
 function topsis(setting::MCDMSetting)::TopsisResult
     topsis(
         setting.df,
