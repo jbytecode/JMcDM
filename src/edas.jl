@@ -134,6 +134,21 @@ function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Func
 end
 
 
+"""
+        edas(setting)
+
+Apply EDAS (Evaluation based on Distance from Average Solution) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+edas() applies the EDAS method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::EDASResult`: EDASResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function edas(setting::MCDMSetting)::EDASResult
     edas(
         setting.df,
