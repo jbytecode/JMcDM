@@ -1,14 +1,18 @@
 """
     copras(decisionMat, weights, fs)
 Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights and, type of criteria.
+
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
-# Description 
+
+ # Description 
 copras() applies the COPRAS method to rank n alternatives subject to m criteria and criteria type vector.
+
 # Output 
 - `::COPRASResult`: COPRASResult object that holds multiple outputs including scores and best index.
+
 # Examples
 ```julia-repl
 julia> decmat = [2.50 240 57 45 1.10 0.333333;
@@ -191,6 +195,20 @@ function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 end
 
 
+
+"""
+    copras(setting)
+Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights and, type of criteria.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+ # Description 
+copras() applies the COPRAS method to rank n alternatives subject to m criteria and criteria type vector.
+
+# Output 
+- `::COPRASResult`: COPRASResult object that holds multiple outputs including scores and best index.
+"""
 function copras(setting::MCDMSetting)::COPRASResult
     copras(
         setting.df,
