@@ -101,7 +101,20 @@ function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 end
 
 
+"""
+        moora(setting)
 
+Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+moora() applies the MOORA method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
+
+# Output 
+- `::MooraResult`: MooraResult object that holds multiple outputs including scores and best index.
+"""
 function moora(setting::MCDMSetting)::MooraResult
     moora(
         setting.df,
