@@ -100,7 +100,21 @@ function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
     return result
 end
 
+"""
+        wpm(setting)
 
+Apply WPM (Weighted Product Method) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+
+# Description 
+wpm() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::WPMResult`: WPMResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function wpm(setting::MCDMSetting)::WPMResult
     wpm(
         setting.df,
