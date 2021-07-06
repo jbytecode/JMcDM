@@ -166,6 +166,26 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
     return result
 end
 
+
+
+"""
+        electre(setting)
+
+Apply ELECTRE (ELimination Et Choice Translating REality) method 
+for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+electre() applies the ELECTRE method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
+C and D values are used to determine the best strategy. If the strategy with the highest C value 
+is same as the strategy with the lowest D value than the solution is unique. Otherwise, two strategies 
+are reported as the solution. 
+
+# Output 
+- `::ElectreResult`: TopsisResult object that holds multiple outputs including scores and best index.
+"""
 function electre(setting::MCDMSetting)::ElectreResult
     electre(
         setting.df,
