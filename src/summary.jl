@@ -155,7 +155,7 @@ end
 Apply more methods for a given decision problem. The methods accept standart number of arguments.   
 
 # Arguments:
- - `setting::MCDMSetting`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `setting::MCDMSetting`: MCDMSetting object. 
  - `methods::Array{Symbol, 1}`: Array of symbols. The elements can be :topsis, :electre, :cocoso, :copras, :moora, :vikor, :grey, :aras, :saw, :wpm, :waspas, :edas, :marcos, :mabac, :mairca, :copras, :critic
 
 # Description 
