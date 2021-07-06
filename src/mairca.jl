@@ -110,6 +110,22 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 end
 
 
+
+"""
+        mairca(setting)
+
+Apply MAIRCA (Multi Attributive Ideal-Real Comparative Analysis) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+mairca() applies the MAIRCA method to rank n alternatives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::MAIRCAResult`: MAIRCAResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function mairca(setting::MCDMSetting)::MAIRCAResult
     mairca(
         setting.df,
