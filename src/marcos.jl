@@ -126,6 +126,21 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 end
 
 
+"""
+        marcos(setting)
+
+Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting 
+ 
+# Description 
+marcos() applies the MARCOS method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::MARCOSResult`: MARCOSResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function marcos(setting::MCDMSetting)::MARCOSResult
     marcos(
         setting.df,
