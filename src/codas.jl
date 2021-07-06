@@ -1,15 +1,19 @@
 """
     codas(decisionMat, weights, fs)
 Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
+
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
  - `tau::Float64`: tau parameter for the algorithm. The default is 0.02.
-# Description 
+
+ # Description 
 codas() applies the CODAS method to rank n alternatives subject to m criteria and criteria type vector.
+
 # Output 
 - `::CODASResult`: CODASResult object that holds multiple outputs including scores and best index.
+
 # Examples
 ```julia-repl
 julia> decmat
@@ -139,7 +143,20 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Func
     return result
 end
 
+"""
+    codas(setting; tau = 0.02)
+Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
 
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ - `tau::Float64`: tau parameter for the algorithm. The default is 0.02.
+
+ # Description 
+codas() applies the CODAS method to rank n alternatives subject to m criteria and criteria type vector.
+
+# Output 
+- `::CODASResult`: CODASResult object that holds multiple outputs including scores and best index.
+"""
 function codas(setting::MCDMSetting; tau::Float64=0.02)::CODASResult
     codas(
         setting.df,
