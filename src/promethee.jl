@@ -73,7 +73,7 @@ Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evalua
  - `decisionMatrix::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{Function, 1}`: m-vector of functions that are either maximum or minimum.
- - `pref::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
+ - `prefs::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
  - `qs::Array{Float64, 1}`: m-vector of q parameters that is used in corresponding preference function.
  - `ps::Array{Float64, 1}`: m-vector of p parameters that is used in corresponding preference function
  
@@ -81,7 +81,7 @@ Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evalua
 promethee() applies the PROMETHEE method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
-- `::Result`: PrometheeResult object that holds multiple outputs including scores and best index.
+- `::PrometheeResult`: PrometheeResult object that holds multiple outputs including scores and best index.
 
 # Examples
 ```julia-repl
@@ -186,7 +186,24 @@ end
 
 
 
+"""
+        promethee(setting, prefs, qs, ps)
 
+Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations) method for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ - `prefs::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
+ - `qs::Array{Float64, 1}`: m-vector of q parameters that is used in corresponding preference function.
+ - `ps::Array{Float64, 1}`: m-vector of p parameters that is used in corresponding preference function
+ 
+# Description 
+promethee() applies the PROMETHEE method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
+
+# Output 
+- `::PrometheeResult`: PrometheeResult object that holds multiple outputs including scores and best index.
+
+"""
 function promethee(setting::MCDMSetting, prefs::Array{Function,1}, qs::Array, ps::Array)::PrometheeResult
     promethee(
         setting.df,
