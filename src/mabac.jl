@@ -121,6 +121,22 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 end
 
 
+
+"""
+        mabac(setting)
+
+Apply MABAC (Multi-Attributive Border Approximation area Comparison) for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object. 
+ 
+# Description 
+mabac() applies the MABAC method to rank n alternatives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::MABACResult`: MABACResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function mabac(setting::MCDMSetting)::MABACResult
     mabac(
         setting.df,
