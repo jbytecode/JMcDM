@@ -1,5 +1,5 @@
 """
-        cocoso(decisionMat, weights, fns, lambda)
+        cocoso(decisionMat, weights, fns; lambda)
 
 Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weights.
 
@@ -124,7 +124,22 @@ function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 end
 
 
+"""
+        cocoso(setting; lambda)
 
+Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weights.
+
+# Arguments:
+ - `setting::MCDMSetting`: MCDMSetting object 
+ - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
+
+# Description 
+cocoso() applies the CoCoSo method to rank n alterntives subject to m criteria which are supposed to be 
+either maximized or minimized.
+
+# Output 
+- `::CoCoSoResult`: CoCoSoResult object that holds multiple outputs including scores, rankings, and best index.
+"""
 function cocoso(setting::MCDMSetting; lambda::Float64=0.5)::CoCoSoResult
     cocoso(
         setting.df,

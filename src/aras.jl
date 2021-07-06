@@ -109,6 +109,9 @@ Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, t
  
  # Description 
 aras() applies the ARAS method to rank n alternatives subject to m criteria and criteria type vector.
+
+# Output 
+- `::ARASResult`: ARASResult object that holds multiple outputs including scores and best index.
 """
 function aras(setting::MCDMSetting)::ARASResult
     aras(
