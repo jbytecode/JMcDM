@@ -134,11 +134,11 @@ end
 
 
 """
-    AHP(comparisonMatrix, criteriaComparisonMatrix)
+    AHP(comparisonMatrixList, criteriaComparisonMatrix)
 Apply AHP (Analytical Hierarchy Process) for a given comparison matrix and criteria comparison matrix.
 
 # Arguments:
- - `comparisonMatrix::Array{DataFrame,1}`: Array of comparison matrices for all of the criteria. 
+ - `comparisonMatrixList::Array{DataFrame,1}`: Array of comparison matrices for all of the criteria. 
  - `criteriaComparisonMatrix::DataFrame`: Criteria comparison matrix for AHP (Comparison of columns). 
  
  
