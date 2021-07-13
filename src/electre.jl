@@ -16,7 +16,7 @@ is same as the strategy with the lowest D value than the solution is unique. Oth
 are reported as the solution. 
 
 # Output 
-- `::ElectreResult`: TopsisResult object that holds multiple outputs including scores and best index.
+- `::ElectreResult`: ElectreResult object that holds multiple outputs including scores and best index.
 
 # Examples
 ```julia-repl
@@ -184,7 +184,7 @@ is same as the strategy with the lowest D value than the solution is unique. Oth
 are reported as the solution. 
 
 # Output 
-- `::ElectreResult`: TopsisResult object that holds multiple outputs including scores and best index.
+- `::ElectreResult`: ElectreResult object that holds multiple outputs including scores and best index.
 """
 function electre(setting::MCDMSetting)::ElectreResult
     electre(
