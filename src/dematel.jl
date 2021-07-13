@@ -5,7 +5,7 @@ Apply Dematel for a given comparison matrix.
 
 
 # Arguments:
- - `comparisonMat::DataFrame`: n × m matrix of input values in DataFrame format (for convenience). Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
+ - `comparisonMat::DataFrame`: n × n matrix of input values in DataFrame format (for convenience) where n is the number of criteria. Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
  - `threshold::Union{Nothing, Float64}`: Optional threshold used in calculating values of influence matrix. It is calculated when the argument is omitted. 
 
 # Description 
