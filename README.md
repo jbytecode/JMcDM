@@ -3,7 +3,7 @@ A package for Multiple-criteria decision making techniques in Julia.
 
 ## The problem
 
-Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 <= w_i <= 1$ where sum of w_i is 1. f_i is either maximum or minimum. g_j(.) is evolution function and it is taken as g_j(x) = x in many methods. A multiple criteria decision problem can be represented using the decision table 
+Suppose a decision process has n alternatives and m criteria  which are either to be maximized or minimized. Each single criterion has a weight 0 <= w_i <= 1 where sum of w_i is 1. f_i is either maximum or minimum. g_j(.) is evolution function and it is taken as g_j(x) = x in many methods. A multiple criteria decision problem can be represented using the decision table 
 
    | **Criteria**  |   C_1    |   C_2    | ...  |   C_m    |
    | :-----------: | :--------: | :--------: | :------: | :--------: |
