@@ -1,7 +1,7 @@
 authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>"]
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
