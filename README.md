@@ -45,7 +45,7 @@ in Julia REPL.
 ## Package Dependencies
 
 Since the Julia package manager installs all of the dependencies automatically, user don't need to
-install them manually. The package is dependent the listed work below:
+install them manually. The package dependencies are listed below:
 - Cbc
 - DataFrames
 - JuMP
