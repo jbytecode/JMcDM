@@ -50,8 +50,29 @@ end
 
 
 """
-    Apply maximin method for a given decision matrix
+    maximin(decisionMat)
 
+    Apply Maximin method for a given decision matrix (for convenience, in type of DataFrame).
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ 
+# Output 
+- `::MaximinResult`: MaximinResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+
+julia> result = maximin(dm)
+```
 """
 function maximin(decisionMatrix::DataFrame)::MaximinResult
 
