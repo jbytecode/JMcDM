@@ -29,7 +29,7 @@ bibliography: paper.bib
 ---
 
 # Summary
-```JMcDM``` is a ```Julia``` package that implements some leading multiple-criteria decision making tools for both researchers and developers. ```Julia```'s REPL is well suited for researchers to perform their analysis using different methods and comparing their results. ```JMcDM``` also provides the necessary infrastructure and utility functions for writing recently published methods.  The proposed package has brought MCDM tools to a relatively new language such as ```Julia``` with its significant performance promises. The methods developed in the package are also designed to be familiar to users who previously used ```R``` and ```Python``` languages. The paper presents the basics of the design, example usage, and code snippets.
+```JMcDM``` is a ```Julia``` package that implements some leading multiple-criteria decision-making tools for both researchers and developers. By having a REPL tool, ```Julia``` is well suited for researchers to perform their analysis using different methods and comparing their results. ```JMcDM``` also provides the necessary infrastructure, utility functions, and a standardized API for implementing recently published methods.  The proposed package has brought MCDM (Multiple-Criteria Decision-Making) tools to a relatively new language such as ```Julia``` with its significant performance promises. Besides Julia being a new language, the methods developed in the package are designed to be familiar to users who previously used ```R``` and ```Python``` languages. The paper presents the basics of the design, example usage, and code snippets.
 
 
 # Introduction
@@ -87,7 +87,7 @@ and
 WPM [@wsm_wpm]
 for multiple-criteria tools. This list of selected methods includes both classical (TOPSIS, ELECTRE, PROMETHEE, etc.) and modern (COCOSO, MABAC, MARCOS, etc.) tools of the relevant literature. 
 
-The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver. Although these methods may seem different from the methods mentioned above, they are basically members of the same method family and solve similar problems. DEA differs from the above methods by not being an outranking method. Zero-sum game is also a multi-criteria decision-making problem, but this time, unlike outranking methods, both the rows and columns of the decision matrix show alternative strategies. 
+The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver. Although these methods may seem different from the methods mentioned above, they are basically members of the same method family and solve similar problems. DEA differs from the above methods in that it is not an outranking method but compares efficiencies of decision units. Zero-sum game is also a multi-criteria decision-making problem, but this time, unlike outranking methods, both the rows and columns of the decision matrix show alternative strategies. 
 
 The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
