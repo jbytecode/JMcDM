@@ -58,8 +58,8 @@ Multiple-criteria decision-making (MCDM) tools provide several algorithms for or
 
 
 # Statement of need 
-The applications mentioned above are lacking in at least one of the features such as the number of methods included, being programmable, being free, and the results being comparable by the researcher.
-```JMcDM``` is designed to provide a developer-friendly library for solving multiple-criteria decision problems in ```Julia``` [@julia]. Since ```Julia``` is a dynamic language, it is also useful for researchers that familiar with REPL (Read-Eval-Print-Loop) environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games, and methods for single criterion methods. ```JMcDM``` clearly differs from the software cited above in terms of the number of methods it has, providing the necessary environment for writing new methods, and the ability to compare multiple results.
+While the applications mentioned above are lacking in at least one of the features such as the number of methods included, being programmable, being free, and the results being comparable by the researcher; ```JMcDM``` clearly differs as it solves these problems.
+```JMcDM``` is designed to provide a developer-friendly library for solving multiple-criteria decision problems in ```Julia``` [@julia]. Since ```Julia``` is a dynamic language, it is also useful for researchers that familiar with REPL (Read-Eval-Print-Loop) environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games, and methods for single criterion methods. 
 
 The package implements methods for 
 AHP [@ahp],
