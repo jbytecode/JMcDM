@@ -42,6 +42,9 @@ include("summary.jl")
 include("mcdm.jl")
 include("print.jl")
 
+# export imported functions
+export DataFrame
+
 # export MCDM methods
 export MCDMMethod 
 export ArasMethod
