@@ -122,7 +122,7 @@ In this sample problem, a decision maker is subject to select an apartment by co
 The data can be entered as a two-dimensional array (matrix) or as a DataFrame object:
 
 ```julia
-julia> using JMcDM, DataFrames
+julia> using JMcDM
 julia> df = DataFrame(
 :age        => [6.0, 4, 12],
 :size       => [140.0, 90, 140],

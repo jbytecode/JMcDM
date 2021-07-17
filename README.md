@@ -118,7 +118,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 ## Example
 
 ```julia
-julia> using JMcDM, DataFrames
+julia> using JMcDM
 julia> df = DataFrame(
 :age        => [6.0, 4, 12],
 :size       => [140.0, 90, 140],
