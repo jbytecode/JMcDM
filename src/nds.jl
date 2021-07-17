@@ -95,7 +95,7 @@ end
     Sort multidimensional data using non-dominated sorting algorithm.
 
 # Arguments
-- `data::DataFrame`: n x k desicion matrix with n cases and k critera.
+- `data::DataFrame`: n x k desicion matrix with n cases and k criteria.
 
 # Output 
 - `::NDSResult`: NDSResult object that holds multiple outputs including ranks and best index.
