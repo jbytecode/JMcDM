@@ -32,7 +32,8 @@ bibliography: paper.bib
 ```JMcDM``` is a ```Julia``` package that implements some leading multiple-criteria decision making tools for both researchers and developers. ```Julia```'s REPL is well suited for researchers to perform their analysis using different methods and comparing their results. ```JMcDM``` also provides the necessary infrastructure and utility functions for writing recently published methods.  The proposed package has brought MCDM tools to a relatively new language such as ```Julia``` with its significant performance promises. The methods developed in the package are also designed to be familiar to users who previously used ```R``` and ```Python``` languages. The paper presents the basics of the design, example usage, and code snippets.
 
 
-# State of the field
+# Introduction
+
 The one-dimensional array $a$ is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points.
 
 In multi-dimensional case, the binary domination operator $\succ$ applied on points $a$ and $b$, $a \succ b$, is true iif each item in $a$ is not worse than the correspoing item in $b$ and at least one item is better than the corresponding item in $b$ [@Deb_2002]. On the other hand, the more relaxed operator $\succeq$ returns true if each item in $a$ is as good as the corresponding item in $b$ [@greco2016multiple]. Several outranking methods in MCDM (Multiple-Criteria Decision Making) define a unique ranking mechanism to select the best alternative among others.
@@ -50,11 +51,14 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eith
 
 \noindent without loss of generality. When $A_1$, $A_2$, $\dots$, $A_n$ are alternatives and $C_1$, $C_2$, $\dots$, $C_m$ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If $A_i$ and $C_j$ are strategies of two game players then $g_j(A_i)$ is the gain of the row player when she selects the strategy $i$ and the column player selects the strategy $C_j$. 
 
-Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. ```PyTOPS``` is a Python tool for TOPSIS [@PyTOPS]. ```Super Decisions``` is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) [@superdecision]. ```Visual Promethee``` implements Promethee method on Windows platforms [@visualpromethee]. ```M-BACBETH``` is an other commercial software product that implements MACBETH with an easy to use GUI [@macbeth]. ```Sanna``` is a standard ```MS Excel``` add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) [@sanna]. ```DEAFrontier``` software requires an ```Excel``` add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard ```MS Excel Solver```) [@deafrontier].
+# State of the field
+
+Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weigths when there is uncertainity. Although some algorithms are suitable for hand calculations, a computer software is often required. While some previous applications only focused on a single method, some applications appear to include multiple methods. ```PyTOPS``` is a Python tool for TOPSIS [@PyTOPS]. ```Super Decisions``` is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) [@superdecision]. ```Visual Promethee``` implements Promethee method on Windows platforms [@visualpromethee]. ```M-BACBETH``` is an other commercial software product that implements MACBETH with an easy to use GUI [@macbeth]. ```Sanna``` is a standard ```MS Excel``` add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) [@sanna]. ```DEAFrontier``` software requires an ```Excel``` add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard ```MS Excel Solver```) [@deafrontier]. 
 
 
 
 # Statement of need 
+The applications mentioned above are lacking in at least one of the features such as the number of methods included, being programmable, being free, and the results being comparable by the researcher.
 ```JMcDM``` is designed to provide a developer-friendly library for solving multiple-criteria decision problems in ```Julia``` [@julia]. Since ```Julia``` is a dynamic language, it is also useful for researchers that familiar with REPL (Read-Eval-Print-Loop) environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games, and methods for single criterion methods. ```JMcDM``` clearly differs from the software cited above in terms of the number of methods it has, providing the necessary environment for writing new methods, and the ability to compare multiple results.
 
 The package implements methods for 
@@ -81,7 +85,11 @@ VIKOR [@vikor_1; @vikor_2],
 WASPAS [@waspas], 
 and
 WPM [@wsm_wpm]
-for multiple-criteria tools. The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver.  The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
+for multiple-criteria tools. This list of selected methods includes both classical (TOPSIS, ELECTRE, PROMETHEE, etc.) and modern (COCOSO, MABAC, MARCOS, etc.) tools of the relevant literature. 
+
+The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver. Although these methods may seem different from the methods mentioned above, they are basically members of the same method family and solve similar problems. DEA differs from the above methods by not being an outranking method. Zero-sum game is also a multi-criteria decision-making problem, but this time, unlike outranking methods, both the rows and columns of the decision matrix show alternative strategies. 
+
+The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
 # Installation and basic usage
 
