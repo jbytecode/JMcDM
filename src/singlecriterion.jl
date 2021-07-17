@@ -186,8 +186,29 @@ end
 
 
 """
-    Apply minimin method for a given decision matrix
+    minimin(decisionMat)
 
+    Apply Minimin method for a given decision matrix (for convenience, in type of DataFrame).
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ 
+# Output 
+- `::MiniminResult`: Minimin object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+
+julia> result = minimin(dm)
+```
 """
 function minimin(decisionMatrix::DataFrame)::MiniminResult
 
@@ -210,8 +231,32 @@ end
 
 
 """
-    Apply Savage method for a given decision matrix
+    savage(decisionMat)
 
+    Apply Savage method for a given decision matrix (for convenience, in type of DataFrame).
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ 
+# Output 
+- `::SavageResult`: SavageResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+
+julia> result = savage(dm)
+
+julia> result.bestIndex 
+4
+```
 """
 function savage(decisionMatrix::DataFrame)::SavageResult
 
@@ -238,9 +283,35 @@ function savage(decisionMatrix::DataFrame)::SavageResult
     return result
 end
 
-"""
-    Apply Hurwicz method for a given decision matrix
 
+"""
+    hurwicz(decisionMat; alpha = 0.5)
+
+    Apply Hurwicz method for a given decision matrix (for convenience, in type of DataFrame).
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `alpha::Float64`: The optional alpha value for the Hurwicz method. Default is 0.5.
+ 
+# Output 
+- `::HurwiczResult`: HurwiczResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+
+julia> result = hurwicz(dm)
+
+julia> result.bestIndex 
+3
+```
 """
 function hurwicz(decisionMatrix::DataFrame; alpha::Float64=0.5)::HurwiczResult
 
@@ -265,8 +336,33 @@ end
 
 
 """
-    Apply MLE (Maximum Likelihood) method for a given decision matrix
+    mle(decisionMat, weights)
 
+    Apply MLE (Maximum Likelihood) method for a given decision matrix (for convenience, in type of DataFrame) and weights.
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `weights::Array{Float64,1}`: Array of weights for each criterion that sums up to 1.0.
+ 
+# Output 
+- `::MLEResult`: MLEResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+julia> weights = [0.2, 0.5, 0.2, 0.1]
+julia> result = mle(dm)
+
+julia> result.bestIndex 
+2
+```
 """
 function mle(decisionMatrix::DataFrame, weights::Array{Float64,1})::MLEResult
 
@@ -290,8 +386,33 @@ end
 
 
 """
-    Apply Expected Regret method for a given decision matrix
+    expectedregret(decisionMat, weights)
 
+    Apply Expected Regret method for a given decision matrix (for convenience, in type of DataFrame) and weights.
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `weights::Array{Float64,1}`: Array of weights for each criterion that sums up to 1.0.
+ 
+# Output 
+- `::ExpectedRegretResult`: ExpectedRegretResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+julia> dm = makeDecisionMatrix(mat)
+julia> weights = [0.2, 0.5, 0.2, 0.1]
+julia> result = expectedregret(dm)
+
+julia> result.bestIndex 
+2
+```
 """
 function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
 
