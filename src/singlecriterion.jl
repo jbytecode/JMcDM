@@ -1,6 +1,26 @@
 """
-    Apply Laplace method for a given decision matrix
+    laplace(decisionMat)
 
+    Apply Laplace method for a given decision matrix (for convenience, in type of DataFrame).
+
+# Arguments:
+ - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ 
+# Output 
+- `::LaplaceResult`: LaplaceResult object that holds multiple outputs including the best alternative.
+
+# Examples
+```julia-repl
+julia> mat = [
+        3000 2750 2500 2250;
+        1500 4750 8000 7750;
+        2000 5250 8500 11750
+]
+
+julia> dm = makeDecisionMatrix(mat)
+
+julia> result = laplace(dm)
+```
 """
 function laplace(decisionMatrix::DataFrame)::LaplaceResult
 
