@@ -5,6 +5,22 @@ using DataFrames
 
 include("playground.jl")
 
+@testset "Pretty printing of results" begin
+    @testset "Pretty printing of TopsisResult" begin
+        t = TopsisResult(
+            DataFrame(rand(3,4), :auto),
+            rand(3),
+            DataFrame(rand(3,4), :auto),
+            DataFrame(rand(3,4), :auto),
+            1,
+            [1, 2, 3])
+        io = IOBuffer()
+        show(io, t)
+        str_expected = String(take!(io))
+        @test str_expected == "Scores:\n[1.0, 2.0, 3.0]\nBest indices:\n1\n"
+    end
+end
+
 @testset "Euclidean distance" begin
     @test euclidean([0.0, 1.0, 2.0], [0.0, 1.0, 2.0]) == 0.0
     @test euclidean([0.0, 0.0, 0.0]) == 0.0
