@@ -19,6 +19,22 @@ using JMcDM
         str_expected = String(take!(io))
         @test str_expected == "Scores:\n[1.0, 2.0, 3.0]\nBest indices:\n1\n"
     end
+
+    @testset "Pretty printing of ARAS Result" begin
+        t = ARASResult(
+            rand(3),
+            rand(3,3),
+            rand(3,3),
+            rand(3),
+            [1.0, 2.0, 3.0],
+            [3, 2, 1],
+            2
+        )
+        io = IOBuffer()
+        show(io, t)
+        str_expected = String(take!(io))
+        @test str_expected == "Scores:\n[1.0, 2.0, 3.0]\nOrderings: \n[3, 2, 1]\nBest indices:\n2\n" 
+    end
 end
 
 @testset "Euclidean distance" begin
