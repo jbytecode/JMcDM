@@ -1,11 +1,16 @@
 module JMcDM
 
+# Dependencies
 using DataFrames
 using LinearAlgebra
 using JuMP
 using Cbc
 using StatsBase
 using Statistics
+
+# for Pretty printing
+# of MCDM results
+import Base.show
 
 
 # includes 
