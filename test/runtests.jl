@@ -1,5 +1,5 @@
 using Test
-using DataFrames
+import DataFrames: DataFrame, DataFrameRow
 
 
 using JMcDM
@@ -37,6 +37,7 @@ using JMcDM
     end
 end
 
+@testset "Utility functions" begin
 @testset "Euclidean distance" begin
     @test euclidean([0.0, 1.0, 2.0], [0.0, 1.0, 2.0]) == 0.0
     @test euclidean([0.0, 0.0, 0.0]) == 0.0
@@ -132,6 +133,383 @@ end
     @test names(dfwithnames)[4] == "EE"
     @test names(dfwithnames)[5] == "FG"
 end
+
+
+@testset "Reverse minimum & maximum array" begin
+
+    fns = [minimum, maximum, maximum, minimum, maximum]
+    revfns = [maximum, minimum, minimum, maximum, minimum]
+
+    @test reverseminmax(fns) == revfns 
+
+    @test reverseminmax(revfns) == fns 
+end
+
+@testset "Make Array of minimum and maximum" begin
+    result1 = makeminmax([maximum, maximum, maximum, maximum])
+
+    @test typeof(result1) == Array{Function,1}
+
+    @test typeof(result1[1]([1.0, 2.0, 3.0])) == Float64 
+
+    @test result1[1]([1.0, 2.0, 3.0]) == 3.0 
+
+end
+
+end # end of utility function test
+
+
+@testset "Single Criterion Decision Making tools" begin
+@testset "Laplace" begin
+    
+    tol = 0.00001
+
+    mat = [
+        3000 2750 2500 2250;
+        1500 4750 8000 7750;
+        2000 5250 8500 11750
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = laplace(dm)
+
+    @test isa(result, LaplaceResult)
+
+    @test isapprox(result.expected_values, [2625.0, 5500, 6875], atol=tol)
+
+    @test result.bestIndex == 3
+end
+
+
+@testset "Maximin" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = maximin(dm)
+
+    @test isa(result, MaximinResult)
+
+    @test isapprox(result.rowmins, [18, 18, 24, 20], atol=tol) 
+
+    @test result.bestIndex == 3
+end
+
+
+@testset "Maximax" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = maximax(dm)
+
+    @test isa(result, MaximaxResult)
+
+    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
+     
+    @test result.bestIndex in [2, 3]
+end
+
+
+@testset "Minimax" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = minimax(dm)
+
+    @test isa(result, MinimaxResult)
+
+    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
+     
+    @test result.bestIndex == 1
+end
+
+
+@testset "Minimin" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = minimin(dm)
+
+    @test isa(result, MiniminResult)
+
+    @test isapprox(result.rowmins, [18, 18,24,20], atol=tol) 
+     
+    @test result.bestIndex in [1, 2]
+end
+
+
+
+@testset "Savage" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = savage(dm)
+
+    @test isa(result, SavageResult)
+     
+    @test result.bestIndex == 4
+
+end
+
+
+
+
+
+@testset "Hurwicz" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = hurwicz(dm)
+
+    @test isa(result, HurwiczResult)
+     
+    @test result.bestIndex == 3
+
+end
+
+
+
+@testset "Maximum likelihood for single criterion" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    weights = [0.2, 0.5, 0.2, 0.1]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = mle(dm, weights)
+
+    @test isa(result, MLEResult)
+     
+    @test result.bestIndex == 2
+    
+    @test isapprox(result.scores, [24, 29.2, 27, 27], atol=tol) 
+end
+
+
+
+@testset "Expected Regret" begin
+    
+    tol = 0.00001
+
+    mat = [
+        26 26 18 22;
+        22 34 30 18;
+        28 24 34 26;
+        22 30 28 20
+    ]
+
+    weights = [0.2, 0.5, 0.2, 0.1]
+
+    dm = makeDecisionMatrix(mat)
+
+    result = expectedregret(dm, weights)
+
+    @test isa(result, ExpectedRegretResult)
+     
+    @test result.bestIndex == 2
+    
+    @test isapprox(result.scores, [8, 2.8, 5, 5], atol=tol) 
+end
+end # end of single criterion tools
+
+
+@testset "Zero Sum Games" begin
+@testset "Game" begin
+    
+    tol = 0.00001
+
+    mat = [-2 6 3;
+        3 -4 7;
+        -1 2 4]
+ 
+    dm = makeDecisionMatrix(mat)
+    result = game(dm)
+
+    @test isa(result, GameResult)
+
+    @test result.value == 0.6666666666666661
+
+    @test isapprox(result.row_player_probabilities, [0.4666667, 0.5333333, 0.0000000], atol=tol) 
+        
+end
+
+@testset "Game - Rock & Paper & Scissors" begin
+
+    tol = 0.00001
+
+    mat = [0 -1 1;
+      1 0 -1;
+       -1 1 0]
+ 
+    dm = makeDecisionMatrix(mat)
+    result = game(dm)
+
+    @test isa(result, GameResult)
+
+    @test result.value == 0.0
+
+    @test isapprox(result.row_player_probabilities, [0.333333, 0.333333, 0.33333], atol=tol) 
+        
+end
+
+end # end of zero sum games
+
+@testset "Data Envelopment" begin
+    
+    tol = 0.00001
+
+    x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95]
+    x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306]
+
+    out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165]
+    inp = hcat(x1, x2)
+
+    result::DataEnvelopResult = dataenvelop(inp, out)
+
+    @test isa(result, DataEnvelopResult)
+
+
+    @test result.orderedcases == [:Case8, :Case2, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3]
+
+    @test isapprox(result.efficiencies, 
+        [0.9879815986198964, 0.9999999999999999, 
+        0.8959653733189055, 0.9421686746987951, 
+        0.9659435120753173, 0.9715662650602411, 
+        0.9911164465786314, 1.0, 0.9841048789857857], atol=tol)
+
+   @test isapprox(result.references[:, :Case1],
+        [0.0, 0.544106, 0.0, 0.0, 0.0, 
+        0.0, 0.0, 0.496377, 0.0], atol=tol) 
+
+   @test isapprox(result.references[:, :Case2],
+        [0.0, 1, 0, 0, 0, 0, 0, 0, 0], atol=tol) 
+     
+    @test isapprox(result.references[:, :Case3],
+        [0.0, 0.266193, 0, 0, 0, 0, 0, 0.588654, 0], atol=tol) 
+
+    @test isapprox(result.references[:, :Case4],
+        [0.0, 0.860241, 0, 0, 0, 0, 0, 0.0409639, 0], atol=tol) 
+    
+    @test isapprox(result.references[:, :Case5],
+        [0.0, 0.314982, 0, 0, 0, 0, 0, 0.727957, 0], atol=tol) 
+
+    @test isapprox(result.references[:, :Case6],
+        [0.0, 0.96 , 0, 0, 0, 0, 0, 0, 0], atol=tol) 
+    
+    @test isapprox(result.references[:, :Case7],
+        [0.0, 0 , 0, 0, 0, 0, 0, 1.01176, 0], atol=tol)  
+        
+    @test isapprox(result.references[:, :Case8],
+        [0.0, 0 , 0, 0, 0, 0, 0, 1.0, 0], atol=tol) 
+        
+    @test isapprox(result.references[:, :Case9],
+        [0.0, 0.774923 , 0, 0, 0, 0, 0, 0.286833, 0], atol=tol) 
+        
+end
+
+
+@testset "Grey Relational Analysis" begin
+    
+    tol = 0.0001
+    
+    df = DataFrame(
+        :K1 => [105000.0, 120000, 150000, 115000, 135000],
+        :K2 => [105.0, 110, 120, 105, 115],
+        :K3 => [10.0, 15, 12, 20, 15],
+        :K4 => [4.0, 4, 3, 4, 5],
+        :K5 => [300.0, 500, 550, 600, 400],
+        :K6 => [10.0, 8, 12, 9, 9]
+    )
+    functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
+
+
+
+    w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
+
+    result = grey(df, w, functionlist)
+
+    @test isa(result, GreyResult)
+    
+    @test isapprox(result.scores, [0.525, 0.7007142857142857, 
+    0.5464285714285715, 0.5762820512820512, 0.650952380952381], atol=tol)
+
+    @test result.bestIndex == 2
+
+    setting = MCDMSetting(df, w, functionlist)
+    result2 = grey(setting)
+    @test result2 isa GreyResult
+    @test result2.scores == result.scores 
+    @test result2.bestIndex == result.bestIndex
+
+    result3 = mcdm(setting, GreyMethod())
+    @test result3 isa GreyResult
+    @test result3.scores == result.scores 
+    @test result3.bestIndex == result.bestIndex
+end
+
+
 
 @testset "TOPSIS" begin
     tol = 0.00001
@@ -438,354 +816,6 @@ end
 end
 
 
-@testset "Laplace" begin
-    
-    tol = 0.00001
-
-    mat = [
-        3000 2750 2500 2250;
-        1500 4750 8000 7750;
-        2000 5250 8500 11750
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = laplace(dm)
-
-    @test isa(result, LaplaceResult)
-
-    @test isapprox(result.expected_values, [2625.0, 5500, 6875], atol=tol)
-
-    @test result.bestIndex == 3
-end
-
-
-@testset "Maximin" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = maximin(dm)
-
-    @test isa(result, MaximinResult)
-
-    @test isapprox(result.rowmins, [18, 18, 24, 20], atol=tol) 
-
-    @test result.bestIndex == 3
-end
-
-
-@testset "Maximax" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = maximax(dm)
-
-    @test isa(result, MaximaxResult)
-
-    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
-     
-    @test result.bestIndex in [2, 3]
-end
-
-
-@testset "Minimax" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = minimax(dm)
-
-    @test isa(result, MinimaxResult)
-
-    @test isapprox(result.rowmaxs, [26, 34, 34, 30], atol=tol) 
-     
-    @test result.bestIndex == 1
-end
-
-
-@testset "Minimin" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = minimin(dm)
-
-    @test isa(result, MiniminResult)
-
-    @test isapprox(result.rowmins, [18, 18,24,20], atol=tol) 
-     
-    @test result.bestIndex in [1, 2]
-end
-
-
-
-@testset "Savage" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = savage(dm)
-
-    @test isa(result, SavageResult)
-     
-    @test result.bestIndex == 4
-
-end
-
-
-
-
-
-@testset "Hurwicz" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = hurwicz(dm)
-
-    @test isa(result, HurwiczResult)
-     
-    @test result.bestIndex == 3
-
-end
-
-
-
-@testset "Maximum likelihood for single criterion" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    weights = [0.2, 0.5, 0.2, 0.1]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = mle(dm, weights)
-
-    @test isa(result, MLEResult)
-     
-    @test result.bestIndex == 2
-    
-    @test isapprox(result.scores, [24, 29.2, 27, 27], atol=tol) 
-end
-
-
-
-@testset "Expected Regret" begin
-    
-    tol = 0.00001
-
-    mat = [
-        26 26 18 22;
-        22 34 30 18;
-        28 24 34 26;
-        22 30 28 20
-    ]
-
-    weights = [0.2, 0.5, 0.2, 0.1]
-
-    dm = makeDecisionMatrix(mat)
-
-    result = expectedregret(dm, weights)
-
-    @test isa(result, ExpectedRegretResult)
-     
-    @test result.bestIndex == 2
-    
-    @test isapprox(result.scores, [8, 2.8, 5, 5], atol=tol) 
-end
-
-
-
-@testset "Game" begin
-    
-    tol = 0.00001
-
-    mat = [-2 6 3;
-        3 -4 7;
-        -1 2 4]
- 
-    dm = makeDecisionMatrix(mat)
-    result = game(dm)
-
-    @test isa(result, GameResult)
-
-    @test result.value == 0.6666666666666661
-
-    @test isapprox(result.row_player_probabilities, [0.4666667, 0.5333333, 0.0000000], atol=tol) 
-        
-end
-
-@testset "Game - Rock & Paper & Scissors" begin
-
-    tol = 0.00001
-
-    mat = [0 -1 1;
-      1 0 -1;
-       -1 1 0]
- 
-    dm = makeDecisionMatrix(mat)
-    result = game(dm)
-
-    @test isa(result, GameResult)
-
-    @test result.value == 0.0
-
-    @test isapprox(result.row_player_probabilities, [0.333333, 0.333333, 0.33333], atol=tol) 
-        
-end
-
-
-@testset "Data Envelopment" begin
-    
-    tol = 0.00001
-
-    x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95]
-    x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306]
-
-    out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165]
-    inp = hcat(x1, x2)
-
-    result::DataEnvelopResult = dataenvelop(inp, out)
-
-    @test isa(result, DataEnvelopResult)
-
-
-    @test result.orderedcases == [:Case8, :Case2, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3]
-
-    @test isapprox(result.efficiencies, 
-        [0.9879815986198964, 0.9999999999999999, 
-        0.8959653733189055, 0.9421686746987951, 
-        0.9659435120753173, 0.9715662650602411, 
-        0.9911164465786314, 1.0, 0.9841048789857857], atol=tol)
-
-   @test isapprox(result.references[:, :Case1],
-        [0.0, 0.544106, 0.0, 0.0, 0.0, 
-        0.0, 0.0, 0.496377, 0.0], atol=tol) 
-
-   @test isapprox(result.references[:, :Case2],
-        [0.0, 1, 0, 0, 0, 0, 0, 0, 0], atol=tol) 
-     
-    @test isapprox(result.references[:, :Case3],
-        [0.0, 0.266193, 0, 0, 0, 0, 0, 0.588654, 0], atol=tol) 
-
-    @test isapprox(result.references[:, :Case4],
-        [0.0, 0.860241, 0, 0, 0, 0, 0, 0.0409639, 0], atol=tol) 
-    
-    @test isapprox(result.references[:, :Case5],
-        [0.0, 0.314982, 0, 0, 0, 0, 0, 0.727957, 0], atol=tol) 
-
-    @test isapprox(result.references[:, :Case6],
-        [0.0, 0.96 , 0, 0, 0, 0, 0, 0, 0], atol=tol) 
-    
-    @test isapprox(result.references[:, :Case7],
-        [0.0, 0 , 0, 0, 0, 0, 0, 1.01176, 0], atol=tol)  
-        
-    @test isapprox(result.references[:, :Case8],
-        [0.0, 0 , 0, 0, 0, 0, 0, 1.0, 0], atol=tol) 
-        
-    @test isapprox(result.references[:, :Case9],
-        [0.0, 0.774923 , 0, 0, 0, 0, 0, 0.286833, 0], atol=tol) 
-        
-end
-
-
-@testset "Grey Relational Analysis" begin
-    
-    tol = 0.0001
-    
-    df = DataFrame(
-        :K1 => [105000.0, 120000, 150000, 115000, 135000],
-        :K2 => [105.0, 110, 120, 105, 115],
-        :K3 => [10.0, 15, 12, 20, 15],
-        :K4 => [4.0, 4, 3, 4, 5],
-        :K5 => [300.0, 500, 550, 600, 400],
-        :K6 => [10.0, 8, 12, 9, 9]
-    )
-    functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
-
-
-
-    w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
-
-    result = grey(df, w, functionlist)
-
-    @test isa(result, GreyResult)
-    
-    @test isapprox(result.scores, [0.525, 0.7007142857142857, 
-    0.5464285714285715, 0.5762820512820512, 0.650952380952381], atol=tol)
-
-    @test result.bestIndex == 2
-
-    setting = MCDMSetting(df, w, functionlist)
-    result2 = grey(setting)
-    @test result2 isa GreyResult
-    @test result2.scores == result.scores 
-    @test result2.bestIndex == result.bestIndex
-
-    result3 = mcdm(setting, GreyMethod())
-    @test result3 isa GreyResult
-    @test result3.scores == result.scores 
-    @test result3.bestIndex == result.bestIndex
-end
-
-
 @testset "SAW" begin
     
     @testset "Example 1: 4 criteria × 4 alternatives" begin
@@ -1029,26 +1059,6 @@ end
 end
 
 
-@testset "Reverse minimum & maximum array" begin
-
-    fns = [minimum, maximum, maximum, minimum, maximum]
-    revfns = [maximum, minimum, minimum, maximum, minimum]
-
-    @test reverseminmax(fns) == revfns 
-
-    @test reverseminmax(revfns) == fns 
-end
-
-@testset "Make Array of minimum and maximum" begin
-    result1 = makeminmax([maximum, maximum, maximum, maximum])
-
-    @test typeof(result1) == Array{Function,1}
-
-    @test typeof(result1[1]([1.0, 2.0, 3.0])) == Float64 
-
-    @test result1[1]([1.0, 2.0, 3.0]) == 3.0 
-
-end
 
 @testset "MAIRCA" begin
     

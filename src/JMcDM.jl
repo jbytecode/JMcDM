@@ -1,12 +1,13 @@
 module JMcDM
 
 # Dependencies
-using DataFrames
-using LinearAlgebra
-using JuMP
-using Cbc
-using StatsBase
-using Statistics
+import DataFrames: DataFrame, DataFrameRow
+import LinearAlgebra: I
+import JuMP: @variable, @objective, @constraint
+import JuMP: Model, MOI, optimize!, JuMP, objective_value
+import Cbc: Cbc
+import StatsBase: geomean
+import Statistics: cor, mean, std
 
 # for Pretty printing
 # of MCDM results

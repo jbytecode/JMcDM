@@ -1,6 +1,6 @@
 using Base: Float64
 using Test
-using DataFrames
+import DataFrames: DataFrame
 
 
 include("playground.jl")
