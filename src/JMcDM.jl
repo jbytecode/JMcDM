@@ -2,7 +2,6 @@ module JMcDM
 
 # Dependencies
 import DataFrames: DataFrame, DataFrameRow
-import LinearAlgebra: I
 import JuMP: @variable, @objective, @constraint
 import JuMP: Model, MOI, optimize!, JuMP, objective_value
 import Cbc: Cbc

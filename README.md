@@ -53,8 +53,7 @@ install them manually. The package dependencies are listed below:
 - Cbc
 - DataFrames
 - JuMP
-- LinearAlgebra
-- Statistics
+
 
 ## Documentation
 

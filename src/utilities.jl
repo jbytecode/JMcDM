@@ -1,3 +1,11 @@
+function I(n)
+    mat = zeros(n, n)
+    for i in 1:n
+        mat[i, i] = 1.0
+    end
+    return mat
+end
+
 mean(x) = sum(x)/length(x)
 
 function var(x) 
