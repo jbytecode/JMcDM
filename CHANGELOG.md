@@ -3,4 +3,3 @@
 - I() implemented, LinearAlgebra package removed from dependencies.
 - mean(), geomean(), std(), and cor() are implemented and StatsBase & Statistics packages are removed
 - using keyword replaced by import and only the needed functions are loaded at startup.
-- 
