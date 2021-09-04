@@ -55,7 +55,6 @@ install them manually. The package dependencies are listed below:
 - JuMP
 - LinearAlgebra
 - Statistics
-- StatsBase
 
 ## Documentation
 

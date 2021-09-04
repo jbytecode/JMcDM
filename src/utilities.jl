@@ -1,3 +1,5 @@
+geomean(x::Array{<: Number, 1}) = exp(sum(log.(x))/length(x))
+
 function euclidean(v1::Array{T1,1}, v2::Array{T2,1})::Float64 where {T1 <: Number,T2 <: Number} 
     (v1 .- v2).^2.0 |> sum |> sqrt
 end
