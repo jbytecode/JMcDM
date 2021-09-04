@@ -1,4 +1,35 @@
+mean(x) = sum(x)/length(x)
+
+function var(x) 
+    m = mean(x)
+    xm = x .- m
+    return sum((xm .* xm) / (length(x) - 1)) 
+end 
+
+std(x) = var(x) |> sqrt
+
 geomean(x::Array{<: Number, 1}) = exp(sum(log.(x))/length(x))
+
+function cor(x, y)
+    xmd= x .- mean(x)
+    ymd =y .- mean(y)
+    return (sum(xmd .* ymd) / sqrt(var(x) * var(y))) / (length(x) - 1.0)
+end
+
+function cor(x::Matrix{Float64})
+    _, p = size(x)
+    cormat = ones(p, p)
+    for i in 1:p
+        for j in i:p
+            if i != j 
+                cr = cor(x[:,i], x[:,j])
+                cormat[i, j] = cr
+                cormat[j, i] = cr
+            end
+        end
+    end
+    return cormat
+end
 
 function euclidean(v1::Array{T1,1}, v2::Array{T2,1})::Float64 where {T1 <: Number,T2 <: Number} 
     (v1 .- v2).^2.0 |> sum |> sqrt
