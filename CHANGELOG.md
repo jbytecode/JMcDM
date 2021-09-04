@@ -1,5 +1,6 @@
 ### 0.2.5
 - On/Off switch for tests. 
+- New tests.
 
 ### 0.2.4
 - Base.show(io:IO, MCDMResult) implementations for pretty printing all of the results
