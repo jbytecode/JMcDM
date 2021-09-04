@@ -4,7 +4,14 @@ import DataFrames: DataFrame, DataFrameRow
 
 using JMcDM
 
+const testUtilityFunctions = true
+const testMCDMFunctions = true
+const testSCDMFunctions = true
+const testLPBasedFunctions = true
 
+
+if testUtilityFunctions
+@info "Testing Utility Functions"
 @testset "Pretty printing of results" begin
     @testset "Pretty printing of TopsisResult" begin
         t = TopsisResult(
@@ -158,7 +165,13 @@ end
 
 end # end of utility function test
 
+end # Test Utility Functions
 
+# ------------------------------------------------------------------------------
+
+
+if testSCDMFunctions
+@info "Testing SCDM Functions"
 @testset "Single Criterion Decision Making tools" begin
 @testset "Laplace" begin
     
@@ -297,9 +310,6 @@ end
 end
 
 
-
-
-
 @testset "Hurwicz" begin
     
     tol = 0.00001
@@ -374,8 +384,12 @@ end
 end
 end # end of single criterion tools
 
+end # Test SCDM Tools 
 
+# ----------------------------------------------------------------------------
 
+if testMCDMFunctions
+@info "Testing MCDM functions"
 @testset "Grey Relational Analysis" begin
     
     tol = 0.0001
@@ -1208,8 +1222,13 @@ end
     @test result3.scores == result.scores 
 end
 
+end  # Test MCDM Tools
+
+# ----------------------------------------------------------------
 
 
+if testLPBasedFunctions
+@info "Testing LP Based Functions (Takes time...)"
 @testset "Zero Sum Games" begin
 @testset "Game" begin
     
@@ -1306,3 +1325,5 @@ end # end of zero sum games
         [0.0, 0.774923 , 0, 0, 0, 0, 0, 0.286833, 0], atol=tol) 
         
 end
+
+end # Test LP Based Tools
