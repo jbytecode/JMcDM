@@ -1,3 +1,8 @@
+### Next revision
+- Tests were divided into several files
+- Dependencies upgraded
+  
+  
 ### 0.2.5
 - On/Off switch for tests. 
 - New tests.

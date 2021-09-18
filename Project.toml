@@ -1,6 +1,6 @@
-authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>"]
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
+authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>"]
 version = "0.2.4"
 
 [deps]
@@ -9,7 +9,7 @@ DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 
 [compat]
-Cbc = "^0.8"
-DataFrames = "^0.22"
-JuMP = "^0.21"
+Cbc = "^0"
+DataFrames = "^1"
+JuMP = "^0"
 julia = "^1.4"
