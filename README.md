@@ -197,11 +197,14 @@ The TOPSIS method, defined in [topsis.jl](https://github.com/jbytecode/JMcDM/blo
 
 ### The design pattern
 - ```topsis()``` takes the decision matrix, weights, and vector of directions of optimization as arguments. This function is defined in ```topsis.jl```.
-   ```julia
+
+```julia
    function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
-   ```
+```
+
 - ```topsis()``` method has a return type of ```TopsisResult```. This ```struct``` is defined in ```types.jl```
-  ```julia
+
+```julia
   struct TopsisResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
@@ -210,8 +213,10 @@ The TOPSIS method, defined in [topsis.jl](https://github.com/jbytecode/JMcDM/blo
     bestIndex::Int64 
     scores::Array{Float64,1}
 end
-  ```
+```
+
 - Optionally, a ```show``` function can be derived for pretty printing the result. These functions are defined in ```print.jl```
+
 ```julia
 function Base.show(io::IO, result::TopsisResult)
     println(io, "Scores:")
@@ -220,6 +225,7 @@ function Base.show(io::IO, result::TopsisResult)
     println(io, result.bestIndex)
 end
 ```
+
 Please read the issue [Welcome to newcomers!](https://github.com/jbytecode/JMcDM/issues/3) for other implementation details.
 
 ### Report Issues
