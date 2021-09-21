@@ -1,5 +1,5 @@
 # JMcDM
-A package for Multiple-criteria decision making techniques in Julia.
+A package for Multiple-criteria decision-making techniques in Julia.
 
 ## The problem
 
@@ -18,14 +18,14 @@ Suppose a decision process has n alternatives and m criteria  which are either t
    |      A_n      | g_1(A_n) | g_2(A_n) |  ...  | g_m(A_n) |
 -->
 
-without loss of generality. When <img src="https://render.githubusercontent.com/render/math?math=A_1, A_2, \ldots, A_n"> are alternatives and <img src="https://render.githubusercontent.com/render/math?math=C_1, C_2, \ldots, C_m"> are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If <img src="https://render.githubusercontent.com/render/math?math=A_i"> and <img src="https://render.githubusercontent.com/render/math?math=C_j"> are strategies of two game players then <img src="https://render.githubusercontent.com/render/math?math=g_j(A_i)"> is the gain of the row player when she selects the strategy *i* and the column player selects the strategy <img src="https://render.githubusercontent.com/render/math?math=C_j">. 
+without loss of generality. When <img src="https://render.githubusercontent.com/render/math?math=A_1, A_2, \ldots, A_n"> are alternatives and <img src="https://render.githubusercontent.com/render/math?math=C_1, C_2, \ldots, C_m"> are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If <img src="https://render.githubusercontent.com/render/math?math=A_i"> and <img src="https://render.githubusercontent.com/render/math?math=C_j"> are strategies of two game players then <img src="https://render.githubusercontent.com/render/math?math=g_j(A_i)"> is the gain of the row player when she selects the strategy *i* and the column player selects the strategy <img src="https://render.githubusercontent.com/render/math?math=C_j">. 
 
 
-The package mainly focuses on solving these kind of decision problems.
+The package mainly focuses on solving these kinds of decision problems.
 
 ## For whom?
 
-Multiple-criteria decision-making is an inter-discipline subject and there is a vast amount of research in the literature in this area. However, the existing software packages in this area are generally focused on a small subset of tools. JMcDM is a developer and researcher friendly Julia package that combines the developed methods, utility functions for implementing new ones, and serves an environment for comparing results of multiple analysis.  
+Multiple-criteria decision-making is an inter-discipline subject and there is a vast amount of research in the literature in this area. However, the existing software packages in this area are generally focused on a small subset of tools. JMcDM is a developer and researcher-friendly Julia package that combines the developed methods, utility functions for implementing new ones, and serves an environment for comparing results of multiple analyses.  
 
 ## Installation
 
@@ -48,7 +48,7 @@ in Julia REPL.
 
 ## Package Dependencies
 
-Since the Julia package manager installs all of the dependencies automatically, a standard user don't need to
+Since the Julia package manager installs all of the dependencies automatically, a standard user doesn't need to
 install them manually. The package dependencies are listed below:
 - Cbc
 - DataFrames
@@ -65,7 +65,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 ### MCDM Tools
 
 - TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
-- ELECTRE (Elemination and Choice Translating Reality)
+- ELECTRE (Elimination and Choice Translating Reality)
 - DEMATEL (The Decision Making Trial and Evaluation Laboratory)
 - MOORA (Multi-Objective Optimization By Ratio Analysis)
 - VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
@@ -183,12 +183,12 @@ julia> result = mcdm(setting, TopsisMethod())
 Do you want to contribute?
 
 - Please create an issue first. In this issue, please specify the idea.
-- Let the community discuss the new contribution in our Slack channel or in the created issue.
+- Let the community discuss the new contribution in our Slack channel or the created issue.
 
 If the community decision is yes, please
 
 - Fork the repository
-- Add the new code in this forked repository
+- Add the new code to this forked repository
 - Make sure the tests are passed 
 - Send a pull request with a good description of functionality.
 
@@ -215,7 +215,7 @@ The TOPSIS method, defined in [topsis.jl](https://github.com/jbytecode/JMcDM/blo
 end
 ```
 
-- Optionally, a ```show``` function can be derived for pretty printing the result. These functions are defined in ```print.jl```
+- Optionally, a ```show``` function can be derived for pretty-printing the result. These functions are defined in ```print.jl```
 
 ```julia
 function Base.show(io::IO, result::TopsisResult)
@@ -234,7 +234,7 @@ If you find a bug or error, first report the problem in a new issue. If the prob
 in an existing issue please follow the existing one.
 
 ### Seek Support
-Our Slack channel is [JMcDM Slack Channel](https://julialang.slack.com/archives/C01MJ0VF1U3). Please feel free to ask any problem using our Slack channel or issues. [Julia Discourse](https://discourse.julialang.org/t/jmcdm-a-julia-package-for-multiple-criteria-decision-making-tools/54942) is the JMcDM entry in Julia Discourse site and any thoughts, problems, and issues can also be discussed in there.
+Our Slack channel is [JMcDM Slack Channel](https://julialang.slack.com/archives/C01MJ0VF1U3). Please feel free to ask about any problem using our Slack channel or issues. [Julia Discourse](https://discourse.julialang.org/t/jmcdm-a-julia-package-for-multiple-criteria-decision-making-tools/54942) is the JMcDM entry in Julia Discourse site and any thoughts, problems, and issues can also be discussed there.
 
 
 
