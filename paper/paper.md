@@ -41,14 +41,14 @@ In multi-dimensional case, the binary domination operator $\succ$ applied on poi
 
 Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$. $f_i$ is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table 
 
-   | **Criteria**  |   $C_1$    |   $C_2$    | $\dots$  |   $C_m$    |
-   | :-----------: | :--------: | :--------: | :------: | :--------: |
-   |  **Weights**  |   $w_1$    |   $w_2$    | $\dots$  |   $w_m$    |
-   | **Functions** |   $f_1$    |   $f_2$    | $\dots$  |   $f_m$    |
-   |     $A_1$     | $g_1(A_1)$ | $g_2(A_1)$ | $\dots$  | $g_m(S_A)$ |
-   |     $A_2$     | $g_1(A_2)$ | $g_2(A_2)$ | $\dots$  | $g_m(A_2)$ |
-   |       ⋮       |     ⋮      |     ⋮      | $\ddots$ |     ⋮      |
-   |     $A_n$     | $g_1(A_n)$ | $g_2(A_n)$ | $\dots$  | $g_m(A_n)$ |
+| **Criteria**  |   $C_1$    |   $C_2$    | $\dots$  |   $C_m$    |
+| :-----------: | :--------: | :--------: | :------: | :--------: |
+|  **Weights**  |   $w_1$    |   $w_2$    | $\dots$  |   $w_m$    |
+| **Functions** |   $f_1$    |   $f_2$    | $\dots$  |   $f_m$    |
+|     $A_1$     | $g_1(A_1)$ | $g_2(A_1)$ | $\dots$  | $g_m(S_A)$ |
+|     $A_2$     | $g_1(A_2)$ | $g_2(A_2)$ | $\dots$  | $g_m(A_2)$ |
+|       ⋮       |     ⋮      |     ⋮      | $\ddots$  |     ⋮      |
+|     $A_n$     | $g_1(A_n)$ | $g_2(A_n)$ | $\dots$  | $g_m(A_n)$ |
 
 \noindent without loss of generality. When $A_1$, $A_2$, $\dots$, $A_n$ are alternatives and $C_1$, $C_2$, $\dots$, $C_m$ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If $A_i$ and $C_j$ are strategies of two game players then $g_j(A_i)$ is the gain of the row player when she selects the strategy $i$ and the column player selects the strategy $C_j$. 
 
@@ -113,13 +113,13 @@ in ```Julia``` REPL.
 
 Suppose a decision problem is given in the table below.
 
-  | **Criteria**  |  Age   |  Size  |  Price   | Distance | Population |
-  | :-----------: | :----: | :----: | :------: | :------: | :--------: |
-  |  **Weights**  | $0.35$ | $0.15$ |  $0.25$  |  $0.20$  |   $0.05$   |
-  | **Functions** |  min   |  max   |   min    |   min    |    max     |
-  |     $A_1$     |  $6$   | $140$  | $150000$ |  $950$   |   $1500$   |
-  |     $A_2$     |  $4$   |  $90$  | $100000$ |  $1500$  |   $2000$   |
-  |     $A_3$     |  $12$  | $140$  | $75000$  |  $550$   |   $1100$   |
+| **Criteria**  |  Age   |  Size  |  Price   | Distance | Population |
+| :-----------: | :----: | :----: | :------: | :------: | :--------: |
+|  **Weights**  | $0.35$ | $0.15$ |  $0.25$  |  $0.20$  |   $0.05$   |
+| **Functions** |  min   |  max   |   min    |   min    |    max     |
+|     $A_1$     |  $6$   | $140$  | $150000$ |  $950$   |   $1500$   |
+|     $A_2$     |  $4$   |  $90$  | $100000$ |  $1500$  |   $2000$   |
+|     $A_3$     |  $12$  | $140$  | $75000$  |  $550$   |   $1100$   |
 
 In this sample problem, a decision maker is subject to select an apartment by considering the age of the building, size (in $m^2$s), price (in \$), distance to city centre (in $m$s), and nearby population.
 The data can be entered as a two-dimensional array (matrix) or as a DataFrame object:
