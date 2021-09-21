@@ -1,27 +1,27 @@
 ---
 title: 'JMcDM: A Julia package for multiple-criteria decision-making tools'
 tags:
-  - Julia
-  - decision making
-  - multiple criteria
-  - outranking
+  - Julia
+  - decision making
+  - multiple criteria
+  - outranking
 authors:
-  - name: Mehmet Hakan Satman
-    orcid: 0000-0002-9402-1982
-    affiliation: 1
-  - name: Bahadır Fatih Yıldırım
-    orcid: 0000-0002-0475-741X
-    affiliation: 2
-  - name: Ersagun Kuruca
-    orcid: 0000-0002-2552-7701
-    affiliation: 3
+  - name: Mehmet Hakan Satman
+    orcid: 0000-0002-9402-1982
+    affiliation: 1
+  - name: Bahadır Fatih Yıldırım
+    orcid: 0000-0002-0475-741X
+    affiliation: 2
+  - name: Ersagun Kuruca
+    orcid: 0000-0002-2552-7701
+    affiliation: 3
 affiliations:
- - name: Department of Econometrics, Istanbul University, Istanbul, Turkey
-   index: 1
- - name: Department of Transportation and Logistics, Istanbul University, Istanbul, Turkey
-   index: 2
- - name: Independent researcher
-   index: 3
+ - name: Department of Econometrics, Istanbul University, Istanbul, Turkey
+   index: 1
+ - name: Department of Transportation and Logistics, Istanbul University, Istanbul, Turkey
+   index: 2
+ - name: Independent researcher
+   index: 3
 
 
 date: 8 May 2021
@@ -29,6 +29,7 @@ bibliography: paper.bib
 ---
 
 # Summary
+
 ```JMcDM``` is a ```Julia``` package that implements some leading multiple-criteria decision-making tools for both researchers and developers. By having a REPL tool, ```Julia``` is well suited for researchers to perform their analysis using different methods and comparing their results. ```JMcDM``` also provides the necessary infrastructure, utility functions, and a standardized API for implementing recently published methods.  The proposed package has brought MCDM (Multiple-Criteria Decision-Making) tools to a relatively new language such as ```Julia``` with its significant performance promises. Besides Julia being a new language, the methods developed in the package are designed to be familiar to users who previously used ```R``` and ```Python``` languages. The paper presents the basics of the design, example usage, and code snippets.
 
 
@@ -53,11 +54,13 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eit
 
 
 # State of the field
+
 Multiple-criteria decision-making (MCDM) tools provide several algorithms for ordering or  selecting alternatives and/or determining the weights when there is uncertainty. Although some algorithms are suitable for hand calculations, computer software is often required. While some previous applications only focused on a single method, some applications appear to include multiple methods. ```PyTOPS``` is a Python tool for TOPSIS [@PyTOPS]. ```Super Decisions``` is a software package which is mainly focused on AHP (Analytic Hierarchy Process) and ANP (Analytic Network Process) [@superdecision]. ```Visual Promethee``` implements Promethee method on Windows platforms [@visualpromethee]. ```M-BACBETH``` is another commercial software product that implements MACBETH with an easy to use GUI [@macbeth]. ```Sanna``` is a standard ```MS Excel``` add-in application that supports several basic methods for multi-criteria evaluation of alternatives (WSA, TOPSIS, ELECTRE I and III, PROMETHEE I and II, MAPPAC and ORESTE) [@sanna]. ```DEAFrontier``` software requires an ```Excel``` add-in that can solve up to 50 DMUs with unlimited number of inputs and outputs (subject to the capacity of the standard ```MS Excel Solver```) [@deafrontier]. 
 
 
 
 # Statement of need 
+
 While the applications mentioned above are lacking in at least one of the features such as the number of methods included, being programmable, being free, and the results being comparable by the researcher; ```JMcDM``` clearly differs as it solves these problems.
 ```JMcDM``` is designed to provide a developer-friendly library for solving multiple-criteria decision problems in ```Julia``` [@julia]. Since ```Julia``` is a dynamic language, it is also useful for researchers that are familiar with REPL (Read-Eval-Print-Loop) environments. The package includes multi-criteria decision methods as well as a game solver for zero-sum games, and methods for single criterion methods. 
 
