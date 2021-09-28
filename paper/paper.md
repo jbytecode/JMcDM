@@ -37,6 +37,7 @@ The one-dimensional array $a$ is in ascending order if and only if $a_i \le a_{i
 Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$ and is represented by a function $f_i$ which is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table shown in Table \ref{decision_table} without loss of generality. When $A_1$, $A_2$, $\dots$, $A_n$ are alternatives and $C_1$, $C_2$, $\dots$, $C_m$ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If $A_i$ and $C_j$ are strategies of two game players then $g_j(A_i)$ is the gain of the row player when she selects the strategy $i$ and the column player selects the strategy $C_j$. 
 
 Table: (Decision table) \label{decision_table}
+
 | **Criteria**  |   $C_1$    |   $C_2$    | $\dots$  |   $C_m$    |
 | :-----------: | :--------: | :--------: | :------: | :--------: |
 |  **Weights**  |   $w_1$    |   $w_2$    | $\dots$  |   $w_m$    |
