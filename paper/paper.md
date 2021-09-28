@@ -34,7 +34,7 @@ bibliography: paper.bib
 # Introduction
 The one-dimensional array $a$ is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of the array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points. In multi-dimensional case, the binary domination operator $\succ$ applied on points $a$ and $b$, $a \succ b$, is true if each item in $a$ is not worse than the corresponding item in $b$ and at least one item is better than the corresponding item in $b$ [@Deb_2002]. On the other hand, the more relaxed operator $\succeq$ returns true if each item in $a$ is as good as the corresponding item in $b$ [@greco2016multiple]. Several outranking methods in MCDM (Multiple-Criteria Decision Making) define a unique ranking mechanism to select the best alternative among others.
 
-Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$. $f_i$ is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table 
+Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$ and is represented by a function $f_i$ which is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table 
 
 | **Criteria**  |   $C_1$    |   $C_2$    | $\dots$  |   $C_m$    |
 | :-----------: | :--------: | :--------: | :------: | :--------: |
@@ -85,7 +85,7 @@ and
 WPM [@wsm_wpm]
 for multiple-criteria tools. This list of selected methods includes both classical (TOPSIS, ELECTRE, PROMETHEE, etc.) and modern (COCOSO, MABAC, MARCOS, etc.) tools of the relevant literature. 
 
-The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for zero-sum game solver. Although these methods may seem different from the methods mentioned above, they are basically members of the same method family and solve similar problems. DEA differs from the above methods in that it is not an outranking method but compares efficiencies of decision units. Zero-sum game is also a multi-criteria decision-making problem, but this time, unlike outranking methods, both the rows and columns of the decision matrix show alternative strategies. 
+The package also performs DEA for Data Envelopment Analysis [@dea] and includes a method for solving zero-sum games. Although these methods may seem different from the methods mentioned above, they are basically members of the same method family and solve similar problems. DEA differs from the above methods in that it is not an outranking method but compares efficiencies of decision units. Solving zero-sum games is also a multi-criteria decision-making problem, but this time, unlike outranking methods, both the rows and columns of the decision matrix show alternative strategies. 
 
 The full set of other tools and utility functions are listed and documented in the source code as well as in the online documentation.
 
