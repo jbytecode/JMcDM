@@ -34,8 +34,9 @@ bibliography: paper.bib
 # Introduction
 The one-dimensional array $a$ is in ascending order if and only if $a_i \le a_{i+1}$ where $i = 1, 2, \dots, n-1$, and $n$ is the length of the array. In other terms, the process of ordering numbers requires the logical $\le$ operator to be perfectly defined. Since the operator $\le$ is not defined for any set of points in higher dimensions, $\mathbb{R}^p$ for $p \ge 2$, there is not a unique ordering of points. In multi-dimensional case, the binary domination operator $\succ$ applied on points $a$ and $b$, $a \succ b$, is true if each item in $a$ is not worse than the corresponding item in $b$ and at least one item is better than the corresponding item in $b$ [@Deb_2002]. On the other hand, the more relaxed operator $\succeq$ returns true if each item in $a$ is as good as the corresponding item in $b$ [@greco2016multiple]. Several outranking methods in MCDM (Multiple-Criteria Decision Making) define a unique ranking mechanism to select the best alternative among others.
 
-Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$ and is represented by a function $f_i$ which is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table 
+Suppose a decision process has $n$ alternatives and $m$ criteria  which are either to be maximized or minimized. Each single criterion has a weight $0 \le w_i \le 1$ where $\sum_i^m w_i = 1$ and is represented by a function $f_i$ which is either maximum or minimum. $g_j(.)$ is an evolution function and it is taken as $g_j(x) = x$ in many methods. A multiple criteria decision problem can be represented using the decision table shown in Table \ref{decision_table} without loss of generality. When $A_1$, $A_2$, $\dots$, $A_n$ are alternatives and $C_1$, $C_2$, $\dots$, $C_m$ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If $A_i$ and $C_j$ are strategies of two game players then $g_j(A_i)$ is the gain of the row player when she selects the strategy $i$ and the column player selects the strategy $C_j$. 
 
+Table: (Decision table) \label{decision_table}
 | **Criteria**  |   $C_1$    |   $C_2$    | $\dots$  |   $C_m$    |
 | :-----------: | :--------: | :--------: | :------: | :--------: |
 |  **Weights**  |   $w_1$    |   $w_2$    | $\dots$  |   $w_m$    |
@@ -44,8 +45,6 @@ Suppose a decision process has $n$ alternatives and $m$ criteria  which are eit
 |     $A_2$     | $g_1(A_2)$ | $g_2(A_2)$ | $\dots$  | $g_m(A_2)$ |
 |       ⋮       |     ⋮      |     ⋮      | $\ddots$  |     ⋮      |
 |     $A_n$     | $g_1(A_n)$ | $g_2(A_n)$ | $\dots$  | $g_m(A_n)$ |
-
-\noindent without loss of generality. When $A_1$, $A_2$, $\dots$, $A_n$ are alternatives and $C_1$, $C_2$, $\dots$, $C_m$ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If $A_i$ and $C_j$ are strategies of two game players then $g_j(A_i)$ is the gain of the row player when she selects the strategy $i$ and the column player selects the strategy $C_j$. 
 
 
 # State of the field
