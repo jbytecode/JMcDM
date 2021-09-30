@@ -1,0 +1,17 @@
+@article{Satman2021,
+  doi = {10.21105/joss.03430},
+  url = {https://doi.org/10.21105/joss.03430},
+  year = {2021},
+  publisher = {The Open Journal},
+  volume = {6},
+  number = {65},
+  pages = {3430},
+  author = {Mehmet Hakan Satman and Bahadır Fatih Yıldırım and Ersagun Kuruca},
+  title = {JMcDM: A Julia package for multiple-criteria decision-making tools},
+  journal = {Journal of Open Source Software}
+}
+
+
+
+Satman et al., (2021). JMcDM: A Julia package for multiple-criteria decision-making tools. Journal of Open Source Software, 6(65), 3430, https://doi.org/10.21105/joss.03430
+
