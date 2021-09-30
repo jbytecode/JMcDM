@@ -1,3 +1,5 @@
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.03430/status.svg)](https://doi.org/10.21105/joss.03430)
+
 # JMcDM
 A package for Multiple-criteria decision-making techniques in Julia.
 
@@ -179,6 +181,31 @@ julia> result = mcdm(setting, TopsisMethod())
 
 ## Community guidelines
 
+### How to cite 
+
+Please use the BibTeX entry:
+
+```bibtex
+@article{Satman2021,
+  doi = {10.21105/joss.03430},
+  url = {https://doi.org/10.21105/joss.03430},
+  year = {2021},
+  publisher = {The Open Journal},
+  volume = {6},
+  number = {65},
+  pages = {3430},
+  author = {Mehmet Hakan Satman and Bahadır Fatih Yıldırım and Ersagun Kuruca},
+  title = {JMcDM: A Julia package for multiple-criteria decision-making tools},
+  journal = {Journal of Open Source Software}
+}
+```
+
+or citation string
+
+Satman et al., (2021). JMcDM: A Julia package for multiple-criteria decision-making tools. Journal of Open Source Software, 6(65), 3430, https://doi.org/10.21105/joss.03430
+
+to cite this software.
+
 ### Contribute to software
 Do you want to contribute?
 
@@ -235,9 +262,6 @@ in an existing issue please follow the existing one.
 
 ### Seek Support
 Our Slack channel is [JMcDM Slack Channel](https://julialang.slack.com/archives/C01MJ0VF1U3). Please feel free to ask about any problem using our Slack channel or issues. [Julia Discourse](https://discourse.julialang.org/t/jmcdm-a-julia-package-for-multiple-criteria-decision-making-tools/54942) is the JMcDM entry in Julia Discourse site and any thoughts, problems, and issues can also be discussed there.
-
-
-
 
 
 Welcome!
