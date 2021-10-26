@@ -34,8 +34,6 @@ function Base.show(io::IO, result::COPRASResult)
 end
 
 function Base.show(io::IO, result::CRITICResult)
-    println(io, "Scores:")
-    println(io, result.scores)
     println(io, "Ranking: ")
     println(io, result.ranking)
     println(io, "Best indices:")
