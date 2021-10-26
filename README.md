@@ -178,6 +178,12 @@ julia> setting = MCDMSetting(df, w, fns)
 julia> result = mcdm(setting, TopsisMethod())
 ```
 
+### Jupyter Notebook
+
+Here is a Jupyter Notebook for basic usage: 
+
+https://github.com/jbytecode/JMcDM/blob/main/notebook/basic-usage.ipynb
+
 
 ## Community guidelines
 
