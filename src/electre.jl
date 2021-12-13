@@ -128,10 +128,15 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         r_ik_full  = weightednormalizedMat[i, :]
         r_jk_full  = weightednormalizedMat[j, :]
 
-        nom = maximum(abs.(r_ik - r_jk))
-        dom = maximum(abs.(r_ik_full - r_jk_full))
-        nonfitnessmatrix[i, j] = nom / dom
-    end
+        if length(r_ik) > 0 && length(r_jk) > 0 
+            nom = maximum(abs.(r_ik - r_jk))
+            dom = maximum(abs.(r_ik_full - r_jk_full))
+            nonfitnessmatrix[i, j] = nom / dom
+        else
+            nonfitnessmatrix[i, j] = Inf64
+        end  # end if 
+
+    end # end for 
 
     C = zeros(Float64, nalternatives)
     D = zeros(Float64, nalternatives)
@@ -153,7 +158,7 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
     result = ElectreResult(
         decisionMat,
         w,
-    weightednormalizedMat,
+        weightednormalizedMat,
         fitnessTable,
         nonfitnessTable,
         fitnessmatrix,

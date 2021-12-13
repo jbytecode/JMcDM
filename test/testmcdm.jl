@@ -154,6 +154,21 @@
         @test result3.bestIndex == result.bestIndex
     end
 
+    @testset "Electre (failed in previous release <= v0.2.5" begin
+        df = DataFrame(
+            x = [1.0, 2.0, 3.0, 2.0],
+            y = [1.0, 2.0, 1.0, 1.0],
+            z = [1.0, 3.0, 2.0, 2.0],
+            k = [4.0, 2, 1, 4],
+        )
+        fns = makeminmax([maximum, maximum, maximum, maximum])
+        ws = [0.25, 0.25, 0.25, 0.25]
+        e = electre(df, ws, fns)
+
+        @test e isa ElectreResult
+        @test e.bestIndex == (2, 1)
+    end
+
 
     @testset "MOORA" begin
         tol = 0.00001
