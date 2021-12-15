@@ -73,6 +73,11 @@ function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     refmat = similar(weightednormalizedMat)
     
+    #=
+    # This implementation is buggy and will be removed 
+    # in later releases. 
+    # note: the problem is fns[rowind] is non-sense
+    # because fns are due to columns not rows.
     for rowind in 1:nalternatives
         if fns[rowind] == maximum 
             refmat[rowind, :] .= cmaxs - weightednormalizedMat[rowind, :]
@@ -81,6 +86,20 @@ function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
         else
             @warn fns[rowind]
             error("Function must be either maximize or minimize")
+        end
+    end
+    =#
+
+    for rowind in 1:nalternatives
+        for colind in 1:ncriteria
+            if fns[colind] == maximum 
+                refmat[rowind, colind] = cmaxs[colind] - weightednormalizedMat[rowind, colind]
+            elseif fns[colind] == minimum
+                refmat[rowind, colind] = weightednormalizedMat[rowind, colind] - cmins[colind]
+            else
+                @warn fns[colind]
+                error("Function must be either maximize or minimize")
+            end
         end
     end
 

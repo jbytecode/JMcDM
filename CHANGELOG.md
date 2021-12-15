@@ -1,4 +1,5 @@
-### Next revision
+### 0.2.7
+- Bug in Moore fixed.
 
 
 ### 0.2.6
