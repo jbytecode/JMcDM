@@ -1,5 +1,6 @@
 ### 0.2.7
 - Bug in Moore fixed.
+- Bug in Marcos fixed.
 
 
 ### 0.2.6

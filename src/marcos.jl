@@ -94,8 +94,9 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
         end
     end
     
-    S  = zeros(Float64, col)
-
+    #S  = zeros(Float64, col)
+    S = zeros(Float64, row + 2)
+    
     for i in 1:row + 2
         S[i] = w .* normalizedDecisionMat[i, :] |> sum
     end
