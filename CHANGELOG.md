@@ -1,3 +1,7 @@
+### 0.2.8
+- Direction of optimization added for nds()
+- New tests added
+
 ### 0.2.7
 - Bug in Moore fixed.
 - Bug in Marcos fixed.
