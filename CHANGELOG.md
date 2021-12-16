@@ -1,8 +1,8 @@
-### 0.2.9 (Under development - Now available for update using Pkg)
+### 0.2.9
 - Default optimizer is now GLPK (Cbc removed)
 
 
-### 0.2.8 (Current version)
+### 0.2.8
 - Direction of optimization added for nds()
 - New tests added
 
