@@ -52,8 +52,9 @@ in Julia REPL.
 
 Since the Julia package manager installs all of the dependencies automatically, a standard user doesn't need to
 install them manually. The package dependencies are listed below:
-- Cbc
+
 - DataFrames
+- GLPK
 - JuMP
 
 
