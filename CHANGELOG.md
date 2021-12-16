@@ -1,3 +1,6 @@
+### Upcoming release
+- entropy() returns a result even though there are NaNs for some criterion.
+
 ### 0.2.9
 - Default optimizer is now GLPK (Cbc removed)
 

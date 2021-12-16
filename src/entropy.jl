@@ -82,8 +82,10 @@ function entropy(decisionMat::DataFrame):EntropyResult
 
     w = zeros(Float64, col)
     
+    esum = sum(filter(x -> !isnan(x), e))
+
     for i in 1:col
-        w[i] = e[i] ./ sum(e)
+        w[i] = e[i] ./ esum
     end
     
     rankings = sortperm(w)
