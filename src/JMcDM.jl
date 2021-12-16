@@ -4,7 +4,7 @@ module JMcDM
 import DataFrames: DataFrame, DataFrameRow
 import JuMP: @variable, @objective, @constraint
 import JuMP: Model, MOI, optimize!, JuMP, objective_value
-import Cbc: Cbc
+import GLPK
 
 # for Pretty printing
 # of MCDM results

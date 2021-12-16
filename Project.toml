@@ -4,12 +4,12 @@ authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fati
 version = "0.2.8"
 
 [deps]
-Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 
 [compat]
-Cbc = "^0.8"
 DataFrames = "^1"
+GLPK = "^0.14"
 JuMP = "^0.21"
 julia = "^1.4"
