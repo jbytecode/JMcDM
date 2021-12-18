@@ -15,7 +15,8 @@ pkg.R.install <- function(x) {
 pkg.julia.install <- function(x){
     result <- julia_installed_package(pkg_name = x)
     if (result == "nothing") {
-        julia_install_package(pkg_name_or_url = "JMcDM")
+        log_info("Installing required packages")
+        julia_install_package(pkg_name_or_url = x)
     }
 }
 
