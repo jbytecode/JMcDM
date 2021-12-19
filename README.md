@@ -5,7 +5,7 @@ A package for Multiple-criteria decision-making techniques in Julia.
 
 ## The problem
 
-Suppose a decision process has n alternatives and m criteria  which are either to be maximized or minimized. Each single criterion has a weight <img src="https://render.githubusercontent.com/render/math?math=0 \le w_i \le 1"> where sum of <img src="https://render.githubusercontent.com/render/math?math=w_i"> is 1. <img src="https://render.githubusercontent.com/render/math?math=f_i"> is either maximum or minimum. <img src="https://render.githubusercontent.com/render/math?math=g_j(.)"> is the evolution function and it is choosen as <img src="https://render.githubusercontent.com/render/math?math=g_j(x)=x"> in many methods. A multiple criteria decision problem can be represented using the decision table 
+Suppose a decision process has n alternatives and m criteria  which are either to be maximized or minimized. Each single criterion has a weight _0 ≤ wᵢ ≤ 1_ where sum of _wᵢ_ is either maximum or minimum. _gⱼ(.)_ is the evolution function and it is choosen as _gⱼ(x) = x_ in many methods. A multiple criteria decision problem can be represented using the decision table 
 
 <img src="https://github.com/jbytecode/JMcDM/blob/gh-pages/images/generalformula.png" width = "50%"/>
 
@@ -20,7 +20,7 @@ Suppose a decision process has n alternatives and m criteria  which are either t
    |      A_n      | g_1(A_n) | g_2(A_n) |  ...  | g_m(A_n) |
 -->
 
-without loss of generality. When <img src="https://render.githubusercontent.com/render/math?math=A_1, A_2, \ldots, A_n"> are alternatives and <img src="https://render.githubusercontent.com/render/math?math=C_1, C_2, \ldots, C_m"> are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If <img src="https://render.githubusercontent.com/render/math?math=A_i"> and <img src="https://render.githubusercontent.com/render/math?math=C_j"> are strategies of two game players then <img src="https://render.githubusercontent.com/render/math?math=g_j(A_i)"> is the gain of the row player when she selects the strategy *i* and the column player selects the strategy <img src="https://render.githubusercontent.com/render/math?math=C_j">. 
+without loss of generality. When _A₁, A₂, ..., Aₙ_ are alternatives and _C₁, C₂, ..., Cₙ_ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If _Cⱼ_ are strategies of two game players then _gⱼ(Aᵢ)_ is the gain of the row player when she selects the strategy _i_ and the column player selects the strategy _Cⱼ_.
 
 
 The package mainly focuses on solving these kinds of decision problems.
