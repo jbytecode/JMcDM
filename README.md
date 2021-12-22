@@ -90,6 +90,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - CRITIC (CRiteria Importance Through Intercriteria Correlation)
 - Entropy
 - CODAS (COmbinative Distance-based ASsessment)
+- Copeland (For combining multiple ordering results)
 
 ### SCDM Tools
 
