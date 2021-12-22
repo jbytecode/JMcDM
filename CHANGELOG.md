@@ -1,5 +1,7 @@
 ### Upcoming release
 - entropy() returns a result even though there are NaNs for some criterion.
+- rwrapper.R added so the library is callable from within R
+  
 
 ### 0.2.9
 - Default optimizer is now GLPK (Cbc removed)
