@@ -1,6 +1,7 @@
 ### Upcoming release
 - entropy() returns a result even though there are NaNs for some criterion.
 - rwrapper.R added so the library is callable from within R
+- copeland() method added for combining multiple ordering results.
   
 
 ### 0.2.9
