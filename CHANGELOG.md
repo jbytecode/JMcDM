@@ -1,3 +1,7 @@
+### Upcoming (0.3.1)
+- fix Copeland.
+
+
 ### 0.3.0
 - entropy() returns a result even though there are NaNs for some criterion.
 - rwrapper.R added so the library is callable from within R

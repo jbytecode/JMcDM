@@ -4,7 +4,7 @@ function level_of_dominance(v1::Array{Int,1}, v2::Array{Int,1})::Int64
     lod = zero(Int64)
     n = length(v1)
     for i = 1:n
-        if v1[i] > v2[i]
+        if v1[i] < v2[i]
             lod += 1
         end
     end
