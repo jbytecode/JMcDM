@@ -44,6 +44,8 @@ include("summary.jl")
 include("mcdm.jl")
 include("print.jl")
 
+include("copeland.jl")
+
 # export imported functions
 export DataFrame
 
@@ -166,5 +168,9 @@ export dataenvelop
 #  export summary function
 export summary
 export mcdm
+
+# export Copeland module
+import JMcDM.Copeland: copeland
+export copeland
 
 end # module

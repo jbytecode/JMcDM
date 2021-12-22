@@ -22,6 +22,7 @@ end # Test SCDM Tools
 
 if testMCDMFunctions
     include("./testmcdm.jl")
+    include("./testcopeland.jl")
 end  # Test MCDM Tools
 
 
