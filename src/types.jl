@@ -83,10 +83,11 @@ end
 
 
 struct MooraResult <: MCDMResult
+    mooraType::Symbol
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
     weightedDecisionMatrix::DataFrame
-    referenceMatrix::DataFrame
+    referenceMatrix::Union{DataFrame, Nothing}
     scores::Array{Float64,1}
     bestIndex::Int64
 end
@@ -366,8 +367,10 @@ end
 
 
 struct MooraMethod <: MCDMMethod 
+    method::Symbol
 end 
 
+MooraMethod() :: MooraMethod = MooraMethod(:reference)
 
 struct PrometheeMethod <: MCDMMethod 
     pref::Array{Function, 1}

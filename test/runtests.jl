@@ -10,6 +10,7 @@ const testSCDMFunctions = true
 const testLPBasedFunctions = true
 
 
+
 if testUtilityFunctions
     include("./testutility.jl")
 end

@@ -1,6 +1,6 @@
-### Upcoming (0.3.1)
+### 0.3.1
 - fix Copeland.
-
+- add Moora Ratio method with new tests.
 
 ### 0.3.0
 - entropy() returns a result even though there are NaNs for some criterion.

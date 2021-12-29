@@ -70,7 +70,8 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
 - ELECTRE (Elimination and Choice Translating Reality)
 - DEMATEL (The Decision Making Trial and Evaluation Laboratory)
-- MOORA (Multi-Objective Optimization By Ratio Analysis)
+- MOORA Reference (Multi-Objective Optimization By Ratio Analysis)
+- MOORA Ratio
 - VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
 - AHP (Analytic Hierarchy Process)
 - DEA (Data Envelopment Analysis)
