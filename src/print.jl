@@ -14,6 +14,11 @@ function Base.show(io::IO, result::ARASResult)
     println(io, result.bestIndex)
 end
 
+function Base.show(io::IO, result::SDResult)
+    println(io, "Weights:")
+    println(io, result.weigths)
+end
+
 function Base.show(io::IO, result::CODASResult)
     println(io, "Scores:")
     println(io, result.scores)

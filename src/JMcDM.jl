@@ -45,6 +45,7 @@ include("mcdm.jl")
 include("print.jl")
 
 include("copeland.jl")
+include("sd.jl")
 
 # export imported functions
 export DataFrame
@@ -96,6 +97,7 @@ export CoCoSoResult
 export CRITICResult
 export EntropyResult
 export CODASResult
+export SDResult
 
 # export game type
 export GameResult
@@ -112,6 +114,7 @@ export HurwiczResult
 export MLEResult
 export ExpectedRegretResult
 export DataEnvelopResult
+
 
 
 # export utility functions
@@ -147,6 +150,7 @@ export cocoso
 export critic
 export entropy
 export codas
+export sd
 
 #  export SCDM tools
 export laplace

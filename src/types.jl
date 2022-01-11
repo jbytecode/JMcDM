@@ -318,6 +318,10 @@ struct CODASResult <: MCDMResult
     bestIndex::Int64
 end
 
+struct SDResult <: MCDMResult
+    weights::Array{Float64, 1}
+end
+
 struct TopsisMethod <: MCDMMethod end
 
 struct ElectreMethod <: MCDMMethod 

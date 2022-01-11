@@ -1,3 +1,6 @@
+### 0.3.2
+- SD method implemented for determining weights.
+
 ### 0.3.1
 - fix Copeland.
 - add Moora Ratio method with new tests.
