@@ -93,7 +93,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - CODAS (COmbinative Distance-based ASsessment)
 - Copeland (For combining multiple ordering results)
 - SD Method for determining weights of criteria
-
+- ROV (Range of Value) Method
 
 ### SCDM Tools
 

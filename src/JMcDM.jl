@@ -46,6 +46,8 @@ include("print.jl")
 
 include("copeland.jl")
 include("sd.jl")
+include("rov.jl")
+
 
 # export imported functions
 export DataFrame
@@ -98,6 +100,7 @@ export CRITICResult
 export EntropyResult
 export CODASResult
 export SDResult
+export ROVResult
 
 # export game type
 export GameResult
@@ -151,6 +154,7 @@ export critic
 export entropy
 export codas
 export sd
+export rov
 
 #  export SCDM tools
 export laplace

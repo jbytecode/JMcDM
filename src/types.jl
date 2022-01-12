@@ -322,6 +322,14 @@ struct SDResult <: MCDMResult
     weights::Array{Float64, 1}
 end
 
+struct ROVResult 
+    uminus::Array{Float64, 1}
+    uplus::Array{Float64, 1}
+    scores::Array{Float64, 1}
+    ranks::Array{Float64, 1}
+end
+
+
 struct TopsisMethod <: MCDMMethod end
 
 struct ElectreMethod <: MCDMMethod 

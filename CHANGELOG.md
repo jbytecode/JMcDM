@@ -1,3 +1,6 @@
+### 0.3.3
+- ROV (Range of Value) Method implemented.
+
 ### 0.3.2
 - SD method implemented for determining weights.
 
