@@ -27,6 +27,8 @@ pkg.R.install("logger")
 # Setting up the Julia Environment
 log_info("Checking JuliaCall")
 pkg.R.install("JuliaCall")
+julia_setup(installJulia = TRUE)
+
 
 # Setting up the JMcDM package
 log_info("Checking JMcDM")
