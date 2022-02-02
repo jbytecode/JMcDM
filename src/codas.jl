@@ -145,6 +145,7 @@ end
 
 """
     codas(setting; tau = 0.02)
+    
 Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
 
 # Arguments:

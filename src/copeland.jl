@@ -33,6 +33,20 @@ function winloss_scores(dommat::Array{Int, 2})::Array{Int, 2}
     return winlossmat
 end
 
+"""
+        copeland(ordering_mat)
+
+# Arguments
+ - `ordering_mat`::Array{Int, 2}`: Ordering matrix.
+
+# Description 
+The function takes an ordering matrix as input. Different ordering results are in columns.
+Orderings are in ascending order. The function returns the ranks. The alternative with rank 
+1 is the winner. 
+
+# Output 
+- `::Array{Int, 1}`: Vector of ranks.
+"""
 function copeland(ordering_mat::Array{Int, 2})::Array{Int, 1}
     winlosses = ordering_mat |> dominance_scores |> winloss_scores
     n, _ = size(winlosses)

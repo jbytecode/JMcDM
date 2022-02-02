@@ -1,3 +1,8 @@
+### 0.3.4 
+- Add new tests for Copeland
+- Documentation added for Copeland 
+  
+  
 ### 0.3.3
 - ROV (Range of Value) Method implemented.
 
