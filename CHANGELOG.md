@@ -1,3 +1,6 @@
+### 0.3.5 (Upcoming)
+- Update dependencies GLPK and JuMP
+
 ### 0.3.4 
 - Add new tests for Copeland
 - Documentation added for Copeland 
