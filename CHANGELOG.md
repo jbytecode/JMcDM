@@ -1,4 +1,4 @@
-### 0.3.5 (Upcoming)
+### 0.3.5
 - Update dependencies GLPK and JuMP
 
 ### 0.3.4 
