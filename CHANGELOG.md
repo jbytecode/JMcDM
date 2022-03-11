@@ -1,3 +1,7 @@
+### 0.3.6
+- Fix Vikor 
+
+
 ### 0.3.5
 - Update dependencies GLPK and JuMP
 

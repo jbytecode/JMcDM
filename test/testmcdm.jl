@@ -143,7 +143,7 @@
     end
 
     @testset "VIKOR" begin
-        tol = 0.00001
+        tol = 0.01
         w = [0.110, 0.035, 0.379, 0.384, 0.002, 0.002, 0.010, 0.077]
         Amat = [
             100 92 10 2 80 70 95 80
@@ -168,10 +168,10 @@
         @test isa(result, VikorResult)
         @test result.bestIndex == 4
 
-        @test isapprox(result.scores[1], 0.1975012087551764, atol = tol)
-        @test isapprox(result.scores[2], 0.2194064473270817, atol = tol)
-        @test isapprox(result.scores[3], 0.3507643203516215, atol = tol)
-        @test isapprox(result.scores[4], -0.16727341435277993, atol = tol)
+        @test isapprox(result.scores[1], 0.74, atol = tol)
+        @test isapprox(result.scores[2], 0.73, atol = tol)
+        @test isapprox(result.scores[3], 1.0, atol = tol)
+        @test isapprox(result.scores[4], 0.0, atol = tol)
 
         setting = MCDMSetting(dmat, w, fns)
         result2 = vikor(setting)
