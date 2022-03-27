@@ -35,7 +35,7 @@ Please type
 
 ```julia
 julia> ]
-(@v1.5) pkg> add JMcDM
+(@v1.7) pkg> add JMcDM
 ```
 
 or
@@ -121,6 +121,10 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - Goal Programming
 - MACBETH
 - COMET
+- SWARA
+- ORESTE
+- SMAA
+- TODIM
 
 - will be updated soon. 
 
