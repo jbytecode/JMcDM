@@ -16,7 +16,7 @@ end
 
 function Base.show(io::IO, result::SDResult)
     println(io, "Weights:")
-    println(io, result.weigths)
+    println(io, result.weights)
 end
 
 function Base.show(io::IO, result::CODASResult)

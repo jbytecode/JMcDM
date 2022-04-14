@@ -1,3 +1,12 @@
+### 0.3.8 (Upcoming)
+- Small bug fixes 
+- Remove the critic method from summary()
+
+
+### 0.3.7 
+- Add compat entry for new JuMP version 1.0.0
+- Update README
+  
 ### 0.3.6
 - Fix Vikor 
 

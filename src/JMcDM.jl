@@ -148,7 +148,7 @@ export marcos
 export mabac
 export mairca
 export copras
-export promethee, prometLinear, prometVShape, prometUsual, prometQuasi, prometLevel
+export promethee, prometLinear, prometVShape, prometUShape, prometQuasi, prometLevel
 export cocoso
 export critic
 export entropy
