@@ -137,12 +137,7 @@ function summary(
         resultdf[:,:copras] = map(x -> if result.bestIndex == x check else " " end, 1:nalternatives)
     end 
 
-    if :critic in methods
-        result = critic(decisionMat, fns)
-        resultdf[:,:critic] = map(x -> if result.bestIndex == x check else " " end, 1:nalternatives)
-    end 
-
-
+    
     return resultdf
 
 end
