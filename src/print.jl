@@ -154,6 +154,16 @@ function Base.show(io::IO, result::WPMResult)
     println(io, result.bestIndex)
 end
 
+function Base.show(io::IO, result::ROVResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ranking: ")
+    println(io, result.ranks)
+    println(io, "Uminus:")
+    println(io, result.uminus)
+    println(io, "UPlus:")
+    println(io, result.uplus)
+end
 
 
 

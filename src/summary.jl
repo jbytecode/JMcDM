@@ -137,7 +137,11 @@ function summary(
         resultdf[:,:copras] = map(x -> if result.bestIndex == x check else " " end, 1:nalternatives)
     end 
 
-    
+    if :rov in methods 
+        result = rov(decisionMat, weights, fns)
+        resultdf[:,:rov] = map(x -> if result.bestIndex == x check else " " end, 1:nalternatives)
+    end
+
     return resultdf
 
 end

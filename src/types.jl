@@ -415,3 +415,6 @@ end
 
 struct MarcosMethod <: MCDMMethod
 end
+
+struct ROVMethod <: MCDMMethod
+end

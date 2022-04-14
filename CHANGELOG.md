@@ -1,6 +1,7 @@
-### 0.3.8 (Upcoming)
+### 0.3.8
 - Small bug fixes 
 - Remove the critic method from summary()
+- print and summary for ROV method
 
 
 ### 0.3.7 
