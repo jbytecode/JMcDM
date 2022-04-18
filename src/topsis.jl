@@ -59,17 +59,15 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
 
-w = unitize(weights)
-nalternatives, ncriteria = size(decisionMat)
+    w = unitize(weights)
+    nalternatives, ncriteria = size(decisionMat)
 
-normalizedMat = normalize(decisionMat)
+    normalizedMat = normalize(decisionMat)
 
-weightednormalizedMat = w * normalizedMat
+    weightednormalizedMat = w * normalizedMat
 
-    # col_max = colmaxs(weightednormalizedMat)
-    # col_min = colmins(weightednormalizedMat)
-    col_max = apply_columns(fns, weightednormalizedMat)
-    col_min = apply_columns(reverseminmax(fns), weightednormalizedMat)
+    desired = apply_columns(fns, weightednormalizedMat)
+    undesired = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
     distances_plus  = zeros(Float64, nalternatives)
     distances_minus = zeros(Float64, nalternatives)
@@ -78,8 +76,8 @@ weightednormalizedMat = w * normalizedMat
 
     @inbounds for i in 1:nalternatives
         ithrow = weightednormalizedMat[i,:] |> Array{Float64,1}
-		distances_plus[i]  = euclidean(col_max, ithrow)
-		distances_minus[i] = euclidean(col_min, ithrow)
+		distances_plus[i]  = euclidean(desired, ithrow)
+		distances_minus[i] = euclidean(undesired, ithrow)
 		scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
     end
     
