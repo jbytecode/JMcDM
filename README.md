@@ -45,7 +45,15 @@ julia> using Pkg
 julia> Pkg.add("JMcDM")
 ```
 
-in Julia REPL. 
+in Julia REPL to install package in the standard way, otherwise, you can clone the repository
+and type 
+
+```julia
+julia> ]
+(@v1.7) pkg> develop .
+``` 
+
+to start developing new methods.
 
 
 ## Package Dependencies
