@@ -1,3 +1,6 @@
+### 0.3.11 (upcoming release)
+- game() accepts matrix
+
 ### 0.3.10
 - Fix game solver
 

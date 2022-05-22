@@ -49,7 +49,15 @@ julia> result.value
 # References
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
 """
-    function game(decisionMatrix::DataFrame; verbose::Bool=false)::GameResult
+function game(decisionMatrix::DataFrame; verbose::Bool=false)::GameResult
+    
+    return game(Matrix(decisionMatrix), verbose = verbose)
+
+end
+
+
+
+function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
     
     newDecisionMatrix = copy(decisionMatrix)
     
@@ -64,8 +72,7 @@ Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (20
         newDecisionMatrix = decisionMatrix .- minmat    
     end
 
-    # dm = convert(Matrix, newDecisionMatrix)
-    dm = Matrix(newDecisionMatrix)
+    dm = newDecisionMatrix
 
     model = Model(GLPK.Optimizer);
     MOI.set(model, MOI.Silent(), !verbose)
