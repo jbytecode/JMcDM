@@ -15,7 +15,7 @@
 
             @test isa(result, GameResult)
 
-            @test result.value == 0.6666666666666661
+            @test isapprox(result.value, 0.6666666666666661, atol = tol)
 
             @test isapprox(
                 result.row_player_probabilities,

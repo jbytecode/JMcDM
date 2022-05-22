@@ -1,3 +1,6 @@
+### 0.3.10
+- Fix game solver
+
 ### 0.3.9
 - Implement PSI (Preference Selection Index) method
 
