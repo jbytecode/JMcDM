@@ -1,10 +1,16 @@
 using JMcDM
-using DataFrames
 
-dmat = [0.0 -1 1; 1 0 -1; -1 1 0]
-df = makeDecisionMatrix(dmat)
+dmat = [
+        #Rock   Paper   Scissors
+           0     -1        1; 
+           1      0       -1; 
+          -1      1        0
+]
 
-g = game(df)
-@info g 
+@info game(dmat |> makeDecisionMatrix)
+
+# GameResult([0.3333333333333334, 
+              0.3333333333333333, 
+              0.3333333333333333], 0.0)
 
 
