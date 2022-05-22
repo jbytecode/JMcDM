@@ -1,3 +1,6 @@
+### 0.3.9
+- Implement PSI (Preference Selection Index) method
+
 ### 0.3.8
 - Small bug fixes 
 - Remove the critic method from summary()

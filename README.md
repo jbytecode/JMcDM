@@ -94,6 +94,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - Copeland (For combining multiple ordering results)
 - SD Method for determining weights of criteria
 - ROV (Range of Value) Method
+- PSI (Preference Selection Index) Method
 
 ### SCDM Tools
 

@@ -50,6 +50,12 @@ struct MCDMSetting
     fns::Array{Function, 1}
 end
 
+struct PSIResult <: MCDMResult
+    scores::Array{Float64,1}
+    rankings::Array{Int, 1}
+    bestIndex::Int
+end
+
 struct TopsisResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
@@ -376,6 +382,9 @@ end
 
 struct MaircaMethod <: MCDMMethod 
 end 
+
+struct PSIMethod <: MCDMMethod
+end
 
 
 struct MooraMethod <: MCDMMethod 
