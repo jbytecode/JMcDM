@@ -1,5 +1,28 @@
 @testset "MCDM functions" begin
 
+    @testset "MOOSRA" begin 
+        tol = 0.0001
+
+        df = DataFrame(
+                :c1 => [25.0, 21, 19, 22],
+                :c2 => [65.0, 78, 53, 25],
+                :c3 => [7.0, 6, 5, 2],
+                :c4 => [20.0, 24, 33, 31],
+            )
+        weights = [0.25, 0.25, 0.25, 0.25]
+        fns = [maximum, maximum, minimum, maximum]
+        result = moosra(df, weights, fns)
+
+        @test result isa MoosraResult 
+
+        @test isapprox(result.scores, 
+        [15.714285714285714, 20.499999999999996, 20.999999999999996, 39.0],
+        atol = tol)
+
+        @test result.rankings == [1, 2, 3, 4]
+        @test result.bestIndex == 4 
+    end 
+
     @testset "PSI" begin 
         tol = 0.0001
 

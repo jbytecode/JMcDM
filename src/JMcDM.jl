@@ -39,6 +39,7 @@ include("critic.jl")
 include("entropy.jl")
 include("codas.jl")
 include("psi.jl")
+include("moosra.jl")
 
 include("summary.jl")
 
@@ -74,6 +75,7 @@ export WPMMethod
 export WaspasMethod
 export MarcosMethod
 export PSIMethod
+export MoosraMethod
 
 export MCDMSetting
 
@@ -104,6 +106,7 @@ export CODASResult
 export SDResult
 export ROVResult
 export PSIResult
+export MoosraResult
 
 # export game type
 export GameResult
@@ -159,6 +162,7 @@ export codas
 export sd
 export rov
 export psi
+export moosra
 
 #  export SCDM tools
 export laplace

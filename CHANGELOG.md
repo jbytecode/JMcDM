@@ -1,5 +1,6 @@
-### 0.3.11 (upcoming release)
+### 0.3.11 
 - game() accepts matrix
+- Implement MOOSRA method
 
 ### 0.3.10
 - Fix game solver

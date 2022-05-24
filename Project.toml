@@ -1,7 +1,7 @@
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
 authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>", "Ersagun Kuruca"]
-version = "0.3.10"
+version = "0.3.11"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
