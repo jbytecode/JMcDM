@@ -100,7 +100,7 @@ end
 
 
 """
-        waspas(setting)
+        moosra(setting)
 
 Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) for a given matrix and weights.
 
