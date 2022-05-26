@@ -1,3 +1,24 @@
+module SD 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+export SDResult 
+
+
+struct SDResult <: MCDMResult
+    weights::Array{Float64, 1}
+end
+
+function Base.show(io::IO, result::SDResult)
+    println(io, "Weights:")
+    println(io, result.weights)
+end
+
+
+
 """
         sd(decisionMat, fns)
 
@@ -72,3 +93,5 @@ function sd(setting::MCDMSetting)::SDResult
         setting.fns
     )
 end 
+
+end # end module SD

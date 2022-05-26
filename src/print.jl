@@ -9,10 +9,7 @@ function Base.show(io::IO, result::ARASResult)
     println(io, result.bestIndex)
 end
 
-function Base.show(io::IO, result::SDResult)
-    println(io, "Weights:")
-    println(io, result.weights)
-end
+
 
 function Base.show(io::IO, result::CODASResult)
     println(io, "Scores:")
