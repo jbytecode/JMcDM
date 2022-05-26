@@ -1,3 +1,18 @@
+module NDS 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+export nds
+
+struct NDSResult <: MCDMResult
+    ranks::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
 """
     dominates(p1::Array, p2::Array, fns)
 
@@ -155,4 +170,7 @@ function nds(data::DataFrame, fns::Array{Function, 1})::NDSResult
     return result
 end
 
+
+
+end # end of module NDS 
 

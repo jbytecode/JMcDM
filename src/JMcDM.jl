@@ -67,6 +67,7 @@ import .ROV: rov, ROVMethod, ROVResult
 import .PSI: psi, PSIMethod, PSIResult
 import .PROMETHEE: promethee, PrometheeMethod, PrometheeResult 
 import .PROMETHEE: prometLinear, prometVShape, prometUShape, prometQuasi, prometLevel
+import .NDS: nds 
 
 
 import .Utilities: * 

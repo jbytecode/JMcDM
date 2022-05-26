@@ -116,10 +116,7 @@ struct AHPResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct NDSResult <: MCDMResult
-    ranks::Array{Int64,1}
-    bestIndex::Int64
-end
+
 
 struct LaplaceResult <: SCDMResult
     expected_values::Array{Float64,1}
