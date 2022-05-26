@@ -1,3 +1,36 @@
+module WASPAS 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+export WaspasMethod, WASPASResult, waspas
+
+struct WASPASResult <: MCDMResult
+    decisionMatrix::DataFrame
+    normalizedDecisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+struct WaspasMethod <: MCDMMethod
+    lambda::Float64
+end
+
+WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
+
+function Base.show(io::IO, result::WASPASResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         waspas(decisionMat, weights, fns; lambda = 0.5)
 
@@ -138,3 +171,5 @@ function waspas(setting::MCDMSetting; lambda::Float64=0.5)::WASPASResult
         lambda = lambda 
     )
 end 
+
+end # end of module WASPAS

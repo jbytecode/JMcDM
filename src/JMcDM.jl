@@ -59,6 +59,7 @@ include("rov.jl")
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
 import .WPM: wpm, WPMResult, WPMMethod
+import .WASPAS: waspas, WASPASResult, WaspasMethod
 
 import .Utilities: * 
 using .Utilities

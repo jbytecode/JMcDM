@@ -131,14 +131,7 @@ function Base.show(io::IO, result::VikorResult)
     println(io, result.bestIndex)
 end
 
-function Base.show(io::IO, result::WASPASResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 
 

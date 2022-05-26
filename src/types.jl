@@ -224,14 +224,7 @@ struct ARASResult <: MCDMResult
 end
 
 
-struct WASPASResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
+
 
 struct EDASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -403,11 +396,7 @@ end
 VikorMethod()::VikorMethod = VikorMethod(0.5)
 
 
-struct WaspasMethod <: MCDMMethod
-    lambda::Float64
-end
 
-WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
 
 
 
