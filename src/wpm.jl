@@ -1,3 +1,34 @@
+module WPM 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+export WPMMethod, WPMResult, wpm
+
+struct WPMMethod <: MCDMMethod
+end 
+
+struct WPMResult <: MCDMResult
+    decisionMatrix::DataFrame
+    normalizedDecisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+function Base.show(io::IO, result::WPMResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         wpm(decisionMat, weights, fns)
 
@@ -122,3 +153,5 @@ function wpm(setting::MCDMSetting)::WPMResult
         setting.fns
     )
 end 
+
+end # end of module WPM 

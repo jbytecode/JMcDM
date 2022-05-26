@@ -223,14 +223,6 @@ struct ARASResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct WPMResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
 
 struct WASPASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -417,8 +409,7 @@ end
 
 WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
 
-struct WPMMethod <: MCDMMethod
-end 
+
 
 
 struct MarcosMethod <: MCDMMethod
