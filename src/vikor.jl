@@ -1,3 +1,34 @@
+module VIKOR 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct VikorMethod <: MCDMMethod
+    v::Float64
+end 
+
+VikorMethod()::VikorMethod = VikorMethod(0.5)
+
+struct VikorResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    weightedDecisionMatrix::DataFrame
+    bestIndex::Int64
+    scores::Array{Float64,1}
+end
+
+
+function Base.show(io::IO, result::VikorResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
+
+
 """
         vikor(decisionMat, weights, fns; v = 0.5)
 
@@ -140,3 +171,5 @@ function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
         v = v
     )
 end 
+
+end # end module VIKOR 

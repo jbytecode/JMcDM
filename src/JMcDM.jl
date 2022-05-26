@@ -60,6 +60,7 @@ include("rov.jl")
 import .Topsis: topsis, TopsisMethod, TopsisResult
 import .WPM: wpm, WPMResult, WPMMethod
 import .WASPAS: waspas, WASPASResult, WaspasMethod
+import .VIKOR: vikor, VikorMethod, VikorResult
 
 import .Utilities: * 
 using .Utilities

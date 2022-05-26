@@ -61,15 +61,6 @@ struct PSIResult <: MCDMResult
 end
 
 
-struct VikorResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
-    bestIndex::Int64
-    scores::Array{Float64,1}
-end
-
-
 struct ElectreResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
@@ -387,18 +378,6 @@ PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float6
 
 struct SawMethod <: MCDMMethod 
 end 
-
-
-struct VikorMethod <: MCDMMethod
-    v::Float64
-end 
-
-VikorMethod()::VikorMethod = VikorMethod(0.5)
-
-
-
-
-
 
 
 struct MarcosMethod <: MCDMMethod
