@@ -80,6 +80,10 @@ import .ARAS: aras, ArasMethod, ARASResult
 import .COCOSO: cocoso, CocosoMethod, CoCoSoResult
 import .CODAS: codas, CodasMethod, CODASResult
 import .COPRAS: copras, CoprasMethod, COPRASResult
+import .EDAS: edas, EdasMethod, EDASResult
+import .CRITIC: critic, CRITICResult, CriticMethod
+import .ELECTRE: electre, ElectreMethod, ElectreResult
+
 
 
 import .Utilities: * 

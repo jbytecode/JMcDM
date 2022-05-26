@@ -1,3 +1,33 @@
+module ELECTRE 
+
+export electre, ElectreMethod, ElectreResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct ElectreResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    weightedDecisionMatrix::DataFrame
+    fitnessTable::Array{Dict,1}
+    nonfitnessTable::Array{Dict,1}
+    fitnessMatrix::Array{Float64,2}
+    nonfitnessMatrix::Array{Float64,2}
+    C::Array{Float64,1}
+    D::Array{Float64,1}
+    bestIndex::Tuple
+end
+
+struct ElectreMethod <: MCDMMethod 
+end 
+
+function Base.show(io::IO, result::ElectreResult)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         electre(decisionMat, weights, fns)
 
@@ -198,3 +228,6 @@ function electre(setting::MCDMSetting)::ElectreResult
         setting.fns
     )
 end 
+
+end # end of module ELECTRE 
+

@@ -49,21 +49,6 @@ struct MCDMSetting
 end
 
 
-struct ElectreResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
-    fitnessTable::Array{Dict,1}
-    nonfitnessTable::Array{Dict,1}
-    fitnessMatrix::Array{Float64,2}
-    nonfitnessMatrix::Array{Float64,2}
-    C::Array{Float64,1}
-    D::Array{Float64,1}
-    bestIndex::Tuple
-end
-
-
-
 
 
 struct DematelResult <: MCDMResult
@@ -151,44 +136,13 @@ struct ExpectedRegretResult <: SCDMResult
     bestIndex::Int64
 end
 
-
-
-
-struct EDASResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
-struct CRITICResult <: MCDMResult
-    decisionMatrix::DataFrame
-    w::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
 struct EntropyResult <: MCDMResult
     decisionMatrix::DataFrame
     w::Array{Float64,1}
     ranking::Array{Int64,1}
     bestIndex::Int64
-end
-
-
-
-
-struct ElectreMethod <: MCDMMethod 
-end 
- 
-
-struct CriticMethod <: MCDMMethod 
 end 
 
-
-struct EdasMethod <: MCDMMethod 
-end 
 
 
 

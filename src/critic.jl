@@ -1,3 +1,30 @@
+module CRITIC 
+
+export critic, CRITICResult, CriticMethod
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct CriticMethod <: MCDMMethod 
+end 
+
+
+struct CRITICResult <: MCDMResult
+    decisionMatrix::DataFrame
+    w::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+function Base.show(io::IO, result::CRITICResult)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         critic(decisionMat, fns)
 
@@ -123,3 +150,5 @@ function critic(setting::MCDMSetting)::CRITICResult
         setting.fns
     )
 end 
+
+end # end of module CRITIC

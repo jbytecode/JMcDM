@@ -1,5 +1,6 @@
 module COPRAS 
 
+export copras, CoprasMethod, COPRASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities 
@@ -15,6 +16,15 @@ struct COPRASResult <: MCDMResult
     scores::Array{Float64,1}
     ranking::Array{Int64,1}
     bestIndex::Int64
+end
+
+function Base.show(io::IO, result::COPRASResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
 end
 
 """

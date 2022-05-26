@@ -1,3 +1,31 @@
+module EDAS 
+
+export edas, EdasMethod, EDASResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct EdasMethod <: MCDMMethod 
+end 
+
+struct EDASResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+function Base.show(io::IO, result::EDASResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
 """
         edas(decisionMat, weights, fns)
 
@@ -156,3 +184,5 @@ function edas(setting::MCDMSetting)::EDASResult
         setting.fns
     )
 end 
+
+end # end of module EDAS 
