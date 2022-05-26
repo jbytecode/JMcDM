@@ -1,4 +1,4 @@
-### 0.4.0 (Upcoming release)
+### 0.4.0 
 - Modular system
 
 ### 0.3.11 
