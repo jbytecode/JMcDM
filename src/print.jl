@@ -112,18 +112,6 @@ function Base.show(io::IO, result::PrometheeResult)
     println(io, result.bestIndex)
 end
 
-
-function Base.show(io::IO, result::ROVResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranks)
-    println(io, "Uminus:")
-    println(io, result.uminus)
-    println(io, "UPlus:")
-    println(io, result.uplus)
-end
-
 function Base.show(io::IO, result::PSIResult)
     println(io, "Scores:")
     println(io, result.scores)

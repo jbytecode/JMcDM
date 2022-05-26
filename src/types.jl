@@ -288,17 +288,6 @@ struct CODASResult <: MCDMResult
 end
 
 
-
-struct ROVResult 
-    uminus::Array{Float64, 1}
-    uplus::Array{Float64, 1}
-    scores::Array{Float64, 1}
-    ranks::Array{Float64, 1}
-end
-
-
-
-
 struct ElectreMethod <: MCDMMethod 
 end 
 
@@ -371,5 +360,3 @@ PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float6
 struct MarcosMethod <: MCDMMethod
 end
 
-struct ROVMethod <: MCDMMethod
-end

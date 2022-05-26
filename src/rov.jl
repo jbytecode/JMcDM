@@ -1,3 +1,33 @@
+module ROV 
+
+export rov, ROVMethod, ROVResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct ROVMethod <: MCDMMethod
+end
+
+struct ROVResult 
+    uminus::Array{Float64, 1}
+    uplus::Array{Float64, 1}
+    scores::Array{Float64, 1}
+    ranks::Array{Float64, 1}
+end
+
+function Base.show(io::IO, result::ROVResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranks)
+    println(io, "Uminus:")
+    println(io, result.uminus)
+    println(io, "UPlus:")
+    println(io, result.uplus)
+end
+
 """
         rov(decisionMat, weights, fns)
 
@@ -102,9 +132,11 @@ end
 
 
 function rov(setting::MCDMSetting)::ROVResult
-    mairca(
+    rov(
         setting.df,
         setting.weights,
         setting.fns
     )
 end 
+
+end # end of module ROV 
