@@ -1,6 +1,6 @@
 module AHP 
 
-export ahp, ahp_consistency, AHPResult, AHPConsistencyResult
+export ahp, ahp_consistency, AHPResult, AHPConsistencyResult, ahp_RI
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities 
 
