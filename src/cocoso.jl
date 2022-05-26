@@ -1,3 +1,35 @@
+module COCOSO 
+
+export cocoso, CocosoMethod, CoCoSoResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+
+struct CocosoMethod <: MCDMMethod
+    lambda::Float64
+end
+
+CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
+
+struct CoCoSoResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+function Base.show(io::IO, result::CoCoSoResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
 """
         cocoso(decisionMat, weights, fns; lambda)
 
@@ -148,3 +180,6 @@ function cocoso(setting::MCDMSetting; lambda::Float64=0.5)::CoCoSoResult
         lambda = lambda
     )
 end
+
+
+end # end of module COCOSO

@@ -1,3 +1,35 @@
+module ARAS 
+
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+
+
+struct ArasMethod <: MCDMMethod 
+end 
+
+struct ARASResult <: MCDMResult
+    referenceRow::Array{Float64,1}
+    extendMat::Array{Float64,2}
+    normalizedMat::Array{Float64,2}
+    optimalitydegrees::Array{Float64,1}
+    scores::Array{Float64,1}
+    orderings::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+function Base.show(io::IO, result::ARASResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Orderings: ")
+    println(io, result.orderings)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
     aras(decisionMat, weights, fs)
 Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, type of criteria.
@@ -120,3 +152,5 @@ function aras(setting::MCDMSetting)::ARASResult
         setting.fns
     )
 end
+
+end # end of module ARAS

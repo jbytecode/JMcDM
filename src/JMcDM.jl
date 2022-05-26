@@ -76,6 +76,9 @@ import .MABAC: mabac, MABACResult, MabacMethod
 import .GREY: grey, GreyMethod, GreyResult
 import .Game: game, GameResult
 import .DataEnvelop: dataenvelop, DataEnvelopResult
+import .ARAS: aras, ArasMethod, ARASResult 
+import .COCOSO: cocoso, CocosoMethod, CoCoSoResult
+
 
 import .Utilities: * 
 using .Utilities

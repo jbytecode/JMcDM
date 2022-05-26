@@ -152,15 +152,7 @@ struct ExpectedRegretResult <: SCDMResult
 end
 
 
-struct ARASResult <: MCDMResult
-    referenceRow::Array{Float64,1}
-    extendMat::Array{Float64,2}
-    normalizedMat::Array{Float64,2}
-    optimalitydegrees::Array{Float64,1}
-    scores::Array{Float64,1}
-    orderings::Array{Int64,1}
-    bestIndex::Int64
-end
+
 
 struct EDASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -180,14 +172,6 @@ struct COPRASResult <: MCDMResult
     bestIndex::Int64
 end
 
-
-struct CoCoSoResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
 
 struct CRITICResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -216,15 +200,6 @@ struct ElectreMethod <: MCDMMethod
 end 
 
 
-struct ArasMethod <: MCDMMethod 
-end 
-
-
-struct CocosoMethod <: MCDMMethod
-    lambda::Float64
-end
-
-CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
 
 struct CodasMethod <: MCDMMethod
     tau::Float64
