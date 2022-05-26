@@ -50,7 +50,6 @@ include("moosra.jl")
 include("summary.jl")
 
 include("mcdm.jl")
-include("print.jl")
 
 include("copeland.jl")
 include("sd.jl")
@@ -83,7 +82,7 @@ import .COPRAS: copras, CoprasMethod, COPRASResult
 import .EDAS: edas, EdasMethod, EDASResult
 import .CRITIC: critic, CRITICResult, CriticMethod
 import .ELECTRE: electre, ElectreMethod, ElectreResult
-
+import .DEMATEL: dematel, DematelResult
 
 
 import .Utilities: * 
