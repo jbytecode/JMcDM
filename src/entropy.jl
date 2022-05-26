@@ -1,3 +1,19 @@
+module Entropy 
+
+export entropy, EntropyResult
+
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+
+struct EntropyResult <: MCDMResult
+    decisionMatrix::DataFrame
+    w::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end 
 """
         entropy(decisionMat)
 
@@ -101,3 +117,8 @@ function entropy(decisionMat::DataFrame):EntropyResult
 
     return result
 end
+
+
+end # end of module Entropy 
+
+

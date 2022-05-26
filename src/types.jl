@@ -49,84 +49,11 @@ struct MCDMSetting
 end
 
 
-struct AHPConsistencyResult <: MCDMResult
-    comparisonMatrix::DataFrame
-    normalizedComparisonMatrix::DataFrame
-    consistencyVector::Array{Float64,1}
-    priority::Array{Float64,1}
-    pc::Array{Float64,1}
-    lambda_max::Float64
-    CI::Float64
-    RI::Float64
-    CR::Float64
-    isConsistent::Bool
-end
-
-struct AHPResult <: MCDMResult
-    comparisonMatrixList::Array{DataFrame,1}
-    criteriaComparisonMatrix::DataFrame
-    criteriaConsistency::AHPConsistencyResult
-    decisionMatrix::DataFrame
-    scores::Array{Float64,1}
-    weights::Array{Float64,1}
-    bestIndex::Int64
-end
 
 
 
-struct LaplaceResult <: SCDMResult
-    expected_values::Array{Float64,1}
-    bestIndex::Int64 
-end
-
-struct MaximinResult <: SCDMResult
-    rowmins::Array{Float64,1}
-    bestIndex::Int64
-end
 
 
-struct MaximaxResult <: SCDMResult
-    rowmaxs::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct MinimaxResult <: SCDMResult
-    rowmaxs::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct MiniminResult <: SCDMResult
-    rowmins::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct SavageResult <: SCDMResult
-    regretMatrix::DataFrame
-    scores::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct HurwiczResult <: SCDMResult
-    scores::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct MLEResult <: SCDMResult
-    scores::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct ExpectedRegretResult <: SCDMResult
-    scores::Array{Float64,1}
-    bestIndex::Int64
-end
-
-struct EntropyResult <: MCDMResult
-    decisionMatrix::DataFrame
-    w::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end 
 
 
 

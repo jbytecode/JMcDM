@@ -2,6 +2,7 @@ module DEMATEL
 
 export dematel, DematelResult
 
+
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities 
 

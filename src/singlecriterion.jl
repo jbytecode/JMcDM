@@ -1,3 +1,61 @@
+module SCDM 
+
+export LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
+export SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
+export laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
+
+import ..SCDMResult
+using ..Utilities 
+
+using DataFrames 
+
+struct LaplaceResult <: SCDMResult
+    expected_values::Array{Float64,1}
+    bestIndex::Int64 
+end
+
+struct MaximinResult <: SCDMResult
+    rowmins::Array{Float64,1}
+    bestIndex::Int64
+end
+
+
+struct MaximaxResult <: SCDMResult
+    rowmaxs::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MinimaxResult <: SCDMResult
+    rowmaxs::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MiniminResult <: SCDMResult
+    rowmins::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct SavageResult <: SCDMResult
+    regretMatrix::DataFrame
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct HurwiczResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct MLEResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+struct ExpectedRegretResult <: SCDMResult
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
 """
     laplace(decisionMat)
 
@@ -447,3 +505,5 @@ end
 
 
 
+
+end # end of module SCM 

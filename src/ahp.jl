@@ -1,3 +1,35 @@
+module AHP 
+
+export ahp, ahp_consistency, AHPResult, AHPConsistencyResult
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct AHPConsistencyResult <: MCDMResult
+    comparisonMatrix::DataFrame
+    normalizedComparisonMatrix::DataFrame
+    consistencyVector::Array{Float64,1}
+    priority::Array{Float64,1}
+    pc::Array{Float64,1}
+    lambda_max::Float64
+    CI::Float64
+    RI::Float64
+    CR::Float64
+    isConsistent::Bool
+end
+
+struct AHPResult <: MCDMResult
+    comparisonMatrixList::Array{DataFrame,1}
+    criteriaComparisonMatrix::DataFrame
+    criteriaConsistency::AHPConsistencyResult
+    decisionMatrix::DataFrame
+    scores::Array{Float64,1}
+    weights::Array{Float64,1}
+    bestIndex::Int64
+end
+
+
 """
     ahp_RI(n)
 Return AHP Random Index for a given n.
@@ -274,3 +306,4 @@ function ahp(comparisonMatrixList::Array{DataFrame,1}, criteriaComparisonMatrix:
     return result
 end
 
+end # end of module AHP 

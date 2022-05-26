@@ -83,7 +83,12 @@ import .EDAS: edas, EdasMethod, EDASResult
 import .CRITIC: critic, CRITICResult, CriticMethod
 import .ELECTRE: electre, ElectreMethod, ElectreResult
 import .DEMATEL: dematel, DematelResult
+import .Entropy: entropy, EntropyResult
+import .AHP: ahp, ahp_consistency, AHPResult, AHPConsistencyResult
 
+import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
+import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
+import .SCDM: laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
 
 import .Utilities: * 
 using .Utilities
