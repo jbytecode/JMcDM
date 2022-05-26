@@ -1,3 +1,22 @@
+module COPRAS 
+
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct CoprasMethod <: MCDMMethod 
+end
+
+struct COPRASResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
 """
     copras(decisionMat, weights, fs)
 Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights and, type of criteria.
@@ -216,3 +235,6 @@ function copras(setting::MCDMSetting)::COPRASResult
         setting.fns
     )
 end 
+
+
+end # end of module COPRAS 

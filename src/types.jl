@@ -162,17 +162,6 @@ struct EDASResult <: MCDMResult
     bestIndex::Int64
 end
 
-
-
-struct COPRASResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
-
 struct CRITICResult <: MCDMResult
     decisionMatrix::DataFrame
     w::Array{Float64,1}
@@ -187,29 +176,12 @@ struct EntropyResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct CODASResult <: MCDMResult
-    decisionMatrix::DataFrame
-    w::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
+
 
 
 struct ElectreMethod <: MCDMMethod 
 end 
-
-
-
-struct CodasMethod <: MCDMMethod
-    tau::Float64
-end
-
-CodasMethod()::CodasMethod = CodasMethod(0.02)
-
-struct CoprasMethod <: MCDMMethod 
-end 
-
+ 
 
 struct CriticMethod <: MCDMMethod 
 end 

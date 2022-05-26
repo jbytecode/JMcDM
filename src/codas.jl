@@ -1,3 +1,35 @@
+module CODAS 
+
+export codas, CodasMethod, CODASResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct CODASResult <: MCDMResult
+    decisionMatrix::DataFrame
+    w::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+struct CodasMethod <: MCDMMethod
+    tau::Float64
+end
+
+CodasMethod()::CodasMethod = CodasMethod(0.02)
+
+function Base.show(io::IO, result::CODASResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
 """
     codas(decisionMat, weights, fs)
 Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
@@ -166,3 +198,7 @@ function codas(setting::MCDMSetting; tau::Float64=0.02)::CODASResult
         tau = tau
     )
 end
+
+
+end # end of module CODAS 
+
