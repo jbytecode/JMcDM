@@ -62,6 +62,7 @@ import .WPM: wpm, WPMResult, WPMMethod
 import .WASPAS: waspas, WASPASResult, WaspasMethod
 import .VIKOR: vikor, VikorMethod, VikorResult
 import .SD: sd, SDResult
+import .SAW: saw, SawResult, SawMethod
 
 import .Utilities: * 
 using .Utilities

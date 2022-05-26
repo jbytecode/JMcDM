@@ -195,15 +195,6 @@ struct GreyResult <: MCDMResult
     bestIndex::Int64             
 end
 
-struct SawResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
 struct ARASResult <: MCDMResult
     referenceRow::Array{Float64,1}
     extendMat::Array{Float64,2}
@@ -374,8 +365,7 @@ end
 
 PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
 
-struct SawMethod <: MCDMMethod 
-end 
+
 
 
 struct MarcosMethod <: MCDMMethod
