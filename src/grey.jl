@@ -1,3 +1,38 @@
+module GREY 
+
+export grey, GreyResult, GreyMethod
+
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct GreyMethod <: MCDMMethod 
+    zeta::Float64
+end 
+
+GreyMethod() :: GreyMethod = GreyMethod(0.5)
+
+struct GreyResult <: MCDMResult
+    referenceRow::Array{Float64,1}
+    normalizedMat::Matrix
+    absoluteValueMat::Matrix
+    greyTable::Matrix
+    scores::Array{Float64,1}
+    ordering::Array{Int64,1}
+    bestIndex::Int64             
+end
+
+function Base.show(io::IO, result::GreyResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ordering)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         grey(decisionMat, weights, fs; zeta)
 
@@ -156,3 +191,6 @@ function grey(setting::MCDMSetting; zeta::Float64=0.5)::GreyResult
         setting.fns
     )
 end 
+
+end # end of module GREY 
+

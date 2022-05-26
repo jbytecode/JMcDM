@@ -73,6 +73,8 @@ import .MOORA: moora, MooraMethod, MooraResult
 import .MARCOS: marcos, MarcosMethod, MarcosResult
 import .MAIRCA: mairca, MaircaMethod, MAIRCAResult 
 import .MABAC: mabac, MABACResult, MabacMethod
+import .GREY: grey, GreyMethod, GreyResult
+
 
 import .Utilities: * 
 using .Utilities
