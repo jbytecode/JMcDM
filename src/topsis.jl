@@ -1,3 +1,31 @@
+module Topsis
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+export TopsisMethod, TopsisResult, topsis
+
+using DataFrames 
+
+struct TopsisMethod <: MCDMMethod end
+
+struct TopsisResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    normalizedDecisionMatrix::DataFrame
+    normalizedWeightedDecisionMatrix::DataFrame 
+    bestIndex::Int64 
+    scores::Array{Float64,1}
+end
+
+function Base.show(io::IO, result::TopsisResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
+
 """
         topsis(decisionMat, weights, fns)
 
@@ -57,7 +85,11 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
+function topsis(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{Function,1},
+)::TopsisResult
 
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -69,28 +101,28 @@ function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     desired = apply_columns(fns, weightednormalizedMat)
     undesired = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
-    distances_plus  = zeros(Float64, nalternatives)
+    distances_plus = zeros(Float64, nalternatives)
     distances_minus = zeros(Float64, nalternatives)
 
     scores = zeros(Float64, nalternatives)
 
-    @inbounds for i in 1:nalternatives
-        ithrow = weightednormalizedMat[i,:] |> Array{Float64,1}
-		distances_plus[i]  = euclidean(desired, ithrow)
-		distances_minus[i] = euclidean(undesired, ithrow)
-		scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
+    @inbounds for i = 1:nalternatives
+        ithrow = weightednormalizedMat[i, :] |> Array{Float64,1}
+        distances_plus[i] = euclidean(desired, ithrow)
+        distances_minus[i] = euclidean(undesired, ithrow)
+        scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
     end
-    
+
     best_index = sortperm(scores) |> last
-    
+
     topsisresult = TopsisResult(
         decisionMat,
         w,
         normalizedMat,
         weightednormalizedMat,
         best_index,
-        scores
-    ) 
+        scores,
+    )
 
     return topsisresult
 end
@@ -111,9 +143,8 @@ topsis() applies the TOPSIS method to rank n strategies subject to m criteria wh
 - `::TopsisResult`: TopsisResult object that holds multiple outputs including scores and best index.
 """
 function topsis(setting::MCDMSetting)::TopsisResult
-    topsis(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    topsis(setting.df, setting.weights, setting.fns)
+end
+
+
+end # End of module Topsis

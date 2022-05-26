@@ -8,5 +8,6 @@ df = DataFrame(
             )
 weights = [0.25, 0.25, 0.25, 0.25]
 fns = [maximum, maximum, minimum, maximum]
-result = moosra(df, weights, fns)
+result = topsis(df, weights, fns)
 
+print(result)

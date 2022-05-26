@@ -10,6 +10,12 @@ import GLPK
 # of MCDM results
 import Base.show
 
+# Abstract Types 
+abstract type MCDMResult end 
+abstract type SCDMResult end
+abstract type MCDMMethod end 
+
+
 # includes 
 include("types.jl")
 include("utilities.jl")
@@ -50,9 +56,14 @@ include("copeland.jl")
 include("sd.jl")
 include("rov.jl")
 
+# imports from modules
+import .Topsis: topsis, TopsisMethod, TopsisResult
+import .Utilities: * 
+using .Utilities
 
 # export imported functions
 export DataFrame
+export Utilities
 
 # export MCDM methods
 export MCDMMethod 

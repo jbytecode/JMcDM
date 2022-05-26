@@ -1,3 +1,6 @@
+### 0.4.0 (Upcoming release)
+- Modular system
+
 ### 0.3.11 
 - game() accepts matrix
 - Implement MOOSRA method

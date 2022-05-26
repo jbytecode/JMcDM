@@ -1,6 +1,4 @@
-abstract type MCDMResult end 
-abstract type SCDMResult end
-abstract type MCDMMethod end 
+
 
 
 """
@@ -62,14 +60,6 @@ struct PSIResult <: MCDMResult
     bestIndex::Int
 end
 
-struct TopsisResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    normalizedDecisionMatrix::DataFrame
-    normalizedWeightedDecisionMatrix::DataFrame 
-    bestIndex::Int64 
-    scores::Array{Float64,1}
-end
 
 struct VikorResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -342,7 +332,7 @@ struct ROVResult
 end
 
 
-struct TopsisMethod <: MCDMMethod end
+
 
 struct ElectreMethod <: MCDMMethod 
 end 

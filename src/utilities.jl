@@ -1,3 +1,16 @@
+module Utilities
+
+export I, mean, var, std 
+export geomean, cor, euclidean
+export normalize, apply_columns 
+export colmaxs, colmins, unitize
+export makeDecisionMatrix, reverseminmax, makeminmax
+export rowmins, rowmaxs, rowmeans, rowsums
+export colmins, colmaxs, colmeans, colsums
+
+
+using DataFrames 
+
 function I(n)
     mat = zeros(n, n)
     for i in 1:n
@@ -176,3 +189,5 @@ end
 function makeminmax(fns::Array{K,1} where K)::Array{Function,1}
     return convert(Array{Function,1}, fns)
 end
+
+end # End of module Utilities
