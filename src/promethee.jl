@@ -1,3 +1,40 @@
+module PROMETHEE 
+
+export promethee, PrometheeMethod, PrometheeResult
+export prometLevel, prometLinear, prometQuasi, prometUShape
+export prometVShape
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+
+struct PrometheeMethod <: MCDMMethod 
+    pref::Array{Function, 1}
+    qs::Array{Union{Nothing, Float64}, 1}
+    ps::Array{Union{Nothing, Float64}, 1}
+end 
+
+PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
+
+
+struct PrometheeResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+function Base.show(io::IO, result::PrometheeResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
     Linear preference function for PROMETHEE.
 
@@ -214,3 +251,5 @@ function promethee(setting::MCDMSetting, prefs::Array{Function,1}, qs::Array, ps
         ps
     )
 end 
+
+end # end of module PROMETHEE

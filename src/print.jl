@@ -103,15 +103,6 @@ function Base.show(io::IO, result::MooraResult)
     println(io, result.bestIndex)
 end
 
-function Base.show(io::IO, result::PrometheeResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
-
 function Base.show(io::IO, result::MoosraMethod)
     println(io, "Scores:")
     println(io, result.scores)

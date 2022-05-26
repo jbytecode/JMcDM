@@ -243,14 +243,6 @@ struct COPRASResult <: MCDMResult
 end
 
 
-struct PrometheeResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
 struct CoCoSoResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
@@ -338,13 +330,6 @@ end
 
 MooraMethod() :: MooraMethod = MooraMethod(:reference)
 
-struct PrometheeMethod <: MCDMMethod 
-    pref::Array{Function, 1}
-    qs::Array{Union{Nothing, Float64}, 1}
-    ps::Array{Union{Nothing, Float64}, 1}
-end 
-
-PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
 
 
 

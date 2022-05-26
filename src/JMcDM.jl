@@ -65,6 +65,8 @@ import .SD: sd, SDResult
 import .SAW: saw, SawResult, SawMethod
 import .ROV: rov, ROVMethod, ROVResult
 import .PSI: psi, PSIMethod, PSIResult
+import .PROMETHEE: promethee, PrometheeMethod, PrometheeResult 
+import .PROMETHEE: prometLinear, prometVShape, prometUShape, prometQuasi, prometLevel
 
 
 import .Utilities: * 
