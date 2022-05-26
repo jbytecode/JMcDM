@@ -87,29 +87,10 @@ function Base.show(io::IO, result::MAIRCAResult)
     println(io, result.bestIndex)
 end
 
-function Base.show(io::IO, result::MARCOSResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
 
-function Base.show(io::IO, result::MooraResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
 
-function Base.show(io::IO, result::MoosraMethod)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: (from worst to best)")
-    println(io, result.rankings)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
+
+
 
 

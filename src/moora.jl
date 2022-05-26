@@ -1,3 +1,36 @@
+module MOORA 
+
+export moora, MooraMethod, MooraResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct MooraMethod <: MCDMMethod 
+    method::Symbol
+end 
+
+MooraMethod() :: MooraMethod = MooraMethod(:reference)
+
+struct MooraResult <: MCDMResult
+    mooraType::Symbol
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    weightedDecisionMatrix::DataFrame
+    referenceMatrix::Union{DataFrame, Nothing}
+    scores::Array{Float64,1}
+    bestIndex::Int64
+end
+
+function Base.show(io::IO, result::MooraResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
+
 """
         moora_ref(decisionMat, weights, fns)
 
@@ -255,3 +288,6 @@ function moora(setting::MCDMSetting; method::Symbol = :reference)::MooraResult
         method = method
     )
 end 
+
+
+end # end of module MOORA 

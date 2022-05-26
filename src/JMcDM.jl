@@ -68,6 +68,9 @@ import .PSI: psi, PSIMethod, PSIResult
 import .PROMETHEE: promethee, PrometheeMethod, PrometheeResult 
 import .PROMETHEE: prometLinear, prometVShape, prometUShape, prometQuasi, prometLevel
 import .NDS: nds, NDSResult 
+import .MOOSRA: moosra, MoosraResult, MoosraMethod
+import .MOORA: moora, MooraMethod, MooraResult
+import .MARCOS: marcos, MarcosMethod, MarcosResult
 
 
 import .Utilities: * 
@@ -117,7 +120,7 @@ export ARASResult
 export WPMResult
 export WASPASResult
 export EDASResult
-export MARCOSResult
+export MarcosResult
 export MABACResult
 export MAIRCAResult
 export COPRASResult

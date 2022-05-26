@@ -48,12 +48,6 @@ struct MCDMSetting
     fns::Array{Function, 1}
 end
 
-struct MoosraResult <: MCDMResult 
-    scores::Array{Float64, 1}
-    rankings::Array{Int, 1}
-    bestIndex::Int
-end 
-
 
 struct ElectreResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -69,15 +63,7 @@ struct ElectreResult <: MCDMResult
 end
 
 
-struct MooraResult <: MCDMResult
-    mooraType::Symbol
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
-    referenceMatrix::Union{DataFrame, Nothing}
-    scores::Array{Float64,1}
-    bestIndex::Int64
-end
+
 
 
 struct DematelResult <: MCDMResult
@@ -196,9 +182,6 @@ struct ARASResult <: MCDMResult
     bestIndex::Int64
 end
 
-
-
-
 struct EDASResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
@@ -207,13 +190,6 @@ struct EDASResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct MARCOSResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
 
 struct MABACResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -317,20 +293,4 @@ struct MaircaMethod <: MCDMMethod
 end 
 
 
-struct MoosraMethod <: MCDMMethod
-end
-
-
-struct MooraMethod <: MCDMMethod 
-    method::Symbol
-end 
-
-MooraMethod() :: MooraMethod = MooraMethod(:reference)
-
-
-
-
-
-struct MarcosMethod <: MCDMMethod
-end
 

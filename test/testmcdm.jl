@@ -877,7 +877,7 @@
         Fns = convert(Array{Function,1}, fns)
 
         result = marcos(df, weights, Fns)
-        @test result isa MARCOSResult
+        @test result isa MarcosResult
         @test isapprox(
             result.scores,
             [0.684865943528, 0.672767106696, 0.662596906139, 0.661103207660],
@@ -886,12 +886,12 @@
 
         setting = MCDMSetting(df, weights, Fns)
         result2 = marcos(setting)
-        @test result2 isa MARCOSResult
+        @test result2 isa MarcosResult
         @test result2.scores == result.scores
         @test result2.bestIndex == result.bestIndex
 
         result3 = mcdm(setting, MarcosMethod())
-        @test result3 isa MARCOSResult
+        @test result3 isa MarcosResult
         @test result3.scores == result.scores
         @test result3.bestIndex == result.bestIndex
     end

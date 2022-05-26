@@ -1,3 +1,32 @@
+module MARCOS 
+
+export marcos, MarcosResult, MarcosMethod
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct MarcosMethod <: MCDMMethod
+end
+
+struct MarcosResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+function Base.show(io::IO, result::MarcosResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         marcos(decisionMat, weights, fns)
 
@@ -62,7 +91,7 @@ Stević, Z., Pamučar, D., Puška, A., Chatterjee, P., Sustainable supplier sele
 
 Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluation software of project management used measurement of alternatives and ranking according to compromise solution (MARCOS) method. Operational Research in Engineering Sciences: Theory and Applications, 3(1), 89-102.
 """
-function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MARCOSResult
+function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MarcosResult
 
     # df = convert(Matrix, decisionMat)
     df = Matrix(decisionMat)
@@ -115,7 +144,7 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     
     bestIndex = rankings |> last
     
-    result = MARCOSResult(
+    result = MarcosResult(
         decisionMat,
         w,
         scores,
@@ -142,10 +171,12 @@ either maximized or minimized.
 # Output 
 - `::MARCOSResult`: MARCOSResult object that holds multiple outputs including scores, rankings, and best index.
 """
-function marcos(setting::MCDMSetting)::MARCOSResult
+function marcos(setting::MCDMSetting)::MarcosResult
     marcos(
         setting.df,
         setting.weights,
         setting.fns
     )
 end 
+
+end # end of module MARCOS 

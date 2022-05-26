@@ -1,3 +1,30 @@
+module MOOSRA 
+
+export moosra, MoosraMethod, MoosraResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+
+struct MoosraMethod <: MCDMMethod
+end
+
+struct MoosraResult <: MCDMResult 
+    scores::Array{Float64, 1}
+    rankings::Array{Int, 1}
+    bestIndex::Int
+end 
+
+function Base.show(io::IO, result::MoosraMethod)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: (from worst to best)")
+    println(io, result.rankings)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         moosra(decisionMat, weights, fns; lambda = 0.5)
 
@@ -114,3 +141,5 @@ function moosra(setting::MCDMSetting)::MoosraResult
         setting.fns
     )
 end 
+
+end # end of module MOOSRA 
