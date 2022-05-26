@@ -2,9 +2,9 @@ module JMcDM
 
 # Dependencies
 import DataFrames: DataFrame, DataFrameRow
-import JuMP: @variable, @objective, @constraint
-import JuMP: Model, MOI, optimize!, JuMP, objective_value
-import GLPK
+# import JuMP: @variable, @objective, @constraint
+# import JuMP: Model, MOI, optimize!, JuMP, objective_value
+# import GLPK
 
 # for Pretty printing
 # of MCDM results
@@ -74,7 +74,8 @@ import .MARCOS: marcos, MarcosMethod, MarcosResult
 import .MAIRCA: mairca, MaircaMethod, MAIRCAResult 
 import .MABAC: mabac, MABACResult, MabacMethod
 import .GREY: grey, GreyMethod, GreyResult
-
+import .Game: game, GameResult
+import .DataEnvelop: dataenvelop, DataEnvelopResult
 
 import .Utilities: * 
 using .Utilities

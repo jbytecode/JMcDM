@@ -1,3 +1,21 @@
+module DataEnvelop 
+
+export dataenvelop, DataEnvelopResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+using JuMP
+using GLPK 
+
+struct DataEnvelopResult <: MCDMResult
+    efficiencies::Array{Float64,1}
+    references::DataFrame
+    orderedcases::Array{Symbol,1}
+end
+
+
 """
         dataenvelop(input, output; verbose = false)
 
@@ -100,3 +118,5 @@ function dataenvelop(input::Array{Float64,2}, output::Array{Float64,1}; verbose:
 
     return result
 end
+
+end # end of module DataEnvelop

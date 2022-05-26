@@ -151,18 +151,6 @@ struct ExpectedRegretResult <: SCDMResult
     bestIndex::Int64
 end
 
-struct GameResult <: MCDMResult
-    row_player_probabilities::Array{Float64,1}
-    value::Float64
-end
-
-struct DataEnvelopResult <: MCDMResult
-    efficiencies::Array{Float64,1}
-    references::DataFrame
-    orderedcases::Array{Symbol,1}
-end
-
-
 
 struct ARASResult <: MCDMResult
     referenceRow::Array{Float64,1}

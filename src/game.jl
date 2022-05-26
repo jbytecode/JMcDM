@@ -1,3 +1,21 @@
+module Game 
+
+export game 
+
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames
+using JuMP
+using GLPK
+
+
+struct GameResult <: MCDMResult
+    row_player_probabilities::Array{Float64,1}
+    value::Float64
+end
+
 """
         game(decisionMatrix; verbose = false)
 
@@ -114,3 +132,5 @@ function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
     return result
 
 end
+
+end # end of module game 
