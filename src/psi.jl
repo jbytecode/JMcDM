@@ -1,3 +1,30 @@
+module PSI
+
+export psi, PSIMethod, PSIResult 
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct PSIResult <: MCDMResult
+    scores::Array{Float64,1}
+    rankings::Array{Int, 1}
+    bestIndex::Int
+end
+
+struct PSIMethod <: MCDMMethod
+end
+
+function Base.show(io::IO, result::PSIResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: (from worst to best)")
+    println(io, result.rankings)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
+
 """
         psi(decisionMat, fns)
 
@@ -129,3 +156,5 @@ function psi(setting::MCDMSetting)::PSIResult
         setting.fns
     )
 end 
+
+end # end of module PSI 

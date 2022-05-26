@@ -54,12 +54,6 @@ struct MoosraResult <: MCDMResult
     bestIndex::Int
 end 
 
-struct PSIResult <: MCDMResult
-    scores::Array{Float64,1}
-    rankings::Array{Int, 1}
-    bestIndex::Int
-end
-
 
 struct ElectreResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -333,8 +327,6 @@ end
 struct MaircaMethod <: MCDMMethod 
 end 
 
-struct PSIMethod <: MCDMMethod
-end
 
 struct MoosraMethod <: MCDMMethod
 end

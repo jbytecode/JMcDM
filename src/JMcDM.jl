@@ -64,6 +64,8 @@ import .VIKOR: vikor, VikorMethod, VikorResult
 import .SD: sd, SDResult
 import .SAW: saw, SawResult, SawMethod
 import .ROV: rov, ROVMethod, ROVResult
+import .PSI: psi, PSIMethod, PSIResult
+
 
 import .Utilities: * 
 using .Utilities
