@@ -1,3 +1,32 @@
+module MAIRCA 
+
+export mairca, MaircaMethod, MAIRCAResult
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct MAIRCAResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+struct MaircaMethod <: MCDMMethod 
+end 
+
+function Base.show(io::IO, result::MAIRCAResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
 """
         mairca(decisionMat, weights, fns)
 
@@ -133,3 +162,5 @@ function mairca(setting::MCDMSetting)::MAIRCAResult
         setting.fns
     )
 end 
+
+end # end of module MAIRCA 

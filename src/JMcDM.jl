@@ -71,7 +71,8 @@ import .NDS: nds, NDSResult
 import .MOOSRA: moosra, MoosraResult, MoosraMethod
 import .MOORA: moora, MooraMethod, MooraResult
 import .MARCOS: marcos, MarcosMethod, MarcosResult
-
+import .MAIRCA: mairca, MaircaMethod, MAIRCAResult 
+import .MABAC: mabac, MABACResult, MabacMethod
 
 import .Utilities: * 
 using .Utilities

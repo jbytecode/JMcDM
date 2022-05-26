@@ -191,21 +191,6 @@ struct EDASResult <: MCDMResult
 end
 
 
-struct MABACResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
-
-struct MAIRCAResult <: MCDMResult
-    decisionMatrix::DataFrame
-    weights::Array{Float64,1}
-    scores::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
-end
 
 struct COPRASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -285,12 +270,8 @@ end
 
 GreyMethod() :: GreyMethod = GreyMethod(0.5)
 
-struct MabacMethod <: MCDMMethod 
-end 
 
 
-struct MaircaMethod <: MCDMMethod 
-end 
 
 
 

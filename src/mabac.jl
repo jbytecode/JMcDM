@@ -1,3 +1,33 @@
+module MABAC 
+
+
+export mabac, MABACResult, MabacMethod
+
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities 
+
+using DataFrames 
+
+struct MABACResult <: MCDMResult
+    decisionMatrix::DataFrame
+    weights::Array{Float64,1}
+    scores::Array{Float64,1}
+    ranking::Array{Int64,1}
+    bestIndex::Int64
+end
+
+
+struct MabacMethod <: MCDMMethod 
+end 
+
+function Base.show(io::IO, result::MABACResult)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indices:")
+    println(io, result.bestIndex)
+end
 """
         mabac(decisionMat, weights, fns)
 
@@ -144,3 +174,6 @@ function mabac(setting::MCDMSetting)::MABACResult
         setting.fns
     )
 end 
+
+
+end # end of module MABAC 
