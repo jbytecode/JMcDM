@@ -35,8 +35,8 @@ Apply CRITIC (Combined Compromise Solution) method for a given matrix and criter
  - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
-critic() applies the CRITIC method to rank n alterntives subject to m criteria which are supposed to be 
-either maximized or minimized.
+critic() applies the CRITIC method to calculate weights using a decision matrix with  
+n alterntives subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
 - `::CRITICResult`: CRITICResult object that holds multiple outputs including weighting and best index.
