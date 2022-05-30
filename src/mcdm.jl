@@ -98,6 +98,9 @@ function mcdm(df::DataFrame,
         wpm(df, w, fns)
     elseif method isa MarcosMethod
         marcos(df, w, fns)
+    elseif method isa PSIMethod
+        # psi method does not use weights
+        psi(df, fns)
     else
         error("Method is not defined") 
     end 

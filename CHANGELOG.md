@@ -1,4 +1,4 @@
-### 0.4.1 (Upcoming Release)
+### 0.4.1
 - Update documents for CRITIC method 
 - Update mcdm()
 
