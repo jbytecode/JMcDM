@@ -17,11 +17,12 @@ end
 
 
 if testSCDMFunctions
+    @info "SCDM tests ..."
     include("./testscdm.jl")
 end # Test SCDM Tools 
 
-@info "MCDM Tests ..."
 if testMCDMFunctions
+    @info "MCDM Tests ..."
     include("./testmcdm.jl")
     include("./testcopeland.jl")
 end  # Test MCDM Tools

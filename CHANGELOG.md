@@ -1,3 +1,6 @@
+### 0.4.2 (Upcoming release)
+- game() now returns solution vector for both players
+
 ### 0.4.1
 - Update documents for CRITIC method 
 - Update mcdm()

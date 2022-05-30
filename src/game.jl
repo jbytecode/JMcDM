@@ -12,8 +12,22 @@ using GLPK
 
 
 struct GameResult <: MCDMResult
-    row_player_probabilities::Array{Float64,1}
+    probabilities::Array{Float64,1}
     value::Float64
+end
+
+function Base.show(io::IO, result::GameResult)
+    println(io, "Probabilities:")
+    println(io, result.probabilities)
+    println(io, "Value of game: ")
+    println(io, result.value)
+end
+
+function Base.show(io::IO, result::Array{GameResult, 1})
+    println(io, "Row Player: ")
+    println(io, result[1])
+    println(io, "Column Player: ")
+    println(io, result[2])
 end
 
 """
@@ -30,8 +44,8 @@ game() solves zero-sum games using a gain matrix designed for the row player. Th
 and m columns for n and m strategies of row and column players, respectively. 
 
 # Output 
-- `::GameResult`: GameResult object that holds mixed strategy probabilities for row player and the value of game.
-If a pure strategy exists for the row player, than the propabilities vector is a one-hat vector.
+- `::Array{GameResult, 1}`: Vector of GameResult objects that holds mixed strategy probabilities for row 
+and column players and the value of game. If a pure strategy exists, than the propabilities vector is a one-hat vector.
 
 # Examples
 ```julia-repl
@@ -42,55 +56,38 @@ julia> mat = [0 -1 1; 1 0 -1; -1 1 0]
   1   0  -1
  -1   1   0
 
-julia> dm = makeDecisionMatrix(mat)
-3×3 DataFrame
- Row │ Crt1     Crt2     Crt3    
-     │ Float64  Float64  Float64 
-─────┼───────────────────────────
-   1 │     0.0     -1.0      1.0
-   2 │     1.0      0.0     -1.0
-   3 │    -1.0      1.0      0.0
+julia> result = game(mat);
 
-julia> result = game(dm);
-
-julia> result.row_player_probabilities
-3-element Array{Float64,1}:
- 0.3333333333333333
- 0.33333333333333337
- 0.3333333333333333
-
-julia> result.value
+julia> result
+Row Player: 
+Probabilities:
+[0.3333333333333333, 0.3333333333333333, 0.3333333333333333]
+Value of game: 
 0.0
 
+Column Player: 
+Probabilities:
+[0.3333333333333333, 0.3333333333333333, 0.3333333333333333]
+Value of game: 
+0.0
 ```
 
 # References
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
 """
-function game(decisionMatrix::DataFrame; verbose::Bool=false)::GameResult
-    
+function game(decisionMatrix::DataFrame; verbose::Bool=false)::Array{GameResult, 1}
     return game(Matrix(decisionMatrix), verbose = verbose)
-
 end
 
+function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::Array{GameResult, 1}
+    rowplayers_result = game_solver(decisionMatrix, verbose = verbose)
+    columnplayers_result = game_solver(Matrix(decisionMatrix') * -1.0, verbose = verbose)
+    return [rowplayers_result, columnplayers_result]
+end
 
-
-function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
-    
-    newDecisionMatrix = copy(decisionMatrix)
+function game_solver(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
     
     nrow, ncol = size(decisionMatrix)
-
-    minmat = minimum(decisionMatrix)
-
-    modified = false
-
-    if minmat < 0
-        modified = true
-        newDecisionMatrix = decisionMatrix .- minmat    
-    end
-
-    dm = newDecisionMatrix
 
     model = Model(GLPK.Optimizer);
     MOI.set(model, MOI.Silent(), !verbose)
@@ -101,7 +98,7 @@ function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
     @objective(model, Max, g)
 
     for i in 1:ncol
-        @constraint(model, sum(x[1:nrow] .* dm[:, i]) >= g)
+        @constraint(model, sum(x[1:nrow] .* decisionMatrix[:, i]) >= g)
     end
 
     for i in 1:nrow
@@ -120,10 +117,6 @@ function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
 
     gamevalue = JuMP.value(g) #objective_value(model)
     
-    if modified
-        gamevalue -= abs(minmat)
-    end
-
     result = GameResult(
         values,
         gamevalue
