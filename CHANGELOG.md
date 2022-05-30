@@ -1,6 +1,6 @@
 ### 0.4.1 (Upcoming Release)
 - Update documents for CRITIC method 
-  
+- Update mcdm()
 
 ### 0.4.0 
 - Modular system

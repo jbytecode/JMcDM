@@ -1201,11 +1201,6 @@
         @test result2 isa CRITICResult
         @test result2.ranking == result.ranking
         @test result2.bestIndex == result.bestIndex
-
-        result3 = mcdm(setting, CriticMethod())
-        @test result3 isa CRITICResult
-        @test result3.ranking == result.ranking
-        @test result3.bestIndex == result.bestIndex
     end
 
     @testset "Entropy" begin

@@ -165,6 +165,7 @@ export WaspasMethod
 export MarcosMethod
 export PSIMethod
 export MoosraMethod
+export ROVMethod
 
 export MCDMSetting
 

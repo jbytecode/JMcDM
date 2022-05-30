@@ -20,7 +20,7 @@ The method is one of the subtypes of MCDMMethod type. See examples.
 ```julia-repl
 
 julia> subtypes(MCDMMethod)
-18-element Vector{Any}:
+21-element Vector{Any}:
  ArasMethod
  CocosoMethod
  CodasMethod
@@ -33,12 +33,16 @@ julia> subtypes(MCDMMethod)
  MaircaMethod
  MarcosMethod
  MooraMethod
+ MoosraMethod
+ PSIMethod
  PrometheeMethod
+ ROVMethod
  SawMethod
  TopsisMethod
  VikorMethod
  WPMMethod
  WaspasMethod
+
 
 julia> # mcdm() for Topsis:
 julia> # mcdm(df, w, fns, TopsisMethod())
@@ -58,6 +62,8 @@ function mcdm(df::DataFrame,
 
     if method isa TopsisMethod
         topsis(df, w, fns)
+    elseif method isa MoosraMethod
+        moosra(df, w, fns, lambda = method.lambda)
     elseif method isa ElectreMethod
         electre(df, w, fns)
     elseif method isa ArasMethod
@@ -68,8 +74,8 @@ function mcdm(df::DataFrame,
         codas(df, w, fns, tau = method.tau)
     elseif method isa CoprasMethod
         copras(df, w, fns)
-    elseif method isa CriticMethod
-        critic(df, fns)
+    elseif method isa ROVMethod
+        rov(df, w, fns)
     elseif method isa EdasMethod
         edas(df, w, fns)
     elseif method isa GreyMethod
