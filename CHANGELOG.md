@@ -1,5 +1,6 @@
 ### 0.4.2 (Upcoming release)
 - game() now returns solution vector for both players
+- mcdm() function receives TopsisMethod() as default argument
 
 ### 0.4.1
 - Update documents for CRITIC method 

@@ -109,13 +109,13 @@ end
 
 
 """
-    mcdm(setting, method)
+    mcdm(setting, method = TopsisMethod())
 
     Perform selected method for a given decision matrix, weight vector, and function list.
 
 # Arguments:
  - `setting::MCDMSetting`: MCDMSetting object that holds the decision matrix, weight vector, and functions.
- - `method::MCDMMethod`: Preferred MCDMMethod.
+ - `method::MCDMMethod`: Preferred MCDMMethod. The default is TopsisMethod().
  
 # Description 
 The method is one of the subtypes of MCDMMethod type. See examples.
@@ -137,8 +137,9 @@ julia> # mcdm(setting, GreyMethod(0.6))
 ```
 
 """
-function mcdm(setting::MCDMSetting, 
-    method::T1)::MCDMResult where {T1 <: MCDMMethod}
+function mcdm(
+    setting::MCDMSetting, 
+    method::T1 = TopsisMethod())::MCDMResult where {T1 <: MCDMMethod}
 
     mcdm(
         setting.df,
