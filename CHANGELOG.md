@@ -1,6 +1,9 @@
 ### 0.4.2 (Upcoming release)
 - game() now returns solution vector for both players
 - mcdm() function receives TopsisMethod() as default argument
+- yml file updates for testing
+- Julia version is updated from ^1.4 to ^1.5
+- minor fixes and new tests on mcdm methods
 
 ### 0.4.1
 - Update documents for CRITIC method 

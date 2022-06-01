@@ -71,6 +71,12 @@
             result.scores,
             atol = tol
         )
+
+        setting = MCDMSetting(df, w, fns)
+        result2 = mcdm(setting, PSIMethod())
+        @test result2.bestIndex == result.bestIndex
+        @test result2.scores == result.scores
+        @test result2 isa PSIResult
     end
 
     @testset "ROV" begin
@@ -101,6 +107,13 @@
         [0.1841453340595497, 0.26171444444444447, 0.21331577540106955, 0.34285244206773624], atol = tol)
 
         @test result.ranks ==  [4, 2, 3, 1]
+
+
+        setting = MCDMSetting(df, w, fns)
+        result2 = mcdm(setting, ROVMethod())
+        @test result2.ranks == result.ranks
+        @test result2.scores == result.scores
+        @test result2 isa ROVResult 
     end
 
     @testset "SD" begin

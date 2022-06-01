@@ -10,7 +10,7 @@ using DataFrames
 struct ROVMethod <: MCDMMethod
 end
 
-struct ROVResult 
+struct ROVResult <: MCDMResult
     uminus::Array{Float64, 1}
     uplus::Array{Float64, 1}
     scores::Array{Float64, 1}
