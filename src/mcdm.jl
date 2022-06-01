@@ -63,7 +63,7 @@ function mcdm(df::DataFrame,
     if method isa TopsisMethod
         topsis(df, w, fns)
     elseif method isa MoosraMethod
-        moosra(df, w, fns, lambda = method.lambda)
+        moosra(df, w, fns)
     elseif method isa ElectreMethod
         electre(df, w, fns)
     elseif method isa ArasMethod

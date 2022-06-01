@@ -42,6 +42,12 @@
 
         @test result.rankings == [1, 2, 3, 4]
         @test result.bestIndex == 4 
+
+        setting = MCDMSetting(df, weights, fns)
+        result2 = mcdm(setting, MoosraMethod())
+        @test result2.bestIndex == result.bestIndex
+        @test result2.scores == result.scores
+        @test result2 isa MoosraResult
     end 
 
     @testset "PSI" begin 
