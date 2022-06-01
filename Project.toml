@@ -10,6 +10,6 @@ JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 
 [compat]
 DataFrames = "^1"
-GLPK = ">= 1.0.0"
-JuMP = ">= 0.22.0"
+GLPK = ">= 0.14"
+JuMP = ">= 0.22"
 julia = "^1.5"
