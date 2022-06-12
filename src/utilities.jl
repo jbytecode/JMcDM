@@ -7,9 +7,11 @@ export colmaxs, colmins, unitize
 export makeDecisionMatrix, reverseminmax, makeminmax
 export rowmins, rowmaxs, rowmeans, rowsums
 export colmins, colmaxs, colmeans, colsums
-
+export makegrey
 
 using DataFrames 
+
+import ..GreyNumbers: GreyNumber
 
 function I(n)
     mat = zeros(n, n)
@@ -204,5 +206,16 @@ end
 function makeminmax(fns::Array{K,1} where K)::Array{Function,1}
     return convert(Array{Function,1}, fns)
 end
+
+function makegrey(m::Matrix)::Matrix 
+    n, p = size(m)
+    greymatrix = Array{GreyNumber, 2}(undef, n, p)
+    for i in 1:n 
+        for j in 1:p
+            greymatrix[i, j] = GreyNumber(Float64(m[i, j]))
+        end
+    end 
+    return greymatrix
+end 
 
 end # End of module Utilities

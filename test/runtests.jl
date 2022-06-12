@@ -12,6 +12,7 @@ const testGreyMCDMFunctions   = true
 
 
 if testUtilityFunctions
+    @info "Utility tests ..."
     include("./testutility.jl")
 end
 

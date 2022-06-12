@@ -156,5 +156,21 @@
         @test result1[1]([1.0, 2.0, 3.0]) == 3.0
 
     end
+
+    @testset "Make Grey Matrix" begin 
+        m = [1.0 2 3;
+             4 5 6;
+             7 8 9]
+        grey = makegrey(m)
+        @test grey[1, 1] == GreyNumber(1.0, 1.0)
+        @test grey[1, 2] == GreyNumber(2.0, 2.0)
+        @test grey[1, 3] == GreyNumber(3.0, 3.0)
+        @test grey[2, 1] == GreyNumber(4.0, 4.0)
+        @test grey[2, 2] == GreyNumber(5.0, 5.0)
+        @test grey[2, 3] == GreyNumber(6.0, 6.0)
+        @test grey[3, 1] == GreyNumber(7.0, 7.0)
+        @test grey[3, 2] == GreyNumber(8.0, 8.0)
+        @test grey[3, 3] == GreyNumber(9.0, 9.0)
+    end 
 end
 

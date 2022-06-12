@@ -64,6 +64,7 @@ end
 
 
 # includes 
+include("greynumber.jl")
 include("utilities.jl")
 include("topsis.jl")
 include("vikor.jl")
@@ -101,7 +102,7 @@ include("copeland.jl")
 include("sd.jl")
 include("rov.jl")
 
-include("greynumber.jl")
+
 
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
@@ -229,6 +230,7 @@ export unitize
 export makeDecisionMatrix
 export reverseminmax
 export makeminmax
+export makegrey
 
 #  export MCDM tools
 export topsis
