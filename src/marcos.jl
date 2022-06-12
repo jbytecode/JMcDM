@@ -13,7 +13,7 @@ end
 struct MarcosResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -100,8 +100,9 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     w = unitize(weights)
 
-    AAI = zeros(Float64, col)
-    AI  = zeros(Float64, col)
+    zerotype = eltype(df[1, :])
+    AAI = zeros(zerotype, col)
+    AI  = zeros(zerotype, col)
             
     temp = [df; AI'; AAI']
 
@@ -124,7 +125,7 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     end
     
     #S  = zeros(Float64, col)
-    S = zeros(Float64, row + 2)
+    S = zeros(zerotype, row + 2)
     
     for i in 1:row + 2
         S[i] = w .* normalizedDecisionMat[i, :] |> sum
@@ -136,7 +137,7 @@ function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     fKPlus = KPlus ./ (KPlus .+ KMinus)
     fKMinus = KMinus ./ (KPlus .+ KMinus)
 
-    scores = zeros(Float64, row)
+    scores = zeros(zerotype, row)
     for i in 1:row
         scores[i] = (KPlus[i] + KMinus[i]) / ((1 + (1 - fKPlus[i]) / fKPlus[i]) + ((1 - fKMinus[i]) / fKMinus[i]))
     end

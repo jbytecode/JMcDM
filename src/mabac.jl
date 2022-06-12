@@ -11,7 +11,7 @@ using DataFrames
 struct MABACResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -122,7 +122,7 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     wA = w * (A .+ 1)
 
-    g = zeros(Float64, col)
+    g = zeros(eltype(A[1,1]), col)
 
     for i in 1:col
         g[i] = geomean(wA[:, i])
@@ -130,7 +130,7 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     Q = wA .- g'
 
-    scores = zeros(Float64, row)
+    scores = zeros(eltype(A[1,1]), row)
     for i in 1:row
         scores[i] = sum(Q[i, :])
     end 

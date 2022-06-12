@@ -10,7 +10,7 @@ using DataFrames
 struct MAIRCAResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -95,10 +95,12 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     w = unitize(weights)
 
-    T = zeros(Float64, row, col)
+    zerotype = eltype(decisionMat[!, 1])
+
+    T = zeros(zerotype, row, col)
 
     for i in 1:col
-        T[:, i] .= w[i] * (1 / row)
+        T[:, i] .= w[i] * (one(zerotype) / row)
     end 
 
     colMax = colmaxs(decisionMat)
@@ -118,7 +120,8 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
 
     S = T .- A
 
-    scores = zeros(Float64, row)
+    scores = zeros(zerotype, row)
+
     for i in 1:row
         scores[i] = sum(S[i, :])
     end 

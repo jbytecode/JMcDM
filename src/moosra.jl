@@ -11,7 +11,7 @@ struct MoosraMethod <: MCDMMethod
 end
 
 struct MoosraResult <: MCDMResult 
-    scores::Array{Float64, 1}
+    scores::Vector
     rankings::Array{Int, 1}
     bestIndex::Int
 end 
@@ -88,6 +88,8 @@ function moosra(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     
     row, col = size(decisionMat)
     dmat = Matrix(decisionMat)
+    zerotype = eltype(dmat[1,:])
+
     normalizedDecisionMat = dmat ./ sqrt(sum(dmat .* dmat))
     w = unitize(weights)
     
@@ -96,7 +98,7 @@ function moosra(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
         weightedNormalizedMatrix[i, :] = normalizedDecisionMat[i, :] .* w 
     end
     
-    scores = zeros(Float64, row)
+    scores = zeros(zerotype, row)
 
     for i in 1:row
         positive = 0.0

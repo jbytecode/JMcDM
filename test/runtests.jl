@@ -4,11 +4,11 @@ import DataFrames: DataFrame, DataFrameRow
 
 using JMcDM
 
-const testUtilityFunctions = true
-const testMCDMFunctions = true
-const testSCDMFunctions = true
-const testLPBasedFunctions = true 
-
+const testUtilityFunctions    = true
+const testMCDMFunctions       = true
+const testSCDMFunctions       = true
+const testLPBasedFunctions    = true 
+const testGreyMCDMFunctions   = true 
 
 
 if testUtilityFunctions
@@ -26,6 +26,11 @@ if testMCDMFunctions
     include("./testmcdm.jl")
     include("./testcopeland.jl")
 end  # Test MCDM Tools
+
+if testGreyMCDMFunctions
+    @info "Grey MCDM Tests ..."
+    include("./testgreymcdm.jl")
+end # Test Grey MCDM Toolk
 
 @info "LP Based Tests (takes time) ..."
 if testLPBasedFunctions

@@ -13,7 +13,7 @@ end
 struct COPRASResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -187,26 +187,27 @@ function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
         end
     end
 
-    sPlus = zeros(Float64, nrows)
-    sMinus = zeros(Float64, nrows)
+    sPlus =  zeros(eltype(normalizedMat), nrows)
+    sMinus = zeros(eltype(normalizedMat), nrows)
+
 
     for row in 1:nrows
         for col in 1:ncols
             if fns[col] == maximum
-                @inbounds sPlus[row] = sPlus[row] + normalizedMat[row, col]
+                sPlus[row] = sPlus[row] + normalizedMat[row, col]
             elseif fns[col] == minimum
-                @inbounds sMinus[row] = sMinus[row] + normalizedMat[row, col]
+                sMinus[row] = sMinus[row] + normalizedMat[row, col]
             end                    
         end
     end
 
-    Q = zeros(Float64, nrows)
+    Q = zeros(eltype(normalizedMat), nrows)
     Z = sum(1 ./ sMinus)
 
     for row in 1:nrows
         Q[row] = sPlus[row] + (sum(sMinus) / (sMinus[row] * Z))
     end
-    scores = zeros(Float64, nrows)
+    scores = zeros(eltype(normalizedMat), nrows)
     scores = Q ./ maximum(Q)
 
     rankings = sortperm(scores)

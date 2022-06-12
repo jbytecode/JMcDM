@@ -11,11 +11,11 @@ struct ArasMethod <: MCDMMethod
 end 
 
 struct ARASResult <: MCDMResult
-    referenceRow::Array{Float64,1}
-    extendMat::Array{Float64,2}
-    normalizedMat::Array{Float64,2}
-    optimalitydegrees::Array{Float64,1}
-    scores::Array{Float64,1}
+    referenceRow::Vector
+    extendMat::Matrix
+    normalizedMat::Matrix
+    optimalitydegrees::Vector
+    scores::Vector
     orderings::Array{Int64,1}
     bestIndex::Int64
 end
@@ -106,12 +106,12 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Funct
 
     # optimality = similar(normalizedMat)
 
-    optimality_degrees = zeros(Float64, nrows + 1)
+    optimality_degrees = Vector(undef, nrows + 1)
     for i in 1:nrows + 1
         optimality_degrees[i] = w .* normalizedMat[i, :] |> sum 
     end
 
-    utility_degrees = zeros(Float64, nrows)
+    utility_degrees = Vector(undef, nrows)
     for i in 1:nrows
         utility_degrees[i] = optimality_degrees[i] /  optimality_degrees[end]
     end

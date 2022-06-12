@@ -13,10 +13,10 @@ struct ElectreResult <: MCDMResult
     weightedDecisionMatrix::DataFrame
     fitnessTable::Array{Dict,1}
     nonfitnessTable::Array{Dict,1}
-    fitnessMatrix::Array{Float64,2}
-    nonfitnessMatrix::Array{Float64,2}
-    C::Array{Float64,1}
-    D::Array{Float64,1}
+    fitnessMatrix::Matrix
+    nonfitnessMatrix::Matrix
+    C::Vector
+    D::Vector
     bestIndex::Tuple
 end
 
@@ -98,6 +98,8 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
 
     w = unitize(weights)
 
+    zerotype = eltype(decisionMat[!, 1])
+
     nalternatives, ncriteria = size(decisionMat)
 
     normalizedMat = normalize(decisionMat)
@@ -135,8 +137,8 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         end
     end
 
-    fitnessmatrix = zeros(Float64, nalternatives, nalternatives)
-    nonfitnessmatrix = zeros(Float64, nalternatives, nalternatives)
+    fitnessmatrix = zeros(zerotype, nalternatives, nalternatives)
+    nonfitnessmatrix = zeros(zerotype, nalternatives, nalternatives)
 
     for elements in fitnessTable
         i = elements[:i]
@@ -147,7 +149,7 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         fitnessmatrix[i, j] = CC
     end
 
-    nonfitnessmatrix = zeros(Float64, nalternatives, nalternatives)
+    nonfitnessmatrix = zeros(zerotype, nalternatives, nalternatives)
     for elements in nonfitnessTable
         i = elements[:i]
         j = elements[:j]
@@ -168,8 +170,8 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
 
     end # end for 
 
-    C = zeros(Float64, nalternatives)
-    D = zeros(Float64, nalternatives)
+    C = zeros(zerotype, nalternatives)
+    D = zeros(zerotype, nalternatives)
     for i in 1:nalternatives
         C[i] = sum(fitnessmatrix[i, :]) - sum(fitnessmatrix[:, i])
         D[i] = sum(nonfitnessmatrix[i, :]) - sum(nonfitnessmatrix[:, i])

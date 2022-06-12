@@ -8,7 +8,7 @@ using ..Utilities
 using DataFrames 
 
 struct PSIResult <: MCDMResult
-    scores::Array{Float64,1}
+    scores::Vector
     rankings::Array{Int, 1}
     bestIndex::Int
 end
@@ -96,7 +96,11 @@ function psi(decisionMat::DataFrame, fns::Array{Function,1})::PSIResult
 
     row, col = size(decisionMat)
     normalizedDecisionMat = similar(decisionMat)
-    colminmax = zeros(Float64, col)
+
+    zerotype = eltype(decisionMat[!, 1])
+
+    colminmax = zeros(zerotype, col)
+
     @inbounds for i in 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
@@ -106,17 +110,17 @@ function psi(decisionMat::DataFrame, fns::Array{Function,1})::PSIResult
         end
     end    
     
-    pvs = zeros(Float64, row)
+    pvs = zeros(zerotype, row)
     for i in 1:row 
         pvs[i] = PV(normalizedDecisionMat[i, :] |> collect)
     end 
 
-    phis = 1.0 .- pvs 
+    phis = one(zerotype) .- pvs 
     sum_phis = sum(phis)
 
     psis = phis ./ sum_phis
 
-    Is = zeros(Float64, row)
+    Is = zeros(zerotype, row)
     for i in 1:row
         Is[i] = psis[i] .* collect(normalizedDecisionMat[i, :]) |> sum
     end

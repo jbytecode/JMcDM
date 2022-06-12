@@ -16,7 +16,7 @@ CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
 struct CoCoSoResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -123,7 +123,7 @@ function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
         scoreMat[:, i] = A[:, i].^w[i]
     end
 
-    P = zeros(Float64, row)
+    P = Vector{Any}(undef, row)
     for i in 1:row
         P[i] = sum(scoreMat[i, :])
     end

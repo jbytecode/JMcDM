@@ -15,7 +15,7 @@ struct TopsisResult <: MCDMResult
     normalizedDecisionMatrix::DataFrame
     normalizedWeightedDecisionMatrix::DataFrame 
     bestIndex::Int64 
-    scores::Array{Float64,1}
+    scores::Vector
 end
 
 function Base.show(io::IO, result::TopsisResult)
@@ -101,13 +101,13 @@ function topsis(
     desired = apply_columns(fns, weightednormalizedMat)
     undesired = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
-    distances_plus = zeros(Float64, nalternatives)
-    distances_minus = zeros(Float64, nalternatives)
+    distances_plus = Vector{Any}(undef, nalternatives)
+    distances_minus = Vector{Any}(undef, nalternatives)
 
-    scores = zeros(Float64, nalternatives)
+    scores = Vector{Any}(undef, nalternatives)
 
     @inbounds for i = 1:nalternatives
-        ithrow = weightednormalizedMat[i, :] |> Array{Float64,1}
+        ithrow = weightednormalizedMat[i, :]
         distances_plus[i] = euclidean(desired, ithrow)
         distances_minus[i] = euclidean(undesired, ithrow)
         scores[i] = distances_minus[i] / (distances_minus[i] + distances_plus[i])
