@@ -14,7 +14,7 @@ struct SawResult <: MCDMResult
     decisionMatrix::DataFrame
     normalizedDecisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -102,9 +102,12 @@ function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
     
     normalizedDecisionMat = similar(decisionMat)
         
-        w = unitize(weights)
-            
-    colminmax = zeros(Float64, p)
+    w = unitize(weights)
+    
+    zerotype = eltype(decisionMat[!, 1])
+
+    colminmax = zeros(zerotype, p)
+    
     @inbounds for i in 1:p
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum

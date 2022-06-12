@@ -14,7 +14,7 @@ struct WPMResult <: MCDMResult
     decisionMatrix::DataFrame
     normalizedDecisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -95,9 +95,14 @@ Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Op
 function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::WPMResult
    
     row, col = size(decisionMat)
+    
+    zerotype = eltype(decisionMat[!, 1])
+
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
-    colminmax = zeros(Float64, col)
+    
+    colminmax = zeros(zerotype, col)
+    
     @inbounds for i in 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
@@ -111,7 +116,7 @@ function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
         scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
     end
 
-    scores = zeros(Float64, row)
+    scores = zeros(zerotype, row)
     for i in 1:row
         scores[i] = prod(scoreMat[i, :])
     end

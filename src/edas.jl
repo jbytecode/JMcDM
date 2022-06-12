@@ -13,7 +13,7 @@ end
 struct EDASResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -115,26 +115,26 @@ function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Func
     w = unitize(weights)
 
         
-        PDAMatrix = similar(df)
+    PDAMatrix = similar(df)
     NDAMatrix = similar(df)
 
-    AV = zeros(Float64, col)
+    AV = zeros(eltype(df), col)
 
     @inbounds for i in 1:col
         AV[i] = mean(df[:, i])
         for j in 1:row
             if fns[i] == maximum
-                PDAMatrix[j, i] = max(0, df[j, i] - AV[i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, AV[i] - df[j, i]) ./ AV[i]
+                PDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
+                NDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
             elseif fns[i] == minimum 
-                PDAMatrix[j, i] = max(0, AV[i] - df[j, i]) ./ AV[i]
-                NDAMatrix[j, i] = max(0, df[j, i] - AV[i]) ./ AV[i]
+                PDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
+                NDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
             end
         end
     end 
 
-    SP = zeros(Float64, row)
-    SN = zeros(Float64, row)
+    SP = zeros(eltype(df), row)
+    SN = zeros(eltype(df), row)
 
     for i in 1:row
         SP[i] = w .* PDAMatrix[i, :] |> sum

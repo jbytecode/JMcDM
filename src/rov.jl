@@ -11,10 +11,10 @@ struct ROVMethod <: MCDMMethod
 end
 
 struct ROVResult <: MCDMResult
-    uminus::Array{Float64, 1}
-    uplus::Array{Float64, 1}
-    scores::Array{Float64, 1}
-    ranks::Array{Float64, 1}
+    uminus::Vector
+    uplus::Vector
+    scores::Vector
+    ranks::Array{Int64, 1}
 end
 
 function Base.show(io::IO, result::ROVResult)
@@ -84,6 +84,8 @@ function rov(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
     decmat = Matrix(decisionMat)
     normalizedMat = similar(decmat)
 
+    zerotype = eltype(decisionMat[!, 1])
+
     cmins = colmins(decisionMat)
     cmaxs = colmaxs(decisionMat)
 
@@ -98,9 +100,9 @@ function rov(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Funct
         end
     end
 
-    uplus = Array{Float64,1}(undef, n)
-    uminus = Array{Float64,1}(undef, n)
-    u = Array{Float64,1}(undef, n)
+    uplus = zeros(zerotype, n)
+    uminus = zeros(zerotype, n)
+    u = zeros(zerotype, n)
 
     maxindices = filter(x -> fns[x] == maximum, 1:p)
     minindices = filter(x -> fns[x] == minimum, 1:p)

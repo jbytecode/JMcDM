@@ -1,10 +1,14 @@
-### 0.4.2 (Upcoming release)
+### 0.5.0 (Upcoming release)
 - game() now returns solution vector for both players
 - mcdm() function receives TopsisMethod() as default argument
 - yml file updates for testing
 - Julia version is updated from ^1.4 to ^1.5
 - minor fixes and new tests on mcdm methods
-
+- Grey Numbers and their operations
+- Grey Number support for Topsis, Vikor, Aras, Cocoso, Codas, Copras, Edas, Mabac 
+- Grey Number support for Mairca, Marcos, Moosra, Waspas, Wpm, Saw, Rov, Psi
+- Grey Number support for Moora, Electre
+  
 ### 0.4.1
 - Update documents for CRITIC method 
 - Update mcdm()

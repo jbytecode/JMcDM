@@ -19,7 +19,7 @@ struct MooraResult <: MCDMResult
     weights::Array{Float64,1}
     weightedDecisionMatrix::DataFrame
     referenceMatrix::Union{DataFrame, Nothing}
-    scores::Array{Float64,1}
+    scores::Vector
     bestIndex::Int64
 end
 

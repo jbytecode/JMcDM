@@ -16,7 +16,7 @@ struct VikorResult <: MCDMResult
     weights::Array{Float64,1}
     weightedDecisionMatrix::DataFrame
     bestIndex::Int64
-    scores::Array{Float64,1}
+    scores::Vector
 end
 
 
@@ -110,12 +110,11 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
             end    
         end
     end
-
-    
+   
     weightedA = w * A
 
     
-    s = Array{Float64,1}(undef, nalternatives)
+    s = Vector{Any}(undef, nalternatives)
     r = similar(s)
     q = similar(s)
 
@@ -123,8 +122,6 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
         s[i] = sum(weightedA[i,:])
         r[i] = maximum(weightedA[i,:])
     end
-
-    
 
     smin = minimum(s)
     smax = maximum(s)

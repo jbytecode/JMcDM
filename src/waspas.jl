@@ -11,7 +11,7 @@ struct WASPASResult <: MCDMResult
     decisionMatrix::DataFrame
     normalizedDecisionMatrix::DataFrame
     weights::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -103,21 +103,26 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     row, col = size(decisionMat)
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
-    colminmax = zeros(Float64, col)
-    @inbounds for i in 1:col
+    
+    zerotype = eltype(decisionMat[!, 1])
+
+    colminmax = zeros(zerotype, col)
+
+    for i in 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
             normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
         elseif fns[i] == minimum 
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-    end
-    end    
+        end
+    end 
+
     scoreMat = similar(normalizedDecisionMat)
     for i in 1:col
         scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
     end
 
-    scoresWPM = zeros(Float64, row)
+    scoresWPM = zeros(zerotype, row)
     for i in 1:row
         scoresWPM[i] = prod(scoreMat[i, :])
     end
@@ -126,7 +131,7 @@ function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fu
     
     scoreTable = [scoresWSM  scoresWPM]
 
-    l = unitize([lambda, 1 - lambda])
+    l = unitize([lambda, one(zerotype) - lambda])
 
     scores = l' .*  scoreTable |> rowsums
 

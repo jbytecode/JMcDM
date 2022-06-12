@@ -101,6 +101,8 @@ include("copeland.jl")
 include("sd.jl")
 include("rov.jl")
 
+include("greynumber.jl")
+
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
 import .WPM: wpm, WPMResult, WPMMethod
@@ -135,6 +137,8 @@ import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
 import .SCDM: laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
+
+import .GreyNumbers: GreyNumber, kernel, whitenizate
 
 import .Utilities: * 
 using .Utilities
@@ -278,5 +282,8 @@ export mcdm
 # export Copeland module
 import JMcDM.Copeland: copeland
 export copeland
+
+# export Grey Number elements
+export GreyNumber, kernel, whitenizate
 
 end # module

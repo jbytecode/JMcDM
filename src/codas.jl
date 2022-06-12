@@ -10,7 +10,7 @@ using DataFrames
 struct CODASResult <: MCDMResult
     decisionMatrix::DataFrame
     w::Array{Float64,1}
-    scores::Array{Float64,1}
+    scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
 end
@@ -123,7 +123,7 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Func
         end
     end
 
-    Euc = zeros(Float64, nrows)
+    Euc = Vector{Any}(undef, nrows)
     for i in 1:nrows
         Euc[i] = sqrt(sum(E[i,:]))
     end
@@ -135,14 +135,14 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Func
         end
     end
 
-    Tax = zeros(Float64, nrows)
+    Tax = Vector{Any}(undef, nrows)
     for i in 1:nrows
         Tax[i] = sum(T[i,:])
     end
 
-    EA = zeros(Float64, nrows, nrows)
-    TA = zeros(Float64, nrows, nrows)
-    RA = zeros(Float64, nrows, nrows)
+    EA = Matrix{Any}(undef, nrows, nrows)
+    TA = Matrix{Any}(undef, nrows, nrows)
+    RA = Matrix{Any}(undef, nrows, nrows)
 
     for i in 1:nrows
         for j in 1:nrows
@@ -156,7 +156,7 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{Func
         end
     end
 
-    scores = zeros(Float64, nrows)
+    scores = Vector{Any}(undef, nrows)
     for i in 1:nrows
         scores[i] = sum(EA[i,:] .+ (RA[i,:] .* TA[i,:]))
     end
