@@ -1239,8 +1239,7 @@
         setting = MCDMSetting(df, zeros(4), fns)
         result2 = critic(setting)
         @test result2 isa CRITICResult
-        @test result2.ranking == result.ranking
-        @test result2.bestIndex == result.bestIndex
+        @test result2.w == result.w
     end
 
     @testset "Entropy" begin

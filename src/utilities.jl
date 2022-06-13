@@ -24,9 +24,11 @@ end
 mean(x) = sum(x)/length(x)
 
 function var(x) 
+    e = eltype(x)
+    onee = one(e)
     m = mean(x)
     xm = x .- m
-    return sum((xm .* xm) / (length(x) - 1)) 
+    return sum((xm .* xm) ./ (length(x) * onee - onee)) 
 end 
 
 std(x) = var(x) |> sqrt
@@ -36,10 +38,10 @@ geomean(x::Array{<: Number, 1}) = exp(sum(log.(x))/length(x))
 function cor(x, y)
     xmd= x .- mean(x)
     ymd =y .- mean(y)
-    return (sum(xmd .* ymd) / sqrt(var(x) * var(y))) / (length(x) - 1.0)
+    return (sum(xmd .* ymd) / sqrt(var(x) * var(y))) / (length(x) - one(eltype(x)))
 end
 
-function cor(x::Matrix{Float64})
+function cor(x::Matrix)
     _, p = size(x)
     cormat = ones(p, p)
     for i in 1:p

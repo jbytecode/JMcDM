@@ -78,19 +78,19 @@ function Base.:/(g1::GreyNumber, g2::GreyNumber)::GreyNumber
     )
 end
 
-function Base.:/(k, g1::GreyNumber)::GreyNumber
+function Base.:/(k::T, g1::GreyNumber)::GreyNumber where T <: Real
+    return GreyNumber(k, k) / g1
+end
+
+function Base.:/(g1::GreyNumber, k::T)::GreyNumber where T <: Real
     return g1 / GreyNumber(k, k)
 end
 
-function Base.:/(g1::GreyNumber, k)::GreyNumber
-    return g1 / GreyNumber(k, k)
-end
-
-function Base.:^(g::GreyNumber, k)::GreyNumber
+function Base.:^(g::GreyNumber, k::T)::GreyNumber where T <: Real
     @assert k > 0
     @assert g.a <= g.b
-    anew = g.a^k
-    bnew = g.b^k
+    anew = (g.a)^k
+    bnew = (g.b)^k
     return GreyNumber(min(anew, bnew), max(anew, bnew))
 end
 
@@ -142,6 +142,10 @@ function Base.isequal(g1::GreyNumber, g2::GreyNumber)::Bool
     return (g1.a == g2.a) && (g1.b == g2.b) 
 end
 
+function Base.:(==)(g1::GreyNumber, g2::GreyNumber)::Bool
+    return g1.a == g2.a && g1.b == g2.b
+end 
+
 function Base.isreal(g::GreyNumber)::Bool
     return isreal(g.a)
 end
@@ -180,6 +184,10 @@ function Base.eltype(g::GreyNumber)::Type
     return eltype(g.a)
 end
 
+function Base.eltype(::Type{GreyNumber})::Type
+    return GreyNumber
+end 
+
 function Base.iterate(g::GreyNumber, state=1)
     if state == 1
         (g.a, state + 1)
@@ -191,7 +199,7 @@ function Base.iterate(g::GreyNumber, state=1)
 end 
 
 function Base.sqrt(g::GreyNumber)::GreyNumber
-    return g^0.5
+    return GreyNumber(sqrt(g.a), sqrt(g.b))
 end
 
 function Base.cbrt(g::GreyNumber)::GreyNumber

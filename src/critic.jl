@@ -13,16 +13,12 @@ end
 
 struct CRITICResult <: MCDMResult
     decisionMatrix::DataFrame
-    w::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
+    w::Vector
 end
 
 function Base.show(io::IO, result::CRITICResult)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
+    println(io, "Weights: ")
+    println(io, result.w)
 end
 
 """
@@ -88,6 +84,8 @@ function critic(decisionMat::DataFrame, fns::Array{Function,1})::CRITICResult
 
     A = similar(decisionMat)
 
+    zerotype = eltype(decisionMat[:, 1])
+
     for i in 1:row
         for j in 1:col
             if fns[j] == maximum
@@ -101,28 +99,23 @@ function critic(decisionMat::DataFrame, fns::Array{Function,1})::CRITICResult
     # normalizedMat = convert(Matrix, A)
     normalizedMat = Matrix(A)
     
-    corMat = 1 .- cor(normalizedMat)
+    corMat = one(zerotype) .- cor(normalizedMat)
 
-    scores = zeros(Float64, col)
+    scores = zeros(zerotype, col)
+
     for i in 1:col
         scores[i] = sum(corMat[:, i]) .* std(normalizedMat[:, i])
     end
 
-    w = zeros(Float64, col)
+    w = zeros(zerotype, col)
     
     for i in 1:col
         w[i] = scores[i] ./ sum(scores)
     end
-    
-    rankings = sortperm(w)
-    
-    bestIndex = rankings |> last
-    
+        
     result = CRITICResult(
         decisionMat,
-        w,
-        rankings,
-        bestIndex
+        w
     )
 
     return result

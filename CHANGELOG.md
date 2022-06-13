@@ -1,4 +1,8 @@
-### 0.5.0 (Upcoming release)
+### 0.5.1 (Upcoming release)
+
+
+
+### 0.5.0
 - game() now returns solution vector for both players
 - mcdm() function receives TopsisMethod() as default argument
 - yml file updates for testing
