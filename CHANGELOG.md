@@ -1,5 +1,8 @@
-### 0.5.1 (Upcoming release)
+### 0.5.2 (Upcoming revision)
 
+
+### 0.5.1
+- Grey Number support for more methods 
 
 
 ### 0.5.0
