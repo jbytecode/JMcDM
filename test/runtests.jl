@@ -9,7 +9,7 @@ const testUtilityFunctions    = true
 const testMCDMFunctions       = true
 const testSCDMFunctions       = true
 const testLPBasedFunctions    = true 
-const testGreyMCDMFunctions   = true 
+const testGreyMCDMFunctions   = true
 
 
 if testGreyNumbers
@@ -40,7 +40,7 @@ if testGreyMCDMFunctions
     include("./testgreymcdm.jl")
 end # Test Grey MCDM Toolk
 
-@info "LP Based Tests (takes time) ..."
 if testLPBasedFunctions
+    @info "LP Based Tests (takes time) ..."
     include("./testlp.jl")
 end # Test LP Based Tools

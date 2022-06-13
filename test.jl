@@ -1,16 +1,18 @@
 using JMcDM
 
-df = [
-    GreyNumber(1, 2) GreyNumber(5, 8) GreyNumber(0, 3);
-    GreyNumber(4, 5) GreyNumber(6, 7) GreyNumber(9, 10);
-    GreyNumber(8, 9) GreyNumber(3, 4) GreyNumber(6, 7);
-]
+df = DataFrame(
+            :K1 => [105000.0, 120000, 150000, 115000, 135000],
+            :K2 => [105.0, 110, 120, 105, 115],
+            :K3 => [10.0, 15, 12, 20, 15],
+            :K4 => [4.0, 4, 3, 4, 5],
+            :K5 => [300.0, 500, 550, 600, 400],
+            :K6 => [10.0, 8, 12, 9, 9],
+        )
+        functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
 
-w = [0.50, 0.25, 0.25]
+        w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-fns = makeminmax([maximum, maximum, maximum])
+        gdf = makegrey(Matrix(df))
+        result = aras(makeDecisionMatrix(gdf), w, functionlist)
 
-
-result = critic(makeDecisionMatrix(df), fns)
-@info result 
-
+        @show result 
