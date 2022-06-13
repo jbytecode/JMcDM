@@ -276,5 +276,78 @@ using Test
             end
     end 
 
+
+    @testset "EDAS with Grey Numbers" begin 
+        tol = 0.0001
+        decmat = [
+            5000 5 5300 450.0
+            4500 5 5000 400
+            4500 4 4700 400
+            4000 4 4200 400
+            5000 4 7100 500
+            5000 5 5400 450
+            5500 5 6200 500
+            5000 4 5800 450
+        ]
+
+        df = decmat |> makegrey |> makeDecisionMatrix
+
+        weights = [0.25, 0.25, 0.25, 0.25]
+
+        fns = [maximum, maximum, minimum, minimum]
+
+        result = edas(df, weights, fns)
+        @test result isa EDASResult
+        knownscores = 
+            [
+                GreyNumber(0.759594),
+                GreyNumber(0.886016),
+                GreyNumber(0.697472),
+                GreyNumber(0.739658),
+                GreyNumber(0.059083),
+                GreyNumber(0.731833),
+                GreyNumber(0.641691),
+                GreyNumber(0.385194)
+            ]
+        
+        for i in 1:length(knownscores)
+            @test isapprox(result.scores[i], knownscores[i], atol = tol)
+        end
+
+    end 
+
+
+    @testset "MABAC with Grey Numbers" begin 
+        tol = 0.0001
+        decmat = [
+            2 1 4 7 6 6 7 3000.0
+            4 1 5 6 7 7 6 3500
+            3 2 6 6 5 6 8 4000
+            5 1 5 7 6 7 7 3000
+            4 2 5 6 7 7 6 3000
+            3 2 6 6 6 6 6 3500
+        ]
+
+        df = decmat |> makegrey |> makeDecisionMatrix
+
+        weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
+
+        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum]
+
+        result = mabac(df, weights, fns)
+        @test result isa MABACResult
+        knownscores =
+            [
+                GreyNumber(-0.31132), 
+                GreyNumber(-0.10898), 
+                GreyNumber(0.20035), 
+                GreyNumber(0.04218), 
+                GreyNumber(0.34452), 
+                GreyNumber(0.20035)
+                ]
+        for i in 1:length(knownscores)
+            @test isapprox(result.scores[i], knownscores[i], atol = tol)
+        end 
+    end 
     
 end

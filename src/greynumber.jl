@@ -94,6 +94,14 @@ function Base.:^(g::GreyNumber, k::T)::GreyNumber where T <: Real
     return GreyNumber(min(anew, bnew), max(anew, bnew))
 end
 
+function Base.log(g::GreyNumber)::GreyNumber
+    return GreyNumber(log(g.a), log(g.b))
+end 
+
+function Base.exp(g::GreyNumber)::GreyNumber
+    return GreyNumber(exp(g.a), exp(g.b))
+end 
+
 function Base.isless(g1::GreyNumber, g2::GreyNumber)::Bool
     if g1.a < g2.a 
         return true

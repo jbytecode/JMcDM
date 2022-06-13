@@ -11,8 +11,6 @@ using DataFrames
 struct EntropyResult <: MCDMResult
     decisionMatrix::DataFrame
     w::Array{Float64,1}
-    ranking::Array{Int64,1}
-    bestIndex::Int64
 end 
 """
         entropy(decisionMat)
@@ -65,8 +63,6 @@ julia> result.w
  0.0477633096868323
  0.0477633096868323
 
-julia> result.bestIndex
-2
 ```
 # References
 
@@ -104,15 +100,9 @@ function entropy(decisionMat::DataFrame):EntropyResult
         w[i] = e[i] ./ esum
     end
     
-    rankings = sortperm(w)
-    
-    bestIndex = rankings |> last
-    
     result = EntropyResult(
         decisionMat,
-        w,
-        rankings,
-        bestIndex
+        w
     )
 
     return result

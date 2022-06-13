@@ -33,7 +33,7 @@ end
 
 std(x) = var(x) |> sqrt
 
-geomean(x::Array{<: Number, 1}) = exp(sum(log.(x))/length(x))
+geomean(x::Vector) = exp(sum(log.(x)) / length(x))
 
 function cor(x, y)
     xmd= x .- mean(x)

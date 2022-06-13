@@ -110,6 +110,9 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     A = similar(decisionMat)
 
+    zerotype = eltype(A[!,1])
+
+
     for i in 1:row
         for j in 1:col
             if fns[j] == maximum
@@ -122,7 +125,7 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     wA = w * (A .+ 1)
 
-    g = zeros(eltype(A[1,1]), col)
+    g = zeros(zerotype, col)
 
     for i in 1:col
         g[i] = geomean(wA[:, i])
@@ -130,7 +133,7 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
 
     Q = wA .- g'
 
-    scores = zeros(eltype(A[1,1]), row)
+    scores = zeros(zerotype, row)
     for i in 1:row
         scores[i] = sum(Q[i, :])
     end 
