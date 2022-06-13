@@ -4,12 +4,12 @@ import DataFrames: DataFrame, DataFrameRow
 
 using JMcDM
 
-const testGreyNumbers         = true  
-const testUtilityFunctions    = true 
-const testMCDMFunctions       = true 
-const testSCDMFunctions       = true 
-const testLPBasedFunctions    = true  
-const testGreyMCDMFunctions   = true 
+const testGreyNumbers         = true    
+const testUtilityFunctions    = true   
+const testMCDMFunctions       = true   
+const testSCDMFunctions       = true   
+const testLPBasedFunctions    = true    
+const testGreyMCDMFunctions   = true  
 
 
 if testGreyNumbers

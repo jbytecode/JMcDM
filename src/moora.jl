@@ -185,16 +185,19 @@ function moora_ratio(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Arr
 
     nalternatives, ncriteria = size(decisionMat)
 
-    mat = Matrix{Float64}(decisionMat)
+    mat = Matrix(decisionMat)
     normalizedMatrix = similar(mat)
     weightednormalizedMat = similar(mat)
+
+    zerotype = eltype(mat[1, :])
     
     for i in 1:ncriteria
         normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
         weightednormalizedMat[:, i] = normalizedMatrix[:, i] .* w[i]
     end
 
-    scores = zeros(nalternatives)
+    scores = zeros(zerotype, nalternatives)
+    
     for i in 1:nalternatives
         for j in 1:ncriteria
             if fns[j] == maximum 
