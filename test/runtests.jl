@@ -38,7 +38,7 @@ end  # Test MCDM Tools
 if testGreyMCDMFunctions
     @info "Grey MCDM Tests ..."
     include("./testgreymcdm.jl")
-end # Test Grey MCDM Toolk
+end # Test Grey MCDM Tools
 
 if testLPBasedFunctions
     @info "LP Based Tests (takes time) ..."
