@@ -93,6 +93,7 @@ include("entropy.jl")
 include("codas.jl")
 include("psi.jl")
 include("moosra.jl")
+include("merec.jl")
 
 include("summary.jl")
 
@@ -134,6 +135,7 @@ import .ELECTRE: electre, ElectreMethod, ElectreResult
 import .DEMATEL: dematel, DematelResult
 import .Entropy: entropy, EntropyResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
+import .MEREC: merec, MERECResult, MERECMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -171,6 +173,7 @@ export MarcosMethod
 export PSIMethod
 export MoosraMethod
 export ROVMethod
+export MERECMethod
 
 export MCDMSetting
 
@@ -202,6 +205,7 @@ export SDResult
 export ROVResult
 export PSIResult
 export MoosraResult
+export MERECResult
 
 # export game type
 export GameResult
@@ -259,6 +263,7 @@ export sd
 export rov
 export psi
 export moosra
+export merec
 
 #  export SCDM tools
 export laplace
