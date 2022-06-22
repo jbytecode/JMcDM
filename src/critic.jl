@@ -67,8 +67,6 @@ julia> result.w
  0.24912338769165807
  0.16359102025932576
 
-julia> result.bestIndex
-2
 ```
 # References
 
