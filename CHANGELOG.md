@@ -1,5 +1,5 @@
 ### 0.5.2 (Upcoming revision)
-
+- Implement MEREC
 
 ### 0.5.1
 - Grey Number support for more methods 

@@ -115,7 +115,10 @@ JMcDM.critic
 JMcDM.codas
 ```
 
-
+## MEREC
+```@docs
+JMcDM.merec
+```
 
 
 

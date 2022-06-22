@@ -104,6 +104,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/d
 - ROV (Range of Value) Method
 - PSI (Preference Selection Index) Method
 - MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) Method
+- MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
 
 ### SCDM Tools
 
