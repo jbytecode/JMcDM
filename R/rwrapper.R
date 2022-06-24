@@ -27,11 +27,12 @@ pkg.R.install("logger")
 # Setting up the Julia Environment
 log_info("Checking JuliaCall")
 pkg.R.install("JuliaCall")
-julia_setup(installJulia = TRUE)
+julia_setup()
 
 
 # Setting up the JMcDM package
 log_info("Checking JMcDM")
+pkg.julia.install("JMcDM")
 julia_library("JMcDM")
 
 # Registering Julia and JMcDM functions
@@ -102,6 +103,17 @@ waspas <- julia_function("waspas")
 log_info("Registering Julia function wpm()")
 wpm <- julia_function("wpm")
 
+log_info("Registering Julia function moosra()")
+wpm <- julia_function("moosra")
+
+log_info("Registering Julia function rov()")
+wpm <- julia_function("rov")
+
+log_info("Registering Julia function psi()")
+wpm <- julia_function("psi")
+
+log_info("Registering Julia function sd()")
+wpm <- julia_function("sd")
 
 # Sample usage of Topsis
 log_info("Generating sample decision matrix: df")
