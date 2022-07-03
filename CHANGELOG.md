@@ -1,4 +1,8 @@
-### 0.5.2 (Upcoming revision)
+### 0.5.3 (Upcoming release)
+- Add tests for GreyNumber type
+
+
+### 0.5.2 
 - Implement MEREC
 
 ### 0.5.1
