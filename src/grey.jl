@@ -192,5 +192,16 @@ function grey(setting::MCDMSetting; zeta::Float64=0.5)::GreyResult
     )
 end 
 
+
+function grey(mat::Matrix, weights::Array{Float64,1}, fs::Array{Function,1}; zeta::Float64=0.5)::GreyResult
+    grey(
+        makeDecisionMatrix(mat),
+        weights,
+        fs,
+        zeta = zeta
+    )
+end
+
+
 end # end of module GREY 
 

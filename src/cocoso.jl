@@ -181,5 +181,9 @@ function cocoso(setting::MCDMSetting; lambda::Float64=0.5)::CoCoSoResult
     )
 end
 
+function cocoso(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::CoCoSoResult
+    cocoso(makeDecisionMatrix(mat), weights, fns, lambda = lambda)
+end 
+
 
 end # end of module COCOSO

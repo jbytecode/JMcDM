@@ -147,7 +147,9 @@ function topsis(setting::MCDMSetting)::TopsisResult
 end
 
 function topsis(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function, 1})::TopsisResult 
-	return(topsis(makeDecisionMatrix(mat), weights, fns))
+	topsis(makeDecisionMatrix(mat), 
+            weights, 
+            fns)
 end 
 
 

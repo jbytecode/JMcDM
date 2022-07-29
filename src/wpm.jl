@@ -159,4 +159,14 @@ function wpm(setting::MCDMSetting)::WPMResult
     )
 end 
 
+
+function wpm(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::WPMResult
+    wpm(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end
+
+
 end # end of module WPM 

@@ -169,4 +169,15 @@ function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
     )
 end 
 
+
+function vikor(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; v::Float64=0.5)::VikorResult
+    vikor(
+        makeDecisionMatrix(mat),
+        weights,
+        fns,
+        v = v
+    )
+end 
+
+
 end # end module VIKOR 

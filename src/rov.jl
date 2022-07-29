@@ -141,4 +141,12 @@ function rov(setting::MCDMSetting)::ROVResult
     )
 end 
 
+function rov(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})
+    rov(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end 
+
 end # end of module ROV 

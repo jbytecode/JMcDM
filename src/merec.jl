@@ -148,4 +148,11 @@ function merec(setting::MCDMSetting)::MERECResult
     )
 end 
 
+function merec(mat::Matrix, fs::Array{Function,1})::MERECResult
+    merec(
+        makeDecisionMatrix(mat), 
+        fs
+    )
+end 
+
 end # end of module MEREC

@@ -185,4 +185,13 @@ function edas(setting::MCDMSetting)::EDASResult
     )
 end 
 
+function edas(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::EDASResult
+    edas(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end
+ 
+
 end # end of module EDAS 

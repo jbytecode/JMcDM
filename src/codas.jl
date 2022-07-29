@@ -200,5 +200,16 @@ function codas(setting::MCDMSetting; tau::Float64=0.02)::CODASResult
 end
 
 
+function codas(mat::Matrix, weight::Array{Float64,1}, fns::Array{Function,1}; tau::Float64=0.02)::CODASResult
+    codas(
+        makeDecisionMatrix(mat),
+        weight,
+        fns,
+        tau = tau
+    )
+end
+
+
+
 end # end of module CODAS 
 

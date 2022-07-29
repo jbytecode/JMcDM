@@ -293,4 +293,13 @@ function moora(setting::MCDMSetting; method::Symbol = :reference)::MooraResult
 end 
 
 
+function moora(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; method::Symbol = :reference)::MooraResult
+    moora(
+        makeDecisionMatrix(mat),
+        weights,
+        fns,
+        method = method
+    )
+end 
+
 end # end of module MOORA 

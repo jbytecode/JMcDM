@@ -177,4 +177,15 @@ function waspas(setting::MCDMSetting; lambda::Float64=0.5)::WASPASResult
     )
 end 
 
+
+function waspas(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::WASPASResult
+    waspas(
+        makeDecisionMatrix(mat),
+        weights,
+        fns,
+        lambda = lambda
+    )
+end 
+
+
 end # end of module WASPAS

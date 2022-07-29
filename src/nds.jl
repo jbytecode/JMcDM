@@ -170,7 +170,9 @@ function nds(data::DataFrame, fns::Array{Function, 1})::NDSResult
     return result
 end
 
-
+function nds(mat::Matrix, fns::Array{Function, 1})::NDSResult
+    nds(makeDecisionMatrix(mat), fns)
+end 
 
 end # end of module NDS 
 

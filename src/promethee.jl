@@ -252,4 +252,22 @@ function promethee(setting::MCDMSetting, prefs::Array{Function,1}, qs::Array, ps
     )
 end 
 
+
+function promethee(
+    mat::Matrix, 
+    weights::Array{Float64,1}, 
+    fns::Array{Function,1}, 
+    prefs::Array{Function,1}, 
+    qs::Array, 
+    ps::Array)::PrometheeResult
+
+    promethee(
+        makeDecisionMatrix(mat),
+        weights,
+        fns,
+        prefs,
+        qs,
+        ps
+    )
+end 
 end # end of module PROMETHEE

@@ -180,4 +180,13 @@ function marcos(setting::MCDMSetting)::MarcosResult
     )
 end 
 
+
+function marcos(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MarcosResult
+    marcos(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end 
+
 end # end of module MARCOS 

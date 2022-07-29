@@ -162,5 +162,12 @@ function saw(setting::MCDMSetting)::SawResult
     )
 end 
 
+function saw(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::SawResult
+    saw(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end
 
 end # end of module SAW

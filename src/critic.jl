@@ -142,4 +142,11 @@ function critic(setting::MCDMSetting)::CRITICResult
     )
 end 
 
+function critic(mat::Matrix, fns::Array{Function,1})::CRITICResult
+    critic(
+        mat, 
+        fns
+    )
+end 
+
 end # end of module CRITIC

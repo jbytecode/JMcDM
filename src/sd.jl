@@ -80,7 +80,7 @@ end
 
 
 """
-        critic(setting)
+        sd(setting)
 
 Apply SD method for a given matrix and criteria types.
 
@@ -91,6 +91,13 @@ function sd(setting::MCDMSetting)::SDResult
     sd(
         setting.df, 
         setting.fns
+    )
+end 
+
+function sd(mat::Matrix, fns::Array{Function,1})::SDResult
+    sd(
+        makeDecisionMatrix(mat), 
+        fns
     )
 end 
 

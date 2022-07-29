@@ -108,6 +108,11 @@ function entropy(decisionMat::DataFrame):EntropyResult
     return result
 end
 
+function entropy(mat::Matrix):EntropyResult
+    entropy(
+        makeDecisionMatrix(mat)
+    )
+end 
 
 end # end of module Entropy 
 

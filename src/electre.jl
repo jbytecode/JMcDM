@@ -231,5 +231,13 @@ function electre(setting::MCDMSetting)::ElectreResult
     )
 end 
 
+function electre(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::ElectreResult
+    electre(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end 
+
 end # end of module ELECTRE 
 

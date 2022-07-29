@@ -127,5 +127,12 @@ function dematel(comparisonMat::DataFrame; threshold::Union{Nothing,Float64}=not
     return result
 end
 
+function dematel(mat::Matrix; threshold::Union{Nothing,Float64}=nothing)::DematelResult
+    dematel(
+        makeDecisionMatrix(mat),
+        threshold = threshold
+    )
+end 
+
 end # end of module DEMATEL 
 

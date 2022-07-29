@@ -178,5 +178,13 @@ function mabac(setting::MCDMSetting)::MABACResult
     )
 end 
 
+function mabac(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MABACResult
+    mabac(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end 
+
 
 end # end of module MABAC 

@@ -247,5 +247,12 @@ function copras(setting::MCDMSetting)::COPRASResult
     )
 end 
 
+function copras(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::COPRASResult
+    copras(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end
 
 end # end of module COPRAS 

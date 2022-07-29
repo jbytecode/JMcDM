@@ -166,4 +166,13 @@ function mairca(setting::MCDMSetting)::MAIRCAResult
     )
 end 
 
+
+function mairca(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MAIRCAResult
+    mairca(
+        makeDecisionMatrix(mat),
+        weights,
+        fns
+    )
+end 
+
 end # end of module MAIRCA 

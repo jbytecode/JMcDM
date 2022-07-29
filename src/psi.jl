@@ -161,4 +161,11 @@ function psi(setting::MCDMSetting)::PSIResult
     )
 end 
 
+function psi(mat::Matrix, fns::Array{Function,1})::PSIResult
+    psi(
+        makeDecisionMatrix(mat),
+        fns
+    )
+end 
+
 end # end of module PSI 
