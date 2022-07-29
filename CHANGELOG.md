@@ -1,6 +1,6 @@
 ### 0.5.3 (Upcoming release)
 - Add tests for GreyNumber type
-
+- topsis() and aras() accepts matrix
 
 ### 0.5.2 
 - Implement MEREC
