@@ -14,6 +14,8 @@ struct TopsisResult <: MCDMResult
     weights::Array{Float64,1}
     normalizedDecisionMatrix::DataFrame
     normalizedWeightedDecisionMatrix::DataFrame 
+    distanceToIdeal::Vector
+    distanceToNegative::Vector
     bestIndex::Int64 
     scores::Vector
 end
@@ -120,6 +122,8 @@ function topsis(
         w,
         normalizedMat,
         weightednormalizedMat,
+        distances_plus,
+        distances_minus,
         best_index,
         scores,
     )
