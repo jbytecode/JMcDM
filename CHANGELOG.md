@@ -1,7 +1,7 @@
 ### 0.5.3 (Upcoming release)
 - Add tests for GreyNumber type
 - methods now accept Matrix (in addition to DataFrame)
-
+- PIV (Proximity Indexed Value) method implemented
 
 ### 0.5.2 
 - Implement MEREC

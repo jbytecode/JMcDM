@@ -102,6 +102,7 @@ include("mcdm.jl")
 include("copeland.jl")
 include("sd.jl")
 include("rov.jl")
+include("piv.jl")
 
 
 
@@ -136,6 +137,7 @@ import .DEMATEL: dematel, DematelResult
 import .Entropy: entropy, EntropyResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
+import .PIV: piv, PIVResult, PIVMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -174,6 +176,7 @@ export PSIMethod
 export MoosraMethod
 export ROVMethod
 export MERECMethod
+export PIVMethod
 
 export MCDMSetting
 
@@ -206,6 +209,7 @@ export ROVResult
 export PSIResult
 export MoosraResult
 export MERECResult
+export PIVResult
 
 # export game type
 export GameResult
@@ -264,6 +268,7 @@ export rov
 export psi
 export moosra
 export merec
+export piv
 
 #  export SCDM tools
 export laplace
