@@ -30,6 +30,8 @@ function Base.show(io::IO, result::CODASResult)
     println(io, "Best indices:")
     println(io, result.bestIndex)
 end
+
+
 """
     codas(decisionMat, weights, fs)
 Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
