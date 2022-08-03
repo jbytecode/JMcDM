@@ -35,7 +35,7 @@ merec() applies the MEREC method to calculate weights using a decision matrix wi
 n alternatives subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
-- `::MERECResult`: MERECResult object that holds multiple outputs including weighting and best index.
+- `::MERECResult`: MERECResult object that holds multiple outputs including weights.
 
 # Examples
 ```julia-repl

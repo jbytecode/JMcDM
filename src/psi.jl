@@ -8,6 +8,9 @@ using ..Utilities
 using DataFrames 
 
 struct PSIResult <: MCDMResult
+    pvs::Vector
+    phis::Vector 
+    psis::Vector
     scores::Vector
     rankings::Array{Int, 1}
     bestIndex::Int
@@ -130,6 +133,9 @@ function psi(decisionMat::DataFrame, fns::Array{Function,1})::PSIResult
     bestindex = ranks |> last  
 
     result = PSIResult(
+        pvs,
+        phis,
+        psis,
         scores,
         ranks,
         bestindex

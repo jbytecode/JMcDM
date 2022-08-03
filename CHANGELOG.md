@@ -1,7 +1,9 @@
+### 0.5.5
+- More verbose method outputs
+
 ### 0.5.4 
 - More verbose Topsis output with distances to positive and negative ideal solutions.
   
-
 ### 0.5.3 
 - Add tests for GreyNumber type
 - methods now accept Matrix (in addition to DataFrame)

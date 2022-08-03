@@ -16,6 +16,8 @@ struct VikorResult <: MCDMResult
     weights::Array{Float64,1}
     weightedDecisionMatrix::DataFrame
     bestIndex::Int64
+    s::Vector
+    r::Vector
     scores::Vector
 end
 
@@ -140,6 +142,8 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
         w,
         weightedA,
         best_index,
+        s,
+        r,
         scores
     )
     return result
