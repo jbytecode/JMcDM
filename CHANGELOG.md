@@ -1,4 +1,4 @@
-### 0.5.4 (Upcoming Release)
+### 0.5.4 
 - More verbose Topsis output with distances to positive and negative ideal solutions.
   
 
