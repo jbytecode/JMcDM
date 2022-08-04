@@ -11,6 +11,9 @@ using DataFrames
 struct MABACResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
+    wA::Matrix
+    g::Vector
+    Q::Matrix
     scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
@@ -145,6 +148,9 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Fun
     result = MABACResult(
         decisionMat,
         w,
+        Matrix(wA),
+        g,
+        Matrix(Q),
         scores,
         rankings,
         bestIndex

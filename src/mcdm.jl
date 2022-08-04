@@ -20,7 +20,7 @@ The method is one of the subtypes of MCDMMethod type. See examples.
 ```julia-repl
 
 julia> subtypes(MCDMMethod)
-21-element Vector{Any}:
+23-element Vector{Any}:
  ArasMethod
  CocosoMethod
  CodasMethod
@@ -29,11 +29,13 @@ julia> subtypes(MCDMMethod)
  EdasMethod
  ElectreMethod
  GreyMethod
+ MERECMethod
  MabacMethod
  MaircaMethod
  MarcosMethod
  MooraMethod
  MoosraMethod
+ PIVMethod
  PSIMethod
  PrometheeMethod
  ROVMethod
@@ -101,6 +103,10 @@ function mcdm(df::DataFrame,
     elseif method isa PSIMethod
         # psi method does not use weights
         psi(df, fns)
+    elseif method isa MERECMethod
+        merec(df, fns)
+    elseif method isa PIVMethod
+        piv(df, w, fns)
     else
         error("Method is not defined") 
     end 
