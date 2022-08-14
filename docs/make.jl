@@ -1,5 +1,5 @@
 
-using Documenter, Sqlite3Stats
+using Documenter, JMcDM
 
 makedocs(
          format = Documenter.HTML(
