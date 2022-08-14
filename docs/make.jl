@@ -20,5 +20,5 @@ makedocs(
 
 
 deploydocs(
-           repo = "github.com/jbytecode/jmcdm",
+           repo = "github.com/jbytecode/JMcDM",
           )
