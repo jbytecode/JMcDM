@@ -8,7 +8,7 @@ A package for Multiple-criteria decision-making techniques in Julia.
 
 Suppose a decision process has n alternatives and m criteria  which are either to be maximized or minimized. Each single criterion has a weight _0 ≤ wᵢ ≤ 1_ where sum of _wᵢ_ is 1. _fᵢ_ is either maximum or minimum. _gⱼ(.)_ is the evolution function and it is choosen as _gⱼ(x) = x_ in many methods. A multiple criteria decision problem can be represented using the decision table 
 
-<img src="https://github.com/jbytecode/JMcDM/blob/gh-pages/images/generalformula.png" width = "50%"/>
+<img src="https://github.com/jbytecode/JMcDM/blob/gh-pages/dev/images/generalformula.png" width = "50%"/>
 
 <!--
    | **Criteria**  |   C_1    |   C_2    |  ...  |   C_m    |

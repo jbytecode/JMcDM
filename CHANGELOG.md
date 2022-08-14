@@ -1,6 +1,7 @@
 ### 0.5.5
 - Report more result in JMcDMResults
 - Add new methods to mcdm()
+- Update documentation system and integrate with CI
 
 ### 0.5.4 
 - More verbose Topsis output with distances to positive and negative ideal solutions.
