@@ -8,7 +8,7 @@ makedocs(
                                   # assets = ["assets/favicon.ico", "assets/extra_styles.css"],
                                  ),
          sitename="JMcDM: Julia package for multiple-criteria decision making",
-         authors = ["Mehmet Hakan Satman", "Bahadır Fatih Yıldırım", "Ersagun Kuruca"],
+         authors = "Mehmet Hakan Satman, Bahadır Fatih Yıldırım, Ersagun Kuruca",
          pages = [
                   "MCDM" => "mcdms.md",
                   "Game Solver" =>  "game.md",

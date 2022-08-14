@@ -5,18 +5,9 @@ A package for Multiple-criteria decision-making techniques in Julia.
 
 Suppose a decision process has n alternatives and m criteria  which are either to be maximized or minimized. Each single criterion has a weight _0 ≤ wᵢ ≤ 1_ where sum of _wᵢ_ is 1. _fᵢ_ is either maximum or minimum. _gⱼ(.)_ is the evolution function and it is choosen as _gⱼ(x) = x_ in many methods. A multiple criteria decision problem can be represented using the decision table 
 
-<img src="https://github.com/jbytecode/JMcDM/blob/gh-pages/images/generalformula.png" width = "50%"/>
+[](https://github.com/jbytecode/JMcDM/blob/gh-pages/images/generalformula.png)
 
-<!--
-   | **Criteria**  |   C_1    |   C_2    |  ...  |   C_m    |
-   | :-----------: | :------: | :------: | :---: | :------: |
-   |  **Weights**  |   w_1    |   w_2    |  ...  |   w_m    |
-   | **Functions** |   f_1    |   f_2    |  ...  |   f_m    |
-   |      A_1      | g_1(A_1) | g_2(A_1) |  ...  | g_m(S_A) |
-   |      A_2      | g_1(A_2) | g_2(A_2) |  ...  | g_m(A_2) |
-   |       ⋮       |    ⋮     |    ⋮     |  ...  |    ⋮     |
-   |      A_n      | g_1(A_n) | g_2(A_n) |  ...  | g_m(A_n) |
--->
+
 
 without loss of generality. When _A₁, A₂, ..., Aₙ_ are alternatives and _C₁, C₂, ..., Cₙ_ are different situations of a single criterion then the decision problem is said to be single criterion decision problem. If _Cⱼ_ are strategies of two game players then _gⱼ(Aᵢ)_ is the gain of the row player when she selects the strategy _i_ and the column player selects the strategy _Cⱼ_.
 
