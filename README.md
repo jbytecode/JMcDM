@@ -1,5 +1,5 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.03430/status.svg)](https://doi.org/10.21105/joss.03430)
-[![Doc](https://img.shields.io/badge/docs-stable-blue.svg)](https://jbytecode.github.io/JMcDM/)
+[![Doc](https://img.shields.io/badge/docs-dev-blue.svg)](https://jbytecode.github.io/JMcDM/)
 
 # JMcDM
 A package for Multiple-criteria decision-making techniques in Julia.
