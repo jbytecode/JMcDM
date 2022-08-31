@@ -59,8 +59,8 @@ julia> # mcdm(df, w, fns, GreyMethod(0.6))
 """
 function mcdm(df::DataFrame, 
     w::Array{Float64, 1}, 
-    fns::Array{Function, 1}, 
-    method::T1)::MCDMResult where {T1 <: MCDMMethod}
+    fns::Array{F, 1}, 
+    method::T1)::MCDMResult where {T1 <: MCDMMethod, F <: Function}
 
     if method isa TopsisMethod
         topsis(df, w, fns)

@@ -80,7 +80,7 @@ julia> result.scores
 Zavadskas, E. K., & Turskis, Z. (2010). A new additive ratio assessment (ARAS) method in multicriteria decision‐making. Technological and Economic Development of Economy, 16(2), 159-172.
 Yıldırım, B. F. (2015). "Çok Kriterli Karar Verme Problemlerinde ARAS Yöntemi". Kafkas Üniversitesi İktisadi ve İdari Bilimler Fakültesi Dergisi, 6 (9), 285-296. http://dx.doi.org/10.18025/kauiibf.65151
 """
-function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{Function,1})::ARASResult
+function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F ,1})::ARASResult where {F <: Function}
 
     # mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
@@ -153,7 +153,7 @@ function aras(setting::MCDMSetting)::ARASResult
     )
 end
 
-function aras(mat::Matrix, weights::Array{Float64, 1}, fns::Array{Function, 1})::ARASResult
+function aras(mat::Matrix, weights::Array{Float64, 1}, fns::Array{F, 1})::ARASResult  where {F <: Function}
 	return aras(makeDecisionMatrix(mat), weights, fns)
 end
 end # end of module ARAS

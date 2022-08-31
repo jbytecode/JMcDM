@@ -4,7 +4,7 @@ export I, mean, var, std
 export geomean, cor, euclidean
 export normalize, apply_columns 
 export colmaxs, colmins, unitize
-export makeDecisionMatrix, reverseminmax, makeminmax
+export makeDecisionMatrix, reverseminmax
 export rowmins, rowmaxs, rowmeans, rowsums
 export colmins, colmaxs, colmeans, colsums
 export makegrey
@@ -84,12 +84,12 @@ function normalize(data::DataFrame)::DataFrame
 end
 
 
-function apply_columns(fs::Array{Function,1}, data)
+function apply_columns(fs::Array{F,1}, data) where {F <: Function}
     _, m = size(data)
     return [fs[i](data[:,i]) for i in 1:m]
 end
 
-function apply_columns(f::Function, data)
+function apply_columns(f::F, data) where {F <: Function}
     return [f(c) for c in eachcol(data)]
 end
 
@@ -109,7 +109,7 @@ function colmeans(data)::Array{Number,1}
     return apply_columns(mean, data)
 end
 
-function apply_rows(f::Function, data)
+function apply_rows(f::F, data) where {F <: Function}
     return [f(c) for c in eachrow(data)]
 end
 
@@ -200,14 +200,11 @@ function Base.minimum(df::DataFrame)
     df |> Matrix |> minimum
 end
 
-function reverseminmax(fns::Array{Function,1})::Array{Function,1}
+function reverseminmax(fns::Array{F,1})::Array{Function,1} where {F <: Function}
     newfs = map(x -> if x == minimum maximum else minimum end, fns)
     return newfs
 end
 
-function makeminmax(fns::Array{K,1} where K)::Array{Function,1}
-    return convert(Array{Function,1}, fns)
-end
 
 function makegrey(m::Matrix)::Matrix 
     n, p = size(m)

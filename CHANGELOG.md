@@ -1,3 +1,6 @@
+### 0.5.6 
+- Remove dependency of `makeminmax()`. Now functions take Vector{F} where {F <: Function}
+
 ### 0.5.5
 - Report more result in JMcDMResults
 - Add new methods to mcdm()

@@ -89,7 +89,7 @@ Pamučar, D., Lukovac, V., Božanić, D., & Komazec, N. (2018). Multi-criteria F
 
 Ulutaş A.(2019),Swara Ve Mairca Yöntemleri İle Catering Firması Seçimi,BMIJ, (2019), 7(4): 1467-1479 http://dx.doi.org/10.15295/bmij.v7i4.1166
 """
-function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MAIRCAResult
+function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MAIRCAResult where {F <: Function}
 
     row, col = size(decisionMat)
 
@@ -167,7 +167,7 @@ function mairca(setting::MCDMSetting)::MAIRCAResult
 end 
 
 
-function mairca(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MAIRCAResult
+function mairca(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::MAIRCAResult where {F <: Function}
     mairca(
         makeDecisionMatrix(mat),
         weights,

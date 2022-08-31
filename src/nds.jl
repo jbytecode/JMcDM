@@ -25,9 +25,9 @@ end
 
 # Examples
 ```julia-repl
-julia> dominates([1,2,3], [1,2,1], makeminmax([maximum, maximum, maximum]))
+julia> dominates([1,2,3], [1,2,1], [maximum, maximum, maximum])
 true
-julia> dominates([0,0,0,0], [1,0,0,0], makeminmax([maximum, maximum, maximum]))
+julia> dominates([0,0,0,0], [1,0,0,0], ([maximum, maximum, maximum])
 false
 ```
 
@@ -35,7 +35,7 @@ false
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function dominates(p1::Array, p2::Array, fns::Array{Function, 1})::Bool
+function dominates(p1::Array, p2::Array, fns::Array{F, 1})::Bool where {F <: Function}
     n = length(p1)
     notworse = count(i -> if fns[i] == maximum p1[i] < p2[i] else p1[i] > p2[i] end, 1:n)
     better   = count(i -> if fns[i] == maximum p1[i] > p2[i] else p1[i] < p2[i] end , 1:n)
@@ -57,7 +57,7 @@ end
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function ndsranks(data::DataFrame, fns::Array{Function, 1})::Array{Int}
+function ndsranks(data::DataFrame, fns::Array{F, 1})::Array{Int} where {F <: Function}
     
     #mat = convert(Matrix, data)
     mat = Matrix(data)
@@ -85,7 +85,7 @@ end
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function ndsranks(data::Matrix, fns::Array{Function, 1})::Array{Int64}
+function ndsranks(data::Matrix, fns::Array{F, 1})::Array{Int64} where {F <: Function}
     
     n, _ = size(data)
 
@@ -139,7 +139,7 @@ julia> nd = makeDecisionMatrix(cases)
    3 │     1.0      3.0      2.0
    4 │     4.0      5.0      6.0
 
-julia> result = nds(nd, makeminmax([maximum, maximum, maximum]));
+julia> result = nds(nd, [maximum, maximum, maximum]);
 
 julia> result.ranks
 4-element Array{Int64,1}:
@@ -156,7 +156,7 @@ julia> result.bestIndex
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function nds(data::DataFrame, fns::Array{Function, 1})::NDSResult
+function nds(data::DataFrame, fns::Array{F, 1})::NDSResult where {F <: Function}
 
     ranks = ndsranks(data, fns)
 
@@ -170,7 +170,7 @@ function nds(data::DataFrame, fns::Array{Function, 1})::NDSResult
     return result
 end
 
-function nds(mat::Matrix, fns::Array{Function, 1})::NDSResult
+function nds(mat::Matrix, fns::Array{F, 1})::NDSResult where {F <: Function}
     nds(makeDecisionMatrix(mat), fns)
 end 
 

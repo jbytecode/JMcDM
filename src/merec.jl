@@ -73,7 +73,7 @@ julia> result.w
 Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2021). Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry, 13(4), 525. https://doi.org/10.3390/sym13040525
 
 """
-function merec(decisionMat::DataFrame, fs::Array{Function,1})::MERECResult
+function merec(decisionMat::DataFrame, fs::Array{F ,1})::MERECResult where {F <: Function}
     mat = Matrix(decisionMat)    
     row, col = size(mat)
 
@@ -148,7 +148,7 @@ function merec(setting::MCDMSetting)::MERECResult
     )
 end 
 
-function merec(mat::Matrix, fs::Array{Function,1})::MERECResult
+function merec(mat::Matrix, fs::Array{F, 1})::MERECResult  where {F <: Function}
     merec(
         makeDecisionMatrix(mat), 
         fs

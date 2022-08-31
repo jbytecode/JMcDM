@@ -102,7 +102,7 @@ Pamučar, D., & Ćirović, G. (2015). The selection of transport and handling re
 
 Ulutaş, A. (2019). Entropi ve MABAC yöntemleri ile personel seçimi. OPUS–International Journal of Society Researches, 13(19), 1552-1573. DOI: 10.26466/opus.580456
 """
-function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MABACResult
+function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MABACResult where {F <: Function}
 
     row, col = size(decisionMat)
 
@@ -184,7 +184,7 @@ function mabac(setting::MCDMSetting)::MABACResult
     )
 end 
 
-function mabac(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MABACResult
+function mabac(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::MABACResult where {F <: Function}
     mabac(
         makeDecisionMatrix(mat),
         weights,

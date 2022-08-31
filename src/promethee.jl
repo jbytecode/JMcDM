@@ -15,7 +15,7 @@ struct PrometheeMethod <: MCDMMethod
     ps::Array{Union{Nothing, Float64}, 1}
 end 
 
-PrometheeMethod(pref::Array{Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1}) :: PrometheeMethod = PrometheeMethod(pref, qs, ps)
+PrometheeMethod(pref::Array{<: Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1})::PrometheeMethod  = PrometheeMethod(pref, qs, ps) 
 
 
 struct PrometheeResult <: MCDMResult
@@ -151,9 +151,9 @@ julia> ps = [100, 98, 95, 80];
 
 julia> weights = [0.25, 0.35, 0.22, 0.18];
 
-julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
+julia> fns = [maximum, maximum, maximum, maximum];
 
-julia> prefs = convert(Array{Function,1}, [prometLinear, prometVShape, prometLinear, prometLinear]);
+julia> prefs = [prometLinear, prometVShape, prometLinear, prometLinear];
 
 julia> result = promethee(df, weights, fns, prefs, qs, ps);
 
@@ -180,10 +180,10 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 function promethee(
     decisionMatrix::DataFrame, 
     weights::Array{Float64,1}, 
-    fns::Array{Function,1}, 
-    prefs::Array{Function,1}, 
+    fns::Array{F,1}, 
+    prefs::Array{P,1}, 
     qs::Array, 
-    ps::Array)::PrometheeResult
+    ps::Array)::PrometheeResult where {F, P <: Function}
 
     actionCount, criteriaCount = size(decisionMatrix)
 
@@ -256,10 +256,10 @@ end
 function promethee(
     mat::Matrix, 
     weights::Array{Float64,1}, 
-    fns::Array{Function,1}, 
-    prefs::Array{Function,1}, 
+    fns::Array{F ,1}, 
+    prefs::Array{P,1}, 
     qs::Array, 
-    ps::Array)::PrometheeResult
+    ps::Array)::PrometheeResult where {F, P <: Function}
 
     promethee(
         makeDecisionMatrix(mat),

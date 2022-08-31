@@ -92,7 +92,7 @@ julia> result.bestIndex
 # References
 Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of Weighted Aggregated Sum Product Assessment. Elektronika Ir Elektrotechnika, 122(6), 3-6. https://doi.org/10.5755/j01.eee.122.6.1810
 """
-function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::WPMResult
+function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F, 1})::WPMResult  where {F <: Function}
    
     row, col = size(decisionMat)
     
@@ -160,7 +160,7 @@ function wpm(setting::MCDMSetting)::WPMResult
 end 
 
 
-function wpm(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::WPMResult
+function wpm(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::WPMResult  where {F <: Function}
     wpm(
         makeDecisionMatrix(mat),
         weights,

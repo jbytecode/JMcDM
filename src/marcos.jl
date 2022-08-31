@@ -71,9 +71,7 @@ julia> weights = [0.1901901901901902 , 0.15915915915915918 , 0.19819819819819823
 
 julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum];
 
-julia> Fns = convert(Array{Function, 1} , fns)
-
-julia> result = marcos(df, weights, Fns);
+julia> result = marcos(df, weights, fns);
 
 julia> result.scores
 4-element Array{Float64,1}:
@@ -91,7 +89,7 @@ Stević, Z., Pamučar, D., Puška, A., Chatterjee, P., Sustainable supplier sele
 
 Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluation software of project management used measurement of alternatives and ranking according to compromise solution (MARCOS) method. Operational Research in Engineering Sciences: Theory and Applications, 3(1), 89-102.
 """
-function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MarcosResult
+function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MarcosResult where {F <: Function}
 
     # df = convert(Matrix, decisionMat)
     df = Matrix(decisionMat)
@@ -181,7 +179,7 @@ function marcos(setting::MCDMSetting)::MarcosResult
 end 
 
 
-function marcos(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::MarcosResult
+function marcos(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::MarcosResult  where {F <: Function}
     marcos(
         makeDecisionMatrix(mat),
         weights,

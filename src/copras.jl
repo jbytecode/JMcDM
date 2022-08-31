@@ -173,7 +173,7 @@ Kaklauskas, A., Zavadskas, E. K., Raslanas, S., Ginevicius, R., Komka, A., & Mal
 Özdağoğlu, A. (2013). İmalat işletmeleri için eksantrik pres alternatiflerinin COPRAS yöntemi ile karşılaştırılması. Gümüşhane Üniversitesi Sosyal Bilimler Enstitüsü Elektronik Dergisi, 4(8), 1-22.
 Yıldırım, B. F., Timor, M. (2019). "Bulanık ve Gri COPRAS Yöntemleri Kullanılarak Tedarikçi Seçim Modeli Geliştirilmesi". Optimum Ekonomi ve Yönetim Bilimleri Dergisi, 6 (2), 283-310.
 """
-function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::COPRASResult
+function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::COPRASResult where {F <: Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
@@ -247,7 +247,7 @@ function copras(setting::MCDMSetting)::COPRASResult
     )
 end 
 
-function copras(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::COPRASResult
+function copras(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::COPRASResult  where {F <: Function}
     copras(
         makeDecisionMatrix(mat),
         weights,

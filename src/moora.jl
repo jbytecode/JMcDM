@@ -70,7 +70,7 @@ julia> dmat = makeDecisionMatrix(Amat)
    3 │    90.0     85.0      5.0      0.0     75.0     95.0     70.0     70.0
    4 │    70.0     88.0     20.0     18.0     60.0     90.0     95.0     85.0
 
-julia> fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]);
+julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum];
 
 julia> result = moora(dmat, w, fns)
 
@@ -93,7 +93,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MooraResult
+function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MooraResult where {F <: Function}
 
     w = unitize(weights)
 
@@ -180,7 +180,7 @@ reference method, look at `moora_ref`.
 KUNDAKCI, Nilsen. "Combined multi-criteria decision making approach based on MACBETH 
 and MULTI-MOORA methods." Alphanumeric Journal 4.1 (2016): 17-26.
 """
-function moora_ratio(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MooraResult
+function moora_ratio(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MooraResult where {F <: Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
@@ -255,7 +255,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; method::Symbol = :reference)::MooraResult
+function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}; method::Symbol = :reference)::MooraResult where {F <: Function}
     if method == :reference 
         return moora_ref(decisionMat, weights, fns)
     elseif method == :ratio 
@@ -293,7 +293,7 @@ function moora(setting::MCDMSetting; method::Symbol = :reference)::MooraResult
 end 
 
 
-function moora(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; method::Symbol = :reference)::MooraResult
+function moora(mat::Matrix, weights::Array{Float64,1}, fns::Array{F ,1}; method::Symbol = :reference)::MooraResult  where {F <: Function}
     moora(
         makeDecisionMatrix(mat),
         weights,

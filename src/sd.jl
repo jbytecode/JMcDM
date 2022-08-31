@@ -43,7 +43,7 @@ Diakoulaki, Danae, George Mavrotas, and Lefteris Papayannakis. "Determining obje
 in multiple criteria problems: The critic method." Computers & Operations Research 22.7 
 (1995): 763-770.
 """
-function sd(decisionMat::DataFrame, fns::Array{Function,1})::SDResult
+function sd(decisionMat::DataFrame, fns::Array{F, 1})::SDResult  where {F <: Function}
     
    n, p = size(decisionMat)
 
@@ -94,7 +94,7 @@ function sd(setting::MCDMSetting)::SDResult
     )
 end 
 
-function sd(mat::Matrix, fns::Array{Function,1})::SDResult
+function sd(mat::Matrix, fns::Array{F, 1})::SDResult  where {F <: Function}
     sd(
         makeDecisionMatrix(mat), 
         fns

@@ -46,7 +46,7 @@ julia> df[:, :q] = Float64[7, 6, 6];
 
 julia> w = Float64[4, 2, 6, 8];
 
-julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
+julia> fns = [maximum, maximum, maximum, maximum];
 
 julia> setting = MCDMSetting(df, w, fns)
 
@@ -237,7 +237,6 @@ export colmins
 export unitize
 export makeDecisionMatrix
 export reverseminmax
-export makeminmax
 export makegrey
 
 #  export MCDM tools

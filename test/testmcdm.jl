@@ -9,7 +9,7 @@
         df[:, :q] = Float64[7, 6, 6]
         w = Float64[4, 2, 6, 8]
 
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
 
         result = topsis(df, w, fns)
 
@@ -60,7 +60,7 @@
         df[:, :q] = Float64[7, 6, 6]
         w = Float64[4, 2, 6, 8]
 
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
 
         result = psi(df, fns)
 
@@ -138,7 +138,7 @@
         ]
 
         df = makeDecisionMatrix(mat)
-        fns = makeminmax([maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum])
+        fns = [maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum]
 
         result = sd(df, fns)
         
@@ -208,7 +208,7 @@
         df[:, :q] = Float64[7, 6, 6]
         w = Float64[4, 2, 6, 8]
 
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
 
         result = topsis(df, w, fns)
 
@@ -238,7 +238,7 @@
             70 88 20 18 60 90 95 85
         ]
         dmat = makeDecisionMatrix(Amat)
-        fns = makeminmax([
+        fns = [
             maximum,
             maximum,
             maximum,
@@ -247,7 +247,7 @@
             maximum,
             maximum,
             maximum,
-        ])
+        ]
 
         result = vikor(dmat, w, fns)
 
@@ -280,7 +280,7 @@
             70 88 20 18 60 90 95 85
         ]
         dmat = makeDecisionMatrix(Amat)
-        fns = makeminmax([maximum for i = 1:8])
+        fns = [maximum for i = 1:8]
         result = electre(dmat, w, fns)
 
         @test isa(result, ElectreResult)
@@ -311,7 +311,7 @@
             z = [1.0, 3.0, 2.0, 2.0],
             k = [4.0, 2, 1, 4],
         )
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
         ws = [0.25, 0.25, 0.25, 0.25]
         e = electre(df, ws, fns)
 
@@ -330,7 +330,7 @@
                 70 88 20 18 60 90 95 85
             ]
             dmat = makeDecisionMatrix(Amat)
-            fns = makeminmax([
+            fns = [
                 maximum,
                 maximum,
                 maximum,
@@ -339,7 +339,7 @@
                 maximum,
                 maximum,
                 maximum,
-            ])
+            ]
             result = moora(dmat, w, fns)
 
             @test isa(result, MooraResult)
@@ -639,7 +639,7 @@
 
             nd = makeDecisionMatrix(cases)
 
-            fns = makeminmax([maximum, maximum, maximum])
+            fns = [maximum, maximum, maximum]
 
             result = nds(nd, fns)
 
@@ -660,7 +660,7 @@
 
             nd = makeDecisionMatrix(cases)
 
-            fns = makeminmax([minimum, minimum, minimum, minimum])
+            fns = [minimum, minimum, minimum, minimum]
 
             result = nds(nd, fns)
 
@@ -708,7 +708,7 @@
 
             df = makeDecisionMatrix(decmat)
             weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
-            fns = makeminmax([maximum for i = 1:7])
+            fns = [maximum for i = 1:7]
             result = saw(df, weights, fns)
 
             @test result isa SawResult
@@ -1138,7 +1138,7 @@
         qs = [49, nothing, 45, 30]
         ps = [100, 98, 95, 80]
         weights = [0.25, 0.35, 0.22, 0.18]
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
         prefs = convert(
             Array{Function,1},
             [prometLinear, prometVShape, prometLinear, prometLinear],
@@ -1360,7 +1360,7 @@
 
         fns = [maximum, maximum, maximum, maximum, maximum]
 
-        result = piv(makeDecisionMatrix(decmat), w, makeminmax(fns))
+        result = piv(makeDecisionMatrix(decmat), w, fns)
 
         @test result isa PIVResult
         @test isapprox(

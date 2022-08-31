@@ -74,7 +74,7 @@ Diakoulaki, D., Mavrotas, G., & Papayannakis, L. (1995). Determining objective w
 Akçakanat, Ö., Aksoy, E., Teker, T. (2018). CRITIC ve MDL Temelli EDAS Yöntemi ile TR-61 Bölgesi Bankalarının Performans Değerlendirmesi. Süleyman Demirel Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 1 (32), 1-24.
 
 """
-function critic(decisionMat::DataFrame, fns::Array{Function,1})::CRITICResult
+function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult  where {F <: Function}
     
     row, col = size(decisionMat)
     colMax = colmaxs(decisionMat)
@@ -142,7 +142,7 @@ function critic(setting::MCDMSetting)::CRITICResult
     )
 end 
 
-function critic(mat::Matrix, fns::Array{Function,1})::CRITICResult
+function critic(mat::Matrix, fns::Array{F,1})::CRITICResult  where {F <: Function}
     critic(
         mat, 
         fns

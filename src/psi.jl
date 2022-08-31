@@ -88,7 +88,7 @@ julia> result.bestIndex
 Maniya, Kalpesh, and Mangal Guido Bhatt. "A selection of material using a novel type decision-making method: 
 Preference selection index method." Materials & Design 31.4 (2010): 1785-1789
 """
-function psi(decisionMat::DataFrame, fns::Array{Function,1})::PSIResult
+function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F <: Function}
    
     function PV(v)
         mymean = mean(v)
@@ -167,7 +167,7 @@ function psi(setting::MCDMSetting)::PSIResult
     )
 end 
 
-function psi(mat::Matrix, fns::Array{Function,1})::PSIResult
+function psi(mat::Matrix, fns::Array{F,1})::PSIResult where {F <: Function}
     psi(
         makeDecisionMatrix(mat),
         fns

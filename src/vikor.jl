@@ -67,7 +67,7 @@ julia> dmat = makeDecisionMatrix(Amat)
    3 │    90.0     85.0      5.0      0.0     75.0     95.0     70.0     70.0
    4 │    70.0     88.0     20.0     18.0     60.0     90.0     95.0     85.0
 
-julia> fns = makeminmax([maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]);
+julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum];
 
 julia> result = vikor(dmat, w, fns);
 
@@ -87,7 +87,7 @@ julia> result.bestIndex
 Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastirmali
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
-function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; v::Float64=0.5)::VikorResult
+function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}; v::Float64=0.5)::VikorResult where {F <: Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
@@ -174,7 +174,7 @@ function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
 end 
 
 
-function vikor(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; v::Float64=0.5)::VikorResult
+function vikor(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1}; v::Float64=0.5)::VikorResult where {F <: Function}
     vikor(
         makeDecisionMatrix(mat),
         weights,

@@ -78,7 +78,7 @@ julia> result.scores
 Madić, Miloš et al. “Application of the ROV method for the selection of cutting fluids.” 
 Decision Science Letters 5 (2016): 245-254.
 """
-function rov(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})
+function rov(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}) where {F <: Function}
     n, p = size(decisionMat)
 
     decmat = Matrix(decisionMat)
@@ -141,7 +141,7 @@ function rov(setting::MCDMSetting)::ROVResult
     )
 end 
 
-function rov(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})
+function rov(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})  where {F <: Function}
     rov(
         makeDecisionMatrix(mat),
         weights,

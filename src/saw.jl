@@ -96,7 +96,7 @@ Afshari, Alireza, Majid Mojahed, and Rosnah Mohd Yusuff. "Simple additive weight
 personnel selection problem." International Journal of Innovation, Management and Technology 
 1.5 (2010): 511.
 """
-function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::SawResult
+function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::SawResult where {F <: Function}
     
     n, p = size(decisionMat)
     
@@ -162,7 +162,7 @@ function saw(setting::MCDMSetting)::SawResult
     )
 end 
 
-function saw(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::SawResult
+function saw(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::SawResult where {F <: Function}
     saw(
         makeDecisionMatrix(mat),
         weights,

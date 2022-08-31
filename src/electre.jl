@@ -59,7 +59,7 @@ julia> Amat = [
     ];
 
 julia> dmat = makeDecisionMatrix(Amat);
-julia> fns = makeminmax([maximum for i in 1:8]);
+julia> fns = [maximum for i in 1:8];
 julia> result = electre(dmat, w, fns)
 
 julia> dmat
@@ -94,7 +94,7 @@ julia> result.D
 Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastirmali
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
-function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::ElectreResult
+function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::ElectreResult where {F <: Function}
 
     w = unitize(weights)
 
@@ -231,7 +231,7 @@ function electre(setting::MCDMSetting)::ElectreResult
     )
 end 
 
-function electre(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::ElectreResult
+function electre(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::ElectreResult where {F <: Function}
     electre(
         makeDecisionMatrix(mat),
         weights,

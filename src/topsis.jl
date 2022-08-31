@@ -64,7 +64,7 @@ julia> df
    2 │     8.0      7.0      9.0      6.0
    3 │     7.0      8.0      6.0      6.0
 
-julia> fns = makeminmax([maximum, maximum, maximum, maximum]);
+julia> fns = [maximum, maximum, maximum, maximum];
 julia> result = topsis(df, w, fns);
 
 julia> result.bestIndex
@@ -90,8 +90,8 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 function topsis(
     decisionMat::DataFrame,
     weights::Array{Float64,1},
-    fns::Array{Function,1},
-)::TopsisResult
+    fns::Array{F,1},
+)::TopsisResult where {F <: Function}
 
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -150,7 +150,7 @@ function topsis(setting::MCDMSetting)::TopsisResult
     topsis(setting.df, setting.weights, setting.fns)
 end
 
-function topsis(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function, 1})::TopsisResult 
+function topsis(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::TopsisResult where {F <: Function}
 	topsis(makeDecisionMatrix(mat), 
             weights, 
             fns)

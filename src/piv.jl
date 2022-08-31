@@ -52,7 +52,7 @@ Sameera Mufazzal, S.M. Muzakkir, A new multi-criterion decision making (MCDM) me
 Computers & Industrial Engineering, Volume 119, 2018, Pages 427-438, ISSN 0360-8352,
 https://doi.org/10.1016/j.cie.2018.03.045.
 """
-function piv(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::PIVResult
+function piv(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::PIVResult where {F <: Function}
     
     normalized_dec_mat = Utilities.normalize(decisionMat)
     weighted_norm_mat = weights * normalized_dec_mat

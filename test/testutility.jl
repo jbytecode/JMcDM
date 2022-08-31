@@ -147,9 +147,9 @@
     end
 
     @testset "Make Array of minimum and maximum" begin
-        result1 = makeminmax([maximum, maximum, maximum, maximum])
+        result1 = [maximum, maximum, maximum, maximum]
 
-        @test typeof(result1) == Array{Function,1}
+        @test result1 isa Array{F,1} where {F <: Function}
 
         @test typeof(result1[1]([1.0, 2.0, 3.0])) == Float64
 

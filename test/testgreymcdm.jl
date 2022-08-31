@@ -10,7 +10,7 @@ using Test
             GreyNumber(3.0, 4.0) GreyNumber(2.0, 3.0) GreyNumber(1.0, 2.0)
         ]
         w = [0.5, 0.4, 0.1]
-        fns = makeminmax([maximum, maximum, minimum])
+        fns = [maximum, maximum, minimum]
 
         df = makeDecisionMatrix(decmat)
 
@@ -31,7 +31,7 @@ using Test
             90 85 5 0 75 95 70 70
             70 88 20 18 60 90 95 85
         ]
-        fns = makeminmax([
+        fns = [
             maximum,
             maximum,
             maximum,
@@ -40,7 +40,7 @@ using Test
             maximum,
             maximum,
             maximum,
-        ])
+        ]
 
         df = Amat |> makegrey |> makeDecisionMatrix
 
@@ -420,7 +420,7 @@ using Test
             ]
             dmat = Amat |> makegrey |> makeDecisionMatrix
 
-            fns = makeminmax([
+            fns = [
                 maximum,
                 maximum,
                 maximum,
@@ -429,7 +429,7 @@ using Test
                 maximum,
                 maximum,
                 maximum,
-            ])
+            ]
             result = moora(dmat, w, fns)
 
             @test isa(result, MooraResult)
@@ -533,7 +533,7 @@ using Test
         df[:, :q] = Float64[7, 6, 6]
         w = Float64[4, 2, 6, 8]
 
-        fns = makeminmax([maximum, maximum, maximum, maximum])
+        fns = [maximum, maximum, maximum, maximum]
 
         mydf = df |> Matrix |> makegrey |> makeDecisionMatrix
 
@@ -635,7 +635,7 @@ using Test
             df = decmat |> makegrey |> makeDecisionMatrix
 
             weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
-            fns = makeminmax([maximum for i = 1:7])
+            fns = [maximum for i = 1:7]
             result = saw(df, weights, fns)
 
             @test result isa SawResult

@@ -105,7 +105,7 @@ Keshavarz Ghorabaee, M., Zavadskas, E. K., Olfat, L., & Turskis, Z. (2015). Mult
 Ulutaş, A. (2017). EDAS Yöntemi Kullanılarak Bir Tekstil Atölyesi İçin Dikiş Makinesi Seçimi. İşletme Araştırmaları Dergisi, 9(2), 169-183.
 
 """
-function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::EDASResult
+function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::EDASResult  where {F <: Function}
 
     # df = convert(Matrix, decisionMat)
     df = Matrix(decisionMat)
@@ -185,7 +185,7 @@ function edas(setting::MCDMSetting)::EDASResult
     )
 end 
 
-function edas(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::EDASResult
+function edas(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::EDASResult  where {F <: Function}
     edas(
         makeDecisionMatrix(mat),
         weights,

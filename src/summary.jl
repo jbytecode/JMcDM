@@ -46,8 +46,8 @@ julia> result = summary(df, w, fns, methods)
 function summary(
     decisionMat::DataFrame, 
     weights::Array{Float64,1}, 
-    fns::Array{Function,1}, 
-    methods::Array{Symbol,1})
+    fns::Array{F, 1}, 
+    methods::Array{Symbol,1})  where {F <: Function}
 
     nmethods = length(methods)
     nalternatives, _ = size(decisionMat)

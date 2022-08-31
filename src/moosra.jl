@@ -79,7 +79,7 @@ julia> result = moosra(df, weights, fns, lambda);
 Das, Manik Chandra, Bijan Sarkar, and Siddhartha Ray. "Decision making under conflicting environment: a new MCDM method." 
 International Journal of Applied Decision Sciences 5.2 (2012): 142-162.
 """
-function moosra(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::MoosraResult
+function moosra(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F, 1})::MoosraResult  where {F <: Function}
    
     mincounts = count(x -> x == minimum, fns)
     if mincounts < 1
