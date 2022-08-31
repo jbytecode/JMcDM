@@ -1,11 +1,11 @@
-module MAIRCA 
+module MAIRCA
 
 export mairca, MaircaMethod, MAIRCAResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct MAIRCAResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -16,8 +16,7 @@ struct MAIRCAResult <: MCDMResult
 end
 
 
-struct MaircaMethod <: MCDMMethod 
-end 
+struct MaircaMethod <: MCDMMethod end
 
 function Base.show(io::IO, result::MAIRCAResult)
     println(io, "Scores:")
@@ -35,7 +34,7 @@ Apply MAIRCA (Multi Attributive Ideal-Real Comparative Analysis) for a given mat
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 mairca() applies the MAIRCA method to rank n alternatives subject to m criteria which are supposed to be 
@@ -89,7 +88,11 @@ Pamučar, D., Lukovac, V., Božanić, D., & Komazec, N. (2018). Multi-criteria F
 
 Ulutaş A.(2019),Swara Ve Mairca Yöntemleri İle Catering Firması Seçimi,BMIJ, (2019), 7(4): 1467-1479 http://dx.doi.org/10.15295/bmij.v7i4.1166
 """
-function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MAIRCAResult where {F <: Function}
+function mairca(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MAIRCAResult where {F<:Function}
 
     row, col = size(decisionMat)
 
@@ -99,22 +102,24 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,
 
     T = zeros(zerotype, row, col)
 
-    for i in 1:col
+    for i = 1:col
         T[:, i] .= w[i] * (one(zerotype) / row)
-    end 
+    end
 
     colMax = colmaxs(decisionMat)
     colMin = colmins(decisionMat)
 
     A = similar(decisionMat)
 
-    for i in 1:row
-        for j in 1:col
+    for i = 1:row
+        for j = 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = T[i,j] * ((decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
+                @inbounds A[i, j] =
+                    T[i, j] * ((decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
             elseif fns[j] == minimum
-                @inbounds A[i, j] = T[i,j] * ((decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
-            end                    
+                @inbounds A[i, j] =
+                    T[i, j] * ((decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
+            end
         end
     end
 
@@ -122,21 +127,15 @@ function mairca(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,
 
     scores = zeros(zerotype, row)
 
-    for i in 1:row
+    for i = 1:row
         scores[i] = sum(S[i, :])
-    end 
+    end
 
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> first
-    
-    result = MAIRCAResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = MAIRCAResult(decisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -159,20 +158,16 @@ either maximized or minimized.
 - `::MAIRCAResult`: MAIRCAResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function mairca(setting::MCDMSetting)::MAIRCAResult
-    mairca(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    mairca(setting.df, setting.weights, setting.fns)
+end
 
 
-function mairca(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::MAIRCAResult where {F <: Function}
-    mairca(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
-end 
+function mairca(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MAIRCAResult where {F<:Function}
+    mairca(makeDecisionMatrix(mat), weights, fns)
+end
 
 end # end of module MAIRCA 

@@ -1,11 +1,11 @@
 module Topsis
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 export TopsisMethod, TopsisResult, topsis
 
-using DataFrames 
+using DataFrames
 
 struct TopsisMethod <: MCDMMethod end
 
@@ -13,10 +13,10 @@ struct TopsisResult <: MCDMResult
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
     normalizedDecisionMatrix::DataFrame
-    normalizedWeightedDecisionMatrix::DataFrame 
+    normalizedWeightedDecisionMatrix::DataFrame
     distanceToIdeal::Vector
     distanceToNegative::Vector
-    bestIndex::Int64 
+    bestIndex::Int64
     scores::Vector
 end
 
@@ -37,7 +37,7 @@ for a given matrix and weights.
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either minimize or maximize.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
 
 # Description 
 topsis() applies the TOPSIS method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
@@ -91,7 +91,7 @@ function topsis(
     decisionMat::DataFrame,
     weights::Array{Float64,1},
     fns::Array{F,1},
-)::TopsisResult where {F <: Function}
+)::TopsisResult where {F<:Function}
 
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
@@ -150,11 +150,13 @@ function topsis(setting::MCDMSetting)::TopsisResult
     topsis(setting.df, setting.weights, setting.fns)
 end
 
-function topsis(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::TopsisResult where {F <: Function}
-	topsis(makeDecisionMatrix(mat), 
-            weights, 
-            fns)
-end 
+function topsis(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::TopsisResult where {F<:Function}
+    topsis(makeDecisionMatrix(mat), weights, fns)
+end
 
 
 end # End of module Topsis

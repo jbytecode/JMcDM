@@ -31,16 +31,7 @@ using Test
             90 85 5 0 75 95 70 70
             70 88 20 18 60 90 95 85
         ]
-        fns = [
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-        ]
+        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
 
         df = Amat |> makegrey |> makeDecisionMatrix
 
@@ -56,7 +47,7 @@ using Test
     end
 
 
-    @testset "Aras with Grey Numbers" begin 
+    @testset "Aras with Grey Numbers" begin
         tol = 0.0001
 
         df = DataFrame(
@@ -71,30 +62,29 @@ using Test
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        gdf = df |> Matrix |> makegrey |> makeDecisionMatrix 
+        gdf = df |> Matrix |> makegrey |> makeDecisionMatrix
         result = aras(gdf, w, functionlist)
         @test isa(result, ARASResult)
-        
-        knownscores = 
-            [
-            GreyNumber(0.81424068), 
-            GreyNumber(0.89288620), 
-            GreyNumber(0.76415790), 
-            GreyNumber(0.84225462), 
-            GreyNumber(0.86540635)
-            ]
-        
 
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(0.81424068),
+            GreyNumber(0.89288620),
+            GreyNumber(0.76415790),
+            GreyNumber(0.84225462),
+            GreyNumber(0.86540635),
+        ]
+
+
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-        
+        end
+
         @test result.bestIndex == 2
         @test result.orderings == [3, 1, 4, 5, 2]
     end
 
 
-    @testset "COCOSO with Grey Numbers" begin 
+    @testset "COCOSO with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             60.00 0.40 2540.00 500.00 990.00
@@ -116,26 +106,25 @@ using Test
         fns = [maximum, minimum, maximum, maximum, maximum]
 
         result = cocoso(df, weights, fns, lambda = lambda)
-        
-        @test result isa CoCoSoResult
-        
-        knownscores = 
-            [
-                GreyNumber(2.0413128390265998),
-                GreyNumber(2.787989783418825),
-                GreyNumber(2.8823497955972495),
-                GreyNumber(2.4160457689259287),
-                GreyNumber(1.2986918936013303),
-                GreyNumber(1.4431429073391682),
-                GreyNumber(2.519094173200623),
-            ]
 
-        for i in 1:length(knownscores)
+        @test result isa CoCoSoResult
+
+        knownscores = [
+            GreyNumber(2.0413128390265998),
+            GreyNumber(2.787989783418825),
+            GreyNumber(2.8823497955972495),
+            GreyNumber(2.4160457689259287),
+            GreyNumber(1.2986918936013303),
+            GreyNumber(1.4431429073391682),
+            GreyNumber(2.519094173200623),
+        ]
+
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
-    end 
+    end
 
-    @testset "CODAS with Grey Numbers" begin 
+    @testset "CODAS with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             60.000 0.400 2540 500 990
@@ -154,25 +143,24 @@ using Test
 
         result = codas(df, w, fns)
         @test result isa CODASResult
-        knownscores = 
-            [
-                GreyNumber(0.512176491),
-                GreyNumber(1.463300035),
-                GreyNumber(1.07153259),
-                GreyNumber(-0.212467998),
-                GreyNumber(-1.851520552),
-                GreyNumber(-1.17167677),
-                GreyNumber(0.188656204)
-            ]
+        knownscores = [
+            GreyNumber(0.512176491),
+            GreyNumber(1.463300035),
+            GreyNumber(1.07153259),
+            GreyNumber(-0.212467998),
+            GreyNumber(-1.851520552),
+            GreyNumber(-1.17167677),
+            GreyNumber(0.188656204),
+        ]
 
-        for i in 1:length(knownscores)
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
+        end
 
-    end     
+    end
 
 
-    @testset "COPRAS with Grey Numbers" begin 
+    @testset "COPRAS with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             2.50 240 57 45 1.10 0.333333
@@ -223,55 +211,54 @@ using Test
 
         result = copras(df, weights, fns)
         @test result isa COPRASResult
-        knownscores = 
-            [
-                GreyNumber(0.44194),
-                GreyNumber(0.44395),
-                GreyNumber(0.41042),
-                GreyNumber(0.44403),
-                GreyNumber(0.48177),
-                GreyNumber(0.44074),
-                GreyNumber(0.42430),
-                GreyNumber(0.41737),
-                GreyNumber(0.43474),
-                GreyNumber(0.44382),
-                GreyNumber(0.46625),
-                GreyNumber(0.48602),
-                GreyNumber(0.45019),
-                GreyNumber(0.45825),
-                GreyNumber(0.51953),
-                GreyNumber(0.54265),
-                GreyNumber(0.56134),
-                GreyNumber(0.45588),
-                GreyNumber(0.49532),
-                GreyNumber(0.44788),
-                GreyNumber(0.45014),
-                GreyNumber(0.48126),
-                GreyNumber(0.51586),
-                GreyNumber(0.56243),
-                GreyNumber(0.58709),
-                GreyNumber(0.60091),
-                GreyNumber(0.51850),
-                GreyNumber(0.61085),
-                GreyNumber(0.65888),
-                GreyNumber(0.75650),
-                GreyNumber(0.61430),
-                GreyNumber(0.63486),
-                GreyNumber(0.65542),
-                GreyNumber(0.72065),
-                GreyNumber(0.77680),
-                GreyNumber(0.82379),
-                GreyNumber(0.88253),
-                GreyNumber(1.00000)
-            ]
+        knownscores = [
+            GreyNumber(0.44194),
+            GreyNumber(0.44395),
+            GreyNumber(0.41042),
+            GreyNumber(0.44403),
+            GreyNumber(0.48177),
+            GreyNumber(0.44074),
+            GreyNumber(0.42430),
+            GreyNumber(0.41737),
+            GreyNumber(0.43474),
+            GreyNumber(0.44382),
+            GreyNumber(0.46625),
+            GreyNumber(0.48602),
+            GreyNumber(0.45019),
+            GreyNumber(0.45825),
+            GreyNumber(0.51953),
+            GreyNumber(0.54265),
+            GreyNumber(0.56134),
+            GreyNumber(0.45588),
+            GreyNumber(0.49532),
+            GreyNumber(0.44788),
+            GreyNumber(0.45014),
+            GreyNumber(0.48126),
+            GreyNumber(0.51586),
+            GreyNumber(0.56243),
+            GreyNumber(0.58709),
+            GreyNumber(0.60091),
+            GreyNumber(0.51850),
+            GreyNumber(0.61085),
+            GreyNumber(0.65888),
+            GreyNumber(0.75650),
+            GreyNumber(0.61430),
+            GreyNumber(0.63486),
+            GreyNumber(0.65542),
+            GreyNumber(0.72065),
+            GreyNumber(0.77680),
+            GreyNumber(0.82379),
+            GreyNumber(0.88253),
+            GreyNumber(1.00000),
+        ]
 
-            for i in 1:length(knownscores)
-                @test isapprox(result.scores[i], knownscores[i], atol = tol)
-            end
-    end 
+        for i = 1:length(knownscores)
+            @test isapprox(result.scores[i], knownscores[i], atol = tol)
+        end
+    end
 
 
-    @testset "EDAS with Grey Numbers" begin 
+    @testset "EDAS with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             5000 5 5300 450.0
@@ -292,26 +279,25 @@ using Test
 
         result = edas(df, weights, fns)
         @test result isa EDASResult
-        knownscores = 
-            [
-                GreyNumber(0.759594),
-                GreyNumber(0.886016),
-                GreyNumber(0.697472),
-                GreyNumber(0.739658),
-                GreyNumber(0.059083),
-                GreyNumber(0.731833),
-                GreyNumber(0.641691),
-                GreyNumber(0.385194)
-            ]
-        
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(0.759594),
+            GreyNumber(0.886016),
+            GreyNumber(0.697472),
+            GreyNumber(0.739658),
+            GreyNumber(0.059083),
+            GreyNumber(0.731833),
+            GreyNumber(0.641691),
+            GreyNumber(0.385194),
+        ]
+
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
-    end 
+    end
 
 
-    @testset "MABAC with Grey Numbers" begin 
+    @testset "MABAC with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             2 1 4 7 6 6 7 3000.0
@@ -330,22 +316,21 @@ using Test
 
         result = mabac(df, weights, fns)
         @test result isa MABACResult
-        knownscores =
-            [
-                GreyNumber(-0.31132), 
-                GreyNumber(-0.10898), 
-                GreyNumber(0.20035), 
-                GreyNumber(0.04218), 
-                GreyNumber(0.34452), 
-                GreyNumber(0.20035)
-                ]
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(-0.31132),
+            GreyNumber(-0.10898),
+            GreyNumber(0.20035),
+            GreyNumber(0.04218),
+            GreyNumber(0.34452),
+            GreyNumber(0.20035),
+        ]
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
+        end
+    end
 
 
-    @testset "MAIRCA with Grey Numbers" begin 
+    @testset "MAIRCA with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             6.952 8.000 6.649 7.268 8.000 7.652 6.316
@@ -363,20 +348,20 @@ using Test
         result = mairca(df, weights, fns)
         @test result isa MAIRCAResult
         knownscores = [
-                GreyNumber(0.1206454), 
-                GreyNumber(0.0806646), 
-                GreyNumber(0.1458627), 
-                GreyNumber(0.1454237)
-                ]
-        
-        for i in 1:length(knownscores)
+            GreyNumber(0.1206454),
+            GreyNumber(0.0806646),
+            GreyNumber(0.1458627),
+            GreyNumber(0.1454237),
+        ]
+
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
+        end
 
-    end 
+    end
 
 
-    @testset "MARCOS with Grey Numbers" begin 
+    @testset "MARCOS with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             8.675 8.433 8.000 7.800 8.025 8.043
@@ -395,17 +380,16 @@ using Test
 
         result = marcos(df, weights, Fns)
         @test result isa MarcosResult
-        knownscores = 
-            [
-                GreyNumber(0.684865943528), 
-                GreyNumber(0.67276710669), 
-                GreyNumber(0.6625969061), 
-                GreyNumber(0.6611032076)
-            ]
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(0.684865943528),
+            GreyNumber(0.67276710669),
+            GreyNumber(0.6625969061),
+            GreyNumber(0.6611032076),
+        ]
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
+        end
+    end
 
 
     @testset "MOORA with Grey Numbers" begin
@@ -420,29 +404,19 @@ using Test
             ]
             dmat = Amat |> makegrey |> makeDecisionMatrix
 
-            fns = [
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-            ]
+            fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
             result = moora(dmat, w, fns)
 
             @test isa(result, MooraResult)
-            
-            knownscores = 
-                [
-                    GreyNumber(0.33159387), 
-                    GreyNumber(0.29014464), 
-                    GreyNumber(0.37304311), 
-                    GreyNumber(0.01926526)
-                ]
 
-            for i in 1:length(knownscores)
+            knownscores = [
+                GreyNumber(0.33159387),
+                GreyNumber(0.29014464),
+                GreyNumber(0.37304311),
+                GreyNumber(0.01926526),
+            ]
+
+            for i = 1:length(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
             end
         end
@@ -489,15 +463,15 @@ using Test
         end
     end
 
-    @testset "MOOSRA with Grey Numbers" begin 
+    @testset "MOOSRA with Grey Numbers" begin
         tol = 0.0001
 
         df = DataFrame(
-                :c1 => [25.0, 21, 19, 22],
-                :c2 => [65.0, 78, 53, 25],
-                :c3 => [7.0, 6, 5, 2],
-                :c4 => [20.0, 24, 33, 31],
-            )
+            :c1 => [25.0, 21, 19, 22],
+            :c2 => [65.0, 78, 53, 25],
+            :c3 => [7.0, 6, 5, 2],
+            :c4 => [20.0, 24, 33, 31],
+        )
         weights = [0.25, 0.25, 0.25, 0.25]
         fns = [maximum, maximum, minimum, maximum]
 
@@ -505,26 +479,25 @@ using Test
 
         result = moosra(mydf, weights, fns)
 
-        @test result isa MoosraResult 
+        @test result isa MoosraResult
 
-        knownscores = 
-        [
-            GreyNumber(15.714285714285714), 
-            GreyNumber(20.499999999999996), 
-            GreyNumber(20.999999999999996), 
-            GreyNumber(39.000000000000000)
-            ]
+        knownscores = [
+            GreyNumber(15.714285714285714),
+            GreyNumber(20.499999999999996),
+            GreyNumber(20.999999999999996),
+            GreyNumber(39.000000000000000),
+        ]
 
         @test result.rankings == [1, 2, 3, 4]
-        @test result.bestIndex == 4 
-        for i in 1:length(knownscores)
+        @test result.bestIndex == 4
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
+        end
+    end
 
 
-    @testset "PSI with Grey Numbers" begin 
-         tol = 0.0001
+    @testset "PSI with Grey Numbers" begin
+        tol = 0.0001
 
         df = DataFrame()
         df[:, :x] = Float64[9, 8, 7]
@@ -541,27 +514,27 @@ using Test
 
         @test result isa PSIResult
         @test result.bestIndex == 2
-        knownscores = 
-            [
-                GreyNumber(1.1487059780663555), 
-                GreyNumber(1.252775986851622), 
-                GreyNumber(1.0884916686098811)
-            ]
-            
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(1.1487059780663555),
+            GreyNumber(1.252775986851622),
+            GreyNumber(1.0884916686098811),
+        ]
+
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-        
-    end 
+        end
+
+    end
 
 
-    @testset "ROV with Grey Numbers" begin 
+    @testset "ROV with Grey Numbers" begin
         tol = 0.01
         mat = [
-        0.035 34.5 847 1.76 0.335 0.5 0.59 0.59
-        0.027 36.8 834 1.68 0.335 0.665 0.665 0.665
-        0.037 38.6 808 2.4 0.59 0.59 0.41 0.5
-        0.028 32.6 821 1.59 0.5 0.59 0.59 0.41]
+            0.035 34.5 847 1.76 0.335 0.5 0.59 0.59
+            0.027 36.8 834 1.68 0.335 0.665 0.665 0.665
+            0.037 38.6 808 2.4 0.59 0.59 0.41 0.5
+            0.028 32.6 821 1.59 0.5 0.59 0.59 0.41
+        ]
 
         df = mat |> makegrey |> makeDecisionMatrix
 
@@ -572,25 +545,24 @@ using Test
         result = rov(df, w, fns)
 
         @test result isa ROVResult
-       
-        knownscores = 
-        [
-            GreyNumber(0.1841453340595497), 
-            GreyNumber(0.26171444444444447), 
-            GreyNumber(0.21331577540106955), 
-            GreyNumber(0.34285244206773624)
+
+        knownscores = [
+            GreyNumber(0.1841453340595497),
+            GreyNumber(0.26171444444444447),
+            GreyNumber(0.21331577540106955),
+            GreyNumber(0.34285244206773624),
         ]
 
-        @test result.ranks ==  [4, 2, 3, 1]
+        @test result.ranks == [4, 2, 3, 1]
 
-        for i in 1:length(knownscores)
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
+        end
+    end
 
 
 
-     @testset "SAW with Grey Numbers" begin
+    @testset "SAW with Grey Numbers" begin
 
         @testset "Example 1: 4 criteria × 4 alternatives" begin
             tol = 0.0001
@@ -609,17 +581,16 @@ using Test
 
             @test result isa SawResult
 
-            knownscores = 
-                [
-                    GreyNumber(0.681277), 
-                    GreyNumber(0.725151), 
-                    GreyNumber(0.709871), 
-                    GreyNumber(0.784976)
-                ]
+            knownscores = [
+                GreyNumber(0.681277),
+                GreyNumber(0.725151),
+                GreyNumber(0.709871),
+                GreyNumber(0.784976),
+            ]
 
-            for i in 1:length(knownscores)
+            for i = 1:length(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
-            end 
+            end
         end
 
         @testset "Example 2: 7 criteria × 5 alternatives " begin
@@ -639,25 +610,24 @@ using Test
             result = saw(df, weights, fns)
 
             @test result isa SawResult
-            knownscores = 
-                [
-                    GreyNumber(0.553228), 
-                    GreyNumber(0.713485), 
-                    GreyNumber(0.837428), 
-                    GreyNumber(0.514657), 
-                    GreyNumber(0.579342)
-                ]
+            knownscores = [
+                GreyNumber(0.553228),
+                GreyNumber(0.713485),
+                GreyNumber(0.837428),
+                GreyNumber(0.514657),
+                GreyNumber(0.579342),
+            ]
             @test result.bestIndex == 3
             @test result.ranking == [3, 2, 5, 1, 4]
 
-            for i in 1:length(knownscores)
+            for i = 1:length(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
-            end 
+            end
         end
     end
 
 
-    @testset "WASPAS with Grey Numbers" begin 
+    @testset "WASPAS with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             3 12.5 2 120 14 3
@@ -675,22 +645,22 @@ using Test
 
         result = waspas(df, weights, fns)
         @test result isa WASPASResult
-        
+
         knownscores = [
-            GreyNumber(0.805021), 
-            GreyNumber(0.775060), 
-            GreyNumber(0.770181), 
-            GreyNumber(0.796424), 
-            GreyNumber(0.788239)
+            GreyNumber(0.805021),
+            GreyNumber(0.775060),
+            GreyNumber(0.770181),
+            GreyNumber(0.796424),
+            GreyNumber(0.788239),
         ]
 
-        for i in 1:length(knownscores)
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
+        end
+    end
 
 
-    @testset "WPM with Grey Numbers" begin 
+    @testset "WPM with Grey Numbers" begin
         tol = 0.0001
         decmat = [
             3 12.5 2 120 14 3
@@ -708,17 +678,16 @@ using Test
 
         result = wpm(df, weights, fns)
         @test result isa WPMResult
-        knownscores = 
-            [
-                GreyNumber(0.7975224331331),
-                GreyNumber(0.7532541470585),
-                GreyNumber(0.7647463553356),
-                GreyNumber(0.7873956894791),
-                GreyNumber(0.7674278741782)
-            ]
-        for i in 1:length(knownscores)
+        knownscores = [
+            GreyNumber(0.7975224331331),
+            GreyNumber(0.7532541470585),
+            GreyNumber(0.7647463553356),
+            GreyNumber(0.7873956894791),
+            GreyNumber(0.7674278741782),
+        ]
+        for i = 1:length(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
-        end 
-    end 
-    
+        end
+    end
+
 end

@@ -1,9 +1,9 @@
-module COCOSO 
+module COCOSO
 
 export cocoso, CocosoMethod, CoCoSoResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 
@@ -38,7 +38,7 @@ Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weight
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
 
 # Description 
@@ -99,8 +99,13 @@ julia> result.bestIndex
 Yazdani, M., Zarate, P., Kazimieras Zavadskas, E. and Turskis, Z. (2019), "A combined compromise solution (CoCoSo) method for multi-criteria decision-making problems", Management Decision, Vol. 57 No. 9, pp. 2501-2519. https://doi.org/10.1108/MD-05-2017-0458
 
 """
-function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F, 1}; lambda::Float64=0.5)::CoCoSoResult  where {F <: Function}
-   
+function cocoso(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    lambda::Float64 = 0.5,
+)::CoCoSoResult where {F<:Function}
+
     row, col = size(decisionMat)
     w = unitize(weights)
     colMax = colmaxs(decisionMat)
@@ -108,49 +113,47 @@ function cocoso(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,
 
     A = similar(decisionMat)
 
-    for i in 1:row
-        for j in 1:col
+    for i = 1:row
+        for j = 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] =
+                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
-            end                    
+                @inbounds A[i, j] =
+                    (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
+            end
         end
     end
 
     scoreMat = similar(A)
-    for i in 1:col
-        scoreMat[:, i] = A[:, i].^w[i]
+    for i = 1:col
+        scoreMat[:, i] = A[:, i] .^ w[i]
     end
 
     P = Vector{Any}(undef, row)
-    for i in 1:row
+    for i = 1:row
         P[i] = sum(scoreMat[i, :])
     end
 
     S = w * A |> rowsums
-    
+
     scoreTable = [S P]
 
     kA = (S .+ P) ./ sum(scoreTable)
 
     kB = (S ./ minimum(S)) .+ (P ./ minimum(P))
 
-    kC = ((lambda .* S) .+ ((1-lambda) .* P)) ./ ((lambda .* maximum(S)) .+ ((1-lambda) * maximum(P)))
+    kC =
+        ((lambda .* S) .+ ((1 - lambda) .* P)) ./
+        ((lambda .* maximum(S)) .+ ((1 - lambda) * maximum(P)))
 
-    scores = (kA .+ kB .+ kC) ./ 3 .+ (kA .* kB .* kC) .^ (1/3)
+    scores = (kA .+ kB .+ kC) ./ 3 .+ (kA .* kB .* kC) .^ (1 / 3)
 
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = CoCoSoResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = CoCoSoResult(decisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -172,18 +175,18 @@ either maximized or minimized.
 # Output 
 - `::CoCoSoResult`: CoCoSoResult object that holds multiple outputs including scores, rankings, and best index.
 """
-function cocoso(setting::MCDMSetting; lambda::Float64=0.5)::CoCoSoResult
-    cocoso(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        lambda = lambda
-    )
+function cocoso(setting::MCDMSetting; lambda::Float64 = 0.5)::CoCoSoResult
+    cocoso(setting.df, setting.weights, setting.fns, lambda = lambda)
 end
 
-function cocoso(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1}; lambda::Float64=0.5)::CoCoSoResult  where {F <: Function}
+function cocoso(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    lambda::Float64 = 0.5,
+)::CoCoSoResult where {F<:Function}
     cocoso(makeDecisionMatrix(mat), weights, fns, lambda = lambda)
-end 
+end
 
 
 end # end of module COCOSO

@@ -1,14 +1,13 @@
-module COPRAS 
+module COPRAS
 
 export copras, CoprasMethod, COPRASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct CoprasMethod <: MCDMMethod 
-end
+struct CoprasMethod <: MCDMMethod end
 
 struct COPRASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -34,7 +33,7 @@ Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
+ - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
 
  # Description 
 copras() applies the COPRAS method to rank n alternatives subject to m criteria and criteria type vector.
@@ -173,38 +172,42 @@ Kaklauskas, A., Zavadskas, E. K., Raslanas, S., Ginevicius, R., Komka, A., & Mal
 Özdağoğlu, A. (2013). İmalat işletmeleri için eksantrik pres alternatiflerinin COPRAS yöntemi ile karşılaştırılması. Gümüşhane Üniversitesi Sosyal Bilimler Enstitüsü Elektronik Dergisi, 4(8), 1-22.
 Yıldırım, B. F., Timor, M. (2019). "Bulanık ve Gri COPRAS Yöntemleri Kullanılarak Tedarikçi Seçim Modeli Geliştirilmesi". Optimum Ekonomi ve Yönetim Bilimleri Dergisi, 6 (2), 283-310.
 """
-function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::COPRASResult where {F <: Function}
+function copras(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::COPRASResult where {F<:Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
-    
+
     nrows, ncols = size(mat)
     w = unitize(weights)
     normalizedMat = copy(mat)
-    for col in 1:ncols
-        for row in 1:nrows
+    for col = 1:ncols
+        for row = 1:nrows
             normalizedMat[row, col] = w[col] .* (mat[row, col] ./ sum(mat[:, col]))
         end
     end
 
-    sPlus =  zeros(eltype(normalizedMat), nrows)
+    sPlus = zeros(eltype(normalizedMat), nrows)
     sMinus = zeros(eltype(normalizedMat), nrows)
 
 
-    for row in 1:nrows
-        for col in 1:ncols
+    for row = 1:nrows
+        for col = 1:ncols
             if fns[col] == maximum
                 sPlus[row] = sPlus[row] + normalizedMat[row, col]
             elseif fns[col] == minimum
                 sMinus[row] = sMinus[row] + normalizedMat[row, col]
-            end                    
+            end
         end
     end
 
     Q = zeros(eltype(normalizedMat), nrows)
     Z = sum(1 ./ sMinus)
 
-    for row in 1:nrows
+    for row = 1:nrows
         Q[row] = sPlus[row] + (sum(sMinus) / (sMinus[row] * Z))
     end
     scores = zeros(eltype(normalizedMat), nrows)
@@ -213,14 +216,8 @@ function copras(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,
     rankings = sortperm(scores)
     bestIndex = rankings |> last
 
-    result = COPRASResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
-    
+    result = COPRASResult(decisionMat, w, scores, rankings, bestIndex)
+
     return result
 end
 
@@ -240,19 +237,15 @@ copras() applies the COPRAS method to rank n alternatives subject to m criteria 
 - `::COPRASResult`: COPRASResult object that holds multiple outputs including scores and best index.
 """
 function copras(setting::MCDMSetting)::COPRASResult
-    copras(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    copras(setting.df, setting.weights, setting.fns)
+end
 
-function copras(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::COPRASResult  where {F <: Function}
-    copras(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
+function copras(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::COPRASResult where {F<:Function}
+    copras(makeDecisionMatrix(mat), weights, fns)
 end
 
 end # end of module COPRAS 

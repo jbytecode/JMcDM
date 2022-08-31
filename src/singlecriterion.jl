@@ -1,17 +1,17 @@
-module SCDM 
+module SCDM
 
 export LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 export SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
 export laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
 
 import ..SCDMResult
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct LaplaceResult <: SCDMResult
     expected_values::Array{Float64,1}
-    bestIndex::Int64 
+    bestIndex::Int64
 end
 
 struct MaximinResult <: SCDMResult
@@ -84,23 +84,20 @@ function laplace(decisionMatrix::DataFrame)::LaplaceResult
 
     n, p = size(decisionMatrix)
 
-    probs = [1.0 / p for i in 1:p]
+    probs = [1.0 / p for i = 1:p]
 
     expecteds = zeros(Float64, n)
 
     # m = convert(Array{Float64,2}, decisionMatrix)
     m = Matrix{Float64}(decisionMatrix)
-    
-    for i in 1:n
-        expecteds[i] = (m[i,:] .* probs)  |> sum
+
+    for i = 1:n
+        expecteds[i] = (m[i, :] .* probs) |> sum
     end
 
     bestIndex = sortperm(expecteds) |> last
 
-    result = LaplaceResult(
-        expecteds,
-        bestIndex
-    )
+    result = LaplaceResult(expecteds, bestIndex)
 
     return result
 end
@@ -138,15 +135,12 @@ function maximin(decisionMatrix::DataFrame)::MaximinResult
 
     # m = convert(Array{Float64,2}, decisionMatrix)
     m = Matrix{Float64}(decisionMatrix)
-    
+
     rmins = rowmins(decisionMatrix)
 
     bestIndex = sortperm(rmins) |> last
 
-    result = MaximinResult(
-        rmins,
-        bestIndex
-    )
+    result = MaximinResult(rmins, bestIndex)
 
     return result
 end
@@ -183,15 +177,12 @@ function maximax(decisionMatrix::DataFrame)::MaximaxResult
 
     # m = convert(Array{Float64,2}, decisionMatrix)
     m = Matrix{Float64}(decisionMatrix)
-    
+
     rmaxs = rowmaxs(decisionMatrix)
 
     bestIndex = sortperm(rmaxs) |> last
 
-    result = MaximaxResult(
-        rmaxs,
-        bestIndex
-    )
+    result = MaximaxResult(rmaxs, bestIndex)
 
     return result
 end
@@ -228,15 +219,12 @@ function minimax(decisionMatrix::DataFrame)::MinimaxResult
 
     # m = convert(Array{Float64,2}, decisionMatrix)
     m = Matrix{Float64}(decisionMatrix)
-    
+
     rmaxs = rowmaxs(decisionMatrix)
 
     bestIndex = sortperm(rmaxs) |> first
 
-    result = MinimaxResult(
-        rmaxs,
-        bestIndex
-    )
+    result = MinimaxResult(rmaxs, bestIndex)
 
     return result
 end
@@ -274,15 +262,12 @@ function minimin(decisionMatrix::DataFrame)::MiniminResult
 
     # m = convert(Array{Float64,2}, decisionMatrix)
     m = Matrix{Float64}(decisionMatrix)
-    
+
     rmins = rowmins(decisionMatrix)
 
     bestIndex = sortperm(rmins) |> first
 
-    result = MiniminResult(
-        rmins,
-        bestIndex
-    )
+    result = MiniminResult(rmins, bestIndex)
 
     return result
 end
@@ -324,7 +309,7 @@ function savage(decisionMatrix::DataFrame)::SavageResult
 
     newDecisionMatrix = similar(decisionMatrix)
 
-    @inbounds for i in 1:p
+    @inbounds for i = 1:p
         newDecisionMatrix[:, i] = cmaxs[i] .- decisionMatrix[:, i]
     end
 
@@ -332,11 +317,7 @@ function savage(decisionMatrix::DataFrame)::SavageResult
 
     bestIndex = rmaxs |> sortperm |> first
 
-    result = SavageResult(
-        newDecisionMatrix,
-        scores,
-        bestIndex
-    )
+    result = SavageResult(newDecisionMatrix, scores, bestIndex)
 
     return result
 end
@@ -371,7 +352,7 @@ julia> result.bestIndex
 3
 ```
 """
-function hurwicz(decisionMatrix::DataFrame; alpha::Float64=0.5)::HurwiczResult
+function hurwicz(decisionMatrix::DataFrame; alpha::Float64 = 0.5)::HurwiczResult
 
     n, p = size(decisionMatrix)
 
@@ -379,13 +360,10 @@ function hurwicz(decisionMatrix::DataFrame; alpha::Float64=0.5)::HurwiczResult
     rmins = rowmins(decisionMatrix)
 
     scores = alpha .* rmaxs .+ (1.0 - alpha) .* rmins
-    
-    bestIndex = scores |> sortperm |>  last 
 
-    result = HurwiczResult(
-        scores,
-        bestIndex
-    )
+    bestIndex = scores |> sortperm |> last
+
+    result = HurwiczResult(scores, bestIndex)
 
     return result
 
@@ -425,19 +403,16 @@ julia> result.bestIndex
 function mle(decisionMatrix::DataFrame, weights::Array{Float64,1})::MLEResult
 
     w = unitize(weights)
-    
+
     weightedMatrix = w * decisionMatrix
 
     scores = rowsums(weightedMatrix)
 
     bestIndex = scores |> sortperm |> last
 
-    result = MLEResult(
-        scores,
-        bestIndex
-    )
-    
-    return result 
+    result = MLEResult(scores, bestIndex)
+
+    return result
 
 end
 
@@ -475,27 +450,24 @@ julia> result.bestIndex
 function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
 
     _, p = size(decisionMatrix)
-    
+
     w = unitize(weights)
 
     cmaxs = colmaxs(decisionMatrix)
 
     regretmat = similar(decisionMatrix)
 
-    for i in 1:p
+    for i = 1:p
         regretmat[:, i] = cmaxs[i] .- decisionMatrix[:, i]
     end
 
-    weightedregret = w * regretmat 
+    weightedregret = w * regretmat
 
     scores = rowsums(weightedregret)
 
-    bestIndex = scores |> sortperm |> first 
+    bestIndex = scores |> sortperm |> first
 
-    result = ExpectedRegretResult(
-        scores,
-        bestIndex
-    )
+    result = ExpectedRegretResult(scores, bestIndex)
 
     return result
 end

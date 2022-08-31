@@ -1,15 +1,15 @@
-module SD 
+module SD
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-export SDResult 
+export SDResult
 
 
 struct SDResult <: MCDMResult
-    weights::Array{Float64, 1}
+    weights::Array{Float64,1}
 end
 
 function Base.show(io::IO, result::SDResult)
@@ -26,7 +26,7 @@ Apply SD method for a given matrix and directions of optimization.
 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
 sd() applies the SD method to calculate weights for a set of given criteria.
@@ -43,39 +43,35 @@ Diakoulaki, Danae, George Mavrotas, and Lefteris Papayannakis. "Determining obje
 in multiple criteria problems: The critic method." Computers & Operations Research 22.7 
 (1995): 763-770.
 """
-function sd(decisionMat::DataFrame, fns::Array{F, 1})::SDResult  where {F <: Function}
-    
-   n, p = size(decisionMat)
+function sd(decisionMat::DataFrame, fns::Array{F,1})::SDResult where {F<:Function}
 
-   decmat = decisionMat[:,:]
-   normalizedMat = similar(decmat)
-   
-   cmins = colmins(decisionMat)
-   cmaxs = colmaxs(decisionMat)
+    n, p = size(decisionMat)
 
-   for j in 1:p
-        if fns[j] == maximum 
-            normalizedMat[:,j] .= (decmat[:,j] .- cmins[j]) ./ (cmaxs[j] - cmins[j]) 
-        elseif fns[j] == minimum 
-            normalizedMat[:,j] .= (cmaxs[j] .- decmat[:,j]) ./ (cmaxs[j] - cmins[j]) 
+    decmat = decisionMat[:, :]
+    normalizedMat = similar(decmat)
+
+    cmins = colmins(decisionMat)
+    cmaxs = colmaxs(decisionMat)
+
+    for j = 1:p
+        if fns[j] == maximum
+            normalizedMat[:, j] .= (decmat[:, j] .- cmins[j]) ./ (cmaxs[j] - cmins[j])
+        elseif fns[j] == minimum
+            normalizedMat[:, j] .= (cmaxs[j] .- decmat[:, j]) ./ (cmaxs[j] - cmins[j])
         else
             @warn fns[j]
             error("Function must be either maximum or minimum.")
         end
-   end 
+    end
 
-   sds = map(ccol -> std(normalizedMat[:, ccol]), 1:p)
-   sumsds = sum(sds)
+    sds = map(ccol -> std(normalizedMat[:, ccol]), 1:p)
+    sumsds = sum(sds)
 
-   for i in 1:p
-        sds[i] = sds[i] / sumsds 
-   end 
+    for i = 1:p
+        sds[i] = sds[i] / sumsds
+    end
 
-   return(
-       SDResult(
-           sds 
-       )
-   )
+    return (SDResult(sds))
 end
 
 
@@ -88,17 +84,11 @@ Apply SD method for a given matrix and criteria types.
  - `setting::MCDMSetting`: MCDMSetting object. 
 """
 function sd(setting::MCDMSetting)::SDResult
-    sd(
-        setting.df, 
-        setting.fns
-    )
-end 
+    sd(setting.df, setting.fns)
+end
 
-function sd(mat::Matrix, fns::Array{F, 1})::SDResult  where {F <: Function}
-    sd(
-        makeDecisionMatrix(mat), 
-        fns
-    )
-end 
+function sd(mat::Matrix, fns::Array{F,1})::SDResult where {F<:Function}
+    sd(makeDecisionMatrix(mat), fns)
+end
 
 end # end module SD

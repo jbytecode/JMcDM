@@ -1,10 +1,10 @@
-module Game 
+module Game
 
-export game 
+export game
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 using JuMP
@@ -23,7 +23,7 @@ function Base.show(io::IO, result::GameResult)
     println(io, result.value)
 end
 
-function Base.show(io::IO, result::Array{GameResult, 1})
+function Base.show(io::IO, result::Array{GameResult,1})
     println(io, "Row Player: ")
     println(io, result[1])
     println(io, "Column Player: ")
@@ -75,21 +75,21 @@ Value of game:
 # References
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
 """
-function game(decisionMatrix::DataFrame; verbose::Bool=false)::Array{GameResult, 1}
+function game(decisionMatrix::DataFrame; verbose::Bool = false)::Array{GameResult,1}
     return game(Matrix(decisionMatrix), verbose = verbose)
 end
 
-function game(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::Array{GameResult, 1}
+function game(decisionMatrix::Matrix{<:Real}; verbose::Bool = false)::Array{GameResult,1}
     rowplayers_result = game_solver(decisionMatrix, verbose = verbose)
     columnplayers_result = game_solver(Matrix(decisionMatrix') * -1.0, verbose = verbose)
     return [rowplayers_result, columnplayers_result]
 end
 
-function game_solver(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::GameResult
-    
+function game_solver(decisionMatrix::Matrix{<:Real}; verbose::Bool = false)::GameResult
+
     nrow, ncol = size(decisionMatrix)
 
-    model = Model(GLPK.Optimizer);
+    model = Model(GLPK.Optimizer)
     MOI.set(model, MOI.Silent(), !verbose)
 
 
@@ -97,31 +97,28 @@ function game_solver(decisionMatrix::Matrix{<: Real}; verbose::Bool=false)::Game
     @variable(model, g)
     @objective(model, Max, g)
 
-    for i in 1:ncol
+    for i = 1:ncol
         @constraint(model, sum(x[1:nrow] .* decisionMatrix[:, i]) >= g)
     end
 
-    for i in 1:nrow
+    for i = 1:nrow
         @constraint(model, x[i] >= 0)
     end
 
     @constraint(model, sum(x) == 1.0)
 
     if verbose
-        @info model 
-    end 
-    
-    optimize!(model);
+        @info model
+    end
+
+    optimize!(model)
 
     values = JuMP.value.(x)
 
     gamevalue = JuMP.value(g) #objective_value(model)
-    
-    result = GameResult(
-        values,
-        gamevalue
-    )
-    
+
+    result = GameResult(values, gamevalue)
+
     return result
 
 end

@@ -1,14 +1,13 @@
-module SAW 
+module SAW
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 export saw, SawResult, SawMethod
 
-using DataFrames 
+using DataFrames
 
-struct SawMethod <: MCDMMethod 
-end 
+struct SawMethod <: MCDMMethod end
 
 struct SawResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -38,7 +37,7 @@ This method also known as WSM (Weighted Sum Model)
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 saw() applies the SAW method to rank n strategies subject to m criteria which are supposed to be 
@@ -65,15 +64,7 @@ julia> df = makeDecisionMatrix(decmat)
    4 │     3.0      2.0      5.0      3.0      3.0      2.0      5.0
    5 │     4.0      2.0      2.0      5.0      5.0      3.0      6.0
 
-julia> fns = convert(Array{Function,1}, [maximum for i in 1:7])
-7-element Array{Function,1}:
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
- maximum (generic function with 16 methods)
+julia> fns = [maximum for i in 1:7];
 
 julia> weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076];
 
@@ -96,44 +87,41 @@ Afshari, Alireza, Majid Mojahed, and Rosnah Mohd Yusuff. "Simple additive weight
 personnel selection problem." International Journal of Innovation, Management and Technology 
 1.5 (2010): 511.
 """
-function saw(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::SawResult where {F <: Function}
-    
+function saw(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::SawResult where {F<:Function}
+
     n, p = size(decisionMat)
-    
+
     normalizedDecisionMat = similar(decisionMat)
-        
+
     w = unitize(weights)
-    
+
     zerotype = eltype(decisionMat[!, 1])
 
     colminmax = zeros(zerotype, p)
-    
-    @inbounds for i in 1:p
+
+    @inbounds for i = 1:p
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
-        elseif fns[i] == minimum 
+            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+        elseif fns[i] == minimum
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
         else
             @error fns[i]
             error("Function not found")
         end
     end
-    
+
     scores = w * normalizedDecisionMat |> rowsums
 
     rankings = scores |> sortperm |> reverse
-    
+
     bestIndex = rankings |> first
-    
-    result = SawResult(
-        decisionMat,
-        normalizedDecisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = SawResult(decisionMat, normalizedDecisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -155,19 +143,15 @@ either maximized or minimized.
 - `::SawResult`: SawResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function saw(setting::MCDMSetting)::SawResult
-    saw(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    saw(setting.df, setting.weights, setting.fns)
+end
 
-function saw(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::SawResult where {F <: Function}
-    saw(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
+function saw(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::SawResult where {F<:Function}
+    saw(makeDecisionMatrix(mat), weights, fns)
 end
 
 end # end of module SAW

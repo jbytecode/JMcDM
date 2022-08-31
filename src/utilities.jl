@@ -1,53 +1,53 @@
 module Utilities
 
-export I, mean, var, std 
+export I, mean, var, std
 export geomean, cor, euclidean
-export normalize, apply_columns 
+export normalize, apply_columns
 export colmaxs, colmins, unitize
 export makeDecisionMatrix, reverseminmax
 export rowmins, rowmaxs, rowmeans, rowsums
 export colmins, colmaxs, colmeans, colsums
 export makegrey
 
-using DataFrames 
+using DataFrames
 
 import ..GreyNumbers: GreyNumber
 
 function I(n)
     mat = zeros(n, n)
-    for i in 1:n
+    for i = 1:n
         mat[i, i] = 1.0
     end
     return mat
 end
 
-mean(x) = sum(x)/length(x)
+mean(x) = sum(x) / length(x)
 
-function var(x) 
+function var(x)
     e = eltype(x)
     onee = one(e)
     m = mean(x)
     xm = x .- m
-    return sum((xm .* xm) ./ (length(x) * onee - onee)) 
-end 
+    return sum((xm .* xm) ./ (length(x) * onee - onee))
+end
 
 std(x) = var(x) |> sqrt
 
 geomean(x::Vector) = exp(sum(log.(x)) / length(x))
 
 function cor(x, y)
-    xmd= x .- mean(x)
-    ymd =y .- mean(y)
+    xmd = x .- mean(x)
+    ymd = y .- mean(y)
     return (sum(xmd .* ymd) / sqrt(var(x) * var(y))) / (length(x) - one(eltype(x)))
 end
 
 function cor(x::Matrix)
     _, p = size(x)
     cormat = ones(p, p)
-    for i in 1:p
-        for j in i:p
-            if i != j 
-                cr = cor(x[:,i], x[:,j])
+    for i = 1:p
+        for j = i:p
+            if i != j
+                cr = cor(x[:, i], x[:, j])
                 cormat[i, j] = cr
                 cormat[j, i] = cr
             end
@@ -57,7 +57,7 @@ function cor(x::Matrix)
 end
 
 function euclidean(v1::Vector, v2::Vector)
-    (v1 .- v2).^2.0 |> sum |> sqrt
+    (v1 .- v2) .^ 2.0 |> sum |> sqrt
 end
 
 function euclidean(v1::Vector)
@@ -65,35 +65,35 @@ function euclidean(v1::Vector)
     return euclidean(v1, v2)
 end
 
-function euclidean(v1::Vector, row::DataFrames.DataFrameRow{DataFrame, DataFrames.Index})
+function euclidean(v1::Vector, row::DataFrames.DataFrameRow{DataFrame,DataFrames.Index})
     v2 = Vector(row)
-    (v1 .- v2).^2.0 |> sum |> sqrt
+    (v1 .- v2) .^ 2.0 |> sum |> sqrt
 end
 
-function normalize(v1::Vector)::Vector 
-    return v1 ./ euclidean(v1) 
+function normalize(v1::Vector)::Vector
+    return v1 ./ euclidean(v1)
 end
 
 function normalize(data::DataFrame)::DataFrame
     df = similar(data)
     _, p = size(df)
-    for i in 1:p
+    for i = 1:p
         df[:, i] = normalize(data[:, i])
     end
     return df
 end
 
 
-function apply_columns(fs::Array{F,1}, data) where {F <: Function}
+function apply_columns(fs::Array{F,1}, data) where {F<:Function}
     _, m = size(data)
-    return [fs[i](data[:,i]) for i in 1:m]
+    return [fs[i](data[:, i]) for i = 1:m]
 end
 
-function apply_columns(f::F, data) where {F <: Function}
+function apply_columns(f::F, data) where {F<:Function}
     return [f(c) for c in eachcol(data)]
 end
 
-function colmins(data::DataFrame) 
+function colmins(data::DataFrame)
     return apply_columns(minimum, data)
 end
 
@@ -101,7 +101,7 @@ function colmaxs(data::DataFrame)
     return apply_columns(maximum, data)
 end
 
-function colsums(data)::Array{Number,1} 
+function colsums(data)::Array{Number,1}
     return apply_columns(sum, data)
 end
 
@@ -109,7 +109,7 @@ function colmeans(data)::Array{Number,1}
     return apply_columns(mean, data)
 end
 
-function apply_rows(f::F, data) where {F <: Function}
+function apply_rows(f::F, data) where {F<:Function}
     return [f(c) for c in eachrow(data)]
 end
 
@@ -129,15 +129,15 @@ function rowmeans(data)::Vector
     return apply_rows(mean, data)
 end
 
-function unitize(v::Vector)::Vector 
+function unitize(v::Vector)::Vector
     return v ./ sum(v)
 end
 
-function Base.:*(w::Vector, data::DataFrame)::DataFrame 
+function Base.:*(w::Vector, data::DataFrame)::DataFrame
     newdf = copy(data)
     _, p = size(newdf)
-    for i in 1:p
-        newdf[!, i] = newdf[!,i]
+    for i = 1:p
+        newdf[!, i] = newdf[!, i]
         newdf[:, i] = w[i] .* data[:, i]
     end
     return newdf
@@ -182,16 +182,19 @@ end
  - `names::Union{Nothing,Array{String,1}}`: Column names. Default is nothing. If column names are not given, they are labelled as Crt 1, Crt 2, ..., etc.
  
 """
-function makeDecisionMatrix(mat::Matrix; names::Union{Nothing,Array{String,1}}=nothing)::DataFrame
+function makeDecisionMatrix(
+    mat::Matrix;
+    names::Union{Nothing,Array{String,1}} = nothing,
+)::DataFrame
     _, m = size(mat)
     df = DataFrame()
-    for i in 1:m
+    for i = 1:m
         if names isa Nothing
             name = string("Crt", i)
         else
             name = names[i]
         end
-        df[:,Symbol(name)] = mat[:, i]
+        df[:, Symbol(name)] = mat[:, i]
     end
     return df
 end
@@ -200,21 +203,25 @@ function Base.minimum(df::DataFrame)
     df |> Matrix |> minimum
 end
 
-function reverseminmax(fns::Array{F,1})::Array{Function,1} where {F <: Function}
-    newfs = map(x -> if x == minimum maximum else minimum end, fns)
+function reverseminmax(fns::Array{F,1})::Array{Function,1} where {F<:Function}
+    newfs = map(x -> if x == minimum
+        maximum
+    else
+        minimum
+    end, fns)
     return newfs
 end
 
 
-function makegrey(m::Matrix)::Matrix 
+function makegrey(m::Matrix)::Matrix
     n, p = size(m)
-    greymatrix = Array{GreyNumber, 2}(undef, n, p)
-    for i in 1:n 
-        for j in 1:p
+    greymatrix = Array{GreyNumber,2}(undef, n, p)
+    for i = 1:n
+        for j = 1:p
             greymatrix[i, j] = GreyNumber(Float64(m[i, j]))
         end
-    end 
+    end
     return greymatrix
-end 
+end
 
 end # End of module Utilities

@@ -1,14 +1,13 @@
-module MARCOS 
+module MARCOS
 
 export marcos, MarcosResult, MarcosMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct MarcosMethod <: MCDMMethod
-end
+struct MarcosMethod <: MCDMMethod end
 
 struct MarcosResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -35,7 +34,7 @@ Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solut
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 marcos() applies the MARCOS method to rank n alterntives subject to m criteria which are supposed to be 
@@ -89,67 +88,67 @@ Stević, Z., Pamučar, D., Puška, A., Chatterjee, P., Sustainable supplier sele
 
 Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluation software of project management used measurement of alternatives and ranking according to compromise solution (MARCOS) method. Operational Research in Engineering Sciences: Theory and Applications, 3(1), 89-102.
 """
-function marcos(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MarcosResult where {F <: Function}
+function marcos(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MarcosResult where {F<:Function}
 
     # df = convert(Matrix, decisionMat)
     df = Matrix(decisionMat)
-    
+
     row, col = size(df)
 
     w = unitize(weights)
 
     zerotype = eltype(df[1, :])
     AAI = zeros(zerotype, col)
-    AI  = zeros(zerotype, col)
-            
+    AI = zeros(zerotype, col)
+
     temp = [df; AI'; AAI']
 
     normalizedDecisionMat = similar(temp)
 
-    @inbounds for i in 1:col
+    @inbounds for i = 1:col
         if fns[i] == maximum
             AI[i] = maximum(df[:, i])
-            temp[row + 1, i] = AI[i]
+            temp[row+1, i] = AI[i]
             AAI[i] = minimum(df[:, i])
-            temp[row + 2, i] = AAI[i]
-            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i] 
+            temp[row+2, i] = AAI[i]
+            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
         elseif fns[i] == minimum
             AI[i] = minimum(df[:, i])
-            temp[row + 1, i] = AI[i]
+            temp[row+1, i] = AI[i]
             AAI[i] = maximum(df[:, i])
-            temp[row + 2, i] = AAI[i]
+            temp[row+2, i] = AAI[i]
             normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
         end
     end
-    
+
     #S  = zeros(Float64, col)
     S = zeros(zerotype, row + 2)
-    
-    for i in 1:row + 2
+
+    for i = 1:row+2
         S[i] = w .* normalizedDecisionMat[i, :] |> sum
     end
 
-    KPlus  = S[1:row] ./ S[row + 1]
-    KMinus  = S[1:row] ./ S[row + 2]
+    KPlus = S[1:row] ./ S[row+1]
+    KMinus = S[1:row] ./ S[row+2]
 
     fKPlus = KPlus ./ (KPlus .+ KMinus)
     fKMinus = KMinus ./ (KPlus .+ KMinus)
 
     scores = zeros(zerotype, row)
-    for i in 1:row
-        scores[i] = (KPlus[i] + KMinus[i]) / ((1 + (1 - fKPlus[i]) / fKPlus[i]) + ((1 - fKMinus[i]) / fKMinus[i]))
+    for i = 1:row
+        scores[i] =
+            (KPlus[i] + KMinus[i]) /
+            ((1 + (1 - fKPlus[i]) / fKPlus[i]) + ((1 - fKMinus[i]) / fKMinus[i]))
     end
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = MarcosResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = MarcosResult(decisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -171,20 +170,16 @@ either maximized or minimized.
 - `::MARCOSResult`: MARCOSResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function marcos(setting::MCDMSetting)::MarcosResult
-    marcos(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    marcos(setting.df, setting.weights, setting.fns)
+end
 
 
-function marcos(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::MarcosResult  where {F <: Function}
-    marcos(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
-end 
+function marcos(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MarcosResult where {F<:Function}
+    marcos(makeDecisionMatrix(mat), weights, fns)
+end
 
 end # end of module MARCOS 

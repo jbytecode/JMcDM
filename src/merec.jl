@@ -1,14 +1,13 @@
-module MEREC 
+module MEREC
 
 export merec, MERECResult, MERECMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct MERECMethod <: MCDMMethod 
-end 
+struct MERECMethod <: MCDMMethod end
 
 
 struct MERECResult <: MCDMResult
@@ -28,7 +27,7 @@ Apply MEREC (MEthod based on the Removal Effects of Criteria) for a given matrix
 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
 merec() applies the MEREC method to calculate weights using a decision matrix with  
@@ -73,18 +72,18 @@ julia> result.w
 Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2021). Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry, 13(4), 525. https://doi.org/10.3390/sym13040525
 
 """
-function merec(decisionMat::DataFrame, fs::Array{F ,1})::MERECResult where {F <: Function}
-    mat = Matrix(decisionMat)    
+function merec(decisionMat::DataFrame, fs::Array{F,1})::MERECResult where {F<:Function}
+    mat = Matrix(decisionMat)
     row, col = size(mat)
 
     NormalizeMatrix = zeros((row, col))
-    
-    @inbounds for i in 1:row
-        for j in 1:col
+
+    @inbounds for i = 1:row
+        for j = 1:col
             if fs[j] == maximum
-                NormalizeMatrix[i,j] = minimum(mat[:,j]) / mat[i,j]
-            elseif fs[j] == minimum 
-                NormalizeMatrix[i,j] = mat[i,j] / maximum(mat[:,j])
+                NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
+            elseif fs[j] == minimum
+                NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
             end
         end
     end
@@ -92,35 +91,39 @@ function merec(decisionMat::DataFrame, fs::Array{F ,1})::MERECResult where {F <:
     S = zeros(row)
     S_ = zeros(row, col)
 
-    @inbounds for i in 1:row
-        for j in 1:col
-            S[i] = log(1+(sum(abs.(map(log , NormalizeMatrix[i,:])))/col))
+    @inbounds for i = 1:row
+        for j = 1:col
+            S[i] = log(1 + (sum(abs.(map(log, NormalizeMatrix[i, :]))) / col))
         end
     end
 
-    @inbounds for i in 1:row
-        for j in 1:col
-            S_[i,j] = log(1+((sum(abs.(map(log , NormalizeMatrix[i,:]))) - abs(log(NormalizeMatrix[i,j])))/col))
+    @inbounds for i = 1:row
+        for j = 1:col
+            S_[i, j] = log(
+                1 + (
+                    (
+                        sum(abs.(map(log, NormalizeMatrix[i, :]))) -
+                        abs(log(NormalizeMatrix[i, j]))
+                    ) / col
+                ),
+            )
         end
     end
 
     E = zeros(col)
 
-    @inbounds for i in 1:row
-        for j in 1:col
-            E[j] = sum(abs.(S_[:,j].-S))
+    @inbounds for i = 1:row
+        for j = 1:col
+            E[j] = sum(abs.(S_[:, j] .- S))
         end
     end
 
     w = zeros(col)
 
-    w = E./sum(E)
+    w = E ./ sum(E)
 
-    result = MERECResult(
-        decisionMat,
-        w
-    )
-    
+    result = MERECResult(decisionMat, w)
+
     return result
 
 end
@@ -142,17 +145,11 @@ either maximized or minimized.
 - `::MERECResult`: MERECResult object that holds multiple outputs including weighting and best index.
 """
 function merec(setting::MCDMSetting)::MERECResult
-    merec(
-        setting.df, 
-        setting.fns
-    )
-end 
+    merec(setting.df, setting.fns)
+end
 
-function merec(mat::Matrix, fs::Array{F, 1})::MERECResult  where {F <: Function}
-    merec(
-        makeDecisionMatrix(mat), 
-        fs
-    )
-end 
+function merec(mat::Matrix, fs::Array{F,1})::MERECResult where {F<:Function}
+    merec(makeDecisionMatrix(mat), fs)
+end
 
 end # end of module MEREC

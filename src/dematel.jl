@@ -1,12 +1,12 @@
-module DEMATEL 
+module DEMATEL
 
 export dematel, DematelResult
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct DematelResult <: MCDMResult
     comparisonMatrix::DataFrame
@@ -16,7 +16,7 @@ struct DematelResult <: MCDMResult
     r::Array{Float64,1}
     c_plus_r::Array{Float64,1}
     c_minus_r::Array{Float64,1}
-    threshold::Float64 
+    threshold::Float64
     influenceMatrix::Array{Float64,2}
     weights::Array{Float64,1}
 end
@@ -73,44 +73,47 @@ julia> result.weights
 Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastirmali
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
-function dematel(comparisonMat::DataFrame; threshold::Union{Nothing,Float64}=nothing)::DematelResult
+function dematel(
+    comparisonMat::DataFrame;
+    threshold::Union{Nothing,Float64} = nothing,
+)::DematelResult
 
     n, _ = size(comparisonMat)
 
-    csums =  colsums(comparisonMat)
-    rsums =  rowsums(comparisonMat)
+    csums = colsums(comparisonMat)
+    rsums = rowsums(comparisonMat)
 
     largest = maximum(vcat(csums, rsums))
 
     # K = convert(Array{Float64,2}, comparisonMat)
     K = Matrix{Float64}(comparisonMat)
     ND = K ./ largest
-  
+
     T = ND * inv(I(n) - ND)
 
     c = rowsums(T)
     r = colsums(T)
 
-    c_plus_r  = c .+ r
+    c_plus_r = c .+ r
     c_minus_r = c .- r
-  
-    if threshold === nothing 
+
+    if threshold === nothing
         threshold = sum(T) / length(T)
     end
 
     influence_matrix = zeros(Float64, n, n)
-    for i in 1:n
-        for j in 1:n
+    for i = 1:n
+        for j = 1:n
             if T[i, j] > threshold
                 influence_matrix[i, j] = 1
-    end
+            end
         end
     end
 
-    w_row = sqrt.((c_plus_r.^2.0) .+ (c_minus_r.^2.0))
+    w_row = sqrt.((c_plus_r .^ 2.0) .+ (c_minus_r .^ 2.0))
     w = w_row ./ sum(w_row)
 
-    
+
     result = DematelResult(
         comparisonMat,
         ND,
@@ -121,18 +124,14 @@ function dematel(comparisonMat::DataFrame; threshold::Union{Nothing,Float64}=not
         c_minus_r,
         threshold,
         influence_matrix,
-        w
+        w,
     )
 
     return result
 end
 
-function dematel(mat::Matrix; threshold::Union{Nothing,Float64}=nothing)::DematelResult
-    dematel(
-        makeDecisionMatrix(mat),
-        threshold = threshold
-    )
-end 
+function dematel(mat::Matrix; threshold::Union{Nothing,Float64} = nothing)::DematelResult
+    dematel(makeDecisionMatrix(mat), threshold = threshold)
+end
 
 end # end of module DEMATEL 
-

@@ -1,9 +1,9 @@
-module WASPAS 
+module WASPAS
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 export WaspasMethod, WASPASResult, waspas
 
@@ -20,7 +20,7 @@ struct WaspasMethod <: MCDMMethod
     lambda::Float64
 end
 
-WaspasMethod() :: WaspasMethod = WaspasMethod(0.5)
+WaspasMethod()::WaspasMethod = WaspasMethod(0.5)
 
 function Base.show(io::IO, result::WASPASResult)
     println(io, "Scores:")
@@ -39,7 +39,7 @@ Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix an
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
 
 # Description 
@@ -98,55 +98,54 @@ julia> result.scores
 Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of Weighted Aggregated Sum Product Assessment. Elektronika Ir Elektrotechnika, 122(6), 3-6. https://doi.org/10.5755/j01.eee.122.6.1810
 Aytaç Adalı, E. & Tuş Işık, A.. (2017). Bir Tedarikçi Seçim Problemi İçin SWARA ve WASPAS Yöntemlerine Dayanan Karar Verme Yaklaşımı. International Review of Economics and Management, 5 (4) , 56-77. DOI: 10.18825/iremjournal.335408
 """
-function waspas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::WASPASResult
-   
+function waspas(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    lambda::Float64 = 0.5,
+)::WASPASResult where {F<:Function}
+
     row, col = size(decisionMat)
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
-    
+
     zerotype = eltype(decisionMat[!, 1])
 
     colminmax = zeros(zerotype, col)
 
-    for i in 1:col
+    for i = 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
-        elseif fns[i] == minimum 
+            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+        elseif fns[i] == minimum
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
         end
-    end 
+    end
 
     scoreMat = similar(normalizedDecisionMat)
-    for i in 1:col
-        scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
+    for i = 1:col
+        scoreMat[:, i] = normalizedDecisionMat[:, i] .^ w[i]
     end
 
     scoresWPM = zeros(zerotype, row)
-    for i in 1:row
+    for i = 1:row
         scoresWPM[i] = prod(scoreMat[i, :])
     end
 
     scoresWSM = w * normalizedDecisionMat |> rowsums
-    
-    scoreTable = [scoresWSM  scoresWPM]
+
+    scoreTable = [scoresWSM scoresWPM]
 
     l = unitize([lambda, one(zerotype) - lambda])
 
-    scores = l' .*  scoreTable |> rowsums
+    scores = l' .* scoreTable |> rowsums
 
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = WASPASResult(
-        decisionMat,
-        normalizedDecisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result =
+        WASPASResult(decisionMat, normalizedDecisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -168,24 +167,19 @@ either maximized or minimized.
 # Output 
 - `::WASPASResult`: WASPASResult object that holds multiple outputs including scores, rankings, and best index.
 """
-function waspas(setting::MCDMSetting; lambda::Float64=0.5)::WASPASResult
-    waspas(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        lambda = lambda 
-    )
-end 
+function waspas(setting::MCDMSetting; lambda::Float64 = 0.5)::WASPASResult
+    waspas(setting.df, setting.weights, setting.fns, lambda = lambda)
+end
 
 
-function waspas(mat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1}; lambda::Float64=0.5)::WASPASResult
-    waspas(
-        makeDecisionMatrix(mat),
-        weights,
-        fns,
-        lambda = lambda
-    )
-end 
+function waspas(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    lambda::Float64 = 0.5,
+)::WASPASResult where {F<:Function}
+    waspas(makeDecisionMatrix(mat), weights, fns, lambda = lambda)
+end
 
 
 end # end of module WASPAS

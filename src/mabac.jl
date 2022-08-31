@@ -1,12 +1,12 @@
-module MABAC 
+module MABAC
 
 
 export mabac, MABACResult, MabacMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct MABACResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -20,8 +20,7 @@ struct MABACResult <: MCDMResult
 end
 
 
-struct MabacMethod <: MCDMMethod 
-end 
+struct MabacMethod <: MCDMMethod end
 
 function Base.show(io::IO, result::MABACResult)
     println(io, "Scores:")
@@ -39,7 +38,7 @@ Apply MABAC (Multi-Attributive Border Approximation area Comparison) for a given
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 mabac() applies the MABAC method to rank n alternatives subject to m criteria which are supposed to be 
@@ -102,7 +101,11 @@ Pamučar, D., & Ćirović, G. (2015). The selection of transport and handling re
 
 Ulutaş, A. (2019). Entropi ve MABAC yöntemleri ile personel seçimi. OPUS–International Journal of Society Researches, 13(19), 1552-1573. DOI: 10.26466/opus.580456
 """
-function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MABACResult where {F <: Function}
+function mabac(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MABACResult where {F<:Function}
 
     row, col = size(decisionMat)
 
@@ -113,16 +116,18 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1
 
     A = similar(decisionMat)
 
-    zerotype = eltype(A[!,1])
+    zerotype = eltype(A[!, 1])
 
 
-    for i in 1:row
-        for j in 1:col
+    for i = 1:row
+        for j = 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] =
+                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
-            end                    
+                @inbounds A[i, j] =
+                    (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
+            end
         end
     end
 
@@ -130,31 +135,23 @@ function mabac(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1
 
     g = zeros(zerotype, col)
 
-    for i in 1:col
+    for i = 1:col
         g[i] = geomean(wA[:, i])
     end
 
     Q = wA .- g'
 
     scores = zeros(zerotype, row)
-    for i in 1:row
+    for i = 1:row
         scores[i] = sum(Q[i, :])
-    end 
+    end
 
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = MABACResult(
-        decisionMat,
-        w,
-        Matrix(wA),
-        g,
-        Matrix(Q),
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result =
+        MABACResult(decisionMat, w, Matrix(wA), g, Matrix(Q), scores, rankings, bestIndex)
 
     return result
 end
@@ -177,20 +174,16 @@ either maximized or minimized.
 - `::MABACResult`: MABACResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function mabac(setting::MCDMSetting)::MABACResult
-    mabac(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    mabac(setting.df, setting.weights, setting.fns)
+end
 
-function mabac(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::MABACResult where {F <: Function}
-    mabac(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
-end 
+function mabac(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MABACResult where {F<:Function}
+    mabac(makeDecisionMatrix(mat), weights, fns)
+end
 
 
 end # end of module MABAC 

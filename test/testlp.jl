@@ -13,7 +13,7 @@
             dm = makeDecisionMatrix(mat)
             result = game(dm)
 
-            @test isa(result, Array{GameResult, 1})
+            @test isa(result, Array{GameResult,1})
             @test length(result) == 2
 
             @test isapprox(result[1].value, 0.6666666666666661, atol = tol)
@@ -39,7 +39,7 @@
             dm = makeDecisionMatrix(mat)
             result = game(dm)
 
-            @test isa(result, Array{GameResult, 1})
+            @test isa(result, Array{GameResult,1})
             @test length(result) == 2
 
             @test result[1].value == 0.0

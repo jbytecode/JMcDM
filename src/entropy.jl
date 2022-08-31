@@ -1,17 +1,17 @@
-module Entropy 
+module Entropy
 
 export entropy, EntropyResult
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 
 struct EntropyResult <: MCDMResult
     decisionMatrix::DataFrame
     w::Array{Float64,1}
-end 
+end
 """
         entropy(decisionMat)
 
@@ -70,50 +70,45 @@ Shannon, C. E. (1948). A Mathematical Theory of Communication. Bell System Techn
 Ulutaş, A . (2019). Entropi ve MABAC Yöntemleri ile Personel Seçimi. OPUS Uluslararası Toplum Araştırmaları Dergisi, 13 (19), 1552-1573. DOI: 10.26466/opus.580456.
 
 """
-function entropy(decisionMat::DataFrame):EntropyResult
-    
+function entropy(decisionMat::DataFrame)
+    :EntropyResult
+
     row, col = size(decisionMat)
     normalizeDM = zeros(Float64, row, col)
 
-    for i in 1:col
-        normalizeDM[:, i] = decisionMat[:,i] ./ sum(decisionMat[:, i])
+    for i = 1:col
+        normalizeDM[:, i] = decisionMat[:, i] ./ sum(decisionMat[:, i])
     end
 
     logMat = zeros(Float64, row, col)
-    for i in 1:row
-        for j in 1:col
-            logMat[i,j] = normalizeDM[i, j] .* log(normalizeDM[i, j])
-        end    
+    for i = 1:row
+        for j = 1:col
+            logMat[i, j] = normalizeDM[i, j] .* log(normalizeDM[i, j])
+        end
     end
 
     e = zeros(Float64, col)
 
-    for i in 1:col
-        e[i] = 1 - sum(logMat[:,i]) ./ -log(row)
+    for i = 1:col
+        e[i] = 1 - sum(logMat[:, i]) ./ -log(row)
     end
 
     w = zeros(Float64, col)
-    
+
     esum = sum(filter(x -> !isnan(x), e))
 
-    for i in 1:col
+    for i = 1:col
         w[i] = e[i] ./ esum
     end
-    
-    result = EntropyResult(
-        decisionMat,
-        w
-    )
+
+    result = EntropyResult(decisionMat, w)
 
     return result
 end
 
-function entropy(mat::Matrix):EntropyResult
-    entropy(
-        makeDecisionMatrix(mat)
-    )
-end 
+function entropy(mat::Matrix)
+    :EntropyResult
+    entropy(makeDecisionMatrix(mat))
+end
 
 end # end of module Entropy 
-
-

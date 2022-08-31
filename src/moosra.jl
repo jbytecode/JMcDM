@@ -1,20 +1,19 @@
-module MOOSRA 
+module MOOSRA
 
 export moosra, MoosraMethod, MoosraResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 
-struct MoosraMethod <: MCDMMethod
-end
+struct MoosraMethod <: MCDMMethod end
 
-struct MoosraResult <: MCDMResult 
+struct MoosraResult <: MCDMResult
     scores::Vector
-    rankings::Array{Int, 1}
+    rankings::Array{Int,1}
     bestIndex::Int
-end 
+end
 
 function Base.show(io::IO, result::MoosraMethod)
     println(io, "Scores:")
@@ -33,7 +32,7 @@ Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 
 # Description 
@@ -79,50 +78,52 @@ julia> result = moosra(df, weights, fns, lambda);
 Das, Manik Chandra, Bijan Sarkar, and Siddhartha Ray. "Decision making under conflicting environment: a new MCDM method." 
 International Journal of Applied Decision Sciences 5.2 (2012): 142-162.
 """
-function moosra(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F, 1})::MoosraResult  where {F <: Function}
-   
+function moosra(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MoosraResult where {F<:Function}
+
     mincounts = count(x -> x == minimum, fns)
     if mincounts < 1
-        error("At least one function (direction of optimization) must be the minimum function.")
+        error(
+            "At least one function (direction of optimization) must be the minimum function.",
+        )
     end
-    
+
     row, col = size(decisionMat)
     dmat = Matrix(decisionMat)
-    zerotype = eltype(dmat[1,:])
+    zerotype = eltype(dmat[1, :])
 
     normalizedDecisionMat = dmat ./ sqrt(sum(dmat .* dmat))
     w = unitize(weights)
-    
-    weightedNormalizedMatrix  = similar(normalizedDecisionMat) 
-    for i in 1:row
-        weightedNormalizedMatrix[i, :] = normalizedDecisionMat[i, :] .* w 
+
+    weightedNormalizedMatrix = similar(normalizedDecisionMat)
+    for i = 1:row
+        weightedNormalizedMatrix[i, :] = normalizedDecisionMat[i, :] .* w
     end
-    
+
     scores = zeros(zerotype, row)
 
-    for i in 1:row
+    for i = 1:row
         positive = 0.0
         negative = 0.0
-        for j in 1:col
+        for j = 1:col
             if fns[j] == maximum
-                positive += weightedNormalizedMatrix[i, j] 
-            elseif fns[j] == minimum 
+                positive += weightedNormalizedMatrix[i, j]
+            elseif fns[j] == minimum
                 negative += weightedNormalizedMatrix[i, j]
-            else 
-                error("fns[i] is not a proper function (direction of optimization)") 
+            else
+                error("fns[i] is not a proper function (direction of optimization)")
             end
-        end 
+        end
         scores[i] = positive / negative
     end
-   
-    orderings = scores |> sortperm 
-    bestIndex = orderings |> last 
-    
-    result = MoosraResult(
-        scores,
-        orderings,
-        bestIndex
-    )
+
+    orderings = scores |> sortperm
+    bestIndex = orderings |> last
+
+    result = MoosraResult(scores, orderings, bestIndex)
 
     return result
 end
@@ -137,11 +138,7 @@ Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis
  - `setting::MCDMSetting`: MCDMSetting object. 
 """
 function moosra(setting::MCDMSetting)::MoosraResult
-    moosra(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    moosra(setting.df, setting.weights, setting.fns)
+end
 
 end # end of module MOOSRA 

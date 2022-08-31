@@ -1,14 +1,13 @@
-module EDAS 
+module EDAS
 
 export edas, EdasMethod, EDASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct EdasMethod <: MCDMMethod 
-end 
+struct EdasMethod <: MCDMMethod end
 
 struct EDASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -34,7 +33,7 @@ Apply EDAS (Evaluation based on Distance from Average Solution) for a given matr
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 edas() applies the EDAS method to rank n alterntives subject to m criteria which are supposed to be 
@@ -105,38 +104,42 @@ Keshavarz Ghorabaee, M., Zavadskas, E. K., Olfat, L., & Turskis, Z. (2015). Mult
 Ulutaş, A. (2017). EDAS Yöntemi Kullanılarak Bir Tekstil Atölyesi İçin Dikiş Makinesi Seçimi. İşletme Araştırmaları Dergisi, 9(2), 169-183.
 
 """
-function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::EDASResult  where {F <: Function}
+function edas(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::EDASResult where {F<:Function}
 
     # df = convert(Matrix, decisionMat)
     df = Matrix(decisionMat)
-    
+
     row, col = size(df)
 
     w = unitize(weights)
 
-        
+
     PDAMatrix = similar(df)
     NDAMatrix = similar(df)
 
     AV = zeros(eltype(df), col)
 
-    @inbounds for i in 1:col
+    @inbounds for i = 1:col
         AV[i] = mean(df[:, i])
-        for j in 1:row
+        for j = 1:row
             if fns[i] == maximum
                 PDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
                 NDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
-            elseif fns[i] == minimum 
+            elseif fns[i] == minimum
                 PDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
                 NDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
             end
         end
-    end 
+    end
 
     SP = zeros(eltype(df), row)
     SN = zeros(eltype(df), row)
 
-    for i in 1:row
+    for i = 1:row
         SP[i] = w .* PDAMatrix[i, :] |> sum
         SN[i] = w .* NDAMatrix[i, :] |> sum
     end
@@ -144,19 +147,13 @@ function edas(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}
     NSP = SP ./ maximum(SP)
     NSN = 1 .- SN ./ maximum(SN)
 
-    scores = (NSP .+ NSN) ./ 2 
+    scores = (NSP .+ NSN) ./ 2
 
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = EDASResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = EDASResult(decisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -178,20 +175,16 @@ either maximized or minimized.
 - `::EDASResult`: EDASResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function edas(setting::MCDMSetting)::EDASResult
-    edas(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
-
-function edas(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::EDASResult  where {F <: Function}
-    edas(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
+    edas(setting.df, setting.weights, setting.fns)
 end
- 
+
+function edas(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::EDASResult where {F<:Function}
+    edas(makeDecisionMatrix(mat), weights, fns)
+end
+
 
 end # end of module EDAS 

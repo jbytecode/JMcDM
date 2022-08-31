@@ -1,18 +1,18 @@
-module GREY 
+module GREY
 
 export grey, GreyResult, GreyMethod
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct GreyMethod <: MCDMMethod 
+struct GreyMethod <: MCDMMethod
     zeta::Float64
-end 
+end
 
-GreyMethod() :: GreyMethod = GreyMethod(0.5)
+GreyMethod()::GreyMethod = GreyMethod(0.5)
 
 struct GreyResult <: MCDMResult
     referenceRow::Array{Float64,1}
@@ -21,7 +21,7 @@ struct GreyResult <: MCDMResult
     greyTable::Matrix
     scores::Array{Float64,1}
     ordering::Array{Int64,1}
-    bestIndex::Int64             
+    bestIndex::Int64
 end
 
 function Base.show(io::IO, result::GreyResult)
@@ -96,7 +96,12 @@ julia> result.bestIndex
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F,1}; zeta::Float64=0.5)::GreyResult  where {F <: Function}
+function grey(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fs::Array{F,1};
+    zeta::Float64 = 0.5,
+)::GreyResult where {F<:Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
@@ -110,14 +115,14 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F,1};
     normalizedReferenceRow = zeros(Float64, ncols)
 
     normalizedMat = similar(mat)
-    for col in 1:ncols
+    for col = 1:ncols
         mmax = maximum(mat[:, col])
         mmin = minimum(mat[:, col])
         mrange = mmax - mmin
-        for row in 1:nrows
-            if fs[col] == maximum 
+        for row = 1:nrows
+            if fs[col] == maximum
                 normalizedMat[row, col] = (mat[row, col] - mmin) / mrange
-            elseif fs[col] == minimum 
+            elseif fs[col] == minimum
                 normalizedMat[row, col] = (mmax - mat[row, col]) / mrange
             else
                 @error fs[col]
@@ -126,14 +131,14 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F,1};
         end
         if fs[col] == maximum
             normalizedReferenceRow[col] = (referenceRow[col] - mmin) / mrange
-        elseif fs[col] == minimum 
+        elseif fs[col] == minimum
             normalizedReferenceRow[col] = (mmax - referenceRow[col]) / mrange
         end
     end
 
     absoluteValueMat = similar(mat)
-    for row in 1:nrows
-        absoluteValueMat[row,:] = normalizedReferenceRow .- normalizedMat[row, :]  .|> abs 
+    for row = 1:nrows
+        absoluteValueMat[row, :] = normalizedReferenceRow .- normalizedMat[row, :] .|> abs
     end
 
     deltamin = absoluteValueMat |> minimum
@@ -141,15 +146,16 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F,1};
     zetadeltamax = zeta * deltamax
 
     greytable = similar(absoluteValueMat)
-    for row in 1:nrows
-        for col in 1:ncols
-            greytable[row, col] = (deltamin + zetadeltamax) / (absoluteValueMat[row, col] + zetadeltamax) 
+    for row = 1:nrows
+        for col = 1:ncols
+            greytable[row, col] =
+                (deltamin + zetadeltamax) / (absoluteValueMat[row, col] + zetadeltamax)
         end
     end
 
     weightedsums = zeros(Float64, nrows)
-    for i in 1:nrows
-        weightedsums[i] = w .* greytable[i, :] |> sum 
+    for i = 1:nrows
+        weightedsums[i] = w .* greytable[i, :] |> sum
     end
 
     orderings = sortperm(weightedsums)
@@ -162,9 +168,9 @@ function grey(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F,1};
         greytable,
         weightedsums,
         orderings,
-        bestIndex
+        bestIndex,
     )
-    
+
     return result
 end
 
@@ -184,24 +190,19 @@ Applies GRA (Grey Relational Analysis).
 # Output 
 - `::GreyResult`: GreyResult object that holds many values including ordering of strategies or candidates and best index.
 """
-function grey(setting::MCDMSetting; zeta::Float64=0.5)::GreyResult
-    grey(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+function grey(setting::MCDMSetting; zeta::Float64 = 0.5)::GreyResult
+    grey(setting.df, setting.weights, setting.fns)
+end
 
 
-function grey(mat::Matrix, weights::Array{Float64,1}, fs::Array{F, 1}; zeta::Float64=0.5)::GreyResult  where {F <: Function}
-    grey(
-        makeDecisionMatrix(mat),
-        weights,
-        fs,
-        zeta = zeta
-    )
+function grey(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fs::Array{F,1};
+    zeta::Float64 = 0.5,
+)::GreyResult where {F<:Function}
+    grey(makeDecisionMatrix(mat), weights, fs, zeta = zeta)
 end
 
 
 end # end of module GREY 
-

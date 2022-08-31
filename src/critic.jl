@@ -1,14 +1,13 @@
-module CRITIC 
+module CRITIC
 
 export critic, CRITICResult, CriticMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct CriticMethod <: MCDMMethod 
-end 
+struct CriticMethod <: MCDMMethod end
 
 
 struct CRITICResult <: MCDMResult
@@ -28,7 +27,7 @@ Apply CRITIC (Combined Compromise Solution) method for a given matrix and criter
 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
 critic() applies the CRITIC method to calculate weights using a decision matrix with  
@@ -74,8 +73,8 @@ Diakoulaki, D., Mavrotas, G., & Papayannakis, L. (1995). Determining objective w
 Akçakanat, Ö., Aksoy, E., Teker, T. (2018). CRITIC ve MDL Temelli EDAS Yöntemi ile TR-61 Bölgesi Bankalarının Performans Değerlendirmesi. Süleyman Demirel Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 1 (32), 1-24.
 
 """
-function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult  where {F <: Function}
-    
+function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult where {F<:Function}
+
     row, col = size(decisionMat)
     colMax = colmaxs(decisionMat)
     colMin = colmins(decisionMat)
@@ -84,37 +83,36 @@ function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult  where {F
 
     zerotype = eltype(decisionMat[:, 1])
 
-    for i in 1:row
-        for j in 1:col
+    for i = 1:row
+        for j = 1:col
             if fns[j] == maximum
-                @inbounds A[i, j] = (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+                @inbounds A[i, j] =
+                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
             elseif fns[j] == minimum
-                @inbounds A[i, j] = (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
-            end                    
+                @inbounds A[i, j] =
+                    (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
+            end
         end
     end
 
     # normalizedMat = convert(Matrix, A)
     normalizedMat = Matrix(A)
-    
+
     corMat = one(zerotype) .- cor(normalizedMat)
 
     scores = zeros(zerotype, col)
 
-    for i in 1:col
+    for i = 1:col
         scores[i] = sum(corMat[:, i]) .* std(normalizedMat[:, i])
     end
 
     w = zeros(zerotype, col)
-    
-    for i in 1:col
+
+    for i = 1:col
         w[i] = scores[i] ./ sum(scores)
     end
-        
-    result = CRITICResult(
-        decisionMat,
-        w
-    )
+
+    result = CRITICResult(decisionMat, w)
 
     return result
 end
@@ -136,17 +134,11 @@ either maximized or minimized.
 - `::CRITICResult`: CRITICResult object that holds multiple outputs including weighting and best index.
 """
 function critic(setting::MCDMSetting)::CRITICResult
-    critic(
-        setting.df, 
-        setting.fns
-    )
-end 
+    critic(setting.df, setting.fns)
+end
 
-function critic(mat::Matrix, fns::Array{F,1})::CRITICResult  where {F <: Function}
-    critic(
-        mat, 
-        fns
-    )
-end 
+function critic(mat::Matrix, fns::Array{F,1})::CRITICResult where {F<:Function}
+    critic(mat, fns)
+end
 
 end # end of module CRITIC

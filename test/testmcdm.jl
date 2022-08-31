@@ -1,6 +1,6 @@
 @testset "MCDM functions" begin
 
-    @testset "mcdm() with default method" begin 
+    @testset "mcdm() with default method" begin
         tol = 0.00001
         df = DataFrame()
         df[:, :x] = Float64[9, 8, 7]
@@ -15,42 +15,44 @@
 
         setting = MCDMSetting(df, w, fns)
         result2 = mcdm(setting)
-        
+
         @test isa(result2, TopsisResult)
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
-    end 
+    end
 
-    @testset "MOOSRA" begin 
+    @testset "MOOSRA" begin
         tol = 0.0001
 
         df = DataFrame(
-                :c1 => [25.0, 21, 19, 22],
-                :c2 => [65.0, 78, 53, 25],
-                :c3 => [7.0, 6, 5, 2],
-                :c4 => [20.0, 24, 33, 31],
-            )
+            :c1 => [25.0, 21, 19, 22],
+            :c2 => [65.0, 78, 53, 25],
+            :c3 => [7.0, 6, 5, 2],
+            :c4 => [20.0, 24, 33, 31],
+        )
         weights = [0.25, 0.25, 0.25, 0.25]
         fns = [maximum, maximum, minimum, maximum]
         result = moosra(df, weights, fns)
 
-        @test result isa MoosraResult 
+        @test result isa MoosraResult
 
-        @test isapprox(result.scores, 
-        [15.714285714285714, 20.499999999999996, 20.999999999999996, 39.0],
-        atol = tol)
+        @test isapprox(
+            result.scores,
+            [15.714285714285714, 20.499999999999996, 20.999999999999996, 39.0],
+            atol = tol,
+        )
 
         @test result.rankings == [1, 2, 3, 4]
-        @test result.bestIndex == 4 
+        @test result.bestIndex == 4
 
         setting = MCDMSetting(df, weights, fns)
         result2 = mcdm(setting, MoosraMethod())
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
         @test result2 isa MoosraResult
-    end 
+    end
 
-    @testset "PSI" begin 
+    @testset "PSI" begin
         tol = 0.0001
 
         df = DataFrame()
@@ -69,7 +71,7 @@
         @test isapprox(
             [1.1487059780663555, 1.252775986851622, 1.0884916686098811],
             result.scores,
-            atol = tol
+            atol = tol,
         )
 
         setting = MCDMSetting(df, w, fns)
@@ -82,10 +84,11 @@
     @testset "ROV" begin
         tol = 0.01
         mat = [
-        0.035 34.5 847 1.76 0.335 0.5 0.59 0.59
-        0.027 36.8 834 1.68 0.335 0.665 0.665 0.665
-        0.037 38.6 808 2.4 0.59 0.59 0.41 0.5
-        0.028 32.6 821 1.59 0.5 0.59 0.59 0.41]
+            0.035 34.5 847 1.76 0.335 0.5 0.59 0.59
+            0.027 36.8 834 1.68 0.335 0.665 0.665 0.665
+            0.037 38.6 808 2.4 0.59 0.59 0.41 0.5
+            0.028 32.6 821 1.59 0.5 0.59 0.59 0.41
+        ]
 
         df = JMcDM.makeDecisionMatrix(mat)
 
@@ -97,23 +100,42 @@
         result = rov(df, w, fns)
 
         @test result isa ROVResult
-        @test isapprox(result.uminus, 
-        [0.3349730210602759, 0.4762288888888889, 0.3640727272727273, 0.6560048841354725], atol = tol)
+        @test isapprox(
+            result.uminus,
+            [
+                0.3349730210602759,
+                0.4762288888888889,
+                0.3640727272727273,
+                0.6560048841354725,
+            ],
+            atol = tol,
+        )
 
-        @test isapprox(result.uplus, 
-        [0.03331764705882352, 0.0472, 0.06255882352941176, 0.029700000000000004], atol = tol)
+        @test isapprox(
+            result.uplus,
+            [0.03331764705882352, 0.0472, 0.06255882352941176, 0.029700000000000004],
+            atol = tol,
+        )
 
-        @test isapprox(result.scores, 
-        [0.1841453340595497, 0.26171444444444447, 0.21331577540106955, 0.34285244206773624], atol = tol)
+        @test isapprox(
+            result.scores,
+            [
+                0.1841453340595497,
+                0.26171444444444447,
+                0.21331577540106955,
+                0.34285244206773624,
+            ],
+            atol = tol,
+        )
 
-        @test result.ranks ==  [4, 2, 3, 1]
+        @test result.ranks == [4, 2, 3, 1]
 
 
         setting = MCDMSetting(df, w, fns)
         result2 = mcdm(setting, ROVMethod())
         @test result2.ranks == result.ranks
         @test result2.scores == result.scores
-        @test result2 isa ROVResult 
+        @test result2 isa ROVResult
     end
 
     @testset "SD" begin
@@ -141,12 +163,13 @@
         fns = [maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum]
 
         result = sd(df, fns)
-        
+
         @test result isa SDResult
         @test isapprox(
             result.weights,
             [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
-             atol = tol)
+            atol = tol,
+        )
     end
 
     @testset "Grey Relational Analysis" begin
@@ -238,16 +261,7 @@
             70 88 20 18 60 90 95 85
         ]
         dmat = makeDecisionMatrix(Amat)
-        fns = [
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-            maximum,
-        ]
+        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
 
         result = vikor(dmat, w, fns)
 
@@ -330,16 +344,7 @@
                 70 88 20 18 60 90 95 85
             ]
             dmat = makeDecisionMatrix(Amat)
-            fns = [
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-                maximum,
-            ]
+            fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
             result = moora(dmat, w, fns)
 
             @test isa(result, MooraResult)
@@ -1325,7 +1330,7 @@
             :K1 => [450, 10, 100, 220, 5],
             :K2 => [8000, 9100, 8200, 9300, 8400],
             :K3 => [54, 2, 31, 1, 23],
-            :K4 => [145, 160, 153, 162, 158]
+            :K4 => [145, 160, 153, 162, 158],
         )
 
         fns = [maximum, maximum, minimum, minimum]
@@ -1334,7 +1339,12 @@
         @test result isa MERECResult
         @test isapprox(
             result.w,
-            [0.5752216672093823, 0.01409659116846726, 0.40156136388773117, 0.009120377734419302],
+            [
+                0.5752216672093823,
+                0.01409659116846726,
+                0.40156136388773117,
+                0.009120377734419302,
+            ],
             atol = tol,
         )
 
@@ -1348,15 +1358,16 @@
         tol = 0.0001
 
         decmat = [
-         60 2.5 2540 500 990
-         6.35 6.667 1016 3000 1041
-         6.8 10 1727 1500 1676
-         10 5 1000 2000 965
-         2.5 9.8 560 500 915
-         4.5 12.5 1016 350 508
-         3 10 1778 1000 920]
+            60 2.5 2540 500 990
+            6.35 6.667 1016 3000 1041
+            6.8 10 1727 1500 1676
+            10 5 1000 2000 965
+            2.5 9.8 560 500 915
+            4.5 12.5 1016 350 508
+            3 10 1778 1000 920
+        ]
 
-        w = [0.1761,	0.2042,	0.2668,	0.1243,	0.2286]
+        w = [0.1761, 0.2042, 0.2668, 0.1243, 0.2286]
 
         fns = [maximum, maximum, maximum, maximum, maximum]
 
@@ -1365,11 +1376,18 @@
         @test result isa PIVResult
         @test isapprox(
             result.scores,
-            [0.22086675609968962, 0.35854940101222144, 0.2734184099704686, 0.4005382183676046, 0.4581157878699193, 0.43595371718873477, 0.3580651803072459],
+            [
+                0.22086675609968962,
+                0.35854940101222144,
+                0.2734184099704686,
+                0.4005382183676046,
+                0.4581157878699193,
+                0.43595371718873477,
+                0.3580651803072459,
+            ],
             atol = tol,
         )
         @test result.bestIndex == 1
         @test result.ranking == [1, 3, 7, 2, 4, 6, 5]
     end
 end
-

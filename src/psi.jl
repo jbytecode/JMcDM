@@ -1,23 +1,22 @@
 module PSI
 
-export psi, PSIMethod, PSIResult 
+export psi, PSIMethod, PSIResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct PSIResult <: MCDMResult
     pvs::Vector
-    phis::Vector 
+    phis::Vector
     psis::Vector
     scores::Vector
-    rankings::Array{Int, 1}
+    rankings::Array{Int,1}
     bestIndex::Int
 end
 
-struct PSIMethod <: MCDMMethod
-end
+struct PSIMethod <: MCDMMethod end
 
 function Base.show(io::IO, result::PSIResult)
     println(io, "Scores:")
@@ -35,7 +34,7 @@ Apply PSI (Preference Selection Index) method for a given matrix and directions 
 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns.
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  
 # Description 
 psi() applies the PSI method to rank n alterntives subject to m criteria which are supposed to be 
@@ -88,12 +87,12 @@ julia> result.bestIndex
 Maniya, Kalpesh, and Mangal Guido Bhatt. "A selection of material using a novel type decision-making method: 
 Preference selection index method." Materials & Design 31.4 (2010): 1785-1789
 """
-function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F <: Function}
-   
+function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F<:Function}
+
     function PV(v)
         mymean = mean(v)
         meandiff = v .- mymean
-        meandiffsq = meandiff .* meandiff 
+        meandiffsq = meandiff .* meandiff
         return sum(meandiffsq)
     end
 
@@ -104,42 +103,35 @@ function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F <: Fun
 
     colminmax = zeros(zerotype, col)
 
-    @inbounds for i in 1:col
+    @inbounds for i = 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
-        elseif fns[i] == minimum 
+            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+        elseif fns[i] == minimum
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
         end
-    end    
-    
-    pvs = zeros(zerotype, row)
-    for i in 1:row 
-        pvs[i] = PV(normalizedDecisionMat[i, :] |> collect)
-    end 
+    end
 
-    phis = one(zerotype) .- pvs 
+    pvs = zeros(zerotype, row)
+    for i = 1:row
+        pvs[i] = PV(normalizedDecisionMat[i, :] |> collect)
+    end
+
+    phis = one(zerotype) .- pvs
     sum_phis = sum(phis)
 
     psis = phis ./ sum_phis
 
     Is = zeros(zerotype, row)
-    for i in 1:row
+    for i = 1:row
         Is[i] = psis[i] .* collect(normalizedDecisionMat[i, :]) |> sum
     end
 
-    scores = Is 
+    scores = Is
     ranks = sortperm(scores)
-    bestindex = ranks |> last  
+    bestindex = ranks |> last
 
-    result = PSIResult(
-        pvs,
-        phis,
-        psis,
-        scores,
-        ranks,
-        bestindex
-    )
+    result = PSIResult(pvs, phis, psis, scores, ranks, bestindex)
 
     return result
 end
@@ -161,17 +153,11 @@ either maximized or minimized.
 - `::PSIResult`: PSIResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function psi(setting::MCDMSetting)::PSIResult
-    psi(
-        setting.df,
-        setting.fns
-    )
-end 
+    psi(setting.df, setting.fns)
+end
 
-function psi(mat::Matrix, fns::Array{F,1})::PSIResult where {F <: Function}
-    psi(
-        makeDecisionMatrix(mat),
-        fns
-    )
-end 
+function psi(mat::Matrix, fns::Array{F,1})::PSIResult where {F<:Function}
+    psi(makeDecisionMatrix(mat), fns)
+end
 
 end # end of module PSI 

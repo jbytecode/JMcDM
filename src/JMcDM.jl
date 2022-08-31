@@ -11,9 +11,9 @@ import DataFrames: DataFrame, DataFrameRow
 import Base.show
 
 # Abstract Types 
-abstract type MCDMResult end 
+abstract type MCDMResult end
 abstract type SCDMResult end
-abstract type MCDMMethod end 
+abstract type MCDMMethod end
 
 """
     struct MCDMSetting 
@@ -27,7 +27,7 @@ abstract type MCDMMethod end
 # Arguments
 - `df::DataFrame`: The decision matrix in type of DataFrame.
 - `weights::Array{Float64,1}`: Array of weights for each criterion.
-- `fns::Array{Function, 1}`: Array of functions. The elements are either minimum or maximum.
+- `fns::Array{<:Function, 1}`: Array of functions. The elements are either minimum or maximum.
 
 # Description 
 Many methods including Topsis, Electre, Waspas, etc., use a decision matrix, weights, and directions
@@ -56,10 +56,10 @@ julia> result2 = mcdm(setting, TopsisMethod())
 ```
 
 """
-struct MCDMSetting 
+struct MCDMSetting
     df::DataFrame
-    weights::Array{Float64, 1}
-    fns::Array{Function, 1}
+    weights::Array{Float64,1}
+    fns::Array{F,1} where {F<:Function}
 end
 
 
@@ -115,18 +115,18 @@ import .SD: sd, SDResult
 import .SAW: saw, SawResult, SawMethod
 import .ROV: rov, ROVMethod, ROVResult
 import .PSI: psi, PSIMethod, PSIResult
-import .PROMETHEE: promethee, PrometheeMethod, PrometheeResult 
+import .PROMETHEE: promethee, PrometheeMethod, PrometheeResult
 import .PROMETHEE: prometLinear, prometVShape, prometUShape, prometQuasi, prometLevel
-import .NDS: nds, NDSResult 
+import .NDS: nds, NDSResult
 import .MOOSRA: moosra, MoosraResult, MoosraMethod
 import .MOORA: moora, MooraMethod, MooraResult
 import .MARCOS: marcos, MarcosMethod, MarcosResult
-import .MAIRCA: mairca, MaircaMethod, MAIRCAResult 
+import .MAIRCA: mairca, MaircaMethod, MAIRCAResult
 import .MABAC: mabac, MABACResult, MabacMethod
 import .GREY: grey, GreyMethod, GreyResult
 import .Game: game, GameResult
 import .DataEnvelop: dataenvelop, DataEnvelopResult
-import .ARAS: aras, ArasMethod, ARASResult 
+import .ARAS: aras, ArasMethod, ARASResult
 import .COCOSO: cocoso, CocosoMethod, CoCoSoResult
 import .CODAS: codas, CodasMethod, CODASResult
 import .COPRAS: copras, CoprasMethod, COPRASResult
@@ -141,11 +141,12 @@ import .PIV: piv, PIVResult, PIVMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
-import .SCDM: laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
+import .SCDM:
+    laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
 
 import .GreyNumbers: GreyNumber, kernel, whitenizate
 
-import .Utilities: * 
+import .Utilities: *
 using .Utilities
 
 # export imported functions
@@ -153,7 +154,7 @@ export DataFrame
 export Utilities
 
 # export MCDM methods
-export MCDMMethod 
+export MCDMMethod
 export ArasMethod
 export CocosoMethod
 export CodasMethod

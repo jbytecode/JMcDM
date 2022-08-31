@@ -1,11 +1,11 @@
-module CODAS 
+module CODAS
 
 export codas, CodasMethod, CODASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct CODASResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -39,7 +39,7 @@ Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, w
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
+ - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
  - `tau::Float64`: tau parameter for the algorithm. The default is 0.02.
 
  # Description 
@@ -89,11 +89,16 @@ julia> result.scores
 # References
 Keshavarz Ghorabaee, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2016). A new combinative distance-based assessment (CODAS) method for multi-criteria decision-making. Economic Computation & Economic Cybernetics Studies & Research, 50(3), 25-44.
 """
-function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{F,1}; tau::Float64=0.02)::CODASResult where {F <: Function}
+function codas(
+    decisionMat::DataFrame,
+    weight::Array{Float64,1},
+    fns::Array{F,1};
+    tau::Float64 = 0.02,
+)::CODASResult where {F<:Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
-    
+
     nrows, ncols = size(decisionMat)
     w = unitize(weight)
 
@@ -102,78 +107,72 @@ function codas(decisionMat::DataFrame, weight::Array{Float64,1}, fns::Array{F,1}
 
     A = similar(decisionMat)
 
-    for i in 1:ncols
+    for i = 1:ncols
         if fns[i] == maximum
             @inbounds A[:, i] = decisionMat[:, i] ./ colMax[i]
         elseif fns[i] == minimum
             @inbounds A[:, i] = colMin[i] ./ decisionMat[:, i]
-        end  
+        end
     end
 
     wA = similar(A)
 
-    for i in 1:ncols
+    for i = 1:ncols
         @inbounds wA[:, i] = A[:, i] .* w[i]
     end
 
     wAmin = colmins(wA)
 
     E = similar(A)
-    for i in 1:nrows
-        for j in 1:ncols
-            E[i,j] = (wA[i,j] .- wAmin[j])^2
+    for i = 1:nrows
+        for j = 1:ncols
+            E[i, j] = (wA[i, j] .- wAmin[j])^2
         end
     end
 
     Euc = Vector{Any}(undef, nrows)
-    for i in 1:nrows
-        Euc[i] = sqrt(sum(E[i,:]))
+    for i = 1:nrows
+        Euc[i] = sqrt(sum(E[i, :]))
     end
 
     T = similar(A)
-    for i in 1:nrows
-        for j in 1:ncols
-            T[i,j] = abs(wA[i,j] .- wAmin[j])
+    for i = 1:nrows
+        for j = 1:ncols
+            T[i, j] = abs(wA[i, j] .- wAmin[j])
         end
     end
 
     Tax = Vector{Any}(undef, nrows)
-    for i in 1:nrows
-        Tax[i] = sum(T[i,:])
+    for i = 1:nrows
+        Tax[i] = sum(T[i, :])
     end
 
     EA = Matrix{Any}(undef, nrows, nrows)
     TA = Matrix{Any}(undef, nrows, nrows)
     RA = Matrix{Any}(undef, nrows, nrows)
 
-    for i in 1:nrows
-        for j in 1:nrows
-            EA[i,j] = Euc[i] - Euc[j]
-            TA[i,j] = Tax[i] - Tax[j]
+    for i = 1:nrows
+        for j = 1:nrows
+            EA[i, j] = Euc[i] - Euc[j]
+            TA[i, j] = Tax[i] - Tax[j]
             if abs(Euc[i] - Euc[j]) < tau
-                RA[i,j] = 0
+                RA[i, j] = 0
             else
-                RA[i,j] = 1
+                RA[i, j] = 1
             end
         end
     end
 
     scores = Vector{Any}(undef, nrows)
-    for i in 1:nrows
-        scores[i] = sum(EA[i,:] .+ (RA[i,:] .* TA[i,:]))
+    for i = 1:nrows
+        scores[i] = sum(EA[i, :] .+ (RA[i, :] .* TA[i, :]))
     end
 
-    rankings = sortperm(scores)    
-    bestIndex = rankings |> last   
+    rankings = sortperm(scores)
+    bestIndex = rankings |> last
 
-    result = CODASResult(
-        decisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
-    
+    result = CODASResult(decisionMat, w, scores, rankings, bestIndex)
+
     return result
 end
 
@@ -192,26 +191,20 @@ codas() applies the CODAS method to rank n alternatives subject to m criteria an
 # Output 
 - `::CODASResult`: CODASResult object that holds multiple outputs including scores and best index.
 """
-function codas(setting::MCDMSetting; tau::Float64=0.02)::CODASResult
-    codas(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        tau = tau
-    )
+function codas(setting::MCDMSetting; tau::Float64 = 0.02)::CODASResult
+    codas(setting.df, setting.weights, setting.fns, tau = tau)
 end
 
 
-function codas(mat::Matrix, weight::Array{Float64,1}, fns::Array{F,1}; tau::Float64=0.02)::CODASResult  where {F <: Function}
-    codas(
-        makeDecisionMatrix(mat),
-        weight,
-        fns,
-        tau = tau
-    )
+function codas(
+    mat::Matrix,
+    weight::Array{Float64,1},
+    fns::Array{F,1};
+    tau::Float64 = 0.02,
+)::CODASResult where {F<:Function}
+    codas(makeDecisionMatrix(mat), weight, fns, tau = tau)
 end
 
 
 
 end # end of module CODAS 
-

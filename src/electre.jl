@@ -1,11 +1,11 @@
-module ELECTRE 
+module ELECTRE
 
 export electre, ElectreMethod, ElectreResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct ElectreResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -20,8 +20,7 @@ struct ElectreResult <: MCDMResult
     bestIndex::Tuple
 end
 
-struct ElectreMethod <: MCDMMethod 
-end 
+struct ElectreMethod <: MCDMMethod end
 
 function Base.show(io::IO, result::ElectreResult)
     println(io, "Best indices:")
@@ -37,7 +36,7 @@ for a given matrix and weights.
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either minimize or maximize.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
 
 # Description 
 electre() applies the ELECTRE method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.
@@ -94,7 +93,11 @@ julia> result.D
 Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastirmali
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
-function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::ElectreResult where {F <: Function}
+function electre(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::ElectreResult where {F<:Function}
 
     w = unitize(weights)
 
@@ -108,21 +111,21 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
     fitnessTable = []
     nonfitnessTable = []
 
-    for i in 1:nalternatives
-        for j in 1:nalternatives
-            if i != j 
+    for i = 1:nalternatives
+        for j = 1:nalternatives
+            if i != j
                 betterlist = []
                 worselist = []
-                for h in 1:ncriteria
+                for h = 1:ncriteria
                     if fns[h] == maximum
                         if weightednormalizedMat[i, h] >= weightednormalizedMat[j, h]
-                            push!(betterlist, h)    
+                            push!(betterlist, h)
                         else
                             push!(worselist, h)
                         end
                     else
                         if weightednormalizedMat[i, h] <= weightednormalizedMat[j, h]
-                push!(betterlist, h)    
+                            push!(betterlist, h)
                         else
                             push!(worselist, h)
                         end
@@ -144,7 +147,7 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         i = elements[:i]
         j = elements[:j]
         elemlist = elements[:set]
-    
+
         CC = sum(w[elemlist])
         fitnessmatrix[i, j] = CC
     end
@@ -154,13 +157,13 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         i = elements[:i]
         j = elements[:j]
         elemlist = elements[:set]
-        
-        r_ik       = weightednormalizedMat[i, elemlist]
-        r_jk       = weightednormalizedMat[j, elemlist]
-        r_ik_full  = weightednormalizedMat[i, :]
-        r_jk_full  = weightednormalizedMat[j, :]
 
-        if length(r_ik) > 0 && length(r_jk) > 0 
+        r_ik = weightednormalizedMat[i, elemlist]
+        r_jk = weightednormalizedMat[j, elemlist]
+        r_ik_full = weightednormalizedMat[i, :]
+        r_jk_full = weightednormalizedMat[j, :]
+
+        if length(r_ik) > 0 && length(r_jk) > 0
             nom = maximum(abs.(r_ik - r_jk))
             dom = maximum(abs.(r_ik_full - r_jk_full))
             nonfitnessmatrix[i, j] = nom / dom
@@ -172,12 +175,12 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
 
     C = zeros(zerotype, nalternatives)
     D = zeros(zerotype, nalternatives)
-    for i in 1:nalternatives
+    for i = 1:nalternatives
         C[i] = sum(fitnessmatrix[i, :]) - sum(fitnessmatrix[:, i])
         D[i] = sum(nonfitnessmatrix[i, :]) - sum(nonfitnessmatrix[:, i])
     end
 
-    best_C_index = sortperm(C) |> last 
+    best_C_index = sortperm(C) |> last
     best_D_index = sortperm(D) |> first
     best = nothing
 
@@ -197,7 +200,7 @@ function electre(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F
         nonfitnessmatrix,
         C,
         D,
-        best     
+        best,
     )
 
     return result
@@ -224,20 +227,15 @@ are reported as the solution.
 - `::ElectreResult`: ElectreResult object that holds multiple outputs including scores and best index.
 """
 function electre(setting::MCDMSetting)::ElectreResult
-    electre(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    electre(setting.df, setting.weights, setting.fns)
+end
 
-function electre(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1})::ElectreResult where {F <: Function}
-    electre(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
-end 
+function electre(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::ElectreResult where {F<:Function}
+    electre(makeDecisionMatrix(mat), weights, fns)
+end
 
 end # end of module ELECTRE 
-

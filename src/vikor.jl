@@ -1,13 +1,13 @@
-module VIKOR 
+module VIKOR
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct VikorMethod <: MCDMMethod
     v::Float64
-end 
+end
 
 VikorMethod()::VikorMethod = VikorMethod(0.5)
 
@@ -39,7 +39,7 @@ Apply VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian) me
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `v::Float64`: Optional algorithm parameter. Default is 0.5.
 
 # Description 
@@ -87,7 +87,12 @@ julia> result.bestIndex
 Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastirmali
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
-function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}; v::Float64=0.5)::VikorResult where {F <: Function}
+function vikor(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    v::Float64 = 0.5,
+)::VikorResult where {F<:Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
@@ -100,52 +105,48 @@ function vikor(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1
 
     A = similar(decisionMat)
 
-    for i in 1:nalternatives
-        for j in 1:ncriteria
+    for i = 1:nalternatives
+        for j = 1:ncriteria
             if fns[j] == maximum
-                @inbounds A[i, j] = abs((col_max[j] - decisionMat[i, j]) / (col_max[j] - col_min[j]))
-            elseif fns[j] == minimum 
-                @inbounds A[i, j] = abs((decisionMat[i, j] - col_min[j]) / (col_max[j] - col_min[j]))
+                @inbounds A[i, j] =
+                    abs((col_max[j] - decisionMat[i, j]) / (col_max[j] - col_min[j]))
+            elseif fns[j] == minimum
+                @inbounds A[i, j] =
+                    abs((decisionMat[i, j] - col_min[j]) / (col_max[j] - col_min[j]))
             else
                 @warn fns[j]
                 error("Function must be either maximum or minimum.")
-            end    
+            end
         end
     end
-   
+
     weightedA = w * A
 
-    
+
     s = Vector{Any}(undef, nalternatives)
     r = similar(s)
     q = similar(s)
 
-    for i in 1:nalternatives
-        s[i] = sum(weightedA[i,:])
-        r[i] = maximum(weightedA[i,:])
+    for i = 1:nalternatives
+        s[i] = sum(weightedA[i, :])
+        r[i] = maximum(weightedA[i, :])
     end
 
     smin = minimum(s)
     smax = maximum(s)
     rmin = minimum(r)
     rmax = maximum(r)
-    q = v .* (( (s .- smin) ./ (smax .- smin))) + (1 - v) .* (( (r .- rmin) ./ (rmax .- rmin)))
+    q =
+        v .* (((s .- smin) ./ (smax .- smin))) +
+        (1 - v) .* (((r .- rmin) ./ (rmax .- rmin)))
 
 
     scores = q
 
     # select the one with minimum score
-    best_index = sortperm(q) |> first 
+    best_index = sortperm(q) |> first
 
-    result = VikorResult(
-        decisionMat,
-        w,
-        weightedA,
-        best_index,
-        s,
-        r,
-        scores
-    )
+    result = VikorResult(decisionMat, w, weightedA, best_index, s, r, scores)
     return result
 end
 
@@ -164,24 +165,19 @@ vikor() applies the VIKOR method to rank n strategies subject to m criteria whic
 # Output 
 - `::VikorResult`: VikorResult object that holds multiple outputs including scores and best index.
 """
-function vikor(setting::MCDMSetting; v::Float64=0.5)::VikorResult
-    vikor(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        v = v
-    )
-end 
+function vikor(setting::MCDMSetting; v::Float64 = 0.5)::VikorResult
+    vikor(setting.df, setting.weights, setting.fns, v = v)
+end
 
 
-function vikor(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1}; v::Float64=0.5)::VikorResult where {F <: Function}
-    vikor(
-        makeDecisionMatrix(mat),
-        weights,
-        fns,
-        v = v
-    )
-end 
+function vikor(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    v::Float64 = 0.5,
+)::VikorResult where {F<:Function}
+    vikor(makeDecisionMatrix(mat), weights, fns, v = v)
+end
 
 
 end # end module VIKOR 

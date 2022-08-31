@@ -57,10 +57,12 @@ julia> # mcdm(df, w, fns, GreyMethod(0.6))
 ```
 
 """
-function mcdm(df::DataFrame, 
-    w::Array{Float64, 1}, 
-    fns::Array{F, 1}, 
-    method::T1)::MCDMResult where {T1 <: MCDMMethod, F <: Function}
+function mcdm(
+    df::DataFrame,
+    w::Array{Float64,1},
+    fns::Array{F,1},
+    method::T1,
+)::MCDMResult where {T1<:MCDMMethod,F<:Function}
 
     if method isa TopsisMethod
         topsis(df, w, fns)
@@ -71,7 +73,7 @@ function mcdm(df::DataFrame,
     elseif method isa ArasMethod
         aras(df, w, fns)
     elseif method isa CocosoMethod
-        cocoso(df, w, fns, lambda = method.lambda)  
+        cocoso(df, w, fns, lambda = method.lambda)
     elseif method isa CodasMethod
         codas(df, w, fns, tau = method.tau)
     elseif method isa CoprasMethod
@@ -82,9 +84,9 @@ function mcdm(df::DataFrame,
         edas(df, w, fns)
     elseif method isa GreyMethod
         grey(df, w, fns, zeta = method.zeta)
-    elseif method isa MabacMethod 
+    elseif method isa MabacMethod
         mabac(df, w, fns)
-    elseif method isa MaircaMethod 
+    elseif method isa MaircaMethod
         mairca(df, w, fns)
     elseif method isa MooraMethod
         moora(df, w, fns)
@@ -96,7 +98,7 @@ function mcdm(df::DataFrame,
         vikor(df, w, fns, v = method.v)
     elseif method isa WaspasMethod
         waspas(df, w, fns, lambda = method.lambda)
-    elseif method isa WPMMethod 
+    elseif method isa WPMMethod
         wpm(df, w, fns)
     elseif method isa MarcosMethod
         marcos(df, w, fns)
@@ -108,9 +110,9 @@ function mcdm(df::DataFrame,
     elseif method isa PIVMethod
         piv(df, w, fns)
     else
-        error("Method is not defined") 
-    end 
-end 
+        error("Method is not defined")
+    end
+end
 
 
 
@@ -144,13 +146,9 @@ julia> # mcdm(setting, GreyMethod(0.6))
 
 """
 function mcdm(
-    setting::MCDMSetting, 
-    method::T1 = TopsisMethod())::MCDMResult where {T1 <: MCDMMethod}
+    setting::MCDMSetting,
+    method::T1 = TopsisMethod(),
+)::MCDMResult where {T1<:MCDMMethod}
 
-    mcdm(
-        setting.df,
-        setting.weights,
-        setting.fns, 
-        method
-    )
-end 
+    mcdm(setting.df, setting.weights, setting.fns, method)
+end

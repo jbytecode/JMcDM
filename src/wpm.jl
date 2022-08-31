@@ -1,14 +1,13 @@
-module WPM 
+module WPM
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 export WPMMethod, WPMResult, wpm
 
-struct WPMMethod <: MCDMMethod
-end 
+struct WPMMethod <: MCDMMethod end
 
 struct WPMResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -37,7 +36,7 @@ Apply WPM (Weighted Product Method) for a given matrix and weights.
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
 wpm() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
@@ -92,46 +91,43 @@ julia> result.bestIndex
 # References
 Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of Weighted Aggregated Sum Product Assessment. Elektronika Ir Elektrotechnika, 122(6), 3-6. https://doi.org/10.5755/j01.eee.122.6.1810
 """
-function wpm(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F, 1})::WPMResult  where {F <: Function}
-   
+function wpm(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::WPMResult where {F<:Function}
+
     row, col = size(decisionMat)
-    
+
     zerotype = eltype(decisionMat[!, 1])
 
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
-    
+
     colminmax = zeros(zerotype, col)
-    
-    @inbounds for i in 1:col
+
+    @inbounds for i = 1:col
         colminmax[i] = decisionMat[:, i] |> fns[i]
         if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i] 
-        elseif fns[i] == minimum 
+            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+        elseif fns[i] == minimum
             normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
         end
-    end    
+    end
     scoreMat = similar(normalizedDecisionMat)
-    for i in 1:col
-        scoreMat[:, i] = normalizedDecisionMat[:, i].^w[i]
+    for i = 1:col
+        scoreMat[:, i] = normalizedDecisionMat[:, i] .^ w[i]
     end
 
     scores = zeros(zerotype, row)
-    for i in 1:row
+    for i = 1:row
         scores[i] = prod(scoreMat[i, :])
     end
     rankings = sortperm(scores)
-    
+
     bestIndex = rankings |> last
-    
-    result = WPMResult(
-        decisionMat,
-        normalizedDecisionMat,
-        w,
-        scores,
-        rankings,
-        bestIndex
-    )
+
+    result = WPMResult(decisionMat, normalizedDecisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
@@ -152,20 +148,16 @@ either maximized or minimized.
 - `::WPMResult`: WPMResult object that holds multiple outputs including scores, rankings, and best index.
 """
 function wpm(setting::MCDMSetting)::WPMResult
-    wpm(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
-end 
+    wpm(setting.df, setting.weights, setting.fns)
+end
 
 
-function wpm(mat::Matrix, weights::Array{Float64,1}, fns::Array{F, 1})::WPMResult  where {F <: Function}
-    wpm(
-        makeDecisionMatrix(mat),
-        weights,
-        fns
-    )
+function wpm(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::WPMResult where {F<:Function}
+    wpm(makeDecisionMatrix(mat), weights, fns)
 end
 
 

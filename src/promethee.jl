@@ -1,21 +1,25 @@
-module PROMETHEE 
+module PROMETHEE
 
 export promethee, PrometheeMethod, PrometheeResult
 export prometLevel, prometLinear, prometQuasi, prometUShape
 export prometVShape
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 
-struct PrometheeMethod <: MCDMMethod 
-    pref::Array{Function, 1}
-    qs::Array{Union{Nothing, Float64}, 1}
-    ps::Array{Union{Nothing, Float64}, 1}
-end 
+struct PrometheeMethod <: MCDMMethod
+    pref::Array{Function,1}
+    qs::Array{Union{Nothing,Float64},1}
+    ps::Array{Union{Nothing,Float64},1}
+end
 
-PrometheeMethod(pref::Array{<: Function, 1}, qs::Array{Float64,1}, ps::Array{Float64, 1})::PrometheeMethod  = PrometheeMethod(pref, qs, ps) 
+PrometheeMethod(
+    pref::Array{<:Function,1},
+    qs::Array{Float64,1},
+    ps::Array{Float64,1},
+)::PrometheeMethod = PrometheeMethod(pref, qs, ps)
 
 
 struct PrometheeResult <: MCDMResult
@@ -97,7 +101,7 @@ function prometLevel(d::Number, q::Number, p::Number)::Float64
     elseif (0 < d <= p)
         1 / 2
     else
-       1
+        1
     end
 end
 
@@ -109,7 +113,7 @@ Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evalua
 # Arguments:
  - `decisionMatrix::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of functions that are either maximum or minimum.
+ - `fns::Array{<:Function, 1}`: m-vector of functions that are either maximum or minimum.
  - `prefs::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
  - `qs::Array{Float64, 1}`: m-vector of q parameters that is used in corresponding preference function.
  - `ps::Array{Float64, 1}`: m-vector of p parameters that is used in corresponding preference function
@@ -178,46 +182,42 @@ julia> result.bestIndex
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function promethee(
-    decisionMatrix::DataFrame, 
-    weights::Array{Float64,1}, 
-    fns::Array{F,1}, 
-    prefs::Array{P,1}, 
-    qs::Array, 
-    ps::Array)::PrometheeResult where {F, P <: Function}
+    decisionMatrix::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+    prefs::Array{P,1},
+    qs::Array,
+    ps::Array,
+)::PrometheeResult where {F,P<:Function}
 
     actionCount, criteriaCount = size(decisionMatrix)
 
     dValues = zeros(Float64, criteriaCount, actionCount, actionCount)
 
-    for c in 1:criteriaCount, i in 1:actionCount, j in 1:actionCount
-        dValues[c,i,j] = fns[c]([-1, 1]) * (decisionMatrix[i,c] - decisionMatrix[j,c])
+    for c = 1:criteriaCount, i = 1:actionCount, j = 1:actionCount
+        dValues[c, i, j] = fns[c]([-1, 1]) * (decisionMatrix[i, c] - decisionMatrix[j, c])
     end
 
     pValues = zeros(Float64, criteriaCount, actionCount, actionCount)
 
-    for c in 1:criteriaCount, i in 1:actionCount, j in 1:actionCount
-        pValues[c,i,j] = prefs[c](dValues[c,i,j], qs[c], ps[c])
+    for c = 1:criteriaCount, i = 1:actionCount, j = 1:actionCount
+        pValues[c, i, j] = prefs[c](dValues[c, i, j], qs[c], ps[c])
     end
 
     pValues .*= weights
-    
-    flows = sum(pValues, dims=1)[1,:,:]
 
-    negSum = sum(flows, dims=1)[1,:] / (actionCount - 1)
-    posSum = sum(flows, dims=2)[:,1] / (actionCount - 1)
+    flows = sum(pValues, dims = 1)[1, :, :]
+
+    negSum = sum(flows, dims = 1)[1, :] / (actionCount - 1)
+    posSum = sum(flows, dims = 2)[:, 1] / (actionCount - 1)
 
     scores = negSum - posSum
 
     rankings = scores |> sortperm
-    
+
     bestIndex = rankings |> last
 
-    return PrometheeResult(
-        decisionMatrix, 
-        weights, 
-        scores, 
-        rankings, 
-        bestIndex)
+    return PrometheeResult(decisionMatrix, weights, scores, rankings, bestIndex)
 
 end
 
@@ -241,33 +241,25 @@ promethee() applies the PROMETHEE method to rank n strategies subject to m crite
 - `::PrometheeResult`: PrometheeResult object that holds multiple outputs including scores and best index.
 
 """
-function promethee(setting::MCDMSetting, prefs::Array{Function,1}, qs::Array, ps::Array)::PrometheeResult
-    promethee(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        prefs,
-        qs,
-        ps
-    )
-end 
+function promethee(
+    setting::MCDMSetting,
+    prefs::Array{F,1},
+    qs::Array,
+    ps::Array,
+)::PrometheeResult where {F<:Function}
+    promethee(setting.df, setting.weights, setting.fns, prefs, qs, ps)
+end
 
 
 function promethee(
-    mat::Matrix, 
-    weights::Array{Float64,1}, 
-    fns::Array{F ,1}, 
-    prefs::Array{P,1}, 
-    qs::Array, 
-    ps::Array)::PrometheeResult where {F, P <: Function}
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+    prefs::Array{P,1},
+    qs::Array,
+    ps::Array,
+)::PrometheeResult where {F,P<:Function}
 
-    promethee(
-        makeDecisionMatrix(mat),
-        weights,
-        fns,
-        prefs,
-        qs,
-        ps
-    )
-end 
+    promethee(makeDecisionMatrix(mat), weights, fns, prefs, qs, ps)
+end
 end # end of module PROMETHEE

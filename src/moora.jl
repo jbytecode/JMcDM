@@ -1,24 +1,24 @@
-module MOORA 
+module MOORA
 
 export moora, MooraMethod, MooraResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
-struct MooraMethod <: MCDMMethod 
+struct MooraMethod <: MCDMMethod
     method::Symbol
-end 
+end
 
-MooraMethod() :: MooraMethod = MooraMethod(:reference)
+MooraMethod()::MooraMethod = MooraMethod(:reference)
 
 struct MooraResult <: MCDMResult
     mooraType::Symbol
     decisionMatrix::DataFrame
     weights::Array{Float64,1}
     weightedDecisionMatrix::DataFrame
-    referenceMatrix::Union{DataFrame, Nothing}
+    referenceMatrix::Union{DataFrame,Nothing}
     scores::Vector
     bestIndex::Int64
 end
@@ -39,7 +39,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
 
 # Description 
 moora() applies the MOORA method to rank n strategies subject to m criteria which are supposed to be 
@@ -93,7 +93,11 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MooraResult where {F <: Function}
+function moora_ref(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MooraResult where {F<:Function}
 
     w = unitize(weights)
 
@@ -107,7 +111,7 @@ function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array
     cmins = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
     refmat = similar(weightednormalizedMat)
-    
+
     #=
     # This implementation is buggy and will be removed 
     # in later releases. 
@@ -125,12 +129,14 @@ function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array
     end
     =#
 
-    for rowind in 1:nalternatives
-        for colind in 1:ncriteria
-            if fns[colind] == maximum 
-                refmat[rowind, colind] = cmaxs[colind] - weightednormalizedMat[rowind, colind]
+    for rowind = 1:nalternatives
+        for colind = 1:ncriteria
+            if fns[colind] == maximum
+                refmat[rowind, colind] =
+                    cmaxs[colind] - weightednormalizedMat[rowind, colind]
             elseif fns[colind] == minimum
-                refmat[rowind, colind] = weightednormalizedMat[rowind, colind] - cmins[colind]
+                refmat[rowind, colind] =
+                    weightednormalizedMat[rowind, colind] - cmins[colind]
             else
                 @warn fns[colind]
                 error("Function must be either maximize or minimize")
@@ -140,17 +146,17 @@ function moora_ref(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array
 
     scores = rmaxs = rowmaxs(refmat)
 
-    bestIndex = sortperm(rmaxs) |> first 
+    bestIndex = sortperm(rmaxs) |> first
 
     result = MooraResult(
-       :reference, 
-       decisionMat,
-       w,
-       weightednormalizedMat,
-       refmat,
-       scores,
-       bestIndex
-   )
+        :reference,
+        decisionMat,
+        w,
+        weightednormalizedMat,
+        refmat,
+        scores,
+        bestIndex,
+    )
 
     return result
 end
@@ -165,7 +171,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
 
 # Description 
 moora() applies the MOORA method to rank n strategies subject to m criteria which are supposed to be 
@@ -180,7 +186,11 @@ reference method, look at `moora_ref`.
 KUNDAKCI, Nilsen. "Combined multi-criteria decision making approach based on MACBETH 
 and MULTI-MOORA methods." Alphanumeric Journal 4.1 (2016): 17-26.
 """
-function moora_ratio(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::MooraResult where {F <: Function}
+function moora_ratio(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::MooraResult where {F<:Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
@@ -190,36 +200,38 @@ function moora_ratio(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Arr
     weightednormalizedMat = similar(mat)
 
     zerotype = eltype(mat[1, :])
-    
-    for i in 1:ncriteria
+
+    for i = 1:ncriteria
         normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
         weightednormalizedMat[:, i] = normalizedMatrix[:, i] .* w[i]
     end
 
     scores = zeros(zerotype, nalternatives)
-    
-    for i in 1:nalternatives
-        for j in 1:ncriteria
-            if fns[j] == maximum 
+
+    for i = 1:nalternatives
+        for j = 1:ncriteria
+            if fns[j] == maximum
                 scores[i] += weightednormalizedMat[i, j]
             elseif fns[j] == minimum
                 scores[i] -= weightednormalizedMat[i, j]
             else
-                error("In Moora, direction of optimization must be either minimum or maximum.")
+                error(
+                    "In Moora, direction of optimization must be either minimum or maximum.",
+                )
             end
         end
     end
 
-    bestIndex = scores |> sortperm |> last  
+    bestIndex = scores |> sortperm |> last
 
     return MooraResult(
-        :ratio, 
-       decisionMat,
-       w,
-       DataFrame(weightednormalizedMat, :auto),
-       nothing, # refmat
-       scores,
-       bestIndex
+        :ratio,
+        decisionMat,
+        w,
+        DataFrame(weightednormalizedMat, :auto),
+        nothing, # refmat
+        scores,
+        bestIndex,
     )
 end
 
@@ -232,7 +244,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fns::Array{Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `method::Symbol`: Either `:reference` or `:ratio`. By default, it is `:reference`.
 
 
@@ -255,13 +267,18 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
-function moora(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1}; method::Symbol = :reference)::MooraResult where {F <: Function}
-    if method == :reference 
+function moora(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    method::Symbol = :reference,
+)::MooraResult where {F<:Function}
+    if method == :reference
         return moora_ref(decisionMat, weights, fns)
-    elseif method == :ratio 
+    elseif method == :ratio
         return moora_ratio(decisionMat, weights, fns)
     else
-        @error "Method not found: " method 
+        @error "Method not found: " method
         @error "Moora is defined for methods :reference and :ratio"
         error("Terminating.")
     end
@@ -284,22 +301,17 @@ moora() applies the MOORA method to rank n strategies subject to m criteria whic
 - `::MooraResult`: MooraResult object that holds multiple outputs including scores and best index.
 """
 function moora(setting::MCDMSetting; method::Symbol = :reference)::MooraResult
-    moora(
-        setting.df,
-        setting.weights,
-        setting.fns,
-        method = method
-    )
-end 
+    moora(setting.df, setting.weights, setting.fns, method = method)
+end
 
 
-function moora(mat::Matrix, weights::Array{Float64,1}, fns::Array{F ,1}; method::Symbol = :reference)::MooraResult  where {F <: Function}
-    moora(
-        makeDecisionMatrix(mat),
-        weights,
-        fns,
-        method = method
-    )
-end 
+function moora(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1};
+    method::Symbol = :reference,
+)::MooraResult where {F<:Function}
+    moora(makeDecisionMatrix(mat), weights, fns, method = method)
+end
 
 end # end of module MOORA 

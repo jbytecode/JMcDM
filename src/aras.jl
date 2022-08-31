@@ -1,14 +1,13 @@
-module ARAS 
+module ARAS
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
 using DataFrames
 
 
-struct ArasMethod <: MCDMMethod 
-end 
+struct ArasMethod <: MCDMMethod end
 
 struct ARASResult <: MCDMResult
     referenceRow::Vector
@@ -37,7 +36,7 @@ Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, t
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
+ - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
 
  # Description 
 aras() applies the ARAS method to rank n alternatives subject to m criteria and criteria type vector.
@@ -80,17 +79,21 @@ julia> result.scores
 Zavadskas, E. K., & Turskis, Z. (2010). A new additive ratio assessment (ARAS) method in multicriteria decision‐making. Technological and Economic Development of Economy, 16(2), 159-172.
 Yıldırım, B. F. (2015). "Çok Kriterli Karar Verme Problemlerinde ARAS Yöntemi". Kafkas Üniversitesi İktisadi ve İdari Bilimler Fakültesi Dergisi, 6 (9), 285-296. http://dx.doi.org/10.18025/kauiibf.65151
 """
-function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F ,1})::ARASResult where {F <: Function}
+function aras(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fs::Array{F,1},
+)::ARASResult where {F<:Function}
 
     # mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
-    
+
     nrows, ncols = size(mat)
     w = unitize(weights)
     referenceRow = apply_columns(fs, mat)
     extendMat = [mat; referenceRow']
 
-    for col in 1:ncols
+    for col = 1:ncols
         if fs[col] == minimum
             extendMat[:, col] = 1 ./ extendMat[:, col]
         end
@@ -98,8 +101,8 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F ,1}
 
     normalizedMat = similar(extendMat)
 
-    for col in 1:ncols
-        for row in 1:nrows + 1
+    for col = 1:ncols
+        for row = 1:nrows+1
             normalizedMat[row, col] = extendMat[row, col] ./ sum(extendMat[:, col])
         end
     end
@@ -107,13 +110,13 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F ,1}
     # optimality = similar(normalizedMat)
 
     optimality_degrees = Vector(undef, nrows + 1)
-    for i in 1:nrows + 1
-        optimality_degrees[i] = w .* normalizedMat[i, :] |> sum 
+    for i = 1:nrows+1
+        optimality_degrees[i] = w .* normalizedMat[i, :] |> sum
     end
 
     utility_degrees = Vector(undef, nrows)
-    for i in 1:nrows
-        utility_degrees[i] = optimality_degrees[i] /  optimality_degrees[end]
+    for i = 1:nrows
+        utility_degrees[i] = optimality_degrees[i] / optimality_degrees[end]
     end
 
     orderings = sortperm(utility_degrees)
@@ -126,9 +129,9 @@ function aras(decisionMat::DataFrame, weights::Array{Float64,1}, fs::Array{F ,1}
         optimality_degrees,
         utility_degrees,
         orderings,
-        bestIndex
+        bestIndex,
     )
-    
+
     return result
 end
 
@@ -146,14 +149,14 @@ aras() applies the ARAS method to rank n alternatives subject to m criteria and 
 - `::ARASResult`: ARASResult object that holds multiple outputs including scores and best index.
 """
 function aras(setting::MCDMSetting)::ARASResult
-    aras(
-        setting.df,
-        setting.weights,
-        setting.fns
-    )
+    aras(setting.df, setting.weights, setting.fns)
 end
 
-function aras(mat::Matrix, weights::Array{Float64, 1}, fns::Array{F, 1})::ARASResult  where {F <: Function}
-	return aras(makeDecisionMatrix(mat), weights, fns)
+function aras(
+    mat::Matrix,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::ARASResult where {F<:Function}
+    return aras(makeDecisionMatrix(mat), weights, fns)
 end
 end # end of module ARAS

@@ -3,9 +3,9 @@ module PIV
 export piv, PIVResult, PIVMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities 
+using ..Utilities
 
-using DataFrames 
+using DataFrames
 
 struct PIVResult <: MCDMResult
     decisionMatrix::DataFrame
@@ -17,8 +17,7 @@ struct PIVResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct PIVMethod <: MCDMMethod
-end
+struct PIVMethod <: MCDMMethod end
 
 function Base.show(io::IO, result::PIVResult)
     println(io, "Scores:")
@@ -36,7 +35,7 @@ Apply PIV (Proximity Indexed Value) method for a given matrix, weights and, type
 # Arguments:
  - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
- - `fs::Array{Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
+ - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
 
  # Description 
 piv() applies the PIV method to rank n alternatives subject to m criteria and criteria type vector. Alternatives 
@@ -52,8 +51,12 @@ Sameera Mufazzal, S.M. Muzakkir, A new multi-criterion decision making (MCDM) me
 Computers & Industrial Engineering, Volume 119, 2018, Pages 427-438, ISSN 0360-8352,
 https://doi.org/10.1016/j.cie.2018.03.045.
 """
-function piv(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})::PIVResult where {F <: Function}
-    
+function piv(
+    decisionMat::DataFrame,
+    weights::Array{Float64,1},
+    fns::Array{F,1},
+)::PIVResult where {F<:Function}
+
     normalized_dec_mat = Utilities.normalize(decisionMat)
     weighted_norm_mat = weights * normalized_dec_mat
 
@@ -63,29 +66,30 @@ function piv(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{F,1})
 
     finalmat = similar(weighted_norm_mat)
 
-    @inbounds for i in 1:nrow
-        for j in 1:ncol
+    @inbounds for i = 1:nrow
+        for j = 1:ncol
             if fns[j] == maximum
-                finalmat[i,j] = desiredvalues[j] - weighted_norm_mat[i,j]
-            elseif fns[j] == minimum 
-                finalmat[i,j] = weighted_norm_mat[i,j] - desiredvalues[j]
+                finalmat[i, j] = desiredvalues[j] - weighted_norm_mat[i, j]
+            elseif fns[j] == minimum
+                finalmat[i, j] = weighted_norm_mat[i, j] - desiredvalues[j]
             end
         end
     end
 
     di = Utilities.apply_rows(sum, finalmat)
 
-    ranks = di |> sortperm 
-    bestIndex = ranks |> first 
+    ranks = di |> sortperm
+    bestIndex = ranks |> first
 
     return PIVResult(
-        decisionMat, 
-        normalized_dec_mat, 
-        weighted_norm_mat, 
-        weights, 
-        di, 
+        decisionMat,
+        normalized_dec_mat,
+        weighted_norm_mat,
+        weights,
+        di,
         ranks,
-        bestIndex)
-end 
+        bestIndex,
+    )
+end
 
 end # End of Module PIV 
