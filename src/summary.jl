@@ -48,7 +48,7 @@ function summary(
     weights::Array{Float64,1},
     fns::Array{F,1},
     methods::Array{Symbol,1},
-) where {F<:Function}
+)::DataFrame where {F<:Function}
 
     nmethods = length(methods)
     nalternatives, _ = size(decisionMat)
@@ -229,6 +229,6 @@ Apply more methods for a given decision problem. The methods accept standart num
 # Description 
     This method outputs a summarized output using more than MCDM methods in a comparable way. 
 """
-function summary(setting::MCDMSetting, methods::Array{Symbol,1})
+function summary(setting::MCDMSetting, methods::Array{Symbol,1})::DataFrame
     summary(setting.df, setting.weights, setting.fns, methods)
 end

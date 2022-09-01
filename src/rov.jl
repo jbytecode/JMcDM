@@ -14,6 +14,7 @@ struct ROVResult <: MCDMResult
     uplus::Vector
     scores::Vector
     ranks::Array{Int64,1}
+    bestIndex::Int64
 end
 
 function Base.show(io::IO, result::ROVResult)
@@ -25,6 +26,8 @@ function Base.show(io::IO, result::ROVResult)
     println(io, result.uminus)
     println(io, "UPlus:")
     println(io, result.uplus)
+    println(io, "Best Index:")
+    println(io, result.bestIndex)
 end
 
 """
@@ -81,7 +84,7 @@ function rov(
     decisionMat::DataFrame,
     weights::Array{Float64,1},
     fns::Array{F,1},
-) where {F<:Function}
+)::ROVResult where {F<:Function}
     n, p = size(decisionMat)
 
     decmat = Matrix(decisionMat)
@@ -125,8 +128,9 @@ function rov(
     u .= (uminus .+ uplus) ./ 2.0
 
     ranks = u |> reverse |> sortperm
+    bestIndex = ranks |> first
 
-    return ROVResult(uminus, uplus, u, ranks)
+    return ROVResult(uminus, uplus, u, ranks, bestIndex)
 end
 
 

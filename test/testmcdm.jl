@@ -96,10 +96,14 @@
 
         fns = [minimum, minimum, minimum, minimum, maximum, minimum, minimum, maximum]
 
+        result1::ROVResult = rov(mat, w, fns)
 
-        result = rov(df, w, fns)
+        result::ROVResult = rov(df, w, fns)
+
+        @test isapprox(result1.scores, result.scores, atol = tol)
 
         @test result isa ROVResult
+        @test result1 isa ROVResult
         @test isapprox(
             result.uminus,
             [
@@ -110,7 +114,6 @@
             ],
             atol = tol,
         )
-
         @test isapprox(
             result.uplus,
             [0.03331764705882352, 0.0472, 0.06255882352941176, 0.029700000000000004],
@@ -167,6 +170,14 @@
         @test result isa SDResult
         @test isapprox(
             result.weights,
+            [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
+            atol = tol,
+        )
+
+        result1 = sd(mat, fns)
+        @test result1 isa SDResult
+        @test isapprox(
+            result1.weights,
             [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
             atol = tol,
         )
@@ -690,6 +701,7 @@
             )
             weights = [0.25, 0.25, 0.25, 0.25]
             fns = [maximum, maximum, minimum, maximum]
+            
             result = saw(df, weights, fns)
 
             @test result isa SawResult
@@ -699,6 +711,17 @@
                 [0.681277, 0.725151, 0.709871, 0.784976],
                 atol = tol,
             )
+
+            result2 = saw(Matrix(df), weights, fns)
+
+            @test result2 isa SawResult
+
+            @test isapprox(
+                result2.scores,
+                [0.681277, 0.725151, 0.709871, 0.784976],
+                atol = tol,
+            )
+
         end
 
         @testset "Example 2: 7 criteria × 5 alternatives " begin

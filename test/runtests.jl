@@ -10,6 +10,7 @@ const testMCDMFunctions = true
 const testSCDMFunctions = true
 const testLPBasedFunctions = true
 const testGreyMCDMFunctions = true
+const testSummary = true
 
 
 if testGreyNumbers
@@ -44,3 +45,8 @@ if testLPBasedFunctions
     @info "LP Based Tests (takes time) ..."
     include("./testlp.jl")
 end # Test LP Based Tools
+
+if testSummary
+    @info "Summary Tests ..."
+    include("./testsummary.jl")
+end # Test Summary Tools
