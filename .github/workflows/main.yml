@@ -35,9 +35,9 @@ jobs:
             ${{ runner.os }}-
       - uses: julia-actions/julia-buildpkg@latest
       - uses: julia-actions/julia-runtest@latest
-      - uses: julia-actions/julia-buildpkg@v1
-      - run: julia -e 'import Pkg; Pkg.add("DataFrames")'
-      - run: julia -e 'import Pkg; Pkg.add(Pkg.PackageSpec(path="."))'
-      - run: julia --code-coverage test/runtests.jl
-      - uses: codecov/codecov-action@v1
-      - run: bash <(curl -s https://codecov.io/bash) 
+      - uses: julia-actions/julia-processcoverage@latest
+      - uses: codecov/codecov-action@v2
+        with:
+          verbose: true
+          files: lcov.info
+
