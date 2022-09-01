@@ -1410,8 +1410,12 @@ end
         w = [0.1761, 0.2042, 0.2668, 0.1243, 0.2286]
 
         fns = [maximum, maximum, maximum, maximum, maximum]
+        fns2 = [minimum for i = 1:5]
 
         result = piv(makeDecisionMatrix(decmat), w, fns)
+        result2 = piv(makeDecisionMatrix(decmat), w, fns2)
+
+        @test result2 isa PIVResult
 
         @test result isa PIVResult
         @test isapprox(
