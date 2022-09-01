@@ -1149,6 +1149,23 @@
         @test result3.bestIndex == result.bestIndex
     end
 
+@testset "PROMETHEE group" begin 
+
+    @testset "U-Shape" begin
+        @test prometUShape(0.0, 1.0, 1.0) == 0.0
+        @test prometUShape(1.0, 1.0, 1.0) == 1.0
+    end
+
+    @testset "Quasi" begin 
+        @test prometQuasi(0.0, 0.5, 1.0) == 0.0
+        @test prometQuasi(0.6, 0.5, 1.0) == 1.0
+    end 
+
+    @testset "Level" begin
+        @test prometLevel(0, 0.5, 1.0) == 0.0
+        @test prometLevel(0.6, 0.5, 0.9) == 0.5
+        @test prometLevel(1.0, 0.5, 0.9) == 1.0
+    end
 
     @testset "PROMETHEE" begin
         tol = 0.005
@@ -1192,8 +1209,8 @@
         @test result3 isa PrometheeResult
         @test result3.scores == result.scores
         @test result3.bestIndex == result.bestIndex
-
     end
+end 
 
     @testset "CoCoSo" begin
         tol = 0.0001
