@@ -7,11 +7,13 @@ using ..Utilities
 
 using DataFrames
 
+# method is either :reference or :ratio
 struct MooraMethod <: MCDMMethod
     method::Symbol
 end
 
-MooraMethod()::MooraMethod = MooraMethod(:reference)
+
+MooraMethod()::MooraMethod = MooraMethod(:ratio)
 
 struct MooraResult <: MCDMResult
     mooraType::Symbol

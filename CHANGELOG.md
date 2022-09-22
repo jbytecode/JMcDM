@@ -1,3 +1,22 @@
+### 0.5.7
+- Copeland with vector of methods implemented. With this implementation 
+
+```julia
+  met = [
+    PIVMethod(),
+    PSIMethod(),
+    ROVMethod(),
+    SawMethod(),
+    VikorMethod(),
+    WaspasMethod(),
+    WPMMethod(),
+]
+result = copeland(df, w, fns, met)
+```
+
+type call is possible
+  
+
 ### 0.5.6 
 - Remove dependency of `makeminmax()`. Now functions take Vector{F} where {F <: Function}
 

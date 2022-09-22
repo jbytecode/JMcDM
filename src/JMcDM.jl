@@ -99,10 +99,12 @@ include("summary.jl")
 
 include("mcdm.jl")
 
-include("copeland.jl")
 include("sd.jl")
 include("rov.jl")
 include("piv.jl")
+
+include("copeland.jl")
+
 
 
 
@@ -269,6 +271,7 @@ export psi
 export moosra
 export merec
 export piv
+
 
 #  export SCDM tools
 export laplace
