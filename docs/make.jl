@@ -14,7 +14,7 @@ makedocs(
                   "Game Solver" =>  "game.md",
                   "Data Envolepment" => "dataenvelop.md",
                   "SCDM" => "scdm.md",
-				  "Utility" => "utility.md"
+		  "Utility" => "utility.md"
                  ]
         )
 

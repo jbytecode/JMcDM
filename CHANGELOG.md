@@ -1,3 +1,7 @@
+### 0.5.7 (Upcoming Release)
+- Documentation for copeland
+  
+
 ### 0.5.7
 - Copeland with vector of methods implemented. With this implementation 
 

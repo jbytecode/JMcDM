@@ -1,5 +1,12 @@
 # Multiple Criteria Decision Making Tools
 
+
+## Copeland
+```@docs
+JMcDM.copeland
+```
+
+
 ## TOPSIS
 ```@docs
 JMcDM.topsis
