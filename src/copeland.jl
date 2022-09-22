@@ -64,10 +64,10 @@ end
 """
         copeland(ordering_mat)
 
-# Arguments
+# Arguments
  - `ordering_mat`::Array{Int, 2}`: Ordering matrix.
 
-# Description 
+# Description 
 The function takes an ordering matrix as input. Different ordering results are in columns.
 Orderings are in ascending order. The function returns the ranks. The alternative with rank 
 1 is the winner. 
@@ -83,7 +83,7 @@ function copeland(ordering_mat::Array{Int,2})::Array{Int,1}
 end
 
 """
-#Example 
+# Example 
 
 ```julia-repl
 julia> using JMcDM
