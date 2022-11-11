@@ -63,9 +63,13 @@ Since the Julia package manager installs all of the dependencies automatically, 
 install them manually. The package dependencies are listed below:
 
 - DataFrames
+
+for the main functionality. You can also install the 
+
 - GLPK
 - JuMP
 
+for zero-sum game problem solving and the data envelopment problem for the efficiency.
 
 ## Documentation
 
