@@ -6,8 +6,8 @@ import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
 using DataFrames
-using JuMP
-using GLPK
+using ..JuMP
+using ..GLPK
 
 struct DataEnvelopResult <: MCDMResult
     efficiencies::Array{Float64,1}
@@ -84,30 +84,30 @@ function dataenvelop(
 
     for objectnum = 1:nrow
 
-        model = Model(GLPK.Optimizer)
-        MOI.set(model, MOI.Silent(), !verbose)
-        @variable(model, x[1:nrow])
-        @variable(model, theta)
+        model = JuMP.Model(GLPK.Optimizer)
+        JuMP.MOI.set(model, JuMP.MOI.Silent(), !verbose)
+        JuMP.@variable(model, x[1:nrow])
+        JuMP.@variable(model, theta)
 
-        @objective(model, Min, theta)
+        JuMP.@objective(model, Min, theta)
 
         for varnum = 1:ncol
-            @constraint(
+            JuMP.@constraint(
                 model,
                 sum(input[:, varnum] .* x[1:nrow]) - input[objectnum, varnum] * theta <= 0
             )
         end
-        @constraint(model, sum(output .* x[1:nrow]) - output[objectnum] >= 0)
+        JuMP.@constraint(model, sum(output .* x[1:nrow]) - output[objectnum] >= 0)
 
-        @constraint(model, theta >= 0)
+        JuMP.@constraint(model, theta >= 0)
         for i = 1:nrow
-            @constraint(model, x[i] >= 0)
+            JuMP.@constraint(model, x[i] >= 0)
         end
 
-        optimize!(model)
+        JuMP.optimize!(model)
 
         values = JuMP.value.(x)
-        theta = objective_value(model)
+        theta = JuMP.objective_value(model)
 
         efficiencies[objectnum] = theta
         push!(casenames, Symbol(string("Case", objectnum)))

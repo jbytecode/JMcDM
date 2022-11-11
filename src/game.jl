@@ -1,14 +1,13 @@
 module Game
 
 export game
-
+export GameResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
 using DataFrames
-using JuMP
-using GLPK
+using ..JuMP, ..GLPK
 
 
 struct GameResult <: MCDMResult
@@ -89,29 +88,29 @@ function game_solver(decisionMatrix::Matrix{<:Real}; verbose::Bool = false)::Gam
 
     nrow, ncol = size(decisionMatrix)
 
-    model = Model(GLPK.Optimizer)
-    MOI.set(model, MOI.Silent(), !verbose)
+    model = JuMP.Model(GLPK.Optimizer)
+    JuMP.MOI.set(model, JuMP.MOI.Silent(), !verbose)
 
 
-    @variable(model, x[1:nrow])
-    @variable(model, g)
-    @objective(model, Max, g)
+    JuMP.@variable(model, x[1:nrow])
+    JuMP.@variable(model, g)
+    JuMP.@objective(model, Max, g)
 
     for i = 1:ncol
-        @constraint(model, sum(x[1:nrow] .* decisionMatrix[:, i]) >= g)
+        JuMP.@constraint(model, sum(x[1:nrow] .* decisionMatrix[:, i]) >= g)
     end
 
     for i = 1:nrow
-        @constraint(model, x[i] >= 0)
+        JuMP.@constraint(model, x[i] >= 0)
     end
 
-    @constraint(model, sum(x) == 1.0)
+    JuMP.@constraint(model, sum(x) == 1.0)
 
     if verbose
         @info model
     end
 
-    optimize!(model)
+    JuMP.optimize!(model)
 
     values = JuMP.value.(x)
 

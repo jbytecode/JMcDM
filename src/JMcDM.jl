@@ -2,9 +2,28 @@ module JMcDM
 
 # Dependencies
 import DataFrames: DataFrame, DataFrameRow
-# import JuMP: @variable, @objective, @constraint
-# import JuMP: Model, MOI, optimize!, JuMP, objective_value
-# import GLPK
+
+using Requires
+
+
+# Modules Game and DataEnvelop are activated 
+# whenever the JuMP and GLPK packages are required
+# manually by the user.
+export game, dataenvelop    
+function __init__()
+    @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
+        @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
+            include("game.jl")
+            import .Game: game, GameResult
+            include("dataenvelop.jl")
+            import .DataEnvelop: dataenvelop, DataEnvelopResult
+            export GameResult
+            export DataEnvelopResult
+        end
+    end
+end
+
+
 
 # for Pretty printing
 # of MCDM results
@@ -74,8 +93,6 @@ include("dematel.jl")
 include("ahp.jl")
 include("nds.jl")
 include("singlecriterion.jl")
-include("game.jl")
-include("dataenvelop.jl")
 include("grey.jl")
 include("saw.jl")
 include("aras.jl")
@@ -126,8 +143,6 @@ import .MARCOS: marcos, MarcosMethod, MarcosResult
 import .MAIRCA: mairca, MaircaMethod, MAIRCAResult
 import .MABAC: mabac, MABACResult, MabacMethod
 import .GREY: grey, GreyMethod, GreyResult
-import .Game: game, GameResult
-import .DataEnvelop: dataenvelop, DataEnvelopResult
 import .ARAS: aras, ArasMethod, ARASResult
 import .COCOSO: cocoso, CocosoMethod, CoCoSoResult
 import .CODAS: codas, CodasMethod, CODASResult
@@ -214,8 +229,7 @@ export MoosraResult
 export MERECResult
 export PIVResult
 
-# export game type
-export GameResult
+
 
 #  export SCDM types
 export SCDMResult
@@ -228,7 +242,7 @@ export SavageResult
 export HurwiczResult
 export MLEResult
 export ExpectedRegretResult
-export DataEnvelopResult
+
 
 
 
@@ -284,11 +298,7 @@ export hurwicz
 export mle
 export expectedregret
 
-# export game solver
-export game
 
-# export data envelop
-export dataenvelop
 
 #  export summary function
 export summary

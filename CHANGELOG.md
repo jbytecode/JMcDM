@@ -1,4 +1,7 @@
-### 0.5.7 (Upcoming Release)
+### 0.6.0 
+- Dependencies for JuMP and GLPK removed. Requires.jl automatically activates Game and DataEnvelop modules when these two packages are loaded manually by the user. 
+
+### 0.5.7 
 - Documentation for copeland
   
 

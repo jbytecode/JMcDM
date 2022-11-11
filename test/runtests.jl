@@ -1,8 +1,11 @@
 using Test
 import DataFrames: DataFrame, DataFrameRow
 
+using JuMP, GLPK, JMcDM
 
-using JMcDM
+import JMcDM.Game: game
+import JMcDM.DataEnvelop: dataenvelop
+
 
 const testGreyNumbers = true
 const testUtilityFunctions = true

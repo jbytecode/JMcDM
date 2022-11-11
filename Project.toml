@@ -1,15 +1,13 @@
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
 authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>", "Ersagun Kuruca"]
-version = "0.5.7"
+version = "0.6.0"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
-JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 
 [compat]
 DataFrames = "1"
-GLPK = "0.6.1, 0.7, 0.8, 0.9, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 1"
-JuMP = "0.18.3, 0.19, 0.20, 0.21, 0.22, 0.23, 1"
+Requires = "1"
 julia = "1.4"
