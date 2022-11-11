@@ -1,5 +1,5 @@
 
-using Documenter, JMcDM
+using Documenter, JMcDM, GLPK, JuMP
 
 makedocs(
          format = Documenter.HTML(
