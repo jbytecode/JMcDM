@@ -4,7 +4,6 @@ module ARAS
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
 
 
 struct ArasMethod <: MCDMMethod end
@@ -80,7 +79,7 @@ Zavadskas, E. K., & Turskis, Z. (2010). A new additive ratio assessment (ARAS) m
 Yıldırım, B. F. (2015). "Çok Kriterli Karar Verme Problemlerinde ARAS Yöntemi". Kafkas Üniversitesi İktisadi ve İdari Bilimler Fakültesi Dergisi, 6 (9), 285-296. http://dx.doi.org/10.18025/kauiibf.65151
 """
 function aras(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fs::Array{F,1},
 )::ARASResult where {F<:Function}
@@ -152,11 +151,5 @@ function aras(setting::MCDMSetting)::ARASResult
     aras(setting.df, setting.weights, setting.fns)
 end
 
-function aras(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::ARASResult where {F<:Function}
-    return aras(makeDecisionMatrix(mat), weights, fns)
-end
+
 end # end of module ARAS

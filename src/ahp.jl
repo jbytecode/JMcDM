@@ -4,11 +4,10 @@ export ahp, ahp_consistency, AHPResult, AHPConsistencyResult, ahp_RI
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
 
 struct AHPConsistencyResult <: MCDMResult
-    comparisonMatrix::DataFrame
-    normalizedComparisonMatrix::DataFrame
+    comparisonMatrix::Matrix
+    normalizedComparisonMatrix::Matrix
     consistencyVector::Array{Float64,1}
     priority::Array{Float64,1}
     pc::Array{Float64,1}
@@ -20,10 +19,10 @@ struct AHPConsistencyResult <: MCDMResult
 end
 
 struct AHPResult <: MCDMResult
-    comparisonMatrixList::Array{DataFrame,1}
-    criteriaComparisonMatrix::DataFrame
+    comparisonMatrixList::Array{Matrix,1}
+    criteriaComparisonMatrix::Matrix
     criteriaConsistency::AHPConsistencyResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     scores::Array{Float64,1}
     weights::Array{Float64,1}
     bestIndex::Int64
@@ -74,7 +73,7 @@ end
     Test if a comparison matrix whether consistent or not.
  
  # Arguments:
- - `comparisonMatrix::DataFrame`: Comparison matrix for AHP. 
+ - `comparisonMatrix::Matrix`: Comparison matrix for AHP. 
  
  # Description 
  AHP is based on subjective comparison between criteria. The success of the method highly depends on
@@ -115,7 +114,7 @@ true
 # References
 Saaty, Thomas L. "Decision making with the analytic hierarchy process." International journal of services sciences 1.1 (2008): 83-98.
 """
-function ahp_consistency(comparisonMatrix::DataFrame)::AHPConsistencyResult
+function ahp_consistency(comparisonMatrix::Matrix)::AHPConsistencyResult
 
     n, m = size(comparisonMatrix)
 
@@ -146,7 +145,7 @@ function ahp_consistency(comparisonMatrix::DataFrame)::AHPConsistencyResult
 
     result = AHPConsistencyResult(
         comparisonMatrix,
-        makeDecisionMatrix(normalizedComparisonMatrix),
+        normalizedComparisonMatrix,
         consistency_vector,
         priority_vector,
         pc_matrix,
@@ -169,8 +168,8 @@ end
 Apply AHP (Analytical Hierarchy Process) for a given list of comparison matrices and criteria comparison matrix.
 
 # Arguments:
- - `comparisonMatrixList::Array{DataFrame,1}`: Array of comparison matrices for all of the criteria. 
- - `criteriaComparisonMatrix::DataFrame`: Criteria comparison matrix for AHP (Comparison of columns). 
+ - `comparisonMatrixList::Array{Matrix,1}`: Array of comparison matrices for all of the criteria. 
+ - `criteriaComparisonMatrix::Matrix`: Criteria comparison matrix for AHP (Comparison of columns). 
  
  
  # Description 
@@ -267,8 +266,8 @@ julia> result.scores
 Saaty, Thomas L. "Decision making with the analytic hierarchy process." International journal of services sciences 1.1 (2008): 83-98.
 """
 function ahp(
-    comparisonMatrixList::Array{DataFrame,1},
-    criteriaComparisonMatrix::DataFrame,
+    comparisonMatrixList::Vector,
+    criteriaComparisonMatrix::Matrix,
 )::AHPResult
 
     result_list = map(ahp_consistency, comparisonMatrixList)
@@ -289,7 +288,7 @@ function ahp(
 
     weights = criteria_consistency.priority
 
-    decision_matrix_df = makeDecisionMatrix(decision_matrix)
+    decision_matrix_df = decision_matrix
     ordering_result = decision_matrix * weights
 
     bestIndex = sortperm(ordering_result) |> last

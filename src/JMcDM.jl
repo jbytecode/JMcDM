@@ -36,7 +36,7 @@ abstract type MCDMMethod end
 
 """
     struct MCDMSetting 
-        df::DataFrame
+        df::Matrix
         weights::Array{Float64, 1}
         fns::Array{Function, 1}
     end
@@ -76,7 +76,7 @@ julia> result2 = mcdm(setting, TopsisMethod())
 
 """
 struct MCDMSetting
-    df::DataFrame
+    df::Matrix
     weights::Array{Float64,1}
     fns::Array{F,1} where {F<:Function}
 end

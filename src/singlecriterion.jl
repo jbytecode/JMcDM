@@ -7,7 +7,6 @@ export laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expect
 import ..SCDMResult
 using ..Utilities
 
-using DataFrames
 
 struct LaplaceResult <: SCDMResult
     expected_values::Array{Float64,1}
@@ -36,7 +35,7 @@ struct MiniminResult <: SCDMResult
 end
 
 struct SavageResult <: SCDMResult
-    regretMatrix::DataFrame
+    regretMatrix::Matrix
     scores::Array{Float64,1}
     bestIndex::Int64
 end
@@ -59,10 +58,10 @@ end
 """
     laplace(decisionMat)
 
-    Apply Laplace method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Laplace method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::LaplaceResult`: LaplaceResult object that holds multiple outputs including the best alternative.
@@ -80,7 +79,7 @@ julia> dm = makeDecisionMatrix(mat)
 julia> result = laplace(dm)
 ```
 """
-function laplace(decisionMatrix::DataFrame)::LaplaceResult
+function laplace(decisionMatrix::Matrix)::LaplaceResult
 
     n, p = size(decisionMatrix)
 
@@ -107,10 +106,10 @@ end
 """
     maximin(decisionMat)
 
-    Apply Maximin method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Maximin method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::MaximinResult`: MaximinResult object that holds multiple outputs including the best alternative.
@@ -129,7 +128,7 @@ julia> dm = makeDecisionMatrix(mat)
 julia> result = maximin(dm)
 ```
 """
-function maximin(decisionMatrix::DataFrame)::MaximinResult
+function maximin(decisionMatrix::Matrix)::MaximinResult
 
     n, p = size(decisionMatrix)
 
@@ -149,10 +148,10 @@ end
 """
     maximax(decisionMat)
 
-    Apply Maximax method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Maximax method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::MaximaxResult`: MaximaxResult object that holds multiple outputs including the best alternative.
@@ -171,7 +170,7 @@ julia> dm = makeDecisionMatrix(mat)
 julia> result = maximax(dm)
 ```
 """
-function maximax(decisionMatrix::DataFrame)::MaximaxResult
+function maximax(decisionMatrix::Matrix)::MaximaxResult
 
     n, p = size(decisionMatrix)
 
@@ -191,10 +190,10 @@ end
 """
     minimax(decisionMat)
 
-    Apply Minimax method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Minimax method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::MinimaxResult`: MinimaxResult object that holds multiple outputs including the best alternative.
@@ -213,7 +212,7 @@ julia> dm = makeDecisionMatrix(mat)
 julia> result = minimax(dm)
 ```
 """
-function minimax(decisionMatrix::DataFrame)::MinimaxResult
+function minimax(decisionMatrix::Matrix)::MinimaxResult
 
     n, p = size(decisionMatrix)
 
@@ -234,10 +233,10 @@ end
 """
     minimin(decisionMat)
 
-    Apply Minimin method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Minimin method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::MiniminResult`: Minimin object that holds multiple outputs including the best alternative.
@@ -256,7 +255,7 @@ julia> dm = makeDecisionMatrix(mat)
 julia> result = minimin(dm)
 ```
 """
-function minimin(decisionMatrix::DataFrame)::MiniminResult
+function minimin(decisionMatrix::Matrix)::MiniminResult
 
     n, p = size(decisionMatrix)
 
@@ -276,10 +275,10 @@ end
 """
     savage(decisionMat)
 
-    Apply Savage method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Savage method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  
 # Output 
 - `::SavageResult`: SavageResult object that holds multiple outputs including the best alternative.
@@ -301,7 +300,7 @@ julia> result.bestIndex
 4
 ```
 """
-function savage(decisionMatrix::DataFrame)::SavageResult
+function savage(decisionMatrix::Matrix)::SavageResult
 
     n, p = size(decisionMatrix)
 
@@ -326,10 +325,10 @@ end
 """
     hurwicz(decisionMat; alpha = 0.5)
 
-    Apply Hurwicz method for a given decision matrix (for convenience, in type of DataFrame).
+    Apply Hurwicz method for a given decision matrix (for convenience, in type of Matrix).
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  - `alpha::Float64`: The optional alpha value for the Hurwicz method. Default is 0.5.
  
 # Output 
@@ -352,7 +351,7 @@ julia> result.bestIndex
 3
 ```
 """
-function hurwicz(decisionMatrix::DataFrame; alpha::Float64 = 0.5)::HurwiczResult
+function hurwicz(decisionMatrix::Matrix; alpha::Float64 = 0.5)::HurwiczResult
 
     n, p = size(decisionMatrix)
 
@@ -374,10 +373,10 @@ end
 """
     mle(decisionMat, weights)
 
-    Apply MLE (Maximum Likelihood) method for a given decision matrix (for convenience, in type of DataFrame) and weights.
+    Apply MLE (Maximum Likelihood) method for a given decision matrix (for convenience, in type of Matrix) and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  - `weights::Array{Float64,1}`: Array of weights for each criterion that sums up to 1.0.
  
 # Output 
@@ -400,11 +399,11 @@ julia> result.bestIndex
 2
 ```
 """
-function mle(decisionMatrix::DataFrame, weights::Array{Float64,1})::MLEResult
+function mle(decisionMatrix::Matrix, weights::Array{Float64,1})::MLEResult
 
-    w = unitize(weights)
 
-    weightedMatrix = w * decisionMatrix
+    weightedMatrix = Utilities.weightise(decisionMatrix, weights)
+    
 
     scores = rowsums(weightedMatrix)
 
@@ -421,10 +420,10 @@ end
 """
     expectedregret(decisionMat, weights)
 
-    Apply Expected Regret method for a given decision matrix (for convenience, in type of DataFrame) and weights.
+    Apply Expected Regret method for a given decision matrix (for convenience, in type of Matrix) and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: Decision matrix with n alternatives and m criteria. 
+ - `decisionMat::Matrix`: Decision matrix with n alternatives and m criteria. 
  - `weights::Array{Float64,1}`: Array of weights for each criterion that sums up to 1.0.
  
 # Output 
@@ -447,7 +446,7 @@ julia> result.bestIndex
 2
 ```
 """
-function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
+function expectedregret(decisionMatrix::Matrix, weights::Array{Float64,1})
 
     _, p = size(decisionMatrix)
 
@@ -461,7 +460,7 @@ function expectedregret(decisionMatrix::DataFrame, weights::Array{Float64,1})
         regretmat[:, i] = cmaxs[i] .- decisionMatrix[:, i]
     end
 
-    weightedregret = w * regretmat
+    weightedregret = Utilities.weightise(regretmat, w)
 
     scores = rowsums(weightedregret)
 

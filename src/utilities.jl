@@ -93,11 +93,11 @@ function apply_columns(f::F, data) where {F<:Function}
     return [f(c) for c in eachcol(data)]
 end
 
-function colmins(data::DataFrame)
+function colmins(data)
     return apply_columns(minimum, data)
 end
 
-function colmaxs(data::DataFrame)
+function colmaxs(data)
     return apply_columns(maximum, data)
 end
 
@@ -113,11 +113,11 @@ function apply_rows(f::F, data) where {F<:Function}
     return [f(c) for c in eachrow(data)]
 end
 
-function rowmins(data::DataFrame)::Vector
+function rowmins(data)::Vector
     return apply_rows(minimum, data)
 end
 
-function rowmaxs(data::DataFrame)::Vector
+function rowmaxs(data)::Vector
     return apply_rows(maximum, data)
 end
 
@@ -185,22 +185,12 @@ end
 function makeDecisionMatrix(
     mat::Matrix;
     names::Union{Nothing,Array{String,1}} = nothing,
-)::DataFrame
-    _, m = size(mat)
-    df = DataFrame()
-    for i = 1:m
-        if names isa Nothing
-            name = string("Crt", i)
-        else
-            name = names[i]
-        end
-        df[:, Symbol(name)] = mat[:, i]
-    end
-    return df
+)
+    return copy(mat)
 end
 
-function Base.minimum(df::DataFrame)
-    df |> Matrix |> minimum
+function Base.minimum(data)
+    data |> Matrix |> minimum
 end
 
 function reverseminmax(fns::Array{F,1})::Array{Function,1} where {F<:Function}
@@ -222,6 +212,15 @@ function makegrey(m::Matrix)::Matrix
         end
     end
     return greymatrix
+end
+
+function weightise(mat, w)
+    newmat = similar(mat)
+    _, p = size(mat)
+    for i in 1:p
+        newmat[:, i] = mat[:, i] .* w[i]
+    end 
+    return newmat
 end
 
 end # End of module Utilities

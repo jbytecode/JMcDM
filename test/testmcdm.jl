@@ -533,7 +533,7 @@
             1 8 1 (1/3) 5 3 1 1
         ]
 
-        dmat = makeDecisionMatrix(K)
+        dmat = K
         result::AHPConsistencyResult = ahp_consistency(dmat)
 
         @test isa(result, AHPConsistencyResult)
@@ -627,8 +627,8 @@
             1/8 1/6 1/3 1
         ]
 
-        km = makeDecisionMatrix(K)
-        as = map(makeDecisionMatrix, [A1, A2, A3, A4, A5, A6, A7, A8])
+        km = K
+        as =[A1, A2, A3, A4, A5, A6, A7, A8]
 
         result = ahp(as, km)
 
@@ -674,7 +674,7 @@
                 8.0 16.0 24.0 32.0
             ]
 
-            nd = makeDecisionMatrix(cases)
+            nd = cases
 
             fns = [minimum, minimum, minimum, minimum]
 
@@ -778,7 +778,9 @@
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        result = aras(df, w, functionlist)
+        mat = Matrix(df)
+
+        result = aras(mat, w, functionlist)
         @test isa(result, ARASResult)
         @test isapprox(
             result.scores,
@@ -787,7 +789,7 @@
         )
         @test result.bestIndex == 2
 
-        setting = MCDMSetting(df, w, functionlist)
+        setting = MCDMSetting(mat, w, functionlist)
         result2 = aras(setting)
         @test result2 isa ARASResult
         @test result2.scores == result.scores
