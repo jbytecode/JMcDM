@@ -1,5 +1,5 @@
 
-using Documenter, JMcDM, GLPK, JuMP
+using Documenter, JMcDM, GLPK, JuMP, DataFrames
 
 makedocs(
          format = Documenter.HTML(

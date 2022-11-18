@@ -73,7 +73,7 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
 
 
-!!  Warning
+!!! warning "Dependencies"
     This method is enabled when the JuMP, GLPK, and DataFrames packages are installed and loaded.
     
 """

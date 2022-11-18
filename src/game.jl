@@ -75,7 +75,7 @@ Value of game:
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
 
 
-!!  Warning
+!!! warning "Dependencies"
     This method is enabled when the JuMP and GLPK packages are installed and loaded.
 
 """
