@@ -7,7 +7,7 @@ export prometVShape
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct PrometheeMethod <: MCDMMethod
     pref::Array{Function,1}
@@ -23,7 +23,7 @@ PrometheeMethod(
 
 
 struct PrometheeResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Array{Float64,1}
     ranking::Array{Int64,1}
@@ -111,7 +111,7 @@ end
 Apply PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMatrix::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMatrix::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions that are either maximum or minimum.
  - `prefs::Array{Function, 1}`: m-vector of preference functions that are prometLinear, prometVShape, prometUShape, prometQuasi, or prometLevel.
@@ -182,7 +182,7 @@ julia> result.bestIndex
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function promethee(
-    decisionMatrix::DataFrame,
+    decisionMatrix::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
     prefs::Array{P,1},
@@ -251,15 +251,5 @@ function promethee(
 end
 
 
-function promethee(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-    prefs::Array{P,1},
-    qs::Array,
-    ps::Array,
-)::PrometheeResult where {F,P<:Function}
 
-    promethee(makeDecisionMatrix(mat), weights, fns, prefs, qs, ps)
-end
 end # end of module PROMETHEE

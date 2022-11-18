@@ -1,6 +1,6 @@
 @testset "Summary" begin
     tol = 0.0001
-    df = DataFrame(
+    df = DataFrames.DataFrame(
         :c1 => [25.0, 21, 19, 22],
         :c2 => [65.0, 78, 53, 25],
         :c3 => [7.0, 6, 5, 2],
@@ -9,15 +9,17 @@
     weights = [0.25, 0.25, 0.25, 0.25]
     fns = [maximum, maximum, minimum, maximum]
 
-    result1 = JMcDM.summary(df, weights, fns, [:topsis, :electre, :cocoso, :copras, :moora])
-    result2 = JMcDM.summary(df, weights, fns, [:grey, :aras, :saw, :wpm, :waspas, :edas])
-    result3 = JMcDM.summary(df, weights, fns, [:mabac, :mairca, :rov, :marcos, :vikor])
+    dmat = Matrix(df)
 
-    @test result1 isa DataFrame
-    @test result2 isa DataFrame
-    @test result3 isa DataFrame
+    result1 = JMcDM.summary(dmat, weights, fns, [:topsis, :electre, :cocoso, :copras, :moora])
+    result2 = JMcDM.summary(dmat, weights, fns, [:grey, :aras, :saw, :wpm, :waspas, :edas])
+    result3 = JMcDM.summary(dmat, weights, fns, [:mabac, :mairca, :rov, :marcos, :vikor])
 
-    @test size(result1) == (4, 5)
-    @test size(result2) == (4, 6)
-    @test size(result3) == (4, 5)
+    @test result1 isa Dict
+    @test result2 isa Dict
+    @test result3 isa Dict
+
+    @test result1 == Dict{Any, Any}((Colon(), :electre) => [" ", " ✅ ", " ", " ✅ "], (Colon(), :topsis) => [" ", " ✅ ", " ", " "], (Colon(), :copras) => [" ", " ", " ", " ✅ "], (Colon(), :cocoso) => [" ", " ✅ ", " ", " "], (Colon(), :moora) => [" ", " ✅ ", " ", " "])
+    @test result2 == Dict{Any, Any}((Colon(), :aras) => [" ", " ", " ", " ✅ "], (Colon(), :saw) => [" ", " ", " ", " ✅ "], (Colon(), :wpm) => [" ", " ", " ", " ✅ "], (Colon(), :waspas) => [" ", " ", " ", " ✅ "], (Colon(), :edas) => [" ", " ", " ", " ✅ "], (Colon(), :grey) => [" ", " ", " ", " ✅ "])
+    @test result3 ==  Dict{Any, Any}((Colon(), :mairca) => [" ", " ", " ", " ✅ "], (Colon(), :vikor) => [" ", " ✅ ", " ", " "], (Colon(), :rov) => [" ", " ", " ", " ✅ "], (Colon(), :mabac) => [" ", " ", " ", " ✅ "], (Colon(), :marcos) => [" ", " ", " ", " ✅ "])
 end

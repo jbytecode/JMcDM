@@ -11,9 +11,11 @@
 
         fns = [maximum, maximum, maximum, maximum]
 
-        result = topsis(df, w, fns)
+        mat = Matrix(df)
 
-        setting = MCDMSetting(df, w, fns)
+        result = topsis(mat, w, fns)
+
+        setting = MCDMSetting(mat, w, fns)
         result2 = mcdm(setting)
 
         @test isa(result2, TopsisResult)
@@ -32,7 +34,7 @@
         )
         weights = [0.25, 0.25, 0.25, 0.25]
         fns = [maximum, maximum, minimum, maximum]
-        result = moosra(df, weights, fns)
+        result = moosra(Matrix(df), weights, fns)
 
         @test result isa MoosraResult
 
@@ -45,7 +47,7 @@
         @test result.rankings == [1, 2, 3, 4]
         @test result.bestIndex == 4
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(Matrix(df), weights, fns)
         result2 = mcdm(setting, MoosraMethod())
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
@@ -64,7 +66,7 @@
 
         fns = [maximum, maximum, maximum, maximum]
 
-        result = psi(df, fns)
+        result = psi(Matrix(df), fns)
 
         @test result isa PSIResult
         @test result.bestIndex == 2
@@ -74,7 +76,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, w, fns)
+        setting = MCDMSetting(Matrix(df), w, fns)
         result2 = mcdm(setting, PSIMethod())
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
@@ -90,7 +92,6 @@
             0.028 32.6 821 1.59 0.5 0.59 0.59 0.41
         ]
 
-        df = JMcDM.makeDecisionMatrix(mat)
 
         w = [0.3306, 0.0718, 0.1808, 0.0718, 0.0459, 0.126, 0.126, 0.0472]
 
@@ -98,14 +99,10 @@
 
         result1::ROVResult = rov(mat, w, fns)
 
-        result::ROVResult = rov(df, w, fns)
 
-        @test isapprox(result1.scores, result.scores, atol = tol)
-
-        @test result isa ROVResult
         @test result1 isa ROVResult
         @test isapprox(
-            result.uminus,
+            result1.uminus,
             [
                 0.3349730210602759,
                 0.4762288888888889,
@@ -115,13 +112,13 @@
             atol = tol,
         )
         @test isapprox(
-            result.uplus,
+            result1.uplus,
             [0.03331764705882352, 0.0472, 0.06255882352941176, 0.029700000000000004],
             atol = tol,
         )
 
         @test isapprox(
-            result.scores,
+            result1.scores,
             [
                 0.1841453340595497,
                 0.26171444444444447,
@@ -131,13 +128,13 @@
             atol = tol,
         )
 
-        @test result.ranks == [4, 2, 3, 1]
+        @test result1.ranks == [4, 2, 3, 1]
 
 
-        setting = MCDMSetting(df, w, fns)
+        setting = MCDMSetting(mat, w, fns)
         result2 = mcdm(setting, ROVMethod())
-        @test result2.ranks == result.ranks
-        @test result2.scores == result.scores
+        @test result2.ranks == result1.ranks
+        @test result2.scores == result1.scores
         @test result2 isa ROVResult
     end
 
@@ -162,10 +159,9 @@
             1677 568 1941 1 39 0.011 0.129 0.633
         ]
 
-        df = makeDecisionMatrix(mat)
         fns = [maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum]
 
-        result = sd(df, fns)
+        result = sd(mat, fns)
 
         @test result isa SDResult
         @test isapprox(
@@ -201,7 +197,7 @@
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        result = grey(df, w, functionlist)
+        result = grey(Matrix(df), w, functionlist)
 
         @test isa(result, GreyResult)
 
@@ -219,7 +215,7 @@
 
         @test result.bestIndex == 2
 
-        setting = MCDMSetting(df, w, functionlist)
+        setting = MCDMSetting(Matrix(df), w, functionlist)
         result2 = grey(setting)
         @test result2 isa GreyResult
         @test result2.scores == result.scores
@@ -244,13 +240,13 @@
 
         fns = [maximum, maximum, maximum, maximum]
 
-        result = topsis(df, w, fns)
+        result = topsis(Matrix(df), w, fns)
 
         @test isa(result, TopsisResult)
         @test result.bestIndex == 2
         @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol = tol)
 
-        setting = MCDMSetting(df, w, fns)
+        setting = MCDMSetting(Matrix(df), w, fns)
         result2 = topsis(setting)
         @test isa(result2, TopsisResult)
         @test result2.bestIndex == result.bestIndex
@@ -271,10 +267,9 @@
             90 85 5 0 75 95 70 70
             70 88 20 18 60 90 95 85
         ]
-        dmat = makeDecisionMatrix(Amat)
         fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
 
-        result = vikor(dmat, w, fns)
+        result = vikor(Amat, w, fns)
 
         @test isa(result, VikorResult)
         @test result.bestIndex == 4
@@ -284,7 +279,7 @@
         @test isapprox(result.scores[3], 1.0, atol = tol)
         @test isapprox(result.scores[4], 0.0, atol = tol)
 
-        setting = MCDMSetting(dmat, w, fns)
+        setting = MCDMSetting(Amat, w, fns)
         result2 = vikor(setting)
         @test result.scores == result2.scores
         @test result.bestIndex == result2.bestIndex
@@ -304,9 +299,8 @@
             90 85 5 0 75 95 70 70
             70 88 20 18 60 90 95 85
         ]
-        dmat = makeDecisionMatrix(Amat)
         fns = [maximum for i = 1:8]
-        result = electre(dmat, w, fns)
+        result = electre(Amat, w, fns)
 
         @test isa(result, ElectreResult)
         @test isa(result.bestIndex, Tuple)
@@ -319,7 +313,7 @@
         )
         @test isapprox(result.D, [0.1914244, -0.1903929, 2.8843076, -2.8853391], atol = tol)
 
-        setting = MCDMSetting(dmat, w, fns)
+        setting = MCDMSetting(Amat, w, fns)
         result2 = electre(setting)
         @test result isa ElectreResult
         @test result.bestIndex == result2.bestIndex
@@ -338,7 +332,7 @@
         )
         fns = [maximum, maximum, maximum, maximum]
         ws = [0.25, 0.25, 0.25, 0.25]
-        e = electre(df, ws, fns)
+        e = electre(Matrix(df), ws, fns)
 
         @test e isa ElectreResult
         @test e.bestIndex == (2, 1)
@@ -354,9 +348,8 @@
                 90 85 5 0 75 95 70 70
                 70 88 20 18 60 90 95 85
             ]
-            dmat = makeDecisionMatrix(Amat)
             fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
-            result = moora(dmat, w, fns)
+            result = moora(Amat, w, fns)
 
             @test isa(result, MooraResult)
             @test isa(result.bestIndex, Int64)
@@ -368,7 +361,7 @@
                 atol = tol,
             )
 
-            setting = MCDMSetting(dmat, w, fns)
+            setting = MCDMSetting(Amat, w, fns)
             result2 = moora(setting)
             @test result2 isa MooraResult
             @test result2.bestIndex == result.bestIndex
@@ -410,8 +403,8 @@
                 162900 4.5 35.4 3 4 3 2 143 119
                 178000 4.2 32 2 3 2 3 180 110
             ]
-            df = DataFrame(mat, :auto)
-            result = moora(df, w, fns, method = :ratio)
+            
+            result = moora(mat, w, fns, method = :ratio)
 
             @test result isa MooraResult
             @test isapprox(0.13489413914936565, result.scores[1], atol = tol)
@@ -441,9 +434,8 @@
             2 1 0 0 0 0 0 0 3 0
         ]
 
-        dmat = makeDecisionMatrix(K)
 
-        result = dematel(dmat)
+        result = dematel(K)
 
         @test isapprox(result.threshold, 0.062945, atol = tol)
 
@@ -653,11 +645,10 @@
                 4.0 5.0 6.0
             ]
 
-            nd = makeDecisionMatrix(cases)
 
             fns = [maximum, maximum, maximum]
 
-            result = nds(nd, fns)
+            result = nds(cases, fns)
 
             @test isa(result, NDSResult)
 
@@ -702,7 +693,7 @@
             weights = [0.25, 0.25, 0.25, 0.25]
             fns = [maximum, maximum, minimum, maximum]
             
-            result = saw(df, weights, fns)
+            result = saw(Matrix(df), weights, fns)
 
             @test result isa SawResult
 
@@ -734,10 +725,9 @@
                 4.0 2 2 5 5 3 6
             ]
 
-            df = makeDecisionMatrix(decmat)
             weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
             fns = [maximum for i = 1:7]
-            result = saw(df, weights, fns)
+            result = saw(decmat, weights, fns)
 
             @test result isa SawResult
             @test isapprox(
@@ -748,7 +738,7 @@
             @test result.bestIndex == 3
             @test result.ranking == [3, 2, 5, 1, 4]
 
-            setting = MCDMSetting(df, weights, fns)
+            setting = MCDMSetting(decmat, weights, fns)
             result2 = saw(setting)
             @test result2 isa SawResult
             @test result2.scores == result.scores
@@ -812,13 +802,11 @@
             3 15 1.5 125 40 4
         ]
 
-        df = makeDecisionMatrix(decmat)
-
         weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
 
         fns = [maximum, minimum, minimum, maximum, minimum, maximum]
 
-        result = wpm(df, weights, fns)
+        result = wpm(decmat, weights, fns)
         @test result isa WPMResult
         @test isapprox(
             result.scores,
@@ -832,7 +820,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = wpm(setting)
         @test result2 isa WPMResult
         @test result2.scores == result.scores
@@ -855,13 +843,12 @@
             3 15 1.5 125 40 4
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
 
         fns = [maximum, minimum, minimum, maximum, minimum, maximum]
 
-        result = waspas(df, weights, fns)
+        result = waspas(decmat, weights, fns)
         @test result isa WASPASResult
         @test isapprox(
             result.scores,
@@ -869,7 +856,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = waspas(setting)
         @test result2 isa WASPASResult
         @test result2.scores == result.scores
@@ -894,13 +881,11 @@
             5000 4 5800 450
         ]
 
-        df = makeDecisionMatrix(decmat)
-
         weights = [0.25, 0.25, 0.25, 0.25]
 
         fns = [maximum, maximum, minimum, minimum]
 
-        result = edas(df, weights, fns)
+        result = edas(decmat, weights, fns)
         @test result isa EDASResult
         @test isapprox(
             result.scores,
@@ -917,7 +902,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = edas(setting)
         @test result2 isa EDASResult
         @test result2.scores == result.scores
@@ -938,7 +923,6 @@
             8.525 8.667 7.180 7.375 7.750 8.071
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         weights = [0.19019, 0.15915, 0.19819, 0.19019, 0.15115, 0.11111]
 
@@ -946,7 +930,7 @@
 
         Fns = convert(Array{Function,1}, fns)
 
-        result = marcos(df, weights, Fns)
+        result = marcos(decmat, weights, Fns)
         @test result isa MarcosResult
         @test isapprox(
             result.scores,
@@ -954,7 +938,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, Fns)
+        setting = MCDMSetting(decmat, weights, Fns)
         result2 = marcos(setting)
         @test result2 isa MarcosResult
         @test result2.scores == result.scores
@@ -978,13 +962,12 @@
             3 2 6 6 6 6 6 3500
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
 
         fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum]
 
-        result = mabac(df, weights, fns)
+        result = mabac(decmat, weights, fns)
         @test result isa MABACResult
         @test isapprox(
             result.scores,
@@ -992,7 +975,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = mabac(setting)
         @test result2 isa MABACResult
         @test result2.scores == result.scores
@@ -1016,13 +999,12 @@
             7.319 6.952 6.649 7.319 7.652 6.649 5.000
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140]
 
         fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum]
 
-        result = mairca(df, weights, fns)
+        result = mairca(decmat, weights, fns)
         @test result isa MAIRCAResult
         @test isapprox(
             result.scores,
@@ -1030,7 +1012,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = mairca(setting)
         @test result2 isa MAIRCAResult
         @test result2.scores == result.scores
@@ -1086,13 +1068,12 @@
             7.00 500 200 140 75.00 2.307692
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         weights = [0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.1667]
 
         fns = [maximum, maximum, maximum, maximum, maximum, minimum]
 
-        result = copras(df, weights, fns)
+        result = copras(decmat, weights, fns)
         @test result isa COPRASResult
         @test isapprox(
             result.scores,
@@ -1139,7 +1120,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = copras(setting)
         @test result2 isa COPRASResult
         @test result2.scores == result.scores
@@ -1181,7 +1162,6 @@
             69 40 72 55
             64 35 70 60
         ]
-        df = makeDecisionMatrix(decmat)
         qs = [49, nothing, 45, 30]
         ps = [100, 98, 95, 80]
         weights = [0.25, 0.35, 0.22, 0.18]
@@ -1191,7 +1171,7 @@
             [prometLinear, prometVShape, prometLinear, prometLinear],
         )
 
-        result = promethee(df, weights, fns, prefs, qs, ps)
+        result = promethee(decmat, weights, fns, prefs, qs, ps)
 
         @test result isa PrometheeResult
         @test isapprox(
@@ -1201,7 +1181,7 @@
         )
         @test result.bestIndex == 5
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = promethee(setting, prefs, qs, ps)
         @test result2 isa PrometheeResult
         @test result2.scores == result.scores
@@ -1227,15 +1207,13 @@ end
         ]
 
 
-        df = makeDecisionMatrix(decmat)
-
         weights = [0.036, 0.192, 0.326, 0.326, 0.120]
 
         lambda = 0.5
 
         fns = [maximum, minimum, maximum, maximum, maximum]
 
-        result = cocoso(df, weights, fns, lambda = lambda)
+        result = cocoso(decmat, weights, fns, lambda = lambda)
         @test result isa CoCoSoResult
         @test isapprox(
             result.scores,
@@ -1251,7 +1229,7 @@ end
             atol = tol,
         )
 
-        setting = MCDMSetting(df, weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = cocoso(setting)
         @test result2 isa CoCoSoResult
         @test result2.scores == result.scores
@@ -1271,11 +1249,9 @@ end
             4.1039 0.0000 -0.5076 0.984469444
         ]
 
-        df = makeDecisionMatrix(decmat)
-
         fns = [maximum, maximum, minimum, maximum]
 
-        result = critic(df, fns)
+        result = critic(decmat, fns)
         @test result isa CRITICResult
         @test isapprox(
             result.w,
@@ -1283,7 +1259,7 @@ end
             atol = tol,
         )
 
-        setting = MCDMSetting(df, zeros(4), fns)
+        setting = MCDMSetting(decmat, zeros(4), fns)
         result2 = critic(setting)
         @test result2 isa CRITICResult
         @test result2.w == result.w
@@ -1292,7 +1268,7 @@ end
     @testset "Entropy" begin
         tol = 0.0001
         df = DataFrame(
-            C1 = [2, 4, 3, 5, 4, 3],
+            C1 = [2.0, 4, 3, 5, 4, 3],
             C2 = [1, 1, 2, 1, 2, 2],
             C3 = [4, 5, 6, 5, 5, 6],
             C4 = [7, 6, 6, 7, 6, 6],
@@ -1302,7 +1278,7 @@ end
             C8 = [3000, 3500, 4000, 3000, 3000, 3500],
         )
 
-        result = entropy(df)
+        result = entropy(Matrix(df))
 
         @test result isa EntropyResult
 
@@ -1335,12 +1311,11 @@ end
             3.000 0.100 1778 1000 920
         ]
 
-        df = makeDecisionMatrix(decmat)
 
         w = [0.036, 0.192, 0.326, 0.326, 0.12]
         fns = [maximum, minimum, maximum, maximum, maximum]
 
-        result = codas(df, w, fns)
+        result = codas(decmat, w, fns)
         @test result isa CODASResult
         @test isapprox(
             result.scores,
@@ -1356,7 +1331,7 @@ end
             atol = tol,
         )
 
-        setting = MCDMSetting(df, w, fns)
+        setting = MCDMSetting(decmat, w, fns)
         result2 = codas(setting)
         @test result2 isa CODASResult
         @test result2.scores == result.scores
@@ -1377,7 +1352,7 @@ end
 
         fns = [maximum, maximum, minimum, minimum]
 
-        result = merec(df, fns)
+        result = merec(Matrix(df), fns)
         @test result isa MERECResult
         @test isapprox(
             result.w,
@@ -1390,7 +1365,7 @@ end
             atol = tol,
         )
 
-        setting = MCDMSetting(df, zeros(4), fns)
+        setting = MCDMSetting(Matrix(df), zeros(4), fns)
         result2 = merec(setting)
         @test result2 isa MERECResult
         @test result2.w == result.w
@@ -1414,8 +1389,8 @@ end
         fns = [maximum, maximum, maximum, maximum, maximum]
         fns2 = [minimum for i = 1:5]
 
-        result = piv(makeDecisionMatrix(decmat), w, fns)
-        result2 = piv(makeDecisionMatrix(decmat), w, fns2)
+        result = piv(decmat, w, fns)
+        result2 = piv(decmat, w, fns2)
 
         @test result2 isa PIVResult
 

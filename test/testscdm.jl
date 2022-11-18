@@ -10,9 +10,7 @@
                 2000 5250 8500 11750
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = laplace(dm)
+            result = laplace(mat)
 
             @test isa(result, LaplaceResult)
 
@@ -33,9 +31,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = maximin(dm)
+            result = maximin(mat)
 
             @test isa(result, MaximinResult)
 
@@ -56,9 +52,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = maximax(dm)
+            result = maximax(mat)
 
             @test isa(result, MaximaxResult)
 
@@ -79,9 +73,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = minimax(dm)
+            result = minimax(mat)
 
             @test isa(result, MinimaxResult)
 
@@ -102,9 +94,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = minimin(dm)
+            result = minimin(mat)
 
             @test isa(result, MiniminResult)
 
@@ -126,9 +116,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = savage(dm)
+            result = savage(mat)
 
             @test isa(result, SavageResult)
 
@@ -148,9 +136,7 @@
                 22 30 28 20
             ]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = hurwicz(dm)
+            result = hurwicz(mat)
 
             @test isa(result, HurwiczResult)
 
@@ -173,9 +159,7 @@
 
             weights = [0.2, 0.5, 0.2, 0.1]
 
-            dm = makeDecisionMatrix(mat)
-
-            result = mle(dm, weights)
+            result = mle(mat, weights)
 
             @test isa(result, MLEResult)
 
@@ -199,9 +183,8 @@
 
             weights = [0.2, 0.5, 0.2, 0.1]
 
-            dm = makeDecisionMatrix(mat)
 
-            result = expectedregret(dm, weights)
+            result = expectedregret(mat, weights)
 
             @test isa(result, ExpectedRegretResult)
 

@@ -5,7 +5,7 @@ export cocoso, CocosoMethod, CoCoSoResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct CocosoMethod <: MCDMMethod
     lambda::Float64
@@ -14,7 +14,7 @@ end
 CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
 
 struct CoCoSoResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -36,7 +36,7 @@ end
 Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
@@ -100,7 +100,7 @@ Yazdani, M., Zarate, P., Kazimieras Zavadskas, E. and Turskis, Z. (2019), "A com
 
 """
 function cocoso(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
     lambda::Float64 = 0.5,
@@ -135,8 +135,9 @@ function cocoso(
         P[i] = sum(scoreMat[i, :])
     end
 
-    S = w * A |> rowsums
-
+    # S = w * A |> rowsums
+    S = Utilities.weightise(A, w) |> rowsums
+    
     scoreTable = [S P]
 
     kA = (S .+ P) ./ sum(scoreTable)
@@ -179,14 +180,7 @@ function cocoso(setting::MCDMSetting; lambda::Float64 = 0.5)::CoCoSoResult
     cocoso(setting.df, setting.weights, setting.fns, lambda = lambda)
 end
 
-function cocoso(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1};
-    lambda::Float64 = 0.5,
-)::CoCoSoResult where {F<:Function}
-    cocoso(makeDecisionMatrix(mat), weights, fns, lambda = lambda)
-end
+
 
 
 end # end of module COCOSO

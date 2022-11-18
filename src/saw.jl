@@ -5,13 +5,13 @@ using ..Utilities
 
 export saw, SawResult, SawMethod
 
-using DataFrames
+
 
 struct SawMethod <: MCDMMethod end
 
 struct SawResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
+    decisionMatrix::Matrix
+    normalizedDecisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -35,7 +35,7 @@ Apply SAW (Simple Additive Weighting) method for a given matrix and weights.
 This method also known as WSM (Weighted Sum Model)
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
@@ -88,7 +88,7 @@ personnel selection problem." International Journal of Innovation, Management an
 1.5 (2010): 511.
 """
 function saw(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::SawResult where {F<:Function}
@@ -99,7 +99,7 @@ function saw(
 
     w = unitize(weights)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     colminmax = zeros(zerotype, p)
 
@@ -115,8 +115,9 @@ function saw(
         end
     end
 
-    scores = w * normalizedDecisionMat |> rowsums
-
+    # scores = w * normalizedDecisionMat |> rowsums
+    scores = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
+    
     rankings = scores |> sortperm |> reverse
 
     bestIndex = rankings |> first
@@ -146,12 +147,6 @@ function saw(setting::MCDMSetting)::SawResult
     saw(setting.df, setting.weights, setting.fns)
 end
 
-function saw(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::SawResult where {F<:Function}
-    saw(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 end # end of module SAW

@@ -6,7 +6,7 @@ export grey, GreyResult, GreyMethod
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct GreyMethod <: MCDMMethod
     zeta::Float64
@@ -39,7 +39,7 @@ end
     Perform GRA (Grey Relational Analysis) for a given decision matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of decision matrix in type of DataFrame. 
+ - `decisionMat::Matrix`: n × m matrix of decision matrix in type of DataFrame. 
  - `weights::Array{Float64, 1}`: m-vector of weights for criteria.
  - `fs::Array{Function, 1}`: m-vector of functions that are either maximize or minimize for each single criterion.
  - `zeta::Float64`: zeta parameter for the algorithm. The default is 0.5.
@@ -97,7 +97,7 @@ julia> result.bestIndex
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function grey(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fs::Array{F,1};
     zeta::Float64 = 0.5,
@@ -195,14 +195,6 @@ function grey(setting::MCDMSetting; zeta::Float64 = 0.5)::GreyResult
 end
 
 
-function grey(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fs::Array{F,1};
-    zeta::Float64 = 0.5,
-)::GreyResult where {F<:Function}
-    grey(makeDecisionMatrix(mat), weights, fs, zeta = zeta)
-end
 
 
 end # end of module GREY 

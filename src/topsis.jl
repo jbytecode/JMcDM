@@ -5,15 +5,15 @@ using ..Utilities
 
 export TopsisMethod, TopsisResult, topsis
 
-using DataFrames
+
 
 struct TopsisMethod <: MCDMMethod end
 
 struct TopsisResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
-    normalizedDecisionMatrix::DataFrame
-    normalizedWeightedDecisionMatrix::DataFrame
+    normalizedDecisionMatrix::Matrix
+    normalizedWeightedDecisionMatrix::Matrix
     distanceToIdeal::Vector
     distanceToNegative::Vector
     bestIndex::Int64
@@ -35,7 +35,7 @@ Apply TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution)
 for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
 
@@ -88,7 +88,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function topsis(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::TopsisResult where {F<:Function}
@@ -98,8 +98,9 @@ function topsis(
 
     normalizedMat = normalize(decisionMat)
 
-    weightednormalizedMat = w * normalizedMat
-
+    # weightednormalizedMat = w * normalizedMat
+    weightednormalizedMat = Utilities.weightise(normalizedMat, w)
+    
     desired = apply_columns(fns, weightednormalizedMat)
     undesired = apply_columns(reverseminmax(fns), weightednormalizedMat)
 
@@ -150,13 +151,7 @@ function topsis(setting::MCDMSetting)::TopsisResult
     topsis(setting.df, setting.weights, setting.fns)
 end
 
-function topsis(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::TopsisResult where {F<:Function}
-    topsis(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 
 end # End of module Topsis

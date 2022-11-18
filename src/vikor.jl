@@ -3,7 +3,7 @@ module VIKOR
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct VikorMethod <: MCDMMethod
     v::Float64
@@ -12,9 +12,9 @@ end
 VikorMethod()::VikorMethod = VikorMethod(0.5)
 
 struct VikorResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
+    weightedDecisionMatrix::Matrix
     bestIndex::Int64
     s::Vector
     r::Vector
@@ -37,7 +37,7 @@ end
 Apply VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `v::Float64`: Optional algorithm parameter. Default is 0.5.
@@ -88,7 +88,7 @@ Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastir
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
 function vikor(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
     v::Float64 = 0.5,
@@ -120,8 +120,8 @@ function vikor(
         end
     end
 
-    weightedA = w * A
-
+    # weightedA = w * A
+    weightedA = Utilities.weightise(A, w)
 
     s = Vector{Any}(undef, nalternatives)
     r = similar(s)
@@ -170,14 +170,7 @@ function vikor(setting::MCDMSetting; v::Float64 = 0.5)::VikorResult
 end
 
 
-function vikor(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1};
-    v::Float64 = 0.5,
-)::VikorResult where {F<:Function}
-    vikor(makeDecisionMatrix(mat), weights, fns, v = v)
-end
+
 
 
 end # end module VIKOR 

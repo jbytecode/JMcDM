@@ -5,12 +5,12 @@ export copras, CoprasMethod, COPRASResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct CoprasMethod <: MCDMMethod end
 
 struct COPRASResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -31,7 +31,7 @@ end
 Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights and, type of criteria.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
 
@@ -173,7 +173,7 @@ Kaklauskas, A., Zavadskas, E. K., Raslanas, S., Ginevicius, R., Komka, A., & Mal
 Yıldırım, B. F., Timor, M. (2019). "Bulanık ve Gri COPRAS Yöntemleri Kullanılarak Tedarikçi Seçim Modeli Geliştirilmesi". Optimum Ekonomi ve Yönetim Bilimleri Dergisi, 6 (2), 283-310.
 """
 function copras(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::COPRASResult where {F<:Function}
@@ -240,12 +240,6 @@ function copras(setting::MCDMSetting)::COPRASResult
     copras(setting.df, setting.weights, setting.fns)
 end
 
-function copras(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::COPRASResult where {F<:Function}
-    copras(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 end # end of module COPRAS 

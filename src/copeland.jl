@@ -23,7 +23,7 @@ import ..VIKOR: VikorMethod, vikor
 import ..WASPAS: WaspasMethod, waspas
 import ..WPM: WPMMethod, wpm
 
-using DataFrames
+
 
 
 function level_of_dominance(v1::Array{Int,1}, v2::Array{Int,1})::Int64
@@ -121,7 +121,7 @@ julia> result = copeland(df, w, fns, met)
 ```
 
 """
-function copeland(df::DataFrame, w::Vector, fns::Vector, methods::Vector{T}) where {T <: MCDMMethod}
+function copeland(df::Matrix, w::Vector, fns::Vector, methods::Vector{T}) where {T <: MCDMMethod}
     nmethods = length(methods)
     ncases, _ = size(df)
     scoresmat = zeros(Int64, (ncases, nmethods))
@@ -169,16 +169,16 @@ function copeland(df::DataFrame, w::Vector, fns::Vector, methods::Vector{T}) whe
 
     i = 1
     names = []
-    df = DataFrame(dictt)
+    resultdict = dictt
     for (k, v) in dictt
         scoresmat[:, i] = v
         append!(names, k)
         i+=1
     end
     allresult = copeland(scoresmat)
-    df[!, "Copeland"] = allresult
+    resultdict["Copeland"] = allresult
 
-    return df 
+    return resultdict
 end
 
 end # end of module

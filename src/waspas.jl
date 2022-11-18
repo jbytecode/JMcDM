@@ -3,13 +3,13 @@ module WASPAS
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 export WaspasMethod, WASPASResult, waspas
 
 struct WASPASResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
+    decisionMatrix::Matrix
+    normalizedDecisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -37,7 +37,7 @@ end
 Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
@@ -99,7 +99,7 @@ Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Op
 Aytaç Adalı, E. & Tuş Işık, A.. (2017). Bir Tedarikçi Seçim Problemi İçin SWARA ve WASPAS Yöntemlerine Dayanan Karar Verme Yaklaşımı. International Review of Economics and Management, 5 (4) , 56-77. DOI: 10.18825/iremjournal.335408
 """
 function waspas(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
     lambda::Float64 = 0.5,
@@ -109,7 +109,7 @@ function waspas(
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     colminmax = zeros(zerotype, col)
 
@@ -132,7 +132,7 @@ function waspas(
         scoresWPM[i] = prod(scoreMat[i, :])
     end
 
-    scoresWSM = w * normalizedDecisionMat |> rowsums
+    scoresWSM = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
 
     scoreTable = [scoresWSM scoresWPM]
 
@@ -171,15 +171,6 @@ function waspas(setting::MCDMSetting; lambda::Float64 = 0.5)::WASPASResult
     waspas(setting.df, setting.weights, setting.fns, lambda = lambda)
 end
 
-
-function waspas(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1};
-    lambda::Float64 = 0.5,
-)::WASPASResult where {F<:Function}
-    waspas(makeDecisionMatrix(mat), weights, fns, lambda = lambda)
-end
 
 
 end # end of module WASPAS

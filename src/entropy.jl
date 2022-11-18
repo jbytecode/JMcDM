@@ -6,10 +6,10 @@ export entropy, EntropyResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct EntropyResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     w::Array{Float64,1}
 end
 """
@@ -18,7 +18,7 @@ end
 Apply Entropy method for a given matrix and criteria types.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
 
 # Description 
 entropy() applies the Entropy method to calculate objective weights which are obtained through multi-step calculations of the decision matrix constructed from the actual information about the evaluation criteria of the alternatives.
@@ -70,8 +70,7 @@ Shannon, C. E. (1948). A Mathematical Theory of Communication. Bell System Techn
 Ulutaş, A . (2019). Entropi ve MABAC Yöntemleri ile Personel Seçimi. OPUS Uluslararası Toplum Araştırmaları Dergisi, 13 (19), 1552-1573. DOI: 10.26466/opus.580456.
 
 """
-function entropy(decisionMat::DataFrame)
-    :EntropyResult
+function entropy(decisionMat::Matrix)::EntropyResult
 
     row, col = size(decisionMat)
     normalizeDM = zeros(Float64, row, col)
@@ -106,9 +105,6 @@ function entropy(decisionMat::DataFrame)
     return result
 end
 
-function entropy(mat::Matrix)
-    :EntropyResult
-    entropy(makeDecisionMatrix(mat))
-end
+
 
 end # end of module Entropy 

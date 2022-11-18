@@ -5,10 +5,10 @@ export mairca, MaircaMethod, MAIRCAResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct MAIRCAResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -32,7 +32,7 @@ end
 Apply MAIRCA (Multi Attributive Ideal-Real Comparative Analysis) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
@@ -89,7 +89,7 @@ Pamučar, D., Lukovac, V., Božanić, D., & Komazec, N. (2018). Multi-criteria F
 Ulutaş A.(2019),Swara Ve Mairca Yöntemleri İle Catering Firması Seçimi,BMIJ, (2019), 7(4): 1467-1479 http://dx.doi.org/10.15295/bmij.v7i4.1166
 """
 function mairca(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::MAIRCAResult where {F<:Function}
@@ -98,7 +98,7 @@ function mairca(
 
     w = unitize(weights)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     T = zeros(zerotype, row, col)
 
@@ -162,12 +162,6 @@ function mairca(setting::MCDMSetting)::MAIRCAResult
 end
 
 
-function mairca(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MAIRCAResult where {F<:Function}
-    mairca(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 end # end of module MAIRCA 

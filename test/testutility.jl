@@ -93,23 +93,23 @@
         @test result == [0.20, 0.20, 0.20, 0.20, 0.20]
     end
 
-    @testset "Product weights with DataFrame" begin
-        df = DataFrame()
-        df[:, :x] = [1.0, 2.0, 4.0, 8.0]
-        df[:, :y] = [10.0, 20.0, 30.0, 40.0]
-        w = [0.60, 0.40]
-        result = w * df
-        @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
-        @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
-
-        dfint = DataFrame()
-        dfint[:, :x] = [1.0, 2, 4, 8]
-        dfint[:, :y] = [10, 20, 30, 40]
-        w = [0.60, 0.40]
-        result = w * dfint
-        @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
-        @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
-    end
+    #@testset "Product weights with DataFrame" begin
+    #    df = DataFrame()
+    #    df[:, :x] = [1.0, 2.0, 4.0, 8.0]
+    #    df[:, :y] = [10.0, 20.0, 30.0, 40.0]
+    #    w = [0.60, 0.40]
+    #    result = w * df
+    #    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
+    #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
+#
+    #    dfint = DataFrame()
+    #    dfint[:, :x] = [1.0, 2, 4, 8]
+    #    dfint[:, :y] = [10, 20, 30, 40]
+    #    w = [0.60, 0.40]
+    #    result = w * dfint
+    #    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
+    #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
+    #end
 
    
 

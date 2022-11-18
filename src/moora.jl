@@ -5,7 +5,7 @@ export moora, MooraMethod, MooraResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 # method is either :reference or :ratio
 struct MooraMethod <: MCDMMethod
@@ -17,10 +17,10 @@ MooraMethod()::MooraMethod = MooraMethod(:ratio)
 
 struct MooraResult <: MCDMResult
     mooraType::Symbol
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
-    referenceMatrix::Union{DataFrame,Nothing}
+    weightedDecisionMatrix::Matrix
+    referenceMatrix::Union{Matrix,Nothing}
     scores::Vector
     bestIndex::Int64
 end
@@ -39,7 +39,7 @@ end
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
 
@@ -96,7 +96,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function moora_ref(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::MooraResult where {F<:Function}
@@ -106,7 +106,8 @@ function moora_ref(
     nalternatives, ncriteria = size(decisionMat)
 
     normalizedMat = normalize(decisionMat)
-    weightednormalizedMat = w * normalizedMat
+    # weightednormalizedMat = w * normalizedMat
+    weightednormalizedMat = Utilities.weightise(normalizedMat, w)
 
     # cmaxs = colmaxs(weightednormalizedMat)
     cmaxs = apply_columns(fns, weightednormalizedMat)
@@ -171,7 +172,7 @@ end
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
 
@@ -189,7 +190,7 @@ KUNDAKCI, Nilsen. "Combined multi-criteria decision making approach based on MAC
 and MULTI-MOORA methods." Alphanumeric Journal 4.1 (2016): 17-26.
 """
 function moora_ratio(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::MooraResult where {F<:Function}
@@ -201,7 +202,7 @@ function moora_ratio(
     normalizedMatrix = similar(mat)
     weightednormalizedMat = similar(mat)
 
-    zerotype = eltype(mat[1, :])
+    zerotype = eltype(mat)
 
     for i = 1:ncriteria
         normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
@@ -230,7 +231,7 @@ function moora_ratio(
         :ratio,
         decisionMat,
         w,
-        DataFrame(weightednormalizedMat, :auto),
+        weightednormalizedMat,
         nothing, # refmat
         scores,
         bestIndex,
@@ -244,7 +245,7 @@ end
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `method::Symbol`: Either `:reference` or `:ratio`. By default, it is `:reference`.
@@ -270,7 +271,7 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function moora(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
     method::Symbol = :reference,
@@ -307,13 +308,6 @@ function moora(setting::MCDMSetting; method::Symbol = :reference)::MooraResult
 end
 
 
-function moora(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1};
-    method::Symbol = :reference,
-)::MooraResult where {F<:Function}
-    moora(makeDecisionMatrix(mat), weights, fns, method = method)
-end
+
 
 end # end of module MOORA 

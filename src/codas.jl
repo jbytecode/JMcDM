@@ -5,10 +5,10 @@ export codas, CodasMethod, CODASResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct CODASResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     w::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -37,7 +37,7 @@ end
 Apply CODAS (COmbinative Distance-based ASsessment) method for a given matrix, weights and, type of criteria.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
  - `tau::Float64`: tau parameter for the algorithm. The default is 0.02.
@@ -90,7 +90,7 @@ julia> result.scores
 Keshavarz Ghorabaee, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2016). A new combinative distance-based assessment (CODAS) method for multi-criteria decision-making. Economic Computation & Economic Cybernetics Studies & Research, 50(3), 25-44.
 """
 function codas(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weight::Array{Float64,1},
     fns::Array{F,1};
     tau::Float64 = 0.02,
@@ -196,14 +196,7 @@ function codas(setting::MCDMSetting; tau::Float64 = 0.02)::CODASResult
 end
 
 
-function codas(
-    mat::Matrix,
-    weight::Array{Float64,1},
-    fns::Array{F,1};
-    tau::Float64 = 0.02,
-)::CODASResult where {F<:Function}
-    codas(makeDecisionMatrix(mat), weight, fns, tau = tau)
-end
+
 
 
 

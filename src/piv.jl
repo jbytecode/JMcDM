@@ -5,12 +5,12 @@ export piv, PIVResult, PIVMethod
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct PIVResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedMatrix::DataFrame
-    weightedNormalizedMatrix::DataFrame
+    decisionMatrix::Matrix
+    normalizedMatrix::Matrix
+    weightedNormalizedMatrix::Matrix
     w::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -33,7 +33,7 @@ end
 Apply PIV (Proximity Indexed Value) method for a given matrix, weights and, type of criteria.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
 
@@ -52,13 +52,13 @@ Computers & Industrial Engineering, Volume 119, 2018, Pages 427-438, ISSN 0360-8
 https://doi.org/10.1016/j.cie.2018.03.045.
 """
 function piv(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::PIVResult where {F<:Function}
 
     normalized_dec_mat = Utilities.normalize(decisionMat)
-    weighted_norm_mat = weights * normalized_dec_mat
+    weighted_norm_mat = Utilities.weightise(normalized_dec_mat, weights)
 
     nrow, ncol = size(weighted_norm_mat)
 

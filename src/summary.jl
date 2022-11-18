@@ -4,7 +4,7 @@
 Apply more methods for a given decision problem. The methods accept standart number of arguments.   
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
  - `methods::Array{Symbol, 1}`: Array of symbols. The elements can be :topsis, :electre, :cocoso, :copras, :moora, :vikor, :grey, :aras, :saw, :wpm, :waspas, :edas, :marcos, :mabac, :mairca, :copras, :critic
@@ -13,7 +13,7 @@ Apply more methods for a given decision problem. The methods accept standart num
     This method outputs a summarized output using more than MCDM methods in a comparable way. 
 
     # Output 
-- `::DataFrame`: A DataFrame object, methods in columns, and alternatives in rows. Green check symbol indicates the selected alternative as the best by the corresponding method.
+- `::Matrix`: A DataFrame object, methods in columns, and alternatives in rows. Green check symbol indicates the selected alternative as the best by the corresponding method.
 
 # Examples
 ```julia-repl
@@ -44,16 +44,16 @@ julia> result = summary(df, w, fns, methods)
 ```
 """
 function summary(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
     methods::Array{Symbol,1},
-)::DataFrame where {F<:Function}
+)::Dict where {F<:Function}
 
     nmethods = length(methods)
     nalternatives, _ = size(decisionMat)
 
-    resultdf = DataFrame()
+    resultdf = Dict()
 
     check = " ✅ "
 
@@ -229,6 +229,6 @@ Apply more methods for a given decision problem. The methods accept standart num
 # Description 
     This method outputs a summarized output using more than MCDM methods in a comparable way. 
 """
-function summary(setting::MCDMSetting, methods::Array{Symbol,1})::DataFrame
+function summary(setting::MCDMSetting, methods::Array{Symbol,1})
     summary(setting.df, setting.weights, setting.fns, methods)
 end

@@ -5,12 +5,12 @@ export marcos, MarcosResult, MarcosMethod
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct MarcosMethod <: MCDMMethod end
 
 struct MarcosResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -32,7 +32,7 @@ end
 Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
@@ -89,7 +89,7 @@ Stević, Z., Pamučar, D., Puška, A., Chatterjee, P., Sustainable supplier sele
 Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluation software of project management used measurement of alternatives and ranking according to compromise solution (MARCOS) method. Operational Research in Engineering Sciences: Theory and Applications, 3(1), 89-102.
 """
 function marcos(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::MarcosResult where {F<:Function}
@@ -174,12 +174,6 @@ function marcos(setting::MCDMSetting)::MarcosResult
 end
 
 
-function marcos(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MarcosResult where {F<:Function}
-    marcos(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 end # end of module MARCOS 

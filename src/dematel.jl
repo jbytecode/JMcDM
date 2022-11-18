@@ -6,10 +6,10 @@ export dematel, DematelResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct DematelResult <: MCDMResult
-    comparisonMatrix::DataFrame
+    comparisonMatrix::Matrix
     NDMatrix::Array{Float64,2}
     relationShipMatrix::Array{Float64,2}
     c::Array{Float64,1}
@@ -28,7 +28,7 @@ Apply Dematel for a given comparison matrix.
 
 
 # Arguments:
- - `comparisonMat::DataFrame`: n × n matrix of input values in DataFrame format (for convenience) where n is the number of criteria. Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
+ - `comparisonMat::Matrix`: n × n matrix of input values in DataFrame format (for convenience) where n is the number of criteria. Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
  - `threshold::Union{Nothing, Float64}`: Optional threshold used in calculating values of influence matrix. It is calculated when the argument is omitted. 
 
 # Description 
@@ -74,7 +74,7 @@ Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastir
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
 function dematel(
-    comparisonMat::DataFrame;
+    comparisonMat::Matrix;
     threshold::Union{Nothing,Float64} = nothing,
 )::DematelResult
 
@@ -130,8 +130,6 @@ function dematel(
     return result
 end
 
-function dematel(mat::Matrix; threshold::Union{Nothing,Float64} = nothing)::DematelResult
-    dematel(makeDecisionMatrix(mat), threshold = threshold)
-end
+
 
 end # end of module DEMATEL 

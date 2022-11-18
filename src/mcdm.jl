@@ -4,7 +4,7 @@
     Perform selected method for a given decision matrix, weight vector, and function list.
 
 # Arguments:
- - `df::DataFrame`: n × m matrix of decision matrix in type of DataFrame. 
+ - `df::Matrix`: n × m matrix of decision matrix in type of DataFrame. 
  - `weights::Array{Float64, 1}`: m-vector of weights for criteria.
  - `fs::Array{Function, 1}`: m-vector of functions that are either maximize or minimize for each single criterion.
  - `method::MCDMMethod`: Preferred MCDMMethod.
@@ -58,7 +58,7 @@ julia> # mcdm(df, w, fns, GreyMethod(0.6))
 
 """
 function mcdm(
-    df::DataFrame,
+    df::Matrix,
     w::Array{Float64,1},
     fns::Array{F,1},
     method::T1,

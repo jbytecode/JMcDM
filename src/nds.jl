@@ -3,7 +3,7 @@ module NDS
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 export nds
 
@@ -58,14 +58,14 @@ end
     Sort multidimensional data usin non-dominated sorting algorithm.
 
 # Arguments
-- `data::DataFrame`: DataFrame of variables.
+- `data::Matrix`: DataFrame of variables.
 - `fns::Array{<:Function, 1}`: Vector of functions with elements of maximum or minimum.
 
 # References
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function ndsranks(data::DataFrame, fns::Array{F,1})::Array{Int} where {F<:Function}
+function ndsranks(data::Matrix, fns::Array{F,1})::Array{Int} where {F<:Function}
 
     #mat = convert(Matrix, data)
     mat = Matrix(data)
@@ -121,7 +121,7 @@ end
     Sort multidimensional data using non-dominated sorting algorithm.
 
 # Arguments
-- `data::DataFrame`: n x k desicion matrix with n cases and k criteria.
+- `data::Matrix`: n x k desicion matrix with n cases and k criteria.
 - `fns::Array{<:Function, 1}`: Vector of functions with elements of maximum or minimum.
 
 # Output 
@@ -164,7 +164,7 @@ julia> result.bestIndex
 Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
 International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
 """
-function nds(data::DataFrame, fns::Array{F,1})::NDSResult where {F<:Function}
+function nds(data::Matrix, fns::Array{F,1})::NDSResult where {F<:Function}
 
     ranks = ndsranks(data, fns)
 
@@ -175,8 +175,6 @@ function nds(data::DataFrame, fns::Array{F,1})::NDSResult where {F<:Function}
     return result
 end
 
-function nds(mat::Matrix, fns::Array{F,1})::NDSResult where {F<:Function}
-    nds(makeDecisionMatrix(mat), fns)
-end
+
 
 end # end of module NDS 

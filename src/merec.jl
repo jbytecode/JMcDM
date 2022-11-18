@@ -5,13 +5,13 @@ export merec, MERECResult, MERECMethod
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct MERECMethod <: MCDMMethod end
 
 
 struct MERECResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     w::Vector
 end
 
@@ -26,7 +26,7 @@ merec(decisionMat, fns)
 Apply MEREC (MEthod based on the Removal Effects of Criteria) for a given matrix and criteria types.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
@@ -72,7 +72,7 @@ julia> result.w
 Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2021). Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry, 13(4), 525. https://doi.org/10.3390/sym13040525
 
 """
-function merec(decisionMat::DataFrame, fs::Array{F,1})::MERECResult where {F<:Function}
+function merec(decisionMat::Matrix, fs::Array{F,1})::MERECResult where {F<:Function}
     mat = Matrix(decisionMat)
     row, col = size(mat)
 
@@ -148,8 +148,6 @@ function merec(setting::MCDMSetting)::MERECResult
     merec(setting.df, setting.fns)
 end
 
-function merec(mat::Matrix, fs::Array{F,1})::MERECResult where {F<:Function}
-    merec(makeDecisionMatrix(mat), fs)
-end
+
 
 end # end of module MEREC

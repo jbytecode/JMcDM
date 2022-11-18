@@ -5,14 +5,15 @@ export dataenvelop, DataEnvelopResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 using ..JuMP
 using ..GLPK
+using ..DataFrames
 
 struct DataEnvelopResult <: MCDMResult
-    efficiencies::Array{Float64,1}
+    efficiencies::Vector
     references::DataFrame
-    orderedcases::Array{Symbol,1}
+    orderedcases::Vector
 end
 
 
@@ -71,15 +72,15 @@ julia> result.efficiencies
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 """
 function dataenvelop(
-    input::Array{Float64,2},
-    output::Array{Float64,1};
+    input::Matrix,
+    output::Vector;
     verbose::Bool = false,
 )::DataEnvelopResult
 
     nrow, ncol = size(input)
 
     efficiencies = zeros(Float64, nrow)
-    resultdf = DataFrame()
+    resultdf = DataFrames.DataFrame()
     casenames::Array{Symbol,1} = []
 
     for objectnum = 1:nrow

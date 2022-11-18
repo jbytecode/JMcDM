@@ -3,7 +3,7 @@ module SD
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 export SDResult
 
@@ -25,7 +25,7 @@ end
 Apply SD method for a given matrix and directions of optimization.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
@@ -43,7 +43,7 @@ Diakoulaki, Danae, George Mavrotas, and Lefteris Papayannakis. "Determining obje
 in multiple criteria problems: The critic method." Computers & Operations Research 22.7 
 (1995): 763-770.
 """
-function sd(decisionMat::DataFrame, fns::Array{F,1})::SDResult where {F<:Function}
+function sd(decisionMat::Matrix, fns::Array{F,1})::SDResult where {F<:Function}
 
     n, p = size(decisionMat)
 
@@ -87,8 +87,6 @@ function sd(setting::MCDMSetting)::SDResult
     sd(setting.df, setting.fns)
 end
 
-function sd(mat::Matrix, fns::Array{F,1})::SDResult where {F<:Function}
-    sd(makeDecisionMatrix(mat), fns)
-end
+
 
 end # end module SD

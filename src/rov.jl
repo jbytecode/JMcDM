@@ -5,7 +5,7 @@ export rov, ROVMethod, ROVResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct ROVMethod <: MCDMMethod end
 
@@ -36,7 +36,7 @@ end
 Apply ROV (Range of Value) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns (directions of optimization). 
 
@@ -81,7 +81,7 @@ Madić, Miloš et al. “Application of the ROV method for the selection of cutt
 Decision Science Letters 5 (2016): 245-254.
 """
 function rov(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::ROVResult where {F<:Function}
@@ -90,7 +90,7 @@ function rov(
     decmat = Matrix(decisionMat)
     normalizedMat = similar(decmat)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     cmins = colmins(decisionMat)
     cmaxs = colmaxs(decisionMat)
@@ -139,8 +139,5 @@ function rov(setting::MCDMSetting)::ROVResult
     rov(setting.df, setting.weights, setting.fns)
 end
 
-function rov(mat::Matrix, weights::Array{Float64,1}, fns::Array{F,1}) where {F<:Function}
-    rov(makeDecisionMatrix(mat), weights, fns)
-end
 
 end # end of module ROV 

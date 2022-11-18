@@ -1,3 +1,7 @@
+### 0.7.0 
+- Remove dependency of DataFrames.jl. All of the functions now takes the decision matrix in type of Matrix.
+  
+
 ### 0.6.0 
 - Dependencies for JuMP and GLPK removed. Requires.jl automatically activates Game and DataEnvelop modules when these two packages are loaded manually by the user. 
 

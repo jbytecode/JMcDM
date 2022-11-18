@@ -5,12 +5,12 @@ export electre, ElectreMethod, ElectreResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct ElectreResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
-    weightedDecisionMatrix::DataFrame
+    weightedDecisionMatrix::Matrix
     fitnessTable::Array{Dict,1}
     nonfitnessTable::Array{Dict,1}
     fitnessMatrix::Matrix
@@ -34,7 +34,7 @@ Apply ELECTRE (ELimination Et Choice Translating REality) method
 for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
 
@@ -94,19 +94,21 @@ Celikbilek Yakup, Cok Kriterli Karar Verme Yontemleri, Aciklamali ve Karsilastir
 Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankara, 2018
 """
 function electre(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::ElectreResult where {F<:Function}
 
     w = unitize(weights)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     nalternatives, ncriteria = size(decisionMat)
 
     normalizedMat = normalize(decisionMat)
-    weightednormalizedMat = w * normalizedMat
+    
+    #weightednormalizedMat = w * normalizedMat
+    weightednormalizedMat = Utilities.weightise(normalizedMat, w)
 
     fitnessTable = []
     nonfitnessTable = []
@@ -230,12 +232,6 @@ function electre(setting::MCDMSetting)::ElectreResult
     electre(setting.df, setting.weights, setting.fns)
 end
 
-function electre(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::ElectreResult where {F<:Function}
-    electre(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 end # end of module ELECTRE 

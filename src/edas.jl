@@ -5,12 +5,12 @@ export edas, EdasMethod, EDASResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct EdasMethod <: MCDMMethod end
 
 struct EDASResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -31,7 +31,7 @@ end
 Apply EDAS (Evaluation based on Distance from Average Solution) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
@@ -105,7 +105,7 @@ Ulutaş, A. (2017). EDAS Yöntemi Kullanılarak Bir Tekstil Atölyesi İçin Dik
 
 """
 function edas(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::EDASResult where {F<:Function}
@@ -178,13 +178,7 @@ function edas(setting::MCDMSetting)::EDASResult
     edas(setting.df, setting.weights, setting.fns)
 end
 
-function edas(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::EDASResult where {F<:Function}
-    edas(makeDecisionMatrix(mat), weights, fns)
-end
+
 
 
 end # end of module EDAS 

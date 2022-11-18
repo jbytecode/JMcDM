@@ -10,8 +10,7 @@
                 -1 2 4
             ]
 
-            dm = makeDecisionMatrix(mat)
-            result = game(dm)
+            result = game(mat)
 
             @test isa(result, Array{GameResult,1})
             @test length(result) == 2
@@ -36,8 +35,7 @@
                 -1 1 0
             ]
 
-            dm = makeDecisionMatrix(mat)
-            result = game(dm)
+            result = game(mat)
 
             @test isa(result, Array{GameResult,1})
             @test length(result) == 2
@@ -75,7 +73,7 @@
         out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165]
         inp = hcat(x1, x2)
 
-        result::DataEnvelopResult = dataenvelop(inp, out)
+        result = dataenvelop(inp, out)
 
         @test isa(result, DataEnvelopResult)
 

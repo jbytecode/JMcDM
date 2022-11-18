@@ -6,7 +6,7 @@ export GameResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 using ..JuMP, ..GLPK
 
 
@@ -74,7 +74,7 @@ Value of game:
 # References
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
 """
-function game(decisionMatrix::DataFrame; verbose::Bool = false)::Array{GameResult,1}
+function game(decisionMatrix::Matrix; verbose::Bool = false)::Array{GameResult,1}
     return game(Matrix(decisionMatrix), verbose = verbose)
 end
 

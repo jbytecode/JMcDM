@@ -5,7 +5,7 @@ export psi, PSIMethod, PSIResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct PSIResult <: MCDMResult
     pvs::Vector
@@ -33,7 +33,7 @@ end
 Apply PSI (Preference Selection Index) method for a given matrix and directions of optimizations.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  
 # Description 
@@ -87,7 +87,7 @@ julia> result.bestIndex
 Maniya, Kalpesh, and Mangal Guido Bhatt. "A selection of material using a novel type decision-making method: 
 Preference selection index method." Materials & Design 31.4 (2010): 1785-1789
 """
-function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F<:Function}
+function psi(decisionMat::Matrix, fns::Array{F,1})::PSIResult where {F<:Function}
 
     function PV(v)
         mymean = mean(v)
@@ -99,7 +99,7 @@ function psi(decisionMat::DataFrame, fns::Array{F,1})::PSIResult where {F<:Funct
     row, col = size(decisionMat)
     normalizedDecisionMat = similar(decisionMat)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     colminmax = zeros(zerotype, col)
 
@@ -156,8 +156,5 @@ function psi(setting::MCDMSetting)::PSIResult
     psi(setting.df, setting.fns)
 end
 
-function psi(mat::Matrix, fns::Array{F,1})::PSIResult where {F<:Function}
-    psi(makeDecisionMatrix(mat), fns)
-end
 
 end # end of module PSI 

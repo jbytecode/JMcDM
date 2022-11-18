@@ -5,13 +5,13 @@ export critic, CRITICResult, CriticMethod
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct CriticMethod <: MCDMMethod end
 
 
 struct CRITICResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     w::Vector
 end
 
@@ -26,7 +26,7 @@ end
 Apply CRITIC (Combined Compromise Solution) method for a given matrix and criteria types.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alternatives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
 # Description 
@@ -73,7 +73,7 @@ Diakoulaki, D., Mavrotas, G., & Papayannakis, L. (1995). Determining objective w
 Akçakanat, Ö., Aksoy, E., Teker, T. (2018). CRITIC ve MDL Temelli EDAS Yöntemi ile TR-61 Bölgesi Bankalarının Performans Değerlendirmesi. Süleyman Demirel Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 1 (32), 1-24.
 
 """
-function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult where {F<:Function}
+function critic(decisionMat::Matrix, fns::Array{F,1})::CRITICResult where {F<:Function}
 
     row, col = size(decisionMat)
     colMax = colmaxs(decisionMat)
@@ -95,8 +95,7 @@ function critic(decisionMat::DataFrame, fns::Array{F,1})::CRITICResult where {F<
         end
     end
 
-    # normalizedMat = convert(Matrix, A)
-    normalizedMat = Matrix(A)
+    normalizedMat = A
 
     corMat = one(zerotype) .- cor(normalizedMat)
 
@@ -137,8 +136,6 @@ function critic(setting::MCDMSetting)::CRITICResult
     critic(setting.df, setting.fns)
 end
 
-function critic(mat::Matrix, fns::Array{F,1})::CRITICResult where {F<:Function}
-    critic(mat, fns)
-end
+
 
 end # end of module CRITIC

@@ -1,8 +1,7 @@
 module JMcDM
 
-# Dependencies
-import DataFrames: DataFrame, DataFrameRow
 
+# Dependencies
 using Requires
 
 
@@ -11,14 +10,28 @@ using Requires
 # manually by the user.
 export game, dataenvelop    
 function __init__()
+   # @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
+   #     @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
+   #         include("game.jl")
+   #         import .Game: game, GameResult
+   #         include("dataenvelop.jl")
+   #         import .DataEnvelop: dataenvelop, DataEnvelopResult
+   #         export GameResult
+   #         export DataEnvelopResult
+   #     end
+   # end
+
+
     @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
         @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
             include("game.jl")
             import .Game: game, GameResult
-            include("dataenvelop.jl")
-            import .DataEnvelop: dataenvelop, DataEnvelopResult
             export GameResult
-            export DataEnvelopResult
+            @require DataFrames="a93c6f00-e57d-5684-b7b6-d8193f3e46c0" begin    
+                include("dataenvelop.jl")
+                import .DataEnvelop: dataenvelop, DataEnvelopResult
+                export DataEnvelopResult
+            end
         end
     end
 end
@@ -44,7 +57,7 @@ abstract type MCDMMethod end
     Immutable data structure for a MCDM setting.
 
 # Arguments
-- `df::DataFrame`: The decision matrix in type of DataFrame.
+- `df::Matrix`: The decision matrix in type of DataFrame.
 - `weights::Array{Float64,1}`: Array of weights for each criterion.
 - `fns::Array{<:Function, 1}`: Array of functions. The elements are either minimum or maximum.
 
@@ -252,7 +265,6 @@ export normalize
 export colmaxs
 export colmins
 export unitize
-export makeDecisionMatrix
 export reverseminmax
 export makegrey
 

@@ -4,12 +4,12 @@ export I, mean, var, std
 export geomean, cor, euclidean
 export normalize, apply_columns
 export colmaxs, colmins, unitize
-export makeDecisionMatrix, reverseminmax
+export reverseminmax
 export rowmins, rowmaxs, rowmeans, rowsums
 export colmins, colmaxs, colmeans, colsums
 export makegrey
 
-using DataFrames
+
 
 import ..GreyNumbers: GreyNumber
 
@@ -65,16 +65,16 @@ function euclidean(v1::Vector)
     return euclidean(v1, v2)
 end
 
-function euclidean(v1::Vector, row::DataFrames.DataFrameRow{DataFrame,DataFrames.Index})
-    v2 = Vector(row)
-    (v1 .- v2) .^ 2.0 |> sum |> sqrt
-end
+#function euclidean(v1::Vector, row)
+#    v2 = Vector(row)
+#    (v1 .- v2) .^ 2.0 |> sum |> sqrt
+#end
 
 function normalize(v1::Vector)::Vector
     return v1 ./ euclidean(v1)
 end
 
-function normalize(data::DataFrame)::DataFrame
+function normalize(data::Matrix)::Matrix
     df = similar(data)
     _, p = size(df)
     for i = 1:p
@@ -133,61 +133,46 @@ function unitize(v::Vector)::Vector
     return v ./ sum(v)
 end
 
-function Base.:*(w::Vector, data::DataFrame)::DataFrame
-    newdf = copy(data)
-    _, p = size(newdf)
-    for i = 1:p
-        newdf[!, i] = newdf[!, i]
-        newdf[:, i] = w[i] .* data[:, i]
-    end
-    return newdf
-end
+#function Base.:*(w::Vector, data::Matrix)::Matrix
+#    newdf = copy(data)
+#    _, p = size(newdf)
+#    for i = 1:p
+#        newdf[!, i] = newdf[!, i]
+#        newdf[:, i] = w[i] .* data[:, i]
+#    end
+#    return newdf
+#end
 
-function Base.:-(r1::DataFrameRow, r2::DataFrameRow)::Vector
-    # v1 = convert(Array{Float64,1}, r1)
-    v1 = Vector(r1)
-    # v2 = convert(Array{Float64,1}, r2)
-    v2 = Vector(r2)
-    return v1 .- v2
-end
+#function Base.:-(r1::Vector, r2::Vector)::Vector
+#    # v1 = convert(Array{Float64,1}, r1)
+#    v1 = Vector(r1)
+#    # v2 = convert(Array{Float64,1}, r2)
+#    v2 = Vector(r2)
+#    return v1 .- v2
+#end
 
-#function Base.:-(r1::Array{T,1}, r2::DataFrameRow)::Array{T,1} where T <: Number
+#function Base.:-(r1::Array{T,1}, r2::MatrixRow)::Array{T,1} where T <: Number
 #    # v2 = convert(Array{Float64,1}, r2)
 #    v2 = Vector{Float64}(r2)
 #    return r1 .- v2
 #end
 #
-#function Base.:-(r1::DataFrameRow, r2::Array{T,1})::Array{T,1} where T <: Number
+#function Base.:-(r1::MatrixRow, r2::Array{T,1})::Array{T,1} where T <: Number
 #    v1 = convert(Array{Float64,1}, r1)
 #    return v1 .- r2
 #end
 
-function Base.:-(r1::Vector, r2::DataFrameRow)::Vector
-    # v2 = convert(Array{Float64,1}, r2)
-    return r1 .- r2
-end
+#function Base.:-(r1::Vector, r2::MatrixRow)::Vector
+#    # v2 = convert(Array{Float64,1}, r2)
+#    return r1 .- r2
+#end
+#
+#function Base.:-(r1::MatrixRow, r2::Vector)::Vector
+#    return r1 .- r2
+#end
+#
 
-function Base.:-(r1::DataFrameRow, r2::Vector)::Vector
-    return r1 .- r2
-end
 
-
-"""
-    makeDecisionMatrix(mat; names)
-
-    Create a DataFrame using a decision matrix optionally using column names.
-
-# Arguments:
- - `mat::Array{T,2}`: Matrix of numbers in any set
- - `names::Union{Nothing,Array{String,1}}`: Column names. Default is nothing. If column names are not given, they are labelled as Crt 1, Crt 2, ..., etc.
- 
-"""
-function makeDecisionMatrix(
-    mat::Matrix;
-    names::Union{Nothing,Array{String,1}} = nothing,
-)
-    return copy(mat)
-end
 
 function Base.minimum(data)
     data |> Matrix |> minimum

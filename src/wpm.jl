@@ -3,15 +3,15 @@ module WPM
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 export WPMMethod, WPMResult, wpm
 
 struct WPMMethod <: MCDMMethod end
 
 struct WPMResult <: MCDMResult
-    decisionMatrix::DataFrame
-    normalizedDecisionMatrix::DataFrame
+    decisionMatrix::Matrix
+    normalizedDecisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -34,7 +34,7 @@ end
 Apply WPM (Weighted Product Method) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
@@ -92,14 +92,14 @@ julia> result.bestIndex
 Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Optimization of Weighted Aggregated Sum Product Assessment. Elektronika Ir Elektrotechnika, 122(6), 3-6. https://doi.org/10.5755/j01.eee.122.6.1810
 """
 function wpm(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::WPMResult where {F<:Function}
 
     row, col = size(decisionMat)
 
-    zerotype = eltype(decisionMat[!, 1])
+    zerotype = eltype(decisionMat)
 
     normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
@@ -151,14 +151,6 @@ function wpm(setting::MCDMSetting)::WPMResult
     wpm(setting.df, setting.weights, setting.fns)
 end
 
-
-function wpm(
-    mat::Matrix,
-    weights::Array{Float64,1},
-    fns::Array{F,1},
-)::WPMResult where {F<:Function}
-    wpm(makeDecisionMatrix(mat), weights, fns)
-end
 
 
 end # end of module WPM 

@@ -278,10 +278,9 @@
             WPMMethod(),
         ]
 
-        result = copeland(df, weights, fns, met)
+        result = copeland(Matrix(df), weights, fns, met)
 
-        @test df isa DataFrame
-        @test result[!, "Copeland"] == [3, 1, -1, -3]
+        @test result["Copeland"] == [3, 1, -1, -3]
     end
 
 end

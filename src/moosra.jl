@@ -5,7 +5,7 @@ export moosra, MoosraMethod, MoosraResult
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
-using DataFrames
+
 
 struct MoosraMethod <: MCDMMethod end
 
@@ -30,7 +30,7 @@ end
 Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::DataFrame`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
 
@@ -79,7 +79,7 @@ Das, Manik Chandra, Bijan Sarkar, and Siddhartha Ray. "Decision making under con
 International Journal of Applied Decision Sciences 5.2 (2012): 142-162.
 """
 function moosra(
-    decisionMat::DataFrame,
+    decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
 )::MoosraResult where {F<:Function}
