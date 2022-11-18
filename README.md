@@ -62,14 +62,28 @@ to start developing new methods.
 Since the Julia package manager installs all of the dependencies automatically, a standard user doesn't need to
 install them manually. The package dependencies are listed below:
 
-- DataFrames
+- Requires.jl
+  
 
 for the main functionality. You can also install the 
 
 - GLPK
 - JuMP
 
-for zero-sum game problem solving and the data envelopment problem for the efficiency.
+for zero-sum game problem solving and the data envelopment problem for the efficiency. You can also import
+
+- DataFrames
+
+manually for user-friendly interactions. All of the methods require a decision matrix in type of Matrix which
+can be converted from a DataFrame using the code
+
+```julia
+Matrix(df)
+```
+
+before calling any method.
+
+
 
 ## Documentation
 
@@ -159,6 +173,7 @@ julia> df = DataFrame(
 
 
 ```julia
+julia> using DataFrames
 julia> df
 3×5 DataFrame
  Row │ age      size     price     distance  population 
@@ -172,8 +187,8 @@ julia> df
 
 ```julia
 julia> w  = [0.35, 0.15, 0.25, 0.20, 0.05];
-julia> fns = makeminmax([minimum, maximum, minimum, minimum, maximum]);
-julia> result = topsis(df, w, fns);
+julia> fns = [minimum, maximum, minimum, minimum, maximum];
+julia> result = topsis(Matrix(df), w, fns);
 julia> result.scores
 3-element Array{Float64,1}:
 0.5854753145549456
@@ -187,20 +202,20 @@ julia> result.bestIndex
 alternatively
 
 ```julia
-julia> result = mcdm(df, w, fns, TopsisMethod())
+julia> result = mcdm(Matrix(df), w, fns, TopsisMethod())
 ```
 
 or 
 
 ```julia
-julia> setting = MCDMSetting(df, w, fns)
+julia> setting = MCDMSetting(Matrix(df), w, fns)
 julia> result = topsis(setting)
 ```
 
 or
 
 ```julia
-julia> setting = MCDMSetting(df, w, fns)
+julia> setting = MCDMSetting(Matrix(df), w, fns)
 julia> result = mcdm(setting, TopsisMethod())
 ```
 
@@ -258,14 +273,14 @@ The TOPSIS method, defined in [topsis.jl](https://github.com/jbytecode/JMcDM/blo
 - ```topsis()``` takes the decision matrix, weights, and vector of directions of optimization as arguments. This function is defined in ```topsis.jl```.
 
 ```julia
-   function topsis(decisionMat::DataFrame, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
+   function topsis(decisionMat::Matrix, weights::Array{Float64,1}, fns::Array{Function,1})::TopsisResult
 ```
 
 - ```topsis()``` method has a return type of ```TopsisResult```. This ```struct``` is defined in ```types.jl```
 
 ```julia
   struct TopsisResult <: MCDMResult
-    decisionMatrix::DataFrame
+    decisionMatrix::Matrix
     weights::Array{Float64,1}
     normalizedDecisionMatrix::DataFrame
     normalizedWeightedDecisionMatrix::DataFrame 
