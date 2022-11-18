@@ -15,8 +15,3 @@ JMcDM.mcdm
 JMcDM.summary
 ```
 
-
-## makeDecisionMatrix
-```@docs
-JMcDM.makeDecisionMatrix
-```
