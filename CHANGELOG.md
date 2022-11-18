@@ -1,5 +1,7 @@
 ### Upcoming Release
 - Remove redundant functions from Utility.jl after the dependency of DataFrames.jl was removed.
+- Update README
+- Update Jupyter notebook for example usage
 
 ### 0.7.0 
 - Remove dependency of DataFrames.jl. All of the functions now takes the decision matrix in type of Matrix.
