@@ -103,8 +103,7 @@ function grey(
     zeta::Float64 = 0.5,
 )::GreyResult where {F<:Function}
 
-    #mat = convert(Matrix, decisionMat)
-    mat = Matrix(decisionMat)
+    mat = decisionMat
 
     nrows, ncols = size(mat)
 

@@ -65,10 +65,6 @@ function euclidean(v1::Vector)
     return euclidean(v1, v2)
 end
 
-#function euclidean(v1::Vector, row)
-#    v2 = Vector(row)
-#    (v1 .- v2) .^ 2.0 |> sum |> sqrt
-#end
 
 function normalize(v1::Vector)::Vector
     return v1 ./ euclidean(v1)
@@ -133,50 +129,8 @@ function unitize(v::Vector)::Vector
     return v ./ sum(v)
 end
 
-#function Base.:*(w::Vector, data::Matrix)::Matrix
-#    newdf = copy(data)
-#    _, p = size(newdf)
-#    for i = 1:p
-#        newdf[!, i] = newdf[!, i]
-#        newdf[:, i] = w[i] .* data[:, i]
-#    end
-#    return newdf
-#end
-
-#function Base.:-(r1::Vector, r2::Vector)::Vector
-#    # v1 = convert(Array{Float64,1}, r1)
-#    v1 = Vector(r1)
-#    # v2 = convert(Array{Float64,1}, r2)
-#    v2 = Vector(r2)
-#    return v1 .- v2
-#end
-
-#function Base.:-(r1::Array{T,1}, r2::MatrixRow)::Array{T,1} where T <: Number
-#    # v2 = convert(Array{Float64,1}, r2)
-#    v2 = Vector{Float64}(r2)
-#    return r1 .- v2
-#end
-#
-#function Base.:-(r1::MatrixRow, r2::Array{T,1})::Array{T,1} where T <: Number
-#    v1 = convert(Array{Float64,1}, r1)
-#    return v1 .- r2
-#end
-
-#function Base.:-(r1::Vector, r2::MatrixRow)::Vector
-#    # v2 = convert(Array{Float64,1}, r2)
-#    return r1 .- r2
-#end
-#
-#function Base.:-(r1::MatrixRow, r2::Vector)::Vector
-#    return r1 .- r2
-#end
-#
 
 
-
-function Base.minimum(data)
-    data |> Matrix |> minimum
-end
 
 function reverseminmax(fns::Array{F,1})::Array{Function,1} where {F<:Function}
     newfs = map(x -> if x == minimum
@@ -199,7 +153,7 @@ function makegrey(m::Matrix)::Matrix
     return greymatrix
 end
 
-function weightise(mat, w)
+function weightise(mat::Matrix, w::Vector)
     newmat = similar(mat)
     _, p = size(mat)
     for i in 1:p
