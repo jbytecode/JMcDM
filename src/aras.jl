@@ -63,7 +63,8 @@ julia> df
    3 │ 150000.0    120.0     12.0      3.0    550.0     12.0
    4 │ 115000.0    105.0     20.0      4.0    600.0      9.0
    5 │ 135000.0    115.0     15.0      5.0    400.0      9.0
-julia> result = aras(df, w, fs);
+
+julia> result = aras(Matrix(df), w, fs);
 julia> result.bestIndex
 2
 julia> result.scores

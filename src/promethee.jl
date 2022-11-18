@@ -135,19 +135,7 @@ julia> decmat = [42.0 35 43 51;
                      69 40 72 55;
                      64 35 70 60];
 
-julia> df = makeDecisionMatrix(decmat)
-8×4 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4    
-     │ Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────
-   1 │    42.0     35.0     43.0     51.0
-   2 │    89.0     72.0     92.0     85.0
-   3 │    14.0     85.0     17.0     40.0
-   4 │    57.0     60.0     45.0     80.0
-   5 │    48.0     32.0     43.0     40.0
-   6 │    71.0     45.0     60.0     85.0
-   7 │    69.0     40.0     72.0     55.0
-   8 │    64.0     35.0     70.0     60.0
+
 
 julia> qs = [49, nothing, 45, 30];
 
@@ -159,7 +147,7 @@ julia> fns = [maximum, maximum, maximum, maximum];
 
 julia> prefs = [prometLinear, prometVShape, prometLinear, prometLinear];
 
-julia> result = promethee(df, weights, fns, prefs, qs, ps);
+julia> result = promethee(decmat, weights, fns, prefs, qs, ps);
 
 julia> result.scores
 8-element Array{Float64,1}:

@@ -70,6 +70,12 @@ julia> result.efficiencies
 İşletmeciler, Mühendisler ve Yöneticiler için Operasyonel, Yönetsel ve Stratejik Problemlerin
 Çözümünde Çok Kriterli Karar verme Yöntemleri, Editörler: Bahadır Fatih Yıldırım ve Emrah Önder,
 Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
+
+
+
+!!  Warning
+    This method is enabled when the JuMP, GLPK, and DataFrames packages are installed and loaded.
+    
 """
 function dataenvelop(
     input::Matrix,

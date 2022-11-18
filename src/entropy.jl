@@ -50,7 +50,7 @@ julia> df = DataFrame(
    5 │     4      2      5      6      7      7      6   3000
    6 │     3      2      6      6      6      6      6   3500
 
-julia> result = entropy(df);
+julia> result = entropy(Matrix(df));
 
 julia> result.w
 8-element Array{Float64,1}:

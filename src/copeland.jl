@@ -108,7 +108,7 @@ julia> met = [
     WPMMethod(),
 ]
 
-julia> result = copeland(df, w, fns, met)
+julia> result = copeland(Matrix(df), w, fns, met)
 
 4×8 DataFrame
  Row │ Piv    Psi    Rov    Saw    Vikor  Waspas  Wpm    Copeland 

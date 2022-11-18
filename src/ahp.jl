@@ -106,8 +106,7 @@ julia> K
  5.0       9.0  1.0    0.333333  5.0   3.0       1.0       1.0
  1.0       8.0  1.0    0.333333  5.0   3.0       1.0       1.0
 
-julia> dmat = makeDecisionMatrix(K);
-julia> ahp_consistency(dmat).isConsistent
+julia> ahp_consistency(K).isConsistent
 true
 ```
 
@@ -249,9 +248,8 @@ julia> A8
  0.2    0.333333  1.0       3.0
  0.125  0.166667  0.333333  1.0
 
-julia> km = makeDecisionMatrix(K);
-julia> as = map(makeDecisionMatrix, [A1, A2, A3, A4, A5, A6, A7, A8]);
-julia> result = ahp(as, km);
+julia> as = hcat(A1, A2, A3, A4, A5, A6, A7, A8);
+julia> result = ahp(as, K);
 julia> result.bestIndex
 3
 julia> result.scores

@@ -55,22 +55,12 @@ julia> decmat = [8.675 8.433 8.000 7.800 8.025 8.043;
  8.325  7.6    8.04  7.7    7.925  7.6
  8.525  8.667  7.18  7.375  7.75   8.071
 
-julia> df = makeDecisionMatrix(decmat)
-
-4×6 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6    
-     │ Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼──────────────────────────────────────────────────────
-   1 │   8.675    8.433     8.0     7.8      8.025    8.043
-   2 │   8.825    8.6       7.42    7.463    7.825    8.229
-   3 │   8.325    7.6       8.04    7.7      7.925    7.6
-   4 │   8.525    8.667     7.18    7.375    7.75     8.071
 
 julia> weights = [0.1901901901901902 , 0.15915915915915918 , 0.19819819819819823, 0.1901901901901902, 0.15115115115115116, 0.11111111111111112];
 
 julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum];
 
-julia> result = marcos(df, weights, fns);
+julia> result = marcos(decmat, weights, fns);
 
 julia> result.scores
 4-element Array{Float64,1}:

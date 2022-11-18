@@ -45,19 +45,10 @@ julia> decmat
   4.1201  5.8824   3.4483  1.02156
   4.1039  0.0     -0.5076  0.984469
 
-julia> df = makeDecisionMatrix(decmat)
-
-3×4 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     
-     │ Float64  Float64  Float64  Float64  
-─────┼─────────────────────────────────────
-   1 │ 12.9918   0.7264  -1.1009  1.59814
-   2 │  4.1201   5.8824   3.4483  1.02156
-   3 │  4.1039   0.0     -0.5076  0.984469
 
 julia> fns = [maximum, maximum, minimum, maximum];
 
-julia> result = critic(df, fns);
+julia> result = critic(decmat, fns);
 
 julia> result.w
 4-element Array{Float64,1}:

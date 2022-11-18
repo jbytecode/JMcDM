@@ -77,7 +77,7 @@ julia> functionlist = [minimum, maximum, minimum, maximum, maximum, minimum];
 julia> # Weights
 julia> w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40];
 
-julia> result = grey(df, w, functionlist);
+julia> result = grey(Matrix(df), w, functionlist);
 
 julia> result.scores
 5-element Array{Float64,1}:

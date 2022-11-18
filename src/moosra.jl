@@ -56,22 +56,12 @@ julia> decmat = [3        12.5        2        120        14        3;
  4.0  14.0  2.0  100.0  31.0  4.0
  3.0  15.0  1.5  125.0  40.0  4.0
 
-julia> df = makeDecisionMatrix(decmat)
-5×6 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6    
-     │ Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼──────────────────────────────────────────────────────
-   1 │     3.0     12.5      2.0    120.0     14.0      3.0
-   2 │     5.0     15.0      3.0    110.0     38.0      4.0
-   3 │     3.0     13.0      2.0    120.0     19.0      3.0
-   4 │     4.0     14.0      2.0    100.0     31.0      4.0
-   5 │     3.0     15.0      1.5    125.0     40.0      4.0
 
 julia> weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201];
 
 julia> fns = [maximum, minimum, minimum, maximum, minimum, maximum];
 
-julia> result = moosra(df, weights, fns, lambda);
+julia> result = moosra(decmat, weights, fns, lambda);
 ```
 
 # References

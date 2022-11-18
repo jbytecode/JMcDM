@@ -53,22 +53,12 @@ julia> decmat = [4.0  7  3  2  2  2  2;
                  7.0  6  4  2  5  5  3;
                  3.0  2  5  3  3  2  5;
                  4.0  2  2  5  5  3  6];
-julia> df = makeDecisionMatrix(decmat)
-5×7 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7    
-     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼───────────────────────────────────────────────────────────────
-   1 │     4.0      7.0      3.0      2.0      2.0      2.0      2.0
-   2 │     4.0      4.0      6.0      4.0      4.0      3.0      7.0
-   3 │     7.0      6.0      4.0      2.0      5.0      5.0      3.0
-   4 │     3.0      2.0      5.0      3.0      3.0      2.0      5.0
-   5 │     4.0      2.0      2.0      5.0      5.0      3.0      6.0
 
 julia> fns = [maximum for i in 1:7];
 
 julia> weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076];
 
-julia> result = saw(df, weights, fns);
+julia> result = saw(decmat, weights, fns);
 
 julia> result.scores
 5-element Array{Float64,1}:

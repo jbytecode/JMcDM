@@ -32,7 +32,7 @@ julia> w  = [0.036, 0.192, 0.326, 0.326, 0.12];
 julia> fns = [maximum, minimum, maximum, maximum, maximum];
 
 
-julia> result = summary(df, w, fns, methods)
+julia> result = summary(Matrix(df), w, fns, methods)
 3×7 DataFrame
  Row │ topsis  electre  cocoso  moora   vikor   wpm     waspas 
      │ String  String   String  String  String  String  String 

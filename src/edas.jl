@@ -62,25 +62,12 @@ julia> decmat = [5000 5 5300 450;
  5500  5  6200  500
  5000  4  5800  450
 
-julia> df = makeDecisionMatrix(decmat)
-8×4 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4    
-     │ Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────
-   1 │  5000.0      5.0   5300.0    450.0
-   2 │  4500.0      5.0   5000.0    400.0
-   3 │  4500.0      4.0   4700.0    400.0
-   4 │  4000.0      4.0   4200.0    400.0
-   5 │  5000.0      4.0   7100.0    500.0
-   6 │  5000.0      5.0   5400.0    450.0
-   7 │  5500.0      5.0   6200.0    500.0
-   8 │  5000.0      4.0   5800.0    450.0
 
 julia> weights = [0.25, 0.25, 0.25, 0.25];
 
 julia> fns = [maximum, maximum, minimum, minimum];
 
-julia> result = edas(df, weights, fns);
+julia> result = edas(decmat, weights, fns);
 
 julia> result.scores
 8-element Array{Float64,1}:

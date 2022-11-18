@@ -55,21 +55,12 @@ julia> decmat = [6.952 8.000 6.649 7.268 8.000 7.652 6.316;
  7.0    7.319  7.652  6.952  7.652  6.952  4.642
  7.319  6.952  6.649  7.319  7.652  6.649  5.0
 
- julia> df = makeDecisionMatrix(decmat)
- 4×7 DataFrame
-  Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7    
-      │ Float64  Float64  Float64  Float64  Float64  Float64  Float64 
- ─────┼───────────────────────────────────────────────────────────────
-    1 │   6.952    8.0      6.649    7.268    8.0      7.652    6.316
-    2 │   7.319    7.319    6.604    7.319    8.0      7.652    5.313
-    3 │   7.0      7.319    7.652    6.952    7.652    6.952    4.642
-    4 │   7.319    6.952    6.649    7.319    7.652    6.649    5.0
 
 julia> weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140];
 
 julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-julia> result = mairca(df, weights, fns);
+julia> result = mairca(decmat, weights, fns);
 
 julia> result.scores
 4-element Array{Float64,1}:

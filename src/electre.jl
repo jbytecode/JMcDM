@@ -57,19 +57,9 @@ julia> Amat = [
       70 88 20 18 60 90 95 85
     ];
 
-julia> dmat = makeDecisionMatrix(Amat);
 julia> fns = [maximum for i in 1:8];
-julia> result = electre(dmat, w, fns)
+julia> result = electre(Amat, w, fns)
 
-julia> dmat
-4×8 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7     Crt8    
-     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────────────────────────────────────────
-   1 │   100.0     92.0     10.0      2.0     80.0     70.0     95.0     80.0
-   2 │    80.0     70.0      8.0      4.0    100.0     80.0     80.0     90.0
-   3 │    90.0     85.0      5.0      0.0     75.0     95.0     70.0     70.0
-   4 │    70.0     88.0     20.0     18.0     60.0     90.0     95.0     85.0
 
 julia> result.bestIndex
 (4,)

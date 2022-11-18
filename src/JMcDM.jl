@@ -57,13 +57,13 @@ abstract type MCDMMethod end
     Immutable data structure for a MCDM setting.
 
 # Arguments
-- `df::Matrix`: The decision matrix in type of DataFrame.
+- `df::Matrix`: The decision matrix in type of Matrix.
 - `weights::Array{Float64,1}`: Array of weights for each criterion.
 - `fns::Array{<:Function, 1}`: Array of functions. The elements are either minimum or maximum.
 
 # Description 
 Many methods including Topsis, Electre, Waspas, etc., use a decision matrix, weights, and directions
-of optimizations in types of DataFrame, Vector, and Vector, respectively. The type MCDMSetting simply
+of optimizations in types of Matrix and Vector, respectively. The type MCDMSetting simply
 holds these information to pass them into methods easly. Once a MCDMSetting object is created, the problem
 can be passed into several methods like topsis(setting), electre(setting), waspas(setting), etc.  
 
@@ -80,7 +80,7 @@ julia> w = Float64[4, 2, 6, 8];
 
 julia> fns = [maximum, maximum, maximum, maximum];
 
-julia> setting = MCDMSetting(df, w, fns)
+julia> setting = MCDMSetting(Matrix(df), w, fns)
 
 julia> result = topsis(setting);
 julia> # Same result can be obtained using

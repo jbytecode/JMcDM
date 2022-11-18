@@ -73,6 +73,11 @@ Value of game:
 
 # References
 Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (2016): 151-163.
+
+
+!!  Warning
+    This method is enabled when the JuMP and GLPK packages are installed and loaded.
+
 """
 function game(decisionMatrix::Matrix; verbose::Bool = false)::Array{GameResult,1}
     return game(Matrix(decisionMatrix), verbose = verbose)

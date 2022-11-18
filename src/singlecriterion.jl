@@ -74,9 +74,7 @@ julia> mat = [
         2000 5250 8500 11750
 ]
 
-julia> dm = makeDecisionMatrix(mat)
-
-julia> result = laplace(dm)
+julia> result = laplace(mat)
 ```
 """
 function laplace(decisionMatrix::Matrix)::LaplaceResult
@@ -123,9 +121,7 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
-
-julia> result = maximin(dm)
+julia> result = maximin(mat)
 ```
 """
 function maximin(decisionMatrix::Matrix)::MaximinResult
@@ -165,9 +161,8 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
 
-julia> result = maximax(dm)
+julia> result = maximax(mat)
 ```
 """
 function maximax(decisionMatrix::Matrix)::MaximaxResult
@@ -207,9 +202,8 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
 
-julia> result = minimax(dm)
+julia> result = minimax(mat)
 ```
 """
 function minimax(decisionMatrix::Matrix)::MinimaxResult
@@ -250,9 +244,7 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
-
-julia> result = minimin(dm)
+julia> result = minimin(mat)
 ```
 """
 function minimin(decisionMatrix::Matrix)::MiniminResult
@@ -292,9 +284,8 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
 
-julia> result = savage(dm)
+julia> result = savage(mat)
 
 julia> result.bestIndex 
 4
@@ -343,9 +334,7 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
-
-julia> result = hurwicz(dm)
+julia> result = hurwicz(mat)
 
 julia> result.bestIndex 
 3
@@ -391,9 +380,9 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
+
 julia> weights = [0.2, 0.5, 0.2, 0.1]
-julia> result = mle(dm)
+julia> result = mle(mat, weights)
 
 julia> result.bestIndex 
 2
@@ -438,9 +427,8 @@ julia> mat = [
         22 30 28 20
     ]
 
-julia> dm = makeDecisionMatrix(mat)
 julia> weights = [0.2, 0.5, 0.2, 0.1]
-julia> result = expectedregret(dm)
+julia> result = expectedregret(mat, weights)
 
 julia> result.bestIndex 
 2

@@ -58,7 +58,7 @@ end
     Sort multidimensional data usin non-dominated sorting algorithm.
 
 # Arguments
-- `data::Matrix`: DataFrame of variables.
+- `data::Matrix`: Matrix of cases.
 - `fns::Array{<:Function, 1}`: Vector of functions with elements of maximum or minimum.
 
 # References
@@ -137,17 +137,8 @@ end
                4.0 5.0 6.0
            ];
 
-julia> nd = makeDecisionMatrix(cases)
-4×3 DataFrame
- Row │ Crt1     Crt2     Crt3    
-     │ Float64  Float64  Float64 
-─────┼───────────────────────────
-   1 │     1.0      2.0      3.0
-   2 │     2.0      1.0      3.0
-   3 │     1.0      3.0      2.0
-   4 │     4.0      5.0      6.0
 
-julia> result = nds(nd, [maximum, maximum, maximum]);
+julia> result = nds(cases, [maximum, maximum, maximum]);
 
 julia> result.ranks
 4-element Array{Int64,1}:

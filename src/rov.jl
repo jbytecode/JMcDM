@@ -55,21 +55,12 @@ julia> mat = [
         0.037 38.6 808 2.4 0.59 0.59 0.41 0.5
         0.028 32.6 821 1.59 0.5 0.59 0.59 0.41];
 
-julia> df = JMcDM.makeDecisionMatrix(mat)
-4×8 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7     Crt8    
-     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────────────────────────────────────────
-   1 │   0.035     34.5    847.0     1.76    0.335    0.5      0.59     0.59
-   2 │   0.027     36.8    834.0     1.68    0.335    0.665    0.665    0.665
-   3 │   0.037     38.6    808.0     2.4     0.59     0.59     0.41     0.5
-   4 │   0.028     32.6    821.0     1.59    0.5      0.59     0.59     0.41
 
 julia>  w = [0.3306, 0.0718, 0.1808, 0.0718, 0.0459, 0.126, 0.126, 0.0472];
 
 julia> fns = [minimum, minimum, minimum, minimum, maximum, minimum, minimum, maximum]
 
-julia> result = rov(df, w, fns)
+julia> result = rov(mat, w, fns)
 
 julia> result.ranks 
 

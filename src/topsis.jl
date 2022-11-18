@@ -65,7 +65,7 @@ julia> df
    3 │     7.0      8.0      6.0      6.0
 
 julia> fns = [maximum, maximum, maximum, maximum];
-julia> result = topsis(df, w, fns);
+julia> result = topsis(Matrix(df), w, fns);
 
 julia> result.bestIndex
 2

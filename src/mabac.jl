@@ -64,23 +64,12 @@ Array{Int64,2}:
  4  2  5  6  7  7  6  3000
  3  2  6  6  6  6  6  3500
 
-julia> df = makeDecisionMatrix(decmat)
-6×8 DataFrame
- Row │ Crt1     Crt2     Crt3     Crt4     Crt5     Crt6     Crt7     Crt8    
-     │ Float64  Float64  Float64  Float64  Float64  Float64  Float64  Float64 
-─────┼────────────────────────────────────────────────────────────────────────
-   1 │     2.0      1.0      4.0      7.0      6.0      6.0      7.0   3000.0
-   2 │     4.0      1.0      5.0      6.0      7.0      7.0      6.0   3500.0
-   3 │     3.0      2.0      6.0      6.0      5.0      6.0      8.0   4000.0
-   4 │     5.0      1.0      5.0      7.0      6.0      7.0      7.0   3000.0
-   5 │     4.0      2.0      5.0      6.0      7.0      7.0      6.0   3000.0
-   6 │     3.0      2.0      6.0      6.0      6.0      6.0      6.0   3500.0
 
 julia> weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053];
 
 julia> fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum];
 
-julia> result = mabac(df, weights, fns);
+julia> result = mabac(decmat, weights, fns);
 
 julia> result.scores
 6-element Array{Float64,1}:

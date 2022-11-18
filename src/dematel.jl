@@ -28,7 +28,7 @@ Apply Dematel for a given comparison matrix.
 
 
 # Arguments:
- - `comparisonMat::Matrix`: n × n matrix of input values in DataFrame format (for convenience) where n is the number of criteria. Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
+ - `comparisonMat::Matrix`: n × n Matrix of input values where n is the number of criteria. Values are either 0, 1, 2, 3, or 4 which indicate the level of importance of the ith criterion relative to the jth criterion.
  - `threshold::Union{Nothing, Float64}`: Optional threshold used in calculating values of influence matrix. It is calculated when the argument is omitted. 
 
 # Description 
@@ -52,8 +52,7 @@ julia> K = [
         2 1 0 0 0 0 0 0 3 0
     ];
 
-julia> dmat = makeDecisionMatrix(K);
-julia> result = dematel(dmat);
+julia> result = dematel(K);
 
 julia> result.weights
 10-element Array{Float64,1}:

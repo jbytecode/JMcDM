@@ -72,7 +72,8 @@ julia> df = DataFrame(decmat)
    5 │    2.5      0.1     560.0    500.0    915.0
    6 │    4.5      0.08   1016.0    350.0    508.0
    7 │    3.0      0.1    1778.0   1000.0    920.0
-julia> result = codas(df, w, fs);
+
+julia> result = codas(Matrix(df), w, fs);
 julia> result.bestIndex
 2
 julia> result.scores
