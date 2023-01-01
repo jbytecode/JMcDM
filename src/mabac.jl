@@ -122,7 +122,7 @@ function mabac(
 
     # wA = w * (A .+ 1)
     wA = Utilities.weightise((A .+ one(zerotype)), w)
-    
+
     g = zeros(zerotype, col)
 
     for i = 1:col

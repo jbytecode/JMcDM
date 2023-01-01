@@ -263,10 +263,7 @@ julia> result.scores
 # References
 Saaty, Thomas L. "Decision making with the analytic hierarchy process." International journal of services sciences 1.1 (2008): 83-98.
 """
-function ahp(
-    comparisonMatrixList::Vector,
-    criteriaComparisonMatrix::Matrix,
-)::AHPResult
+function ahp(comparisonMatrixList::Vector, criteriaComparisonMatrix::Matrix)::AHPResult
 
     result_list = map(ahp_consistency, comparisonMatrixList)
 

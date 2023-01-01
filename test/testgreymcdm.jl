@@ -12,7 +12,7 @@ using Test
         w = [0.5, 0.4, 0.1]
         fns = [maximum, maximum, minimum]
 
-        
+
         result = topsis(decmat, w, fns)
         scores = result.scores
         @test isapprox(scores[1], GreyNumber(0.23506, 0.83613), atol = atol)
@@ -32,7 +32,7 @@ using Test
         ]
         fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
 
-        df = Amat |> makegrey 
+        df = Amat |> makegrey
 
         result = vikor(df, w, fns)
 
@@ -61,7 +61,7 @@ using Test
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        gdf = df |> Matrix |> makegrey 
+        gdf = df |> Matrix |> makegrey
         result = aras(gdf, w, functionlist)
         @test isa(result, ARASResult)
 
@@ -96,7 +96,7 @@ using Test
         ]
 
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.036, 0.192, 0.326, 0.326, 0.120]
 
@@ -135,7 +135,7 @@ using Test
             3.000 0.100 1778 1000 920
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         w = [0.036, 0.192, 0.326, 0.326, 0.12]
         fns = [maximum, minimum, maximum, maximum, maximum]
@@ -202,7 +202,7 @@ using Test
             7.00 500 200 140 75.00 2.307692
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.1667]
 
@@ -270,7 +270,7 @@ using Test
             5000 4 5800 450
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.25, 0.25, 0.25, 0.25]
 
@@ -307,7 +307,7 @@ using Test
             3 2 6 6 6 6 6 3500
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.293, 0.427, 0.067, 0.027, 0.053, 0.027, 0.053, 0.053]
 
@@ -338,7 +338,7 @@ using Test
             7.319 6.952 6.649 7.319 7.652 6.649 5.000
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.172, 0.165, 0.159, 0.129, 0.112, 0.122, 0.140]
 
@@ -369,7 +369,7 @@ using Test
             8.525 8.667 7.180 7.375 7.750 8.071
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.19019, 0.15915, 0.19819, 0.19019, 0.15115, 0.11111]
 
@@ -401,7 +401,7 @@ using Test
                 90 85 5 0 75 95 70 70
                 70 88 20 18 60 90 95 85
             ]
-            dmat = Amat |> makegrey 
+            dmat = Amat |> makegrey
 
             fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum]
             result = moora(dmat, w, fns)
@@ -446,7 +446,7 @@ using Test
                 178000 4.2 32 2 3 2 3 180 110
             ]
 
-            df = mat |> makegrey 
+            df = mat |> makegrey
 
             result = moora(df, w, fns, method = :ratio)
 
@@ -508,7 +508,7 @@ using Test
 
         fns = [maximum, maximum, maximum, maximum]
 
-        mydf = df |> Matrix |> makegrey 
+        mydf = df |> Matrix |> makegrey
 
         result = psi(mydf, fns)
 
@@ -536,7 +536,7 @@ using Test
             0.028 32.6 821 1.59 0.5 0.59 0.59 0.41
         ]
 
-        df = mat |> makegrey 
+        df = mat |> makegrey
 
         w = [0.3306, 0.0718, 0.1808, 0.0718, 0.0459, 0.126, 0.126, 0.0472]
 
@@ -575,7 +575,7 @@ using Test
             weights = [0.25, 0.25, 0.25, 0.25]
             fns = [maximum, maximum, minimum, maximum]
 
-            mydf = df |> Matrix |> makegrey 
+            mydf = df |> Matrix |> makegrey
 
             result = saw(mydf, weights, fns)
 
@@ -603,7 +603,7 @@ using Test
                 4.0 2 2 5 5 3 6
             ]
 
-            df = decmat |> makegrey 
+            df = decmat |> makegrey
 
             weights = [0.283, 0.162, 0.162, 0.07, 0.085, 0.162, 0.076]
             fns = [maximum for i = 1:7]
@@ -637,7 +637,7 @@ using Test
             3 15 1.5 125 40 4
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
 
@@ -670,7 +670,7 @@ using Test
             3 15 1.5 125 40 4
         ]
 
-        df = decmat |> makegrey 
+        df = decmat |> makegrey
 
         weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201]
 

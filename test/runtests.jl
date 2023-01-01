@@ -7,13 +7,13 @@ import JMcDM.Game: game
 import JMcDM.DataEnvelop: dataenvelop
 
 
-const testGreyNumbers          = true
-const testUtilityFunctions     = true
-const testMCDMFunctions        = true
-const testSCDMFunctions        = true
-const testLPBasedFunctions     = true
-const testGreyMCDMFunctions    = true
-const testSummary              = true
+const testGreyNumbers = true
+const testUtilityFunctions = true
+const testMCDMFunctions = true
+const testSCDMFunctions = true
+const testLPBasedFunctions = true
+const testGreyMCDMFunctions = true
+const testSummary = true
 
 
 if testGreyNumbers
@@ -53,4 +53,3 @@ if testSummary
     @info "Summary Tests ..."
     include("./testsummary.jl")
 end # Test Summary Tools
-

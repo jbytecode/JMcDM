@@ -101,7 +101,7 @@
     #    result = w * df
     #    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
     #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
-#
+    #
     #    dfint = DataFrame()
     #    dfint[:, :x] = [1.0, 2, 4, 8]
     #    dfint[:, :y] = [10, 20, 30, 40]
@@ -111,7 +111,7 @@
     #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
     #end
 
-   
+
 
 
     @testset "Reverse minimum & maximum array" begin

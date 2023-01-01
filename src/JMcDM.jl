@@ -8,26 +8,26 @@ using Requires
 # Modules Game and DataEnvelop are activated 
 # whenever the JuMP and GLPK packages are required
 # manually by the user.
-export game, dataenvelop    
+export game, dataenvelop
 function __init__()
-   # @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
-   #     @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
-   #         include("game.jl")
-   #         import .Game: game, GameResult
-   #         include("dataenvelop.jl")
-   #         import .DataEnvelop: dataenvelop, DataEnvelopResult
-   #         export GameResult
-   #         export DataEnvelopResult
-   #     end
-   # end
+    # @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
+    #     @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
+    #         include("game.jl")
+    #         import .Game: game, GameResult
+    #         include("dataenvelop.jl")
+    #         import .DataEnvelop: dataenvelop, DataEnvelopResult
+    #         export GameResult
+    #         export DataEnvelopResult
+    #     end
+    # end
 
 
-    @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
-        @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
+    @require GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
+        @require JuMP = "4076af6c-e467-56ae-b986-b466b2749572" begin
             include("game.jl")
             import .Game: game, GameResult
             export GameResult
-            @require DataFrames="a93c6f00-e57d-5684-b7b6-d8193f3e46c0" begin    
+            @require DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0" begin
                 include("dataenvelop.jl")
                 import .DataEnvelop: dataenvelop, DataEnvelopResult
                 export DataEnvelopResult

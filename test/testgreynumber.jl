@@ -39,14 +39,16 @@
     @testset "one and ones" begin
         @test one(GreyNumber) == GreyNumber(1.0, 1.0)
         @test ones(GreyNumber, 2) == [GreyNumber(1), GreyNumber(1)]
-        @test ones(GreyNumber, (2, 2)) == [GreyNumber(1) GreyNumber(1); GreyNumber(1) GreyNumber(1)]
+        @test ones(GreyNumber, (2, 2)) ==
+              [GreyNumber(1) GreyNumber(1); GreyNumber(1) GreyNumber(1)]
         @test isone(GreyNumber(1, 1))
     end
 
     @testset "zero and zeros" begin
         @test zero(GreyNumber) == GreyNumber(0, 0)
         @test zeros(GreyNumber, 2) == [GreyNumber(0), GreyNumber(0)]
-        @test zeros(GreyNumber, (2, 2)) == [GreyNumber(0) GreyNumber(0); GreyNumber(0) GreyNumber(0)]
+        @test zeros(GreyNumber, (2, 2)) ==
+              [GreyNumber(0) GreyNumber(0); GreyNumber(0) GreyNumber(0)]
         @test iszero(GreyNumber(0, 0))
     end
 
@@ -71,18 +73,18 @@
         @test isequal(GreyNumber(1, 2), GreyNumber(1, 2))
     end
 
-    @testset "getindex" begin 
+    @testset "getindex" begin
         @test GreyNumber(1, 2)[1] == 1
         @test GreyNumber(1, 2)[2] == 2
-    end 
+    end
 
-    @testset "isreal" begin 
+    @testset "isreal" begin
         @test isreal(GreyNumber(1.0, 2.0))
-    end 
+    end
 
-    @testset "isinteger" begin 
+    @testset "isinteger" begin
         @test isinteger(GreyNumber(1, 2))
-    end 
+    end
 
     @testset "isinf" begin
         @test isinf(GreyNumber(1.0 / 0.0, 1.0 / 0.0))
@@ -98,9 +100,9 @@
         @test sqrt(GreyNumber(4, 9)) == GreyNumber(2, 3)
     end
 
-    @testset "cbrt" begin 
+    @testset "cbrt" begin
         @test cbrt(GreyNumber(8, 27)) == GreyNumber(2, 3)
-    end 
+    end
 
     @testset "is valid" begin
         @test isvalid(GreyNumber(1.0, 2.0))
@@ -127,21 +129,21 @@
         @test abs2(GreyNumber(-1.0, -2.0)) == GreyNumber(abs2(1.0), abs2(2.0))
     end
 
-    @testset "kernel and whitenize" begin 
+    @testset "kernel and whitenize" begin
         @test kernel(GreyNumber(1.0, 2.0)) == 1.5
         @test whitenizate(GreyNumber(1.0, 2.0), t = 0.5) == 1.5
-    end 
+    end
 
-    @testset "Convert" begin 
-        @test convert(Array{Int, 1}, GreyNumber(1.0, 2.0)) == [1.0, 2.0]
+    @testset "Convert" begin
+        @test convert(Array{Int,1}, GreyNumber(1.0, 2.0)) == [1.0, 2.0]
         @test convert(Vector{Int}, GreyNumber(1.0, 2.0)) == [1.0, 2.0]
-    end 
+    end
 
-    @testset "length" begin 
+    @testset "length" begin
         @test length(GreyNumber(1.0, 2.0)) == 1
     end
 
-    @testset "random" begin 
+    @testset "random" begin
         gs = rand(GreyNumber, 10)
         gsmatrix = rand(GreyNumber, 10, 10)
         g = rand(GreyNumber)
@@ -152,5 +154,5 @@
         @test g[1] >= 0.0
         @test g[2] <= 1.0
         @test g[2] >= 0.0
-    end 
+    end
 end

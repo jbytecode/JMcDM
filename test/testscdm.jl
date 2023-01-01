@@ -165,7 +165,11 @@
 
             @test result.bestIndex == 2
 
-            @test isapprox(result.scores, [24.0, 29.2, 27.000000000000004, 27.0], atol = tol)
+            @test isapprox(
+                result.scores,
+                [24.0, 29.2, 27.000000000000004, 27.0],
+                atol = tol,
+            )
         end
 
 

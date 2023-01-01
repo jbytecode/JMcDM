@@ -96,7 +96,7 @@ function electre(
     nalternatives, ncriteria = size(decisionMat)
 
     normalizedMat = normalize(decisionMat)
-    
+
     #weightednormalizedMat = w * normalizedMat
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)
 

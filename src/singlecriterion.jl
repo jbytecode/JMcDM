@@ -392,7 +392,7 @@ function mle(decisionMatrix::Matrix, weights::Array{Float64,1})::MLEResult
 
 
     weightedMatrix = Utilities.weightise(decisionMatrix, weights)
-    
+
 
     scores = rowsums(weightedMatrix)
 

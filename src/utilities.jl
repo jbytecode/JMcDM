@@ -156,9 +156,9 @@ end
 function weightise(mat::Matrix, w::Vector)
     newmat = similar(mat)
     _, p = size(mat)
-    for i in 1:p
+    for i = 1:p
         newmat[:, i] = mat[:, i] .* w[i]
-    end 
+    end
     return newmat
 end
 

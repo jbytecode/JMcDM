@@ -100,7 +100,7 @@ function topsis(
 
     # weightednormalizedMat = w * normalizedMat
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)
-    
+
     desired = apply_columns(fns, weightednormalizedMat)
     undesired = apply_columns(reverseminmax(fns), weightednormalizedMat)
 

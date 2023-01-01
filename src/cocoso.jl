@@ -126,7 +126,7 @@ function cocoso(
 
     # S = w * A |> rowsums
     S = Utilities.weightise(A, w) |> rowsums
-    
+
     scoreTable = [S P]
 
     kA = (S .+ P) ./ sum(scoreTable)

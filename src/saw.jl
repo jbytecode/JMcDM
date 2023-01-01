@@ -107,7 +107,7 @@ function saw(
 
     # scores = w * normalizedDecisionMat |> rowsums
     scores = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
-    
+
     rankings = scores |> sortperm |> reverse
 
     bestIndex = rankings |> first

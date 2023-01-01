@@ -1,6 +1,6 @@
 module Copeland
 
-export copeland 
+export copeland
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
@@ -121,16 +121,21 @@ julia> result = copeland(Matrix(df), w, fns, met)
 ```
 
 """
-function copeland(df::Matrix, w::Vector, fns::Vector, methods::Vector{T}) where {T <: MCDMMethod}
+function copeland(
+    df::Matrix,
+    w::Vector,
+    fns::Vector,
+    methods::Vector{T},
+) where {T<:MCDMMethod}
     nmethods = length(methods)
     ncases, _ = size(df)
     scoresmat = zeros(Int64, (ncases, nmethods))
     dictt = Dict()
 
-    for i in 1:nmethods
+    for i = 1:nmethods
         if methods[i] isa TopsisMethod
             dictt["Topsis"] = topsis(df, w, fns).scores |> sortperm |> invperm
-        elseif methods[i] isa ArasMethod 
+        elseif methods[i] isa ArasMethod
             dictt["Aras"] = aras(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa CocosoMethod
             dictt["Cocoso"] = cocoso(df, w, fns).scores |> sortperm |> invperm
@@ -143,29 +148,29 @@ function copeland(df::Matrix, w::Vector, fns::Vector, methods::Vector{T}) where 
         elseif methods[i] isa MabacMethod
             dictt["Mabac"] = mabac(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa MaircaMethod
-            dictt["Mairca"] = mairca(df, w, fns).scores  |> x->sortperm(x, rev = true) 
+            dictt["Mairca"] = mairca(df, w, fns).scores |> x -> sortperm(x, rev = true)
         elseif methods[i] isa MarcosMethod
-            dictt["Marcos"] = marcos(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Marcos"] = marcos(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa MooraMethod
-            dictt["Moora"] = moora(df, w, fns).scores  |> x->sortperm(x, rev = true) 
+            dictt["Moora"] = moora(df, w, fns).scores |> x -> sortperm(x, rev = true)
         elseif methods[i] isa MoosraMethod
-            dictt["Moosra"] = moosra(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Moosra"] = moosra(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa PIVMethod
-            dictt["Piv"] = piv(df, w, fns).scores  |> x->sortperm(x, rev = true) 
+            dictt["Piv"] = piv(df, w, fns).scores |> x -> sortperm(x, rev = true)
         elseif methods[i] isa PSIMethod
-            dictt["Psi"] = psi(df, fns).scores  |> sortperm |> invperm
+            dictt["Psi"] = psi(df, fns).scores |> sortperm |> invperm
         elseif methods[i] isa ROVMethod
-            dictt["Rov"] = rov(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Rov"] = rov(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa SawMethod
-            dictt["Saw"] = saw(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Saw"] = saw(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa VikorMethod
-            dictt["Vikor"] = vikor(df, w, fns).scores  |> x->sortperm(x, rev = true) 
+            dictt["Vikor"] = vikor(df, w, fns).scores |> x -> sortperm(x, rev = true)
         elseif methods[i] isa WaspasMethod
-            dictt["Waspas"] = waspas(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Waspas"] = waspas(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa WPMMethod
-            dictt["Wpm"] = wpm(df, w, fns).scores  |> sortperm |> invperm
+            dictt["Wpm"] = wpm(df, w, fns).scores |> sortperm |> invperm
         end
-    end  
+    end
 
     i = 1
     names = []
@@ -173,7 +178,7 @@ function copeland(df::Matrix, w::Vector, fns::Vector, methods::Vector{T}) where 
     for (k, v) in dictt
         scoresmat[:, i] = v
         append!(names, k)
-        i+=1
+        i += 1
     end
     allresult = copeland(scoresmat)
     resultdict["Copeland"] = allresult

@@ -11,7 +11,8 @@
 
     dmat = Matrix(df)
 
-    result1 = JMcDM.summary(dmat, weights, fns, [:topsis, :electre, :cocoso, :copras, :moora])
+    result1 =
+        JMcDM.summary(dmat, weights, fns, [:topsis, :electre, :cocoso, :copras, :moora])
     result2 = JMcDM.summary(dmat, weights, fns, [:grey, :aras, :saw, :wpm, :waspas, :edas])
     result3 = JMcDM.summary(dmat, weights, fns, [:mabac, :mairca, :rov, :marcos, :vikor])
 
@@ -19,7 +20,26 @@
     @test result2 isa Dict
     @test result3 isa Dict
 
-    @test result1 == Dict{Any, Any}((Colon(), :electre) => [" ", " ✅ ", " ", " ✅ "], (Colon(), :topsis) => [" ", " ✅ ", " ", " "], (Colon(), :copras) => [" ", " ", " ", " ✅ "], (Colon(), :cocoso) => [" ", " ✅ ", " ", " "], (Colon(), :moora) => [" ", " ✅ ", " ", " "])
-    @test result2 == Dict{Any, Any}((Colon(), :aras) => [" ", " ", " ", " ✅ "], (Colon(), :saw) => [" ", " ", " ", " ✅ "], (Colon(), :wpm) => [" ", " ", " ", " ✅ "], (Colon(), :waspas) => [" ", " ", " ", " ✅ "], (Colon(), :edas) => [" ", " ", " ", " ✅ "], (Colon(), :grey) => [" ", " ", " ", " ✅ "])
-    @test result3 ==  Dict{Any, Any}((Colon(), :mairca) => [" ", " ", " ", " ✅ "], (Colon(), :vikor) => [" ", " ✅ ", " ", " "], (Colon(), :rov) => [" ", " ", " ", " ✅ "], (Colon(), :mabac) => [" ", " ", " ", " ✅ "], (Colon(), :marcos) => [" ", " ", " ", " ✅ "])
+    @test result1 == Dict{Any,Any}(
+        (Colon(), :electre) => [" ", " ✅ ", " ", " ✅ "],
+        (Colon(), :topsis) => [" ", " ✅ ", " ", " "],
+        (Colon(), :copras) => [" ", " ", " ", " ✅ "],
+        (Colon(), :cocoso) => [" ", " ✅ ", " ", " "],
+        (Colon(), :moora) => [" ", " ✅ ", " ", " "],
+    )
+    @test result2 == Dict{Any,Any}(
+        (Colon(), :aras) => [" ", " ", " ", " ✅ "],
+        (Colon(), :saw) => [" ", " ", " ", " ✅ "],
+        (Colon(), :wpm) => [" ", " ", " ", " ✅ "],
+        (Colon(), :waspas) => [" ", " ", " ", " ✅ "],
+        (Colon(), :edas) => [" ", " ", " ", " ✅ "],
+        (Colon(), :grey) => [" ", " ", " ", " ✅ "],
+    )
+    @test result3 == Dict{Any,Any}(
+        (Colon(), :mairca) => [" ", " ", " ", " ✅ "],
+        (Colon(), :vikor) => [" ", " ✅ ", " ", " "],
+        (Colon(), :rov) => [" ", " ", " ", " ✅ "],
+        (Colon(), :mabac) => [" ", " ", " ", " ✅ "],
+        (Colon(), :marcos) => [" ", " ", " ", " ✅ "],
+    )
 end
