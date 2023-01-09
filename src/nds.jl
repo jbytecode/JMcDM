@@ -52,28 +52,6 @@ end
 
 
 
-"""
-    ndsranks(data, fns)
-
-    Sort multidimensional data usin non-dominated sorting algorithm.
-
-# Arguments
-- `data::Matrix`: Matrix of cases.
-- `fns::Array{<:Function, 1}`: Vector of functions with elements of maximum or minimum.
-
-# References
-Deb, Kalyanmoy, et al. "A fast elitist non-dominated sorting genetic algorithm for multi-objective optimization: NSGA-II." 
-International conference on parallel problem solving from nature. Springer, Berlin, Heidelberg, 2000.
-"""
-function ndsranks(data::Matrix, fns::Array{F,1})::Array{Int} where {F<:Function}
-
-    #mat = convert(Matrix, data)
-    mat = Matrix(data)
-    return ndsranks(mat, fns)
-
-end
-
-
 
 """
     ndsranks(data, fns)

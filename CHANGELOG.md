@@ -1,5 +1,7 @@
 ### Upcoming Release 
 
+### 0.7.2
+- Remove redundant nds() method that takes a DataFrame argument.
 
 
 ### 0.7.1
