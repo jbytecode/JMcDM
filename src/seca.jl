@@ -49,6 +49,7 @@ variation information of decision-matrix within and between criteria. seca retur
 
 # Example
 ```julia
+julia> using JuMP, Ipopt, JMcDM
 julia> mat = [
            1.0     0.9925  0.9115  0.8     0.9401  1.0     0.9449;
            0.8696  0.8271  0.8462  1.0     0.9181  0.978   1.0;
