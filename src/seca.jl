@@ -1,36 +1,51 @@
-module Seca
+module SECA
 
-import ..MCDMMethod, ..MCDMResult
-using Statistics
+import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+using ..Utilities
 using JuMP
 using Ipopt
 
-struct SecaMethod <: MCDMMethod end
+export seca, SECAResult, SECAMethod
 
-struct SecaResult <: MCDMResult
+struct SECAMethod <: MCDMMethod end
+
+struct SECAResult <: MCDMResult
   decisionMatrix::Matrix
-  weights::Vector{Float64}
+  weights::Array{Float64,1}
   scores::Vector
-  ranks::Vector
+  ranking::Array{Int64,1}
+  bestIndex::Int64
+end
+
+function Base.show(io::IO, result::SECAResult)
+  println(io, "Scores:")
+  println(io, result.scores)
+  println(io, "Ordering: ")
+  println(io, result.ranking)
+  println(io, "Best indice:")
+  println(io, result.bestIndex)
 end
 
 """
-    seca(df::Matrix, fns::Vector{Function}, beta::Float64; epsilon::Float64=10^-3)
+    seca(decisionMat::Matrix, fns::Array{F,1}, beta::Float64; epsilon::Float64=10^-3)::SECAResult where {F<:Function}
 
 Implement the SECA method for multi-criteria decision making.
 
 # Arguments
-- `df::Matrix`: A matrix of decision criteria.
-- `fns::Vector{Function}`: A vector of functions that specifies the Beneficial Criteria (BC) as `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
-- `beta::Float64`: This coefficient affects the importance of reaching the reference points of criteria weights.
-- `epsilon::Float64=10^-3`: a small positive parameter considered as a lower bound for
-criteria weights.
+- `decisionMat::Matrix`: A matrix of decision criteria.
+- `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
+- `beta::Float64`: This coefficient affects the importance of reaching the reference points of criteria weights. Note that the output of model is dependent on the value of beta. It's recommended to try several values untill you barely see any change in the weights of each criterion.
+- `epsilon::Float64=10^-3`: a small positive parameter considered as a lower bound for criteria weights.
 
 # Description
-seca implements the SECA method for multi-criteria decision making and finds the weights of the criteria simultaneously with evaluating the alternatives. The model is based on maximization of the overall performance of alternatives with consideration of the variation information of decision-matrix within and between criteria. seca returns a `SecaResult` object that contains the decision matrix, weights, scores, and ranks.
+seca implements the SECA method for multi-criteria decision making and finds the weights
+of the criteria simultaneously with evaluating the alternatives. The model is based on
+maximization of the overall performance of alternatives with consideration of the
+variation information of decision-matrix within and between criteria. seca returns a
+`SecaResult` object that contains the decision matrix, weights, scores, and ranks.
 
 # Returns
-- `SecaResult`: A `SecaResult` object that contains the decision matrix, weights, scores, and ranks.
+- `SECAResult`: A `SECAResult` object that contains the decision matrix, weights, scores, and ranks.
 
 # Example
 ```julia
@@ -50,25 +65,37 @@ julia> mat = [
 julia> fns = [maximum, minimum, minimum, minimum, minimum, minimum, minimum];
 
 julia> seca(mat, fns, 0.5)
+Scores:
+[0.5495915719484191, 0.467758585220479, 0.7430581528101969, 0.805136683615562, 0.6786410609782462, 0.6314963009852793, 0.5445938440469921, 0.5570359821894877, 0.509907132860776, 0.4677585801615632]
+Ordering:
+[6, 9, 2, 1, 3, 4, 7, 5, 8, 10]
+Best indice:
+4
 ```
 
 # Reference
 - [Simultaneous Evaluation of Criteria and Alternatives (SECA) for Multi-Criteria Decision-Making](http://dx.doi.org/10.15388/Informatica.2018.167)
 """
-function seca(df::Matrix, fns::Vector{Function}, beta::Float64; epsilon::Float64=10^-3)
+function seca(
+  decisionMat::Matrix,
+  fns::Array{F,1},
+  beta::Float64;
+  epsilon::Float64=10^-3
+)::SECAResult where {F<:Function}
+
   @assert beta≥0 "beta should be greater than or equal to zero."
-  @assert length(fns) == size(df, 2) "The number of functions should be equal to the number of criteria in the decision matrix."
+  @assert length(fns) == size(decisionMat, 2) "The number of functions should be equal to the number of criteria in the decision matrix."
 
   β = beta
   ϵ = epsilon
-  n, m =  size(df)
+  n, m =  size(decisionMat)
 
   # Amatrix construction
-  Amat = similar(df)
+  Amat = similar(decisionMat)
   max_idx, min_idx = fns .== maximum, fns .== minimum
   # Normalize the decision matrix based on the concept of BC and NC
-  Amat[:, max_idx] .= df[:, max_idx]./maximum(df[:, max_idx])
-  Amat[:, min_idx] .= minimum(df[:, min_idx])./df[:, min_idx]
+  Amat[:, max_idx] .= decisionMat[:, max_idx]./maximum(decisionMat[:, max_idx])
+  Amat[:, min_idx] .= minimum(decisionMat[:, min_idx])./decisionMat[:, min_idx]
 
   # Calculate σᴺ and πᴺ
   σⱼ = map(eachcol(Amat)) do col
@@ -77,7 +104,7 @@ function seca(df::Matrix, fns::Vector{Function}, beta::Float64; epsilon::Float64
 
   σᴺ::Vector = σⱼ ./ sum(σⱼ)
 
-  r::Matrix = cor(mat, dims=1)
+  r::Matrix = cor(Amat)
 
   πⱼ::Vector = vec(sum(-r.+1, dims=1))
 
@@ -95,7 +122,7 @@ function seca(df::Matrix, fns::Vector{Function}, beta::Float64; epsilon::Float64
   @variable(model, λb)
   @variable(model, λc)
 
-  Sᵢ = sum(w[i]*mat[:, i] for i=1:m)
+  Sᵢ = sum(w[i]*Amat[:, i] for i=1:m)
 
   # ======= Constraints =======
   @constraint(model,
@@ -118,9 +145,10 @@ function seca(df::Matrix, fns::Vector{Function}, beta::Float64; epsilon::Float64
   weights = value.(w)
 
   # Calculate overall performance score and ranks of alternatives
-  scores = sum(weights[i]*mat[:, i] for i=1:m)
+  scores = sum(weights[i]*Amat[:, i] for i=1:m)
   ranks = abs.(invperm(sortperm(scores)).-(n+1))
 
-  SecaResult(Amat, weights, scores, ranks)
-end;
+  SECAResult(Amat, weights, scores, ranks, argmax(scores))
+end
+
 end # module Seca
