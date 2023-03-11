@@ -28,18 +28,22 @@ Apply data envelop analysis for a given input matrix and an output vector.
  - `verbose::Bool`: Logical value indicating whether to show optimizition logs. Default is false.
 
 # Description 
-dataenvloper() applies the data envelop analysis to calculate efficiencies of cases.
+dataenvlope() applies the data envelop analysis to calculate efficiencies of cases.
 
 # Output 
 - `::DataEnvelopResult`: DataEnvelopResult object that holds many results including efficiencies and rankings.
 
 # Examples
 ```julia-repl
+julia> using JuMP, Ipopt, JMcDM
+
 julia> x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95];
 julia> x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306];
 julia> out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165];
 julia> inp = hcat(x1, x2);
+
 julia> result = dataenvelop(inp, out);
+
 julia> result.orderedcases
 9-element Array{Symbol,1}:
  :Case8
