@@ -94,8 +94,13 @@ function seca(
   Amat = similar(decisionMat)
   max_idx, min_idx = fns .== maximum, fns .== minimum
   # Normalize the decision matrix based on the concept of BC and NC
-  Amat[:, max_idx] .= decisionMat[:, max_idx]./maximum(decisionMat[:, max_idx])
-  Amat[:, min_idx] .= minimum(decisionMat[:, min_idx])./decisionMat[:, min_idx]
+
+  if !all(iszero, max_idx)
+    Amat[:, max_idx] .= decisionMat[:, max_idx]./maximum(decisionMat[:, max_idx])
+  end
+  if !all(iszero, min_idx)
+    Amat[:, min_idx] .= minimum(decisionMat[:, min_idx])./decisionMat[:, min_idx]
+  end
 
   # Calculate σᴺ and πᴺ
   σⱼ = map(eachcol(Amat)) do col
