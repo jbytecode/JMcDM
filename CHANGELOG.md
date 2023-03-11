@@ -1,7 +1,12 @@
-### 0.7.3 (Upcoming Release)
+### 0.7.4 (The upcoming release)
+
+
+
+### 0.7.3
 
 - Implement SECA method.
 - Remove DataFrames dependency from tests and DataEnvelop
+- DataEnvelop now works with dictionaries
 
 
 ### 0.7.2
