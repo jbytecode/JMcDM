@@ -49,19 +49,19 @@ using Test
     @testset "Aras with Grey Numbers" begin
         tol = 0.0001
 
-        df = DataFrame(
-            :K1 => [105000.0, 120000, 150000, 115000, 135000],
-            :K2 => [105.0, 110, 120, 105, 115],
-            :K3 => [10.0, 15, 12, 20, 15],
-            :K4 => [4.0, 4, 3, 4, 5],
-            :K5 => [300.0, 500, 550, 600, 400],
-            :K6 => [10.0, 8, 12, 9, 9],
+        decmat = hcat(
+            [105000.0, 120000, 150000, 115000, 135000],
+            [105.0, 110, 120, 105, 115],
+            [10.0, 15, 12, 20, 15],
+            [4.0, 4, 3, 4, 5],
+            [300.0, 500, 550, 600, 400],
+            [10.0, 8, 12, 9, 9]
         )
         functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        gdf = df |> Matrix |> makegrey
+        gdf = decmat |> makegrey
         result = aras(gdf, w, functionlist)
         @test isa(result, ARASResult)
 
@@ -466,16 +466,16 @@ using Test
     @testset "MOOSRA with Grey Numbers" begin
         tol = 0.0001
 
-        df = DataFrame(
-            :c1 => [25.0, 21, 19, 22],
-            :c2 => [65.0, 78, 53, 25],
-            :c3 => [7.0, 6, 5, 2],
-            :c4 => [20.0, 24, 33, 31],
+        decmat = hcat(
+            [25.0, 21, 19, 22],
+            [65.0, 78, 53, 25],
+            [7.0, 6, 5, 2],
+            [20.0, 24, 33, 31],
         )
         weights = [0.25, 0.25, 0.25, 0.25]
         fns = [maximum, maximum, minimum, maximum]
 
-        mydf = df |> Matrix |> makegrey
+        mydf = decmat |> makegrey
 
         result = moosra(mydf, weights, fns)
 
@@ -499,16 +499,18 @@ using Test
     @testset "PSI with Grey Numbers" begin
         tol = 0.0001
 
-        df = DataFrame()
-        df[:, :x] = Float64[9, 8, 7]
-        df[:, :y] = Float64[7, 7, 8]
-        df[:, :z] = Float64[6, 9, 6]
-        df[:, :q] = Float64[7, 6, 6]
+        decmat = hcat(
+            Float64[9, 8, 7],
+            Float64[7, 7, 8],
+            Float64[6, 9, 6],
+            Float64[7, 6, 6],
+        )
+
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
 
-        mydf = df |> Matrix |> makegrey
+        mydf = decmat |> makegrey
 
         result = psi(mydf, fns)
 
@@ -566,16 +568,17 @@ using Test
 
         @testset "Example 1: 4 criteria × 4 alternatives" begin
             tol = 0.0001
-            df = DataFrame(
-                :c1 => [25.0, 21, 19, 22],
-                :c2 => [65.0, 78, 53, 25],
-                :c3 => [7.0, 6, 5, 2],
-                :c4 => [20.0, 24, 33, 31],
+            decmat = hcat(
+                [25.0, 21, 19, 22],
+                [65.0, 78, 53, 25],
+                [7.0, 6, 5, 2],
+                [20.0, 24, 33, 31],
             )
+
             weights = [0.25, 0.25, 0.25, 0.25]
             fns = [maximum, maximum, minimum, maximum]
 
-            mydf = df |> Matrix |> makegrey
+            mydf = decmat |> makegrey
 
             result = saw(mydf, weights, fns)
 

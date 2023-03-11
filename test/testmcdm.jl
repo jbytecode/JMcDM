@@ -2,16 +2,17 @@
 
     @testset "mcdm() with default method" begin
         tol = 0.00001
-        df = DataFrame()
-        df[:, :x] = Float64[9, 8, 7]
-        df[:, :y] = Float64[7, 7, 8]
-        df[:, :z] = Float64[6, 9, 6]
-        df[:, :q] = Float64[7, 6, 6]
+        
+        mat = hcat(
+            Float64[9, 8, 7],
+            Float64[7, 7, 8],
+            Float64[6, 9, 6],
+            Float64[7, 6, 6])
+        
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
 
-        mat = Matrix(df)
 
         result = topsis(mat, w, fns)
 
@@ -26,15 +27,15 @@
     @testset "MOOSRA" begin
         tol = 0.0001
 
-        df = DataFrame(
-            :c1 => [25.0, 21, 19, 22],
-            :c2 => [65.0, 78, 53, 25],
-            :c3 => [7.0, 6, 5, 2],
-            :c4 => [20.0, 24, 33, 31],
+        decmat = hcat(
+            [25.0, 21, 19, 22],
+            [65.0, 78, 53, 25],
+            [7.0, 6, 5, 2],
+            [20.0, 24, 33, 31]
         )
         weights = [0.25, 0.25, 0.25, 0.25]
         fns = [maximum, maximum, minimum, maximum]
-        result = moosra(Matrix(df), weights, fns)
+        result = moosra(decmat, weights, fns)
 
         @test result isa MoosraResult
 
@@ -47,7 +48,7 @@
         @test result.rankings == [1, 2, 3, 4]
         @test result.bestIndex == 4
 
-        setting = MCDMSetting(Matrix(df), weights, fns)
+        setting = MCDMSetting(decmat, weights, fns)
         result2 = mcdm(setting, MoosraMethod())
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
@@ -57,16 +58,17 @@
     @testset "PSI" begin
         tol = 0.0001
 
-        df = DataFrame()
-        df[:, :x] = Float64[9, 8, 7]
-        df[:, :y] = Float64[7, 7, 8]
-        df[:, :z] = Float64[6, 9, 6]
-        df[:, :q] = Float64[7, 6, 6]
+        decmat = hcat(
+            Float64[9, 8, 7],
+            Float64[7, 7, 8],
+            Float64[6, 9, 6],
+            Float64[7, 6, 6])
+
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
 
-        result = psi(Matrix(df), fns)
+        result = psi(decmat, fns)
 
         @test result isa PSIResult
         @test result.bestIndex == 2
@@ -76,7 +78,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(Matrix(df), w, fns)
+        setting = MCDMSetting(decmat, w, fns)
         result2 = mcdm(setting, PSIMethod())
         @test result2.bestIndex == result.bestIndex
         @test result2.scores == result.scores
@@ -183,21 +185,19 @@
 
         tol = 0.0001
 
-        df = DataFrame(
-            :K1 => [105000.0, 120000, 150000, 115000, 135000],
-            :K2 => [105.0, 110, 120, 105, 115],
-            :K3 => [10.0, 15, 12, 20, 15],
-            :K4 => [4.0, 4, 3, 4, 5],
-            :K5 => [300.0, 500, 550, 600, 400],
-            :K6 => [10.0, 8, 12, 9, 9],
+        decmat = hcat(
+            [105000.0, 120000, 150000, 115000, 135000],
+            [105.0, 110, 120, 105, 115],
+            [10.0, 15, 12, 20, 15],
+            [4.0, 4, 3, 4, 5],
+            [300.0, 500, 550, 600, 400],
+            [10.0, 8, 12, 9, 9],
         )
         functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
 
-
-
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
 
-        result = grey(Matrix(df), w, functionlist)
+        result = grey(decmat, w, functionlist)
 
         @test isa(result, GreyResult)
 
@@ -215,7 +215,7 @@
 
         @test result.bestIndex == 2
 
-        setting = MCDMSetting(Matrix(df), w, functionlist)
+        setting = MCDMSetting(decmat, w, functionlist)
         result2 = grey(setting)
         @test result2 isa GreyResult
         @test result2.scores == result.scores
@@ -231,22 +231,24 @@
 
     @testset "TOPSIS" begin
         tol = 0.00001
-        df = DataFrame()
-        df[:, :x] = Float64[9, 8, 7]
-        df[:, :y] = Float64[7, 7, 8]
-        df[:, :z] = Float64[6, 9, 6]
-        df[:, :q] = Float64[7, 6, 6]
+        decmat = hcat(
+        Float64[9, 8, 7],
+        Float64[7, 7, 8],
+        Float64[6, 9, 6],
+        Float64[7, 6, 6])
+        
+        
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
 
-        result = topsis(Matrix(df), w, fns)
+        result = topsis(decmat, w, fns)
 
         @test isa(result, TopsisResult)
         @test result.bestIndex == 2
         @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol = tol)
 
-        setting = MCDMSetting(Matrix(df), w, fns)
+        setting = MCDMSetting(decmat, w, fns)
         result2 = topsis(setting)
         @test isa(result2, TopsisResult)
         @test result2.bestIndex == result.bestIndex
@@ -324,15 +326,15 @@
     end
 
     @testset "Electre (failed in previous release <= v0.2.5" begin
-        df = DataFrame(
-            x = [1.0, 2.0, 3.0, 2.0],
-            y = [1.0, 2.0, 1.0, 1.0],
-            z = [1.0, 3.0, 2.0, 2.0],
-            k = [4.0, 2, 1, 4],
+        decmat = hcat(
+            [1.0, 2.0, 3.0, 2.0],
+            [1.0, 2.0, 1.0, 1.0],
+            [1.0, 3.0, 2.0, 2.0],
+            [4.0, 2, 1, 4],
         )
         fns = [maximum, maximum, maximum, maximum]
         ws = [0.25, 0.25, 0.25, 0.25]
-        e = electre(Matrix(df), ws, fns)
+        e = electre(decmat, ws, fns)
 
         @test e isa ElectreResult
         @test e.bestIndex == (2, 1)
@@ -684,16 +686,16 @@
 
         @testset "Example 1: 4 criteria × 4 alternatives" begin
             tol = 0.0001
-            df = DataFrame(
-                :c1 => [25.0, 21, 19, 22],
-                :c2 => [65.0, 78, 53, 25],
-                :c3 => [7.0, 6, 5, 2],
-                :c4 => [20.0, 24, 33, 31],
+            decmat = hcat(
+                [25.0, 21, 19, 22],
+                [65.0, 78, 53, 25],
+                [7.0, 6, 5, 2],
+                [20.0, 24, 33, 31]
             )
             weights = [0.25, 0.25, 0.25, 0.25]
             fns = [maximum, maximum, minimum, maximum]
 
-            result = saw(Matrix(df), weights, fns)
+            result = saw(decmat, weights, fns)
 
             @test result isa SawResult
 
@@ -703,7 +705,7 @@
                 atol = tol,
             )
 
-            result2 = saw(Matrix(df), weights, fns)
+            result2 = saw(decmat, weights, fns)
 
             @test result2 isa SawResult
 
@@ -756,19 +758,17 @@
 
         tol = 0.0001
 
-        df = DataFrame(
-            :K1 => [105000.0, 120000, 150000, 115000, 135000],
-            :K2 => [105.0, 110, 120, 105, 115],
-            :K3 => [10.0, 15, 12, 20, 15],
-            :K4 => [4.0, 4, 3, 4, 5],
-            :K5 => [300.0, 500, 550, 600, 400],
-            :K6 => [10.0, 8, 12, 9, 9],
+        mat = hcat(
+            [105000.0, 120000, 150000, 115000, 135000],
+            [105.0, 110, 120, 105, 115],
+            [10.0, 15, 12, 20, 15],
+            [4.0, 4, 3, 4, 5],
+            [300.0, 500, 550, 600, 400],
+            [10.0, 8, 12, 9, 9]
         )
         functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
 
         w = [0.05, 0.20, 0.10, 0.15, 0.10, 0.40]
-
-        mat = Matrix(df)
 
         result = aras(mat, w, functionlist)
         @test isa(result, ARASResult)
@@ -1267,18 +1267,18 @@
 
     @testset "Entropy" begin
         tol = 0.0001
-        df = DataFrame(
-            C1 = [2.0, 4, 3, 5, 4, 3],
-            C2 = [1, 1, 2, 1, 2, 2],
-            C3 = [4, 5, 6, 5, 5, 6],
-            C4 = [7, 6, 6, 7, 6, 6],
-            C5 = [6, 7, 5, 6, 7, 6],
-            C6 = [6, 7, 6, 7, 7, 6],
-            C7 = [7, 6, 8, 7, 6, 6],
-            C8 = [3000, 3500, 4000, 3000, 3000, 3500],
+        decmat = hcat(
+            [2.0, 4, 3, 5, 4, 3],
+            [1, 1, 2, 1, 2, 2],
+            [4, 5, 6, 5, 5, 6],
+            [7, 6, 6, 7, 6, 6],
+            [6, 7, 5, 6, 7, 6],
+            [6, 7, 6, 7, 7, 6],
+            [7, 6, 8, 7, 6, 6],
+            [3000, 3500, 4000, 3000, 3000, 3500]
         )
 
-        result = entropy(Matrix(df))
+        result = entropy(decmat)
 
         @test result isa EntropyResult
 
@@ -1343,16 +1343,16 @@
 
     @testset "MEREC" begin
         tol = 0.0001
-        df = DataFrame(
-            :K1 => [450, 10, 100, 220, 5],
-            :K2 => [8000, 9100, 8200, 9300, 8400],
-            :K3 => [54, 2, 31, 1, 23],
-            :K4 => [145, 160, 153, 162, 158],
+        decmat = hcat(
+            [450, 10, 100, 220, 5],
+            [8000, 9100, 8200, 9300, 8400],
+            [54, 2, 31, 1, 23],
+            [145, 160, 153, 162, 158]
         )
 
         fns = [maximum, maximum, minimum, minimum]
 
-        result = merec(Matrix(df), fns)
+        result = merec(decmat, fns)
         @test result isa MERECResult
         @test isapprox(
             result.w,
@@ -1365,7 +1365,7 @@
             atol = tol,
         )
 
-        setting = MCDMSetting(Matrix(df), zeros(4), fns)
+        setting = MCDMSetting(decmat, zeros(4), fns)
         result2 = merec(setting)
         @test result2 isa MERECResult
         @test result2.w == result.w
@@ -1414,16 +1414,16 @@
 
     @testset "SECA" begin
       tol = 0.00001
-      df = DataFrame()
-      df[:, :x] = Float64[9, 8, 7]
-      df[:, :y] = Float64[7, 7, 8]
-      df[:, :z] = Float64[6, 9, 6]
-      df[:, :q] = Float64[7, 6, 6]
+      decmat = hcat(
+        Float64[9, 8, 7],
+        Float64[7, 7, 8],
+        Float64[6, 9, 6],
+        Float64[7, 6, 6])
 
       beta = 0.5
       fns = [maximum, maximum, maximum, maximum]
 
-      result = seca(Matrix(df), fns, beta)
+      result = seca(decmat, fns, beta)
 
       @test isa(result, SECAResult)
       @test result.bestIndex == 1

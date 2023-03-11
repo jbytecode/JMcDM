@@ -8,11 +8,10 @@ using ..Utilities
 
 using ..JuMP
 using ..Ipopt
-using ..DataFrames
 
 struct DataEnvelopResult <: MCDMResult
     efficiencies::Vector
-    references::DataFrame
+    references::Dict
     orderedcases::Vector
 end
 
@@ -74,7 +73,7 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
 
 !!! warning "Dependencies"
-    This method is enabled when the JuMP, Ipopt, and DataFrames packages are installed and loaded.
+    This method is enabled when the JuMP and Ipopt packages are installed and loaded.
     
 """
 function dataenvelop(
@@ -86,7 +85,7 @@ function dataenvelop(
     nrow, ncol = size(input)
 
     efficiencies = zeros(Float64, nrow)
-    resultdf = DataFrames.DataFrame()
+    resultdf = Dict()
     casenames::Array{Symbol,1} = []
 
     for objectnum = 1:nrow
@@ -118,7 +117,7 @@ function dataenvelop(
 
         efficiencies[objectnum] = theta
         push!(casenames, Symbol(string("Case", objectnum)))
-        resultdf[:, casenames[objectnum]] = values[1:nrow]
+        resultdf[casenames[objectnum]] = values[1:nrow]
     end
 
     orderedEfficiencyIndex = sortperm(efficiencies) |> reverse

@@ -1,7 +1,7 @@
 using Test
 
 
-using JuMP, Ipopt, JMcDM, DataFrames
+using JuMP, Ipopt, JMcDM
 
 import JMcDM.Game: game
 import JMcDM.DataEnvelop: dataenvelop

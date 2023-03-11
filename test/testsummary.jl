@@ -1,15 +1,16 @@
 @testset "Summary" begin
     tol = 0.0001
-    df = DataFrames.DataFrame(
-        :c1 => [25.0, 21, 19, 22],
-        :c2 => [65.0, 78, 53, 25],
-        :c3 => [7.0, 6, 5, 2],
-        :c4 => [20.0, 24, 33, 31],
+    
+    dmat = hcat(
+        [25.0, 21, 19, 22],
+        [65.0, 78, 53, 25],
+        [7.0, 6, 5, 2],
+        [20.0, 24, 33, 31]
     )
+    
     weights = [0.25, 0.25, 0.25, 0.25]
     fns = [maximum, maximum, minimum, maximum]
 
-    dmat = Matrix(df)
 
     result1 =
         JMcDM.summary(dmat, weights, fns, [:topsis, :electre, :cocoso, :copras, :moora])

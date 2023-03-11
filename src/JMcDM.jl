@@ -23,11 +23,9 @@ function __init__()
             export SECAResult
             export seca
 
-            @require DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0" begin
-                include("dataenvelop.jl")
-                import .DataEnvelop: dataenvelop, DataEnvelopResult
-                export DataEnvelopResult
-            end
+            include("dataenvelop.jl")
+            import .DataEnvelop: dataenvelop, DataEnvelopResult
+            export DataEnvelopResult
         end
     end
 end

@@ -100,55 +100,55 @@
         )
 
         @test isapprox(
-            result.references[:, :Case1],
+            result.references[:Case1],
             [0.0, 0.544106, 0.0, 0.0, 0.0, 0.0, 0.0, 0.496377, 0.0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case2],
+            result.references[:Case2],
             [0.0, 1, 0, 0, 0, 0, 0, 0, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case3],
+            result.references[:Case3],
             [0.0, 0.266193, 0, 0, 0, 0, 0, 0.588654, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case4],
+            result.references[:Case4],
             [0.0, 0.860241, 0, 0, 0, 0, 0, 0.0409639, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case5],
+            result.references[:Case5],
             [0.0, 0.314982, 0, 0, 0, 0, 0, 0.727957, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case6],
+            result.references[:Case6],
             [0.0, 0.96, 0, 0, 0, 0, 0, 0, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case7],
+            result.references[:Case7],
             [0.0, 0, 0, 0, 0, 0, 0, 1.01176, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case8],
+            result.references[:Case8],
             [0.0, 0, 0, 0, 0, 0, 0, 1.0, 0],
             atol = tol,
         )
 
         @test isapprox(
-            result.references[:, :Case9],
+            result.references[:Case9],
             [0.0, 0.774923, 0, 0, 0, 0, 0, 0.286833, 0],
             atol = tol,
         )
