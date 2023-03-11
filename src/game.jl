@@ -7,7 +7,7 @@ import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
 
 
-using ..JuMP, ..GLPK
+using ..JuMP, ..Ipopt
 
 
 struct GameResult <: MCDMResult
@@ -76,7 +76,7 @@ Zhou, Hai-Jun. "The rock–paper–scissors game." Contemporary Physics 57.2 (20
 
 
 !!! warning "Dependencies"
-    This method is enabled when the JuMP and GLPK packages are installed and loaded.
+    This method is enabled when the JuMP and Ipopt packages are installed and loaded.
 
 """
 function game(decisionMatrix::Matrix; verbose::Bool = false)::Array{GameResult,1}
@@ -93,7 +93,7 @@ function game_solver(decisionMatrix::Matrix{<:Real}; verbose::Bool = false)::Gam
 
     nrow, ncol = size(decisionMatrix)
 
-    model = JuMP.Model(GLPK.Optimizer)
+    model = JuMP.Model(Ipopt.Optimizer)
     JuMP.MOI.set(model, JuMP.MOI.Silent(), !verbose)
 
 

@@ -1,10 +1,11 @@
 using Test
 
 
-using JuMP, GLPK, JMcDM, DataFrames
+using JuMP, Ipopt, JMcDM, DataFrames
 
 import JMcDM.Game: game
 import JMcDM.DataEnvelop: dataenvelop
+import JMcDM.SECA: seca
 
 
 const testGreyNumbers = true

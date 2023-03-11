@@ -5,28 +5,24 @@ module JMcDM
 using Requires
 
 
-# Modules Game and DataEnvelop are activated 
-# whenever the JuMP and GLPK packages are required
+# Modules Game, DataEnvelop, and SECA are activated 
+# whenever the JuMP and Ipopt packages are required
 # manually by the user.
 export game, dataenvelop
+
 function __init__()
-    # @require GLPK="60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
-    #     @require JuMP="4076af6c-e467-56ae-b986-b466b2749572" begin 
-    #         include("game.jl")
-    #         import .Game: game, GameResult
-    #         include("dataenvelop.jl")
-    #         import .DataEnvelop: dataenvelop, DataEnvelopResult
-    #         export GameResult
-    #         export DataEnvelopResult
-    #     end
-    # end
-
-
-    @require GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6" begin
+    @require Ipopt = "b6b21f68-93f8-5de0-b562-5493be1d77c9" begin
         @require JuMP = "4076af6c-e467-56ae-b986-b466b2749572" begin
             include("game.jl")
             import .Game: game, GameResult
             export GameResult
+
+            include("seca.jl")
+            import .SECA: seca, SECAResult, SECAMethod
+            export SECAMethod
+            export SECAResult
+            export seca
+
             @require DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0" begin
                 include("dataenvelop.jl")
                 import .DataEnvelop: dataenvelop, DataEnvelopResult
@@ -134,7 +130,7 @@ include("rov.jl")
 include("piv.jl")
 
 include("copeland.jl")
-include("seca.jl")
+
 
 
 
@@ -168,7 +164,7 @@ import .Entropy: entropy, EntropyResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
-import .SECA: seca, SECAResult, SECAMethod
+
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -209,7 +205,7 @@ export MoosraMethod
 export ROVMethod
 export MERECMethod
 export PIVMethod
-export SECAMethod
+
 
 export MCDMSetting
 
@@ -243,7 +239,7 @@ export PSIResult
 export MoosraResult
 export MERECResult
 export PIVResult
-export SECAResult
+
 
 
 #  export SCDM types
@@ -299,7 +295,6 @@ export psi
 export moosra
 export merec
 export piv
-export seca
 
 
 #  export SCDM tools

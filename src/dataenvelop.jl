@@ -7,7 +7,7 @@ using ..Utilities
 
 
 using ..JuMP
-using ..GLPK
+using ..Ipopt
 using ..DataFrames
 
 struct DataEnvelopResult <: MCDMResult
@@ -74,7 +74,7 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
 
 !!! warning "Dependencies"
-    This method is enabled when the JuMP, GLPK, and DataFrames packages are installed and loaded.
+    This method is enabled when the JuMP, Ipopt, and DataFrames packages are installed and loaded.
     
 """
 function dataenvelop(
@@ -91,7 +91,7 @@ function dataenvelop(
 
     for objectnum = 1:nrow
 
-        model = JuMP.Model(GLPK.Optimizer)
+        model = JuMP.Model(Ipopt.Optimizer)
         JuMP.MOI.set(model, JuMP.MOI.Silent(), !verbose)
         JuMP.@variable(model, x[1:nrow])
         JuMP.@variable(model, theta)

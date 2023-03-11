@@ -125,6 +125,9 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) Method
 - MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
 - PIV (Proximity Indexed Value) method
+- SECA (Simultaneous Evaluation of Criteria and Alternatives)
+
+
 
 ### SCDM Tools
 

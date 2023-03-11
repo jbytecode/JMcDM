@@ -40,7 +40,7 @@
             @test isa(result, Array{GameResult,1})
             @test length(result) == 2
 
-            @test result[1].value == 0.0
+            @test isapprox(result[1].value, 0.0, atol = tol)
 
             @test isapprox(
                 result[1].probabilities,
@@ -48,7 +48,7 @@
                 atol = tol,
             )
 
-            @test result[2].value == 0.0
+            @test isapprox(result[2].value, 0.0, atol = tol)
 
             @test isapprox(
                 result[2].probabilities,
@@ -78,8 +78,10 @@
         @test isa(result, DataEnvelopResult)
 
 
-        @test result.orderedcases ==
-              [:Case8, :Case2, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3]
+        @test (result.orderedcases ==
+              [:Case8, :Case2, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3]) ||
+              (result.orderedcases ==
+              [:Case2, :Case8, :Case7, :Case1, :Case9, :Case6, :Case5, :Case4, :Case3])
 
         @test isapprox(
             result.efficiencies,
