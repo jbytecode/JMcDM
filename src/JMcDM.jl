@@ -134,7 +134,7 @@ include("rov.jl")
 include("piv.jl")
 
 include("copeland.jl")
-
+include("seca.jl")
 
 
 
@@ -168,6 +168,7 @@ import .Entropy: entropy, EntropyResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
+import .SECA: seca, SECAResult, SECAMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -208,6 +209,7 @@ export MoosraMethod
 export ROVMethod
 export MERECMethod
 export PIVMethod
+export SECAMethod
 
 export MCDMSetting
 
@@ -241,7 +243,7 @@ export PSIResult
 export MoosraResult
 export MERECResult
 export PIVResult
-
+export SECAResult
 
 
 #  export SCDM types
