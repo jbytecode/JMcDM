@@ -299,6 +299,7 @@ export psi
 export moosra
 export merec
 export piv
+export seca
 
 
 #  export SCDM tools
