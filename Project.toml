@@ -1,7 +1,7 @@
 name = "JMcDM"
 uuid = "358108f5-d052-4d0a-8344-d5384e00c0e5"
 authors = ["Mehmet Hakan Satman (jbytecode) <mhsatman@gmail.com>", "Bahadir Fatih Yildirim <bahadirfyildirim@gmail.com>", "Ersagun Kuruca"]
-version = "0.7.2"
+version = "0.7.3"
 
 [deps]
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"

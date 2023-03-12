@@ -7,12 +7,11 @@ using ..Utilities
 
 
 using ..JuMP
-using ..GLPK
-using ..DataFrames
+using ..Ipopt
 
 struct DataEnvelopResult <: MCDMResult
     efficiencies::Vector
-    references::DataFrame
+    references::Dict
     orderedcases::Vector
 end
 
@@ -29,18 +28,22 @@ Apply data envelop analysis for a given input matrix and an output vector.
  - `verbose::Bool`: Logical value indicating whether to show optimizition logs. Default is false.
 
 # Description 
-dataenvloper() applies the data envelop analysis to calculate efficiencies of cases.
+dataenvlope() applies the data envelop analysis to calculate efficiencies of cases.
 
 # Output 
 - `::DataEnvelopResult`: DataEnvelopResult object that holds many results including efficiencies and rankings.
 
 # Examples
 ```julia-repl
+julia> using JuMP, Ipopt, JMcDM
+
 julia> x1 = [96.0, 84, 90, 81, 102, 83, 108, 99, 95];
 julia> x2 = [300.0, 282, 273, 270, 309, 285, 294, 288, 306];
 julia> out = [166.0, 150, 140, 136, 171, 144, 172, 170, 165];
 julia> inp = hcat(x1, x2);
+
 julia> result = dataenvelop(inp, out);
+
 julia> result.orderedcases
 9-element Array{Symbol,1}:
  :Case8
@@ -74,7 +77,7 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 
 
 !!! warning "Dependencies"
-    This method is enabled when the JuMP, GLPK, and DataFrames packages are installed and loaded.
+    This method is enabled when the JuMP and Ipopt packages are installed and loaded.
     
 """
 function dataenvelop(
@@ -86,12 +89,12 @@ function dataenvelop(
     nrow, ncol = size(input)
 
     efficiencies = zeros(Float64, nrow)
-    resultdf = DataFrames.DataFrame()
+    resultdf = Dict()
     casenames::Array{Symbol,1} = []
 
     for objectnum = 1:nrow
 
-        model = JuMP.Model(GLPK.Optimizer)
+        model = JuMP.Model(Ipopt.Optimizer)
         JuMP.MOI.set(model, JuMP.MOI.Silent(), !verbose)
         JuMP.@variable(model, x[1:nrow])
         JuMP.@variable(model, theta)
@@ -118,7 +121,7 @@ function dataenvelop(
 
         efficiencies[objectnum] = theta
         push!(casenames, Symbol(string("Case", objectnum)))
-        resultdf[:, casenames[objectnum]] = values[1:nrow]
+        resultdf[casenames[objectnum]] = values[1:nrow]
     end
 
     orderedEfficiencyIndex = sortperm(efficiencies) |> reverse

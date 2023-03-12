@@ -2,28 +2,28 @@ module SECA
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 using ..Utilities
-using JuMP
-using Ipopt
+
+using ..JuMP, ..Ipopt
 
 export seca, SECAResult, SECAMethod
 
 struct SECAMethod <: MCDMMethod end
 
 struct SECAResult <: MCDMResult
-  decisionMatrix::Matrix
-  weights::Array{Float64,1}
-  scores::Vector
-  ranking::Array{Int64,1}
-  bestIndex::Int64
+    decisionMatrix::Matrix
+    weights::Array{Float64,1}
+    scores::Vector
+    ranking::Array{Int64,1}
+    bestIndex::Int64
 end
 
 function Base.show(io::IO, result::SECAResult)
-  println(io, "Scores:")
-  println(io, result.scores)
-  println(io, "Ordering: ")
-  println(io, result.ranking)
-  println(io, "Best indice:")
-  println(io, result.bestIndex)
+    println(io, "Scores:")
+    println(io, result.scores)
+    println(io, "Ordering: ")
+    println(io, result.ranking)
+    println(io, "Best indice:")
+    println(io, result.bestIndex)
 end
 
 """
@@ -49,6 +49,7 @@ variation information of decision-matrix within and between criteria. seca retur
 
 # Example
 ```julia
+julia> using JuMP, Ipopt, JMcDM
 julia> mat = [
            1.0     0.9925  0.9115  0.8     0.9401  1.0     0.9449;
            0.8696  0.8271  0.8462  1.0     0.9181  0.978   1.0;
@@ -75,85 +76,83 @@ Best indice:
 
 # Reference
 - [Simultaneous Evaluation of Criteria and Alternatives (SECA) for Multi-Criteria Decision-Making](http://dx.doi.org/10.15388/Informatica.2018.167)
+
+!!! warning "Dependencies"
+    This method is enabled when the JuMP and Ipopt packages are installed and loaded.
+
 """
 function seca(
-  decisionMat::Matrix,
-  fns::Array{F,1},
-  beta::Float64;
-  epsilon::Float64=10^-3
+    decisionMat::Matrix,
+    fns::Array{F,1},
+    beta::Float64;
+    epsilon::Float64 = 10^-3,
 )::SECAResult where {F<:Function}
 
-  @assert beta≥0 "beta should be greater than or equal to zero."
-  @assert length(fns) == size(decisionMat, 2) "The number of functions should be equal to the number of criteria in the decision matrix."
+    @assert beta ≥ 0 "beta should be greater than or equal to zero."
+    @assert length(fns) == size(decisionMat, 2) "The number of functions should be equal to the number of criteria in the decision matrix."
 
-  β = beta
-  ϵ = epsilon
-  n, m =  size(decisionMat)
+    β = beta
+    ϵ = epsilon
+    n, m = size(decisionMat)
 
-  # Amatrix construction
-  Amat = similar(decisionMat)
-  max_idx, min_idx = fns .== maximum, fns .== minimum
-  # Normalize the decision matrix based on the concept of BC and NC
+    # Amatrix construction
+    Amat = similar(decisionMat)
+    max_idx, min_idx = fns .== maximum, fns .== minimum
+    # Normalize the decision matrix based on the concept of BC and NC
 
-  if !all(iszero, max_idx)
-    Amat[:, max_idx] .= decisionMat[:, max_idx]./maximum(decisionMat[:, max_idx])
-  end
-  if !all(iszero, min_idx)
-    Amat[:, min_idx] .= minimum(decisionMat[:, min_idx])./decisionMat[:, min_idx]
-  end
+    if !all(iszero, max_idx)
+        Amat[:, max_idx] .= decisionMat[:, max_idx] ./ maximum(decisionMat[:, max_idx])
+    end
+    if !all(iszero, min_idx)
+        Amat[:, min_idx] .= minimum(decisionMat[:, min_idx]) ./ decisionMat[:, min_idx]
+    end
 
-  # Calculate σᴺ and πᴺ
-  σⱼ = map(eachcol(Amat)) do col
-    std(col)
-  end
+    # Calculate σᴺ and πᴺ
+    σⱼ = map(eachcol(Amat)) do col
+        std(col)
+    end
 
-  σᴺ::Vector = σⱼ ./ sum(σⱼ)
+    σᴺ::Vector = σⱼ ./ sum(σⱼ)
 
-  r::Matrix = cor(Amat)
+    r::Matrix = cor(Amat)
 
-  πⱼ::Vector = vec(sum(-r.+1, dims=1))
+    πⱼ::Vector = vec(sum(-r .+ 1, dims = 1))
 
-  πᴺ::Vector = πⱼ ./ sum(πⱼ)
+    πᴺ::Vector = πⱼ ./ sum(πⱼ)
 
-  # ======= Optimization Model =======
-  model = Model(Ipopt.Optimizer)
+    # ======= Optimization Model =======
+    model = Model(Ipopt.Optimizer)
 
-  # ======= Variables =======
-  @variables(model, begin
-    ϵ <= w[i=1:m] <= 1
-  end)
+    # ======= Variables =======
+    @variables(model, begin
+        ϵ <= w[i = 1:m] <= 1
+    end)
 
-  @variable(model, λₐ)
-  @variable(model, λb)
-  @variable(model, λc)
+    @variable(model, λₐ)
+    @variable(model, λb)
+    @variable(model, λc)
 
-  Sᵢ = sum(w[i]*Amat[:, i] for i=1:m)
+    Sᵢ = sum(w[i] * Amat[:, i] for i = 1:m)
 
-  # ======= Constraints =======
-  @constraint(model,
-  λb == sum((w[j]*σᴺ[j])^2 for j=1:m)
-  )
+    # ======= Constraints =======
+    @constraint(model, λb == sum((w[j] * σᴺ[j])^2 for j = 1:m))
 
-  @constraint(model,
-    λc == sum((w[j]*πᴺ[j])^2 for j=1:m)
-  )
+    @constraint(model, λc == sum((w[j] * πᴺ[j])^2 for j = 1:m))
 
-  @constraint(model, λₐ.<=Sᵢ)
+    @constraint(model, λₐ .<= Sᵢ)
 
-  @constraint(model,
-    sum(w[i] for i=1:m) == 1
-  )
-  # ======= Objective =======
-  @NLobjective(model, Max, λₐ-β*(λb + λc))
-  set_silent(model)
-  optimize!(model)
-  weights = value.(w)
+    @constraint(model, sum(w[i] for i = 1:m) == 1)
+    # ======= Objective =======
+    @NLobjective(model, Max, λₐ - β * (λb + λc))
+    set_silent(model)
+    optimize!(model)
+    weights = value.(w)
 
-  # Calculate overall performance score and ranks of alternatives
-  scores = sum(weights[i]*Amat[:, i] for i=1:m)
-  ranks = abs.(invperm(sortperm(scores)).-(n+1))
+    # Calculate overall performance score and ranks of alternatives
+    scores = sum(weights[i] * Amat[:, i] for i = 1:m)
+    ranks = abs.(invperm(sortperm(scores)) .- (n + 1))
 
-  SECAResult(Amat, weights, scores, ranks, argmax(scores))
+    SECAResult(Amat, weights, scores, ranks, argmax(scores))
 end
 
 end # module Seca

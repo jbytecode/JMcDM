@@ -67,14 +67,7 @@
         @test isapprox(nzint[5], 0.0000000, atol = tol)
     end
 
-    @testset "Column min and max vectors" begin
-        df = DataFrame()
-        df[:, :x] = [0.0, 1.0, 10.0]
-        df[:, :y] = [0.0, -1.0, -10.0]
-        @test colmins(df) == [0.0, -10.0]
-        @test colmaxs(df) == [10.0, 0.0]
-    end
-
+    
     @testset "Unitize vector" begin
         x = [1.0, 2.0, 3.0, 4.0, 5.0]
         result = x |> unitize |> sum
@@ -92,26 +85,6 @@
         result = x |> unitize
         @test result == [0.20, 0.20, 0.20, 0.20, 0.20]
     end
-
-    #@testset "Product weights with DataFrame" begin
-    #    df = DataFrame()
-    #    df[:, :x] = [1.0, 2.0, 4.0, 8.0]
-    #    df[:, :y] = [10.0, 20.0, 30.0, 40.0]
-    #    w = [0.60, 0.40]
-    #    result = w * df
-    #    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
-    #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
-    #
-    #    dfint = DataFrame()
-    #    dfint[:, :x] = [1.0, 2, 4, 8]
-    #    dfint[:, :y] = [10, 20, 30, 40]
-    #    w = [0.60, 0.40]
-    #    result = w * dfint
-    #    @test result[:, :x] == [0.6, 1.2, 2.4, 4.8]
-    #    @test result[:, :y] == [4.0, 8.0, 12.0, 16.0]
-    #end
-
-
 
 
     @testset "Reverse minimum & maximum array" begin
