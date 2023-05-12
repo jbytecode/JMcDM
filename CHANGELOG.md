@@ -1,5 +1,8 @@
-### 0.7.4 (The upcoming release)
+### 0.7.5 (The upcoming release)
 
+
+### 0.7.4 
+- Topsis returns ideal vectors in TopsisResult structure
 
 
 ### 0.7.3

@@ -67,10 +67,10 @@ install them manually. The package dependencies are listed below:
 
 for the main functionality. You can also install the 
 
-- GLPK
 - JuMP
+- Ipopt
 
-for zero-sum game problem solving and the data envelopment problem for the efficiency. You can also import
+for zero-sum game problem solving, data envelopment analysis, and the SECA method. You can also import
 
 - DataFrames
 

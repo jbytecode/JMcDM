@@ -18,6 +18,8 @@ struct TopsisResult <: MCDMResult
     distanceToNegative::Vector
     bestIndex::Int64
     scores::Vector
+    idealDesired::Vector 
+    idealUndesired::Vector 
 end
 
 function Base.show(io::IO, result::TopsisResult)
@@ -127,6 +129,8 @@ function topsis(
         distances_minus,
         best_index,
         scores,
+        desired,
+        undesired
     )
 
     return topsisresult
