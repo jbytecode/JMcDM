@@ -3,7 +3,8 @@ module JMcDM
 
 # Dependencies
 using Requires
-
+using Reexport
+@reexport using InteractiveUtils: subtypes
 
 # Modules Game, DataEnvelop, and SECA are activated 
 # whenever the JuMP and Ipopt packages are required
