@@ -12,7 +12,7 @@ makedocs(
          pages = [
                   "MCDM" => "mcdms.md",
                   "Game Solver" =>  "game.md",
-                  "Data Envolepment" => "dataenvelop.md",
+                  "Data Envelopment" => "dataenvelop.md",
                   "SCDM" => "scdm.md",
 		  "Utility" => "utility.md"
                  ]
