@@ -74,7 +74,7 @@ using Test
         ]
 
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
@@ -118,7 +118,7 @@ using Test
             GreyNumber(2.519094173200623),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -152,7 +152,7 @@ using Test
             GreyNumber(0.188656204),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
@@ -251,7 +251,7 @@ using Test
             GreyNumber(1.00000),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -289,7 +289,7 @@ using Test
             GreyNumber(0.385194),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
@@ -323,7 +323,7 @@ using Test
             GreyNumber(0.34452),
             GreyNumber(0.20035),
         ]
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -353,7 +353,7 @@ using Test
             GreyNumber(0.1454237),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
@@ -385,7 +385,7 @@ using Test
             GreyNumber(0.6625969061),
             GreyNumber(0.6611032076),
         ]
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -415,7 +415,7 @@ using Test
                 GreyNumber(0.01926526),
             ]
 
-            for i = 1:length(knownscores)
+            for i = eachindex(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
             end
         end
@@ -490,7 +490,7 @@ using Test
 
         @test result.rankings == [1, 2, 3, 4]
         @test result.bestIndex == 4
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -522,7 +522,7 @@ using Test
             GreyNumber(1.0884916686098811),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
 
@@ -557,7 +557,7 @@ using Test
 
         @test result.ranks == [4, 2, 3, 1]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -591,7 +591,7 @@ using Test
                 GreyNumber(0.784976),
             ]
 
-            for i = 1:length(knownscores)
+            for i = eachindex(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
             end
         end
@@ -623,7 +623,7 @@ using Test
             @test result.bestIndex == 3
             @test result.ranking == [3, 2, 5, 1, 4]
 
-            for i = 1:length(knownscores)
+            for i = eachindex(knownscores)
                 @test isapprox(result.scores[i], knownscores[i], atol = tol)
             end
         end
@@ -657,7 +657,7 @@ using Test
             GreyNumber(0.788239),
         ]
 
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end
@@ -688,7 +688,7 @@ using Test
             GreyNumber(0.7873956894791),
             GreyNumber(0.7674278741782),
         ]
-        for i = 1:length(knownscores)
+        for i = eachindex(knownscores)
             @test isapprox(result.scores[i], knownscores[i], atol = tol)
         end
     end

@@ -73,9 +73,9 @@ function mcdm(
     elseif method isa ArasMethod
         aras(df, w, fns)
     elseif method isa CocosoMethod
-        cocoso(df, w, fns, lambda = method.lambda)
+        cocoso(df, w, fns, lambda=method.lambda)
     elseif method isa CodasMethod
-        codas(df, w, fns, tau = method.tau)
+        codas(df, w, fns, tau=method.tau)
     elseif method isa CoprasMethod
         copras(df, w, fns)
     elseif method isa ROVMethod
@@ -83,7 +83,7 @@ function mcdm(
     elseif method isa EdasMethod
         edas(df, w, fns)
     elseif method isa GreyMethod
-        grey(df, w, fns, zeta = method.zeta)
+        grey(df, w, fns, zeta=method.zeta)
     elseif method isa MabacMethod
         mabac(df, w, fns)
     elseif method isa MaircaMethod
@@ -95,9 +95,9 @@ function mcdm(
     elseif method isa SawMethod
         saw(df, w, fns)
     elseif method isa VikorMethod
-        vikor(df, w, fns, v = method.v)
+        vikor(df, w, fns, v=method.v)
     elseif method isa WaspasMethod
-        waspas(df, w, fns, lambda = method.lambda)
+        waspas(df, w, fns, lambda=method.lambda)
     elseif method isa WPMMethod
         wpm(df, w, fns)
     elseif method isa MarcosMethod
@@ -145,10 +145,7 @@ julia> # mcdm(setting, GreyMethod(0.6))
 ```
 
 """
-function mcdm(
-    setting::MCDMSetting,
-    method::T1 = TopsisMethod(),
-)::MCDMResult where {T1<:MCDMMethod}
+function mcdm(setting::MCDMSetting, method::T1=TopsisMethod())::MCDMResult where {T1<:MCDMMethod}
 
     mcdm(setting.df, setting.weights, setting.fns, method)
 end
