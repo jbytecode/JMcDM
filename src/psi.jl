@@ -3,6 +3,8 @@ module PSI
 export psi, PSIMethod, PSIResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations 
+
 using ..Utilities
 
 
@@ -77,7 +79,11 @@ julia> result.bestIndex
 Maniya, Kalpesh, and Mangal Guido Bhatt. "A selection of material using a novel type decision-making method: 
 Preference selection index method." Materials & Design 31.4 (2010): 1785-1789
 """
-function psi(decisionMat::Matrix, fns::Array{F,1})::PSIResult where {F<:Function}
+function psi(
+    decisionMat::Matrix, 
+    fns::Array{F,1};
+    normalization::G = Normalizations.dividebycolumnmaxminnormalization
+    )::PSIResult where {F<:Function, G<:Function}
 
     function PV(v)
         mymean = mean(v)
@@ -93,14 +99,15 @@ function psi(decisionMat::Matrix, fns::Array{F,1})::PSIResult where {F<:Function
 
     colminmax = zeros(zerotype, col)
 
-    @inbounds for i = 1:col
-        colminmax[i] = decisionMat[:, i] |> fns[i]
-        if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-        elseif fns[i] == minimum
-            normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-        end
-    end
+    #@inbounds for i = 1:col
+    #    colminmax[i] = decisionMat[:, i] |> fns[i]
+    #    if fns[i] == maximum
+    #        normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+    #    elseif fns[i] == minimum
+    #        normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
+    #    end
+    #end
+    normalizedDecisionMat = normalization(decisionMat, fns)
 
     pvs = zeros(zerotype, row)
     for i = 1:row
