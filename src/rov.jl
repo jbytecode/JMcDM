@@ -3,6 +3,8 @@ module ROV
 export rov, ROVMethod, ROVResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -63,31 +65,20 @@ Decision Science Letters 5 (2016): 245-254.
 function rov(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::ROVResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization
+)::ROVResult where {F<:Function, G<:Function}
+    
     n, p = size(decisionMat)
-
-    decmat = Matrix(decisionMat)
-    normalizedMat = similar(decmat)
-
+    
+    normalizedMat = normalization(decisionMat, fns)
+    
     zerotype = eltype(decisionMat)
-
-    cmins = colmins(decisionMat)
-    cmaxs = colmaxs(decisionMat)
-
-    for j = 1:p
-        if fns[j] == maximum
-            normalizedMat[:, j] .= (decmat[:, j] .- cmins[j]) ./ (cmaxs[j] - cmins[j])
-        elseif fns[j] == minimum
-            normalizedMat[:, j] .= (cmaxs[j] .- decmat[:, j]) ./ (cmaxs[j] - cmins[j])
-        else
-            @warn fns[j]
-            error("Function must be either maximum or minimum.")
-        end
-    end
+    
 
     uplus = zeros(zerotype, n)
     uminus = zeros(zerotype, n)
+    
     u = zeros(zerotype, n)
 
     maxindices = filter(x -> fns[x] == maximum, 1:p)
