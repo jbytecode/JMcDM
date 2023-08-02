@@ -63,6 +63,21 @@ function dividebycolumnmaxminnormalization(mat::Matrix, fns)
     return A 
 end 
 
+function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
+    NormalizeMatrix = similar(mat)
+    row, col = size(mat)
+    @inbounds for i = 1:row
+        for j = 1:col
+            if fns[j] == maximum
+                NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
+            elseif fns[j] == minimum
+                NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
+            end
+        end
+    end
+    return NormalizeMatrix
+end 
+
 function dividebyallnormnormalization(mat::Matrix, fns)
     return mat ./ sqrt(sum(mat .* mat))
 end 

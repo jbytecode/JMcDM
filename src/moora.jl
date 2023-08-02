@@ -3,6 +3,8 @@ module MOORA
 export moora, MooraMethod, MooraResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -89,15 +91,17 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 function moora_ref(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MooraResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.vectornormnormalization
+)::MooraResult where {F<:Function, G<:Function}
 
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
 
-    normalizedMat = normalize(decisionMat)
-    # weightednormalizedMat = w * normalizedMat
+    # normalizedMat = normalize(decisionMat)
+    normalizedMat = normalization(decisionMat, fns)
+
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)
 
     # cmaxs = colmaxs(weightednormalizedMat)

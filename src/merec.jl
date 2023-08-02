@@ -3,6 +3,8 @@ module MEREC
 export merec, MERECResult, MERECMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations 
+
 using ..Utilities
 
 
@@ -72,21 +74,26 @@ julia> result.w
 Keshavarz-Ghorabaee, M., Amiri, M., Zavadskas, E. K., Turskis, Z., & Antucheviciene, J. (2021). Determination of Objective Weights Using a New Method Based on the Removal Effects of Criteria (MEREC). Symmetry, 13(4), 525. https://doi.org/10.3390/sym13040525
 
 """
-function merec(decisionMat::Matrix, fs::Array{F,1})::MERECResult where {F<:Function}
+function merec(
+    decisionMat::Matrix, 
+    fs::Array{F,1};
+    normalization::G = Normalizations.inversedividebycolumnmaxminnormalization
+    )::MERECResult where {F<:Function, G<:Function}
     mat = Matrix(decisionMat)
     row, col = size(mat)
 
-    NormalizeMatrix = zeros((row, col))
+    #NormalizeMatrix = zeros((row, col))
+    #@inbounds for i = 1:row
+    #    for j = 1:col
+    #        if fs[j] == maximum
+    #            NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
+    #        elseif fs[j] == minimum
+    #            NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
+    #        end
+    #    end
+    #end
+    NormalizeMatrix = normalization(decisionMat, fs)
 
-    @inbounds for i = 1:row
-        for j = 1:col
-            if fs[j] == maximum
-                NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
-            elseif fs[j] == minimum
-                NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
-            end
-        end
-    end
 
     S = zeros(row)
     S_ = zeros(row, col)
