@@ -4,6 +4,8 @@ module MABAC
 export mabac, MABACResult, MabacMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations 
+
 using ..Utilities
 
 
@@ -93,8 +95,9 @@ Ulutaş, A. (2019). Entropi ve MABAC yöntemleri ile personel seçimi. OPUS–In
 function mabac(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MABACResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization
+)::MABACResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
 
@@ -103,24 +106,23 @@ function mabac(
     colMax = colmaxs(decisionMat)
     colMin = colmins(decisionMat)
 
-    A = similar(decisionMat)
+    A = normalization(decisionMat, fns)
 
     zerotype = eltype(A)
 
 
-    for i = 1:row
-        for j = 1:col
-            if fns[j] == maximum
-                @inbounds A[i, j] =
-                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
-            elseif fns[j] == minimum
-                @inbounds A[i, j] =
-                    (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
-            end
-        end
-    end
+    #for i = 1:row
+    #    for j = 1:col
+    #        if fns[j] == maximum
+    #            @inbounds A[i, j] =
+    #                (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+    #        elseif fns[j] == minimum
+    #            @inbounds A[i, j] =
+    #                (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
+    #        end
+    #    end
+    #end
 
-    # wA = w * (A .+ 1)
     wA = Utilities.weightise((A .+ one(zerotype)), w)
 
     g = zeros(zerotype, col)
