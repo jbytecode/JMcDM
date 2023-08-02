@@ -1,6 +1,8 @@
 module SD
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -40,7 +42,11 @@ Diakoulaki, Danae, George Mavrotas, and Lefteris Papayannakis. "Determining obje
 in multiple criteria problems: The critic method." Computers & Operations Research 22.7 
 (1995): 763-770.
 """
-function sd(decisionMat::Matrix, fns::Array{F,1})::SDResult where {F<:Function}
+function sd(
+    decisionMat::Matrix, 
+    fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization
+    )::SDResult where {F<:Function, G<:Function}
 
     n, p = size(decisionMat)
 
@@ -50,16 +56,7 @@ function sd(decisionMat::Matrix, fns::Array{F,1})::SDResult where {F<:Function}
     cmins = colmins(decisionMat)
     cmaxs = colmaxs(decisionMat)
 
-    for j = 1:p
-        if fns[j] == maximum
-            normalizedMat[:, j] .= (decmat[:, j] .- cmins[j]) ./ (cmaxs[j] - cmins[j])
-        elseif fns[j] == minimum
-            normalizedMat[:, j] .= (cmaxs[j] .- decmat[:, j]) ./ (cmaxs[j] - cmins[j])
-        else
-            @warn fns[j]
-            error("Function must be either maximum or minimum.")
-        end
-    end
+    normalizedMat = normalization(decisionMat, fns)
 
     sds = map(ccol -> std(normalizedMat[:, ccol]), 1:p)
     sumsds = sum(sds)
