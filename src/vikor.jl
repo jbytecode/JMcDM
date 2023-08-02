@@ -1,6 +1,7 @@
 module VIKOR
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
 using ..Utilities
 
 
@@ -20,7 +21,6 @@ struct VikorResult <: MCDMResult
     r::Vector
     scores::Vector
 end
-
 
 
 
@@ -78,35 +78,14 @@ function vikor(
     weights::Array{Float64,1},
     fns::Array{F,1};
     v::Float64 = 0.5,
-)::VikorResult where {F<:Function}
+    normalization::G = Normalizations.inversemaxminrangenormalization
+)::VikorResult where {F<:Function, G<:Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
 
-    # col_max = colmaxs(decisionMat)
-    # col_min = colmins(decisionMat)
-    col_max = apply_columns(fns, decisionMat)
-    col_min = apply_columns(reverseminmax(fns), decisionMat)
-
-
-    A = similar(decisionMat)
-
-    for i = 1:nalternatives
-        for j = 1:ncriteria
-            if fns[j] == maximum
-                @inbounds A[i, j] =
-                    abs((col_max[j] - decisionMat[i, j]) / (col_max[j] - col_min[j]))
-            elseif fns[j] == minimum
-                @inbounds A[i, j] =
-                    abs((decisionMat[i, j] - col_min[j]) / (col_max[j] - col_min[j]))
-            else
-                @warn fns[j]
-                error("Function must be either maximum or minimum.")
-            end
-        end
-    end
-
-    # weightedA = w * A
+    A = normalization(decisionMat, fns)
+    
     weightedA = Utilities.weightise(A, w)
 
     s = Vector{Any}(undef, nalternatives)

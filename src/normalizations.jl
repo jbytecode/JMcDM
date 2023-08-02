@@ -62,7 +62,27 @@ function maxminrangenormalization(data::Matrix, fns)::Matrix
 end 
 
 
+function inversemaxminrangenormalization(data::Matrix, fns)::Matrix 
+    A = similar(data)
 
+    row, col = size(data)
+    colMax = colmaxs(data)
+    colMin = colmins(data)
+
+    for i = 1:row
+        for j = 1:col
+            if fns[j] == minimum
+                @inbounds A[i, j] =
+                    (data[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+            elseif fns[j] == maximum
+                @inbounds A[i, j] =
+                    (colMax[j] - data[i, j]) / (colMax[j] - colMin[j])
+            end
+        end
+    end
+
+    return A
+end 
 
 """
     dividebycolumnmaxminnormalization(mat::Matrix, fns)
