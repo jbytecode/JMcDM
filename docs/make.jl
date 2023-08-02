@@ -11,6 +11,7 @@ makedocs(
          authors = "Mehmet Hakan Satman, Bahadır Fatih Yıldırım, Ersagun Kuruca",
          pages = [
                   "MCDM" => "mcdms.md",
+                  "Normalization Methods" => "normalizations.md"
                   "Game Solver" =>  "game.md",
                   "Data Envelopment" => "dataenvelop.md",
                   "SCDM" => "scdm.md",
