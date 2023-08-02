@@ -1,6 +1,7 @@
 module Topsis
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
 using ..Utilities
 
 export TopsisMethod, TopsisResult, topsis
@@ -92,13 +93,14 @@ Dora, 2. Basım, 2015, ISBN: 978-605-9929-44-8
 function topsis(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::TopsisResult where {F<:Function}
+    fns::Array{F,1}; 
+    normalization::G = Normalizations.vectornormnormalization
+)::TopsisResult where {F<:Function, G<:Function}
 
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
 
-    normalizedMat = normalize(decisionMat)
+    normalizedMat = normalization(decisionMat)
 
     # weightednormalizedMat = w * normalizedMat
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)
