@@ -3,6 +3,8 @@ module COPRAS
 export copras, CoprasMethod, COPRASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -149,20 +151,20 @@ Yıldırım, B. F., Timor, M. (2019). "Bulanık ve Gri COPRAS Yöntemleri Kullan
 function copras(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::COPRASResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.dividebycolumnsumnormalization
+)::COPRASResult where {F<:Function, G<:Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
 
     nrows, ncols = size(mat)
     w = unitize(weights)
-    normalizedMat = copy(mat)
-    for col = 1:ncols
-        for row = 1:nrows
-            normalizedMat[row, col] = w[col] .* (mat[row, col] ./ sum(mat[:, col]))
-        end
-    end
+
+    normalizedMat = normalization(mat, fns)
+    for i in 1:ncols 
+        normalizedMat[:,i] = normalizedMat[:, i] .* weights[i]
+    end 
 
     sPlus = zeros(eltype(normalizedMat), nrows)
     sMinus = zeros(eltype(normalizedMat), nrows)
