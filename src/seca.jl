@@ -17,14 +17,7 @@ struct SECAResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::SECAResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indice:")
-    println(io, result.bestIndex)
-end
+
 
 """
     seca(decisionMat::Matrix, fns::Array{F,1}, beta::Float64; epsilon::Float64=10^-3)::SECAResult where {F<:Function}

@@ -26,14 +26,7 @@ struct GreyResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::GreyResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ordering)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 """
         grey(decisionMat, weights, fs; zeta)

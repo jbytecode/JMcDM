@@ -19,14 +19,7 @@ struct WPMResult <: MCDMResult
 end
 
 
-function Base.show(io::IO, result::WPMResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 """
         wpm(decisionMat, weights, fns)

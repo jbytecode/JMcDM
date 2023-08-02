@@ -3,6 +3,8 @@ module ELECTRE
 export electre, ElectreMethod, ElectreResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -22,10 +24,7 @@ end
 
 struct ElectreMethod <: MCDMMethod end
 
-function Base.show(io::IO, result::ElectreResult)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 """
         electre(decisionMat, weights, fns)
@@ -86,8 +85,9 @@ Saglik Bilimleri Uygulamalari ile. Editor: Muhlis Ozdemir, Nobel Kitabevi, Ankar
 function electre(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::ElectreResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.vectornormnormalization
+)::ElectreResult where {F<:Function, G<:Function}
 
     w = unitize(weights)
 
@@ -95,7 +95,7 @@ function electre(
 
     nalternatives, ncriteria = size(decisionMat)
 
-    normalizedMat = normalize(decisionMat)
+    normalizedMat = normalization(decisionMat, fns)
 
     #weightednormalizedMat = w * normalizedMat
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)

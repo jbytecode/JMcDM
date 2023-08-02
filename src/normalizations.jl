@@ -123,5 +123,4 @@ function dividebyallnormnormalization(mat::Matrix, fns)
 end 
 
 
-
 end #end of module Normalizations 

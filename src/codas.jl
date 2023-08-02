@@ -24,14 +24,7 @@ end
 
 CodasMethod()::CodasMethod = CodasMethod(0.02)
 
-function Base.show(io::IO, result::CODASResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 
 """

@@ -17,10 +17,7 @@ struct MERECResult <: MCDMResult
     w::Vector
 end
 
-function Base.show(io::IO, result::MERECResult)
-    println(io, "Weights: ")
-    println(io, result.w)
-end
+
 
 """
 merec(decisionMat, fns)

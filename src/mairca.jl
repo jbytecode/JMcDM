@@ -20,14 +20,7 @@ end
 
 struct MaircaMethod <: MCDMMethod end
 
-function Base.show(io::IO, result::MAIRCAResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 """
         mairca(decisionMat, weights, fns)
 

@@ -17,14 +17,7 @@ struct MoosraResult <: MCDMResult
     bestIndex::Int
 end
 
-function Base.show(io::IO, result::MoosraMethod)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: (from worst to best)")
-    println(io, result.rankings)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 """
         moosra(decisionMat, weights, fns; lambda = 0.5)

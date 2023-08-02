@@ -19,14 +19,7 @@ struct COPRASResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::COPRASResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 """
     copras(decisionMat, weights, fs)

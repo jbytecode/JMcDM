@@ -17,10 +17,7 @@ struct CRITICResult <: MCDMResult
     w::Vector
 end
 
-function Base.show(io::IO, result::CRITICResult)
-    println(io, "Weights: ")
-    println(io, result.w)
-end
+
 
 """
         critic(decisionMat, fns)

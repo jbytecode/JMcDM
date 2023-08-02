@@ -22,12 +22,7 @@ struct VikorResult <: MCDMResult
 end
 
 
-function Base.show(io::IO, result::VikorResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 
 

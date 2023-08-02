@@ -27,12 +27,7 @@ struct MooraResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::MooraResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 
 
 """

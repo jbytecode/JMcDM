@@ -21,15 +21,6 @@ struct ARASResult <: MCDMResult
 end
 
 
-function Base.show(io::IO, result::ARASResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Orderings: ")
-    println(io, result.orderings)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
-
 """
     aras(decisionMat, weights, fs)
 Apply ARAS (Additive Ratio ASsessment) method for a given matrix, weights and, type of criteria.

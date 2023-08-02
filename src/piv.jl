@@ -19,14 +19,7 @@ end
 
 struct PIVMethod <: MCDMMethod end
 
-function Base.show(io::IO, result::PIVResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best index:")
-    println(io, result.bestIndex)
-end
+
 
 """
     piv(decisionMat, weights, fs)

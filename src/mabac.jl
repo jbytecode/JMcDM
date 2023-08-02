@@ -24,14 +24,7 @@ end
 
 struct MabacMethod <: MCDMMethod end
 
-function Base.show(io::IO, result::MABACResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranking)
-    println(io, "Best indices:")
-    println(io, result.bestIndex)
-end
+
 """
         mabac(decisionMat, weights, fns)
 

@@ -1,5 +1,5 @@
 ### 0.7.6 (The upcoming release)
-
+- Remove Base.show methods of McDMResults. The structure is already readable enough.
 
 ### 0.7.5
 - Users can now manually feed a normalization method for any MCDM tool.

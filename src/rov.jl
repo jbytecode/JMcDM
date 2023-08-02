@@ -17,18 +17,7 @@ struct ROVResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::ROVResult)
-    println(io, "Scores:")
-    println(io, result.scores)
-    println(io, "Ordering: ")
-    println(io, result.ranks)
-    println(io, "Uminus:")
-    println(io, result.uminus)
-    println(io, "UPlus:")
-    println(io, result.uplus)
-    println(io, "Best Index:")
-    println(io, result.bestIndex)
-end
+
 
 """
         rov(decisionMat, weights, fns)

@@ -15,19 +15,7 @@ struct GameResult <: MCDMResult
     value::Float64
 end
 
-function Base.show(io::IO, result::GameResult)
-    println(io, "Probabilities:")
-    println(io, result.probabilities)
-    println(io, "Value of game: ")
-    println(io, result.value)
-end
 
-function Base.show(io::IO, result::Array{GameResult,1})
-    println(io, "Row Player: ")
-    println(io, result[1])
-    println(io, "Column Player: ")
-    println(io, result[2])
-end
 
 """
         game(decisionMatrix; verbose = false)

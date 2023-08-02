@@ -12,10 +12,7 @@ struct SDResult <: MCDMResult
     weights::Array{Float64,1}
 end
 
-function Base.show(io::IO, result::SDResult)
-    println(io, "Weights:")
-    println(io, result.weights)
-end
+
 
 
 
