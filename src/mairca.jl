@@ -3,6 +3,8 @@ module MAIRCA
 export mairca, MaircaMethod, MAIRCAResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -82,8 +84,9 @@ Ulutaş A.(2019),Swara Ve Mairca Yöntemleri İle Catering Firması Seçimi,BMIJ
 function mairca(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MAIRCAResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization
+)::MAIRCAResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
 
@@ -97,22 +100,22 @@ function mairca(
         T[:, i] .= w[i] * (one(zerotype) / row)
     end
 
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
+    #A = similar(decisionMat)
+    #for i = 1:row
+    #    for j = 1:col
+    #        if fns[j] == maximum
+    #            @inbounds A[i, j] =
+    #                T[i, j] * ((decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
+    #        elseif fns[j] == minimum
+    #            @inbounds A[i, j] =
+    #                T[i, j] * ((decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
+    #        end
+    #    end
+    #end
 
-    A = similar(decisionMat)
+    A = normalization(decisionMat, fns)
+    A = A .* T
 
-    for i = 1:row
-        for j = 1:col
-            if fns[j] == maximum
-                @inbounds A[i, j] =
-                    T[i, j] * ((decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
-            elseif fns[j] == minimum
-                @inbounds A[i, j] =
-                    T[i, j] * ((decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
-            end
-        end
-    end
 
     S = T .- A
 
