@@ -1,6 +1,7 @@
 module WASPAS
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
 using ..Utilities
 
 
@@ -86,24 +87,25 @@ function waspas(
     weights::Array{Float64,1},
     fns::Array{F,1};
     lambda::Float64 = 0.5,
-)::WASPASResult where {F<:Function}
+    normalization::G = Normalizations.dividebycolumnmaxminnormalization
+)::WASPASResult where {F<:Function, G<: Function}
 
     row, col = size(decisionMat)
-    normalizedDecisionMat = similar(decisionMat)
+
     w = unitize(weights)
 
     zerotype = eltype(decisionMat)
 
-    colminmax = zeros(zerotype, col)
-
-    for i = 1:col
-        colminmax[i] = decisionMat[:, i] |> fns[i]
-        if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-        elseif fns[i] == minimum
-            normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-        end
-    end
+    normalizedDecisionMat = normalization(decisionMat, fns)
+    #colminmax = zeros(zerotype, col)
+    #for i = 1:col
+    #    colminmax[i] = decisionMat[:, i] |> fns[i]
+    #    if fns[i] == maximum
+    #        normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+    #    elseif fns[i] == minimum
+    #        normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
+    #    end
+    #end
 
     scoreMat = similar(normalizedDecisionMat)
     for i = 1:col
