@@ -42,4 +42,25 @@ function maxminrangenormalization(data::Matrix, fns)::Matrix
     return A
 end 
 
+
+function dividebycolumnmaxminnormalization(mat::Matrix, fns)
+    
+    nrows, ncols = size(mat)
+    
+    colMax = colmaxs(mat)
+    colMin = colmins(mat)
+
+    A = similar(mat)
+
+    for i = 1:ncols
+        if fns[i] == maximum
+            @inbounds A[:, i] = mat[:, i] ./ colMax[i]
+        elseif fns[i] == minimum
+            @inbounds A[:, i] = colMin[i] ./ mat[:, i]
+        end
+    end
+
+    return A 
+end 
+
 end #end of module Normalizations 

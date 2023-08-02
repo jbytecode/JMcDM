@@ -3,6 +3,8 @@ module CODAS
 export codas, CodasMethod, CODASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations 
+
 using ..Utilities
 
 
@@ -94,8 +96,9 @@ function codas(
     decisionMat::Matrix,
     weight::Array{Float64,1},
     fns::Array{F,1};
+    normalization::G = Normalizations.dividebycolumnmaxminnormalization,
     tau::Float64 = 0.02,
-)::CODASResult where {F<:Function}
+)::CODASResult where {F<:Function, G<:Function}
 
     #mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
@@ -103,18 +106,7 @@ function codas(
     nrows, ncols = size(decisionMat)
     w = unitize(weight)
 
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
-
-    A = similar(decisionMat)
-
-    for i = 1:ncols
-        if fns[i] == maximum
-            @inbounds A[:, i] = decisionMat[:, i] ./ colMax[i]
-        elseif fns[i] == minimum
-            @inbounds A[:, i] = colMin[i] ./ decisionMat[:, i]
-        end
-    end
+    A = normalization(decisionMat, fns)
 
     wA = similar(A)
 
