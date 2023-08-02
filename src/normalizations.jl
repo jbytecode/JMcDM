@@ -2,10 +2,22 @@ module Normalizations
 
 import ..Utilities: normalize, colmins, colmaxs
 
+"""
+    vectornormnormalization(data::Matrix, fns)::Matrix
+
+Default normalization method for Topsis and Moora 
+"""
 function vectornormnormalization(data::Matrix, fns)::Matrix
     return normalize(data)
 end
 
+
+
+"""
+    dividebycolumnsumnormalization(data::Matrix, fns)::Matrix
+
+Default normalization method for Aras and Copras
+"""
 function dividebycolumnsumnormalization(data::Matrix, fns)::Matrix 
     normalizedMat = similar(data)
 
@@ -20,6 +32,13 @@ function dividebycolumnsumnormalization(data::Matrix, fns)::Matrix
     return normalizedMat
 end
 
+
+
+"""
+    maxminrangenormalization(data::Matrix, fns)::Matrix
+
+Default normalization method for Cocoso, Critic, Grey, Mabac, and Mairca
+"""
 function maxminrangenormalization(data::Matrix, fns)::Matrix 
     A = similar(data)
 
@@ -43,6 +62,13 @@ function maxminrangenormalization(data::Matrix, fns)::Matrix
 end 
 
 
+
+
+"""
+    dividebycolumnmaxminnormalization(mat::Matrix, fns)
+
+Default normalization method for Codas and Psi.
+"""
 function dividebycolumnmaxminnormalization(mat::Matrix, fns)
     
     nrows, ncols = size(mat)
@@ -63,6 +89,13 @@ function dividebycolumnmaxminnormalization(mat::Matrix, fns)
     return A 
 end 
 
+
+
+"""
+    inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
+
+Default normalization method by Merec.
+"""
 function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
     NormalizeMatrix = similar(mat)
     row, col = size(mat)
@@ -79,6 +112,12 @@ function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
 end 
 
 
+
+"""
+    dividebyallnormnormalization(mat::Matrix, fns)
+
+Default normalization method for Moosra
+"""
 function dividebyallnormnormalization(mat::Matrix, fns)
     return mat ./ sqrt(sum(mat .* mat))
 end 

@@ -136,3 +136,39 @@ JMcDM.piv
 ```@docs
 JMcDM.seca
 ```
+
+
+
+# Normalization Methods 
+
+## Vector Norm Normalization
+```docs 
+JMcDM.Normalizations.vectornormnormalization
+```
+
+## Divide by Column Sums Normalization
+```docs
+JMcDM.Normalizations.dividebycolumnsumnormalization
+```
+
+## Max-Min Range Normalization
+```docs
+JMcDM.Normalizations.maxminrangenormalization
+```
+
+## Divide by Column Maximum-Minimum Normalization
+```docs
+JMcDM.Normalization.dividebycolumnmaxminnormalization
+```
+
+## Inverse Divide by Column Maximum-Minimum Normalization
+```docs
+JMcDM.Normalization.inversedividebycolumnmaxminnormalization
+```
+
+## Divide by All Norm Normalization
+```docs
+JMcDM.Normalizations.dividebyallnormnormalization
+```
+
+
