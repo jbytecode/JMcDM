@@ -2,6 +2,8 @@ module ARAS
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -82,14 +84,15 @@ Yıldırım, B. F. (2015). "Çok Kriterli Karar Verme Problemlerinde ARAS Yönte
 function aras(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fs::Array{F,1},
-)::ARASResult where {F<:Function}
+    fs::Array{F,1}; normalization::G = Normalizations.dividebycolumnsumnormalization 
+)::ARASResult where {F<:Function, G<: Function}
 
     # mat = convert(Matrix, decisionMat)
     mat = Matrix(decisionMat)
 
     nrows, ncols = size(mat)
     w = unitize(weights)
+
     referenceRow = apply_columns(fs, mat)
     extendMat = [mat; referenceRow']
 
@@ -99,15 +102,8 @@ function aras(
         end
     end
 
-    normalizedMat = similar(extendMat)
-
-    for col = 1:ncols
-        for row = 1:nrows+1
-            normalizedMat[row, col] = extendMat[row, col] ./ sum(extendMat[:, col])
-        end
-    end
-
-    # optimality = similar(normalizedMat)
+    normalizedMat = normalization(extendMat)
+    
 
     optimality_degrees = Vector(undef, nrows + 1)
     for i = 1:nrows+1
