@@ -1,4 +1,9 @@
-### 0.7.5 (The upcoming release)
+### 0.7.6 (The upcoming release)
+
+
+### 0.7.5
+- Users can now manually feed a normalization method for any MCDM tool.
+- Normalization parts of the methods separated as a new module. 
 
 
 ### 0.7.4 

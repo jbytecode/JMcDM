@@ -2,7 +2,19 @@
 
 In MCDM methods, e.g. topsis, aras, waspas, each single method has a predefined and default
 normalization method. However the normalization method can be specifically defined by setting
-the normalization= parameter in MCDM functions.
+the normalization= parameter in MCDM functions. 
+
+For example the default Topsis call with Vector norm normalization is
+
+```julia
+topsis(data, weights, fns)
+```
+
+whereas, the same method can be called with a different normalization method like 
+
+```julia
+topsis(data, weights, fns, normalization = Normalizations.dividebycolumnsumnormalization
+```
 
 ## Vector Norm Normalization
 ```@docs 
@@ -21,12 +33,12 @@ JMcDM.Normalizations.maxminrangenormalization
 
 ## Divide by Column Maximum-Minimum Normalization
 ```@docs
-JMcDM.Normalization.dividebycolumnmaxminnormalization
+JMcDM.Normalizations.dividebycolumnmaxminnormalization
 ```
 
 ## Inverse Divide by Column Maximum-Minimum Normalization
 ```@docs
-JMcDM.Normalization.inversedividebycolumnmaxminnormalization
+JMcDM.Normalizations.inversedividebycolumnmaxminnormalization
 ```
 
 ## Divide by All Norm Normalization
