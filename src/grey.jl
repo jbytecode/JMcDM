@@ -4,6 +4,8 @@ export grey, GreyResult, GreyMethod
 
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -100,8 +102,9 @@ function grey(
     decisionMat::Matrix,
     weights::Array{Float64,1},
     fs::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization,
     zeta::Float64 = 0.5,
-)::GreyResult where {F<:Function}
+)::GreyResult where {F<:Function, G<:Function}
 
     mat = decisionMat
 
@@ -113,27 +116,38 @@ function grey(
 
     normalizedReferenceRow = zeros(Float64, ncols)
 
-    normalizedMat = similar(mat)
-    for col = 1:ncols
+    #normalizedMat = similar(mat)
+    #for col = 1:ncols
+    #    mmax = maximum(mat[:, col])
+    #    mmin = minimum(mat[:, col])
+    #    mrange = mmax - mmin
+    #    for row = 1:nrows
+    #        if fs[col] == maximum
+    #            normalizedMat[row, col] = (mat[row, col] - mmin) / mrange
+    #        elseif fs[col] == minimum
+    #            normalizedMat[row, col] = (mmax - mat[row, col]) / mrange
+    #        else
+    #            @error fs[col]
+    #            error("Function not defined")
+    #        end
+    #    end
+    #    if fs[col] == maximum
+    #        normalizedReferenceRow[col] = (referenceRow[col] - mmin) / mrange
+    #    elseif fs[col] == minimum
+    #        normalizedReferenceRow[col] = (mmax - referenceRow[col]) / mrange
+    #    end
+    #end
+    normalizedMat = normalization(mat, fs)
+    for col = 1:ncols 
         mmax = maximum(mat[:, col])
         mmin = minimum(mat[:, col])
         mrange = mmax - mmin
-        for row = 1:nrows
-            if fs[col] == maximum
-                normalizedMat[row, col] = (mat[row, col] - mmin) / mrange
-            elseif fs[col] == minimum
-                normalizedMat[row, col] = (mmax - mat[row, col]) / mrange
-            else
-                @error fs[col]
-                error("Function not defined")
-            end
-        end
         if fs[col] == maximum
             normalizedReferenceRow[col] = (referenceRow[col] - mmin) / mrange
         elseif fs[col] == minimum
             normalizedReferenceRow[col] = (mmax - referenceRow[col]) / mrange
         end
-    end
+    end 
 
     absoluteValueMat = similar(mat)
     for row = 1:nrows
