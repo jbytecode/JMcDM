@@ -3,6 +3,8 @@ module CRITIC
 export critic, CRITICResult, CriticMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -64,7 +66,11 @@ Diakoulaki, D., Mavrotas, G., & Papayannakis, L. (1995). Determining objective w
 Akçakanat, Ö., Aksoy, E., Teker, T. (2018). CRITIC ve MDL Temelli EDAS Yöntemi ile TR-61 Bölgesi Bankalarının Performans Değerlendirmesi. Süleyman Demirel Üniversitesi Sosyal Bilimler Enstitüsü Dergisi, 1 (32), 1-24.
 
 """
-function critic(decisionMat::Matrix, fns::Array{F,1})::CRITICResult where {F<:Function}
+function critic(
+    decisionMat::Matrix, 
+    fns::Array{F,1}; 
+    normalization::G = Normalizations.maxminrangenormalization
+    )::CRITICResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
     colMax = colmaxs(decisionMat)
@@ -74,19 +80,19 @@ function critic(decisionMat::Matrix, fns::Array{F,1})::CRITICResult where {F<:Fu
 
     zerotype = eltype(decisionMat[:, 1])
 
-    for i = 1:row
-        for j = 1:col
-            if fns[j] == maximum
-                @inbounds A[i, j] =
-                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
-            elseif fns[j] == minimum
-                @inbounds A[i, j] =
-                    (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
-            end
-        end
-    end
+    #for i = 1:row
+    #    for j = 1:col
+    #        if fns[j] == maximum
+    #            @inbounds A[i, j] =
+    #                (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+    #        elseif fns[j] == minimum
+    #            @inbounds A[i, j] =
+    #                (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
+    #        end
+    #    end
+    #end
 
-    normalizedMat = A
+    normalizedMat = normalization(decisionMat, fns)
 
     corMat = one(zerotype) .- cor(normalizedMat)
 
