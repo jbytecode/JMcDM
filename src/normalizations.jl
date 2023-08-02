@@ -1,17 +1,12 @@
 module Normalizations 
 
-import ..Utilities: normalize
+import ..Utilities: normalize, colmins, colmaxs
 
-function vectornormnormalization(data::Matrix)::Matrix
-    df = similar(data)
-    _, p = size(df)
-    for i = 1:p
-        df[:, i] = normalize(data[:, i])
-    end
-    return df
+function vectornormnormalization(data::Matrix, fns)::Matrix
+    return normalize(data)
 end
 
-function dividebycolumnsumnormalization(data::Matrix)::Matrix 
+function dividebycolumnsumnormalization(data::Matrix, fns)::Matrix 
     normalizedMat = similar(data)
 
     nrows, ncols = size(data)
@@ -24,5 +19,27 @@ function dividebycolumnsumnormalization(data::Matrix)::Matrix
 
     return normalizedMat
 end
+
+function maxminrangenormalization(data::Matrix, fns)::Matrix 
+    A = similar(data)
+
+    row, col = size(data)
+    colMax = colmaxs(data)
+    colMin = colmins(data)
+
+    for i = 1:row
+        for j = 1:col
+            if fns[j] == maximum
+                @inbounds A[i, j] =
+                    (data[i, j] - colMin[j]) / (colMax[j] - colMin[j])
+            elseif fns[j] == minimum
+                @inbounds A[i, j] =
+                    (colMax[j] - data[i, j]) / (colMax[j] - colMin[j])
+            end
+        end
+    end
+
+    return A
+end 
 
 end #end of module Normalizations 

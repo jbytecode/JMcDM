@@ -100,7 +100,7 @@ function topsis(
     w = unitize(weights)
     nalternatives, ncriteria = size(decisionMat)
 
-    normalizedMat = normalization(decisionMat)
+    normalizedMat = normalization(decisionMat, fns)
 
     # weightednormalizedMat = w * normalizedMat
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)

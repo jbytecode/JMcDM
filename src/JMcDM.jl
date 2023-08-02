@@ -92,6 +92,7 @@ end
 # includes 
 include("greynumber.jl")
 include("utilities.jl")
+include("normalizations.jl")
 include("topsis.jl")
 include("vikor.jl")
 include("electre.jl")
@@ -318,5 +319,7 @@ export copeland
 
 # export Grey Number elements
 export GreyNumber, kernel, whitenizate
+
+export Normalizations
 
 end # module

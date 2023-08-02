@@ -102,7 +102,7 @@ function aras(
         end
     end
 
-    normalizedMat = normalization(extendMat)
+    normalizedMat = normalization(extendMat, fs)
     
 
     optimality_degrees = Vector(undef, nrows + 1)
