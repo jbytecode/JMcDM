@@ -1,6 +1,8 @@
 module SAW
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 export saw, SawResult, SawMethod
@@ -78,25 +80,14 @@ function saw(
 
     n, p = size(decisionMat)
 
-    normalizedDecisionMat = similar(decisionMat)
 
     w = unitize(weights)
 
     zerotype = eltype(decisionMat)
 
-    colminmax = zeros(zerotype, p)
 
-    @inbounds for i = 1:p
-        colminmax[i] = decisionMat[:, i] |> fns[i]
-        if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-        elseif fns[i] == minimum
-            normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-        else
-            @error fns[i]
-            error("Function not found")
-        end
-    end
+    normalizedDecisionMat = Normalizations.dividebycolumnmaxminnormalization(decisionMat, fns)
+ 
 
     # scores = w * normalizedDecisionMat |> rowsums
     scores = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
