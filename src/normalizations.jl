@@ -78,9 +78,11 @@ function inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
     return NormalizeMatrix
 end 
 
+
 function dividebyallnormnormalization(mat::Matrix, fns)
     return mat ./ sqrt(sum(mat .* mat))
 end 
+
 
 
 end #end of module Normalizations 

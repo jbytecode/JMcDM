@@ -81,7 +81,7 @@ Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluatio
 function marcos(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
+    fns::Array{F,1}
 )::MarcosResult where {F<:Function}
 
     # df = convert(Matrix, decisionMat)
@@ -115,7 +115,7 @@ function marcos(
         end
     end
 
-    #S  = zeros(Float64, col)
+
     S = zeros(zerotype, row + 2)
 
     for i = 1:row+2
