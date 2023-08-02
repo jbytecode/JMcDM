@@ -76,7 +76,8 @@ function saw(
     decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1},
-)::SawResult where {F<:Function}
+    normalization::G = Normalizations.dividebycolumnmaxminnormalization
+)::SawResult where {F<:Function, G<:Function}
 
     n, p = size(decisionMat)
 
@@ -86,7 +87,7 @@ function saw(
     zerotype = eltype(decisionMat)
 
 
-    normalizedDecisionMat = Normalizations.dividebycolumnmaxminnormalization(decisionMat, fns)
+    normalizedDecisionMat = normalization(decisionMat, fns)
  
 
     # scores = w * normalizedDecisionMat |> rowsums

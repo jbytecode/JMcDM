@@ -62,6 +62,10 @@ function maxminrangenormalization(data::Matrix, fns)::Matrix
 end 
 
 
+"""
+    inversemaxminrangenormalization(data::Matrix, fns)::Matrix
+
+"""
 function inversemaxminrangenormalization(data::Matrix, fns)::Matrix 
     A = similar(data)
 

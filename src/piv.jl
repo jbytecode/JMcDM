@@ -3,6 +3,8 @@ module PIV
 export piv, PIVResult, PIVMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -47,10 +49,12 @@ https://doi.org/10.1016/j.cie.2018.03.045.
 function piv(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::PIVResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.vectornormnormalization
+)::PIVResult where {F<:Function, G<:Function}
 
-    normalized_dec_mat = Utilities.normalize(decisionMat)
+    normalized_dec_mat = normalization(decisionMat, fns)
+    
     weighted_norm_mat = Utilities.weightise(normalized_dec_mat, weights)
 
     nrow, ncol = size(weighted_norm_mat)

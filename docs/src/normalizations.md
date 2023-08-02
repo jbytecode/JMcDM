@@ -31,6 +31,12 @@ JMcDM.Normalizations.dividebycolumnsumnormalization
 JMcDM.Normalizations.maxminrangenormalization
 ```
 
+## Inverse Max-Min Range Normalization (max->min, min->max)
+```@docs 
+JMcDM.Normalizations.inversemaxminrangenormalization
+```
+
+
 ## Divide by Column Maximum-Minimum Normalization
 ```@docs
 JMcDM.Normalizations.dividebycolumnmaxminnormalization
@@ -45,5 +51,6 @@ JMcDM.Normalizations.inversedividebycolumnmaxminnormalization
 ```@docs
 JMcDM.Normalizations.dividebyallnormnormalization
 ```
+
 
 
