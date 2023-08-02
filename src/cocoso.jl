@@ -3,6 +3,8 @@ module COCOSO
 export cocoso, CocosoMethod, CoCoSoResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -92,27 +94,15 @@ function cocoso(
     decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization,
     lambda::Float64 = 0.5,
-)::CoCoSoResult where {F<:Function}
+)::CoCoSoResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
     w = unitize(weights)
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
+    
 
-    A = similar(decisionMat)
-
-    for i = 1:row
-        for j = 1:col
-            if fns[j] == maximum
-                @inbounds A[i, j] =
-                    (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
-            elseif fns[j] == minimum
-                @inbounds A[i, j] =
-                    (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
-            end
-        end
-    end
+    A = normalization(decisionMat, fns)
 
     scoreMat = similar(A)
     for i = 1:col
