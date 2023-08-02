@@ -3,6 +3,8 @@ module MOOSRA
 export moosra, MoosraMethod, MoosraResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -71,8 +73,9 @@ International Journal of Applied Decision Sciences 5.2 (2012): 142-162.
 function moosra(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MoosraResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.dividebyallnormnormalization
+)::MoosraResult where {F<:Function, G<:Function}
 
     mincounts = count(x -> x == minimum, fns)
     if mincounts < 1
@@ -85,7 +88,9 @@ function moosra(
     dmat = Matrix(decisionMat)
     zerotype = eltype(dmat[1, :])
 
-    normalizedDecisionMat = dmat ./ sqrt(sum(dmat .* dmat))
+    # normalizedDecisionMat = dmat ./ sqrt(sum(dmat .* dmat))
+    normalizedDecisionMat = normalization(dmat, fns)
+
     w = unitize(weights)
 
     weightedNormalizedMatrix = similar(normalizedDecisionMat)
