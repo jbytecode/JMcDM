@@ -70,14 +70,14 @@ function normalize(v1::Vector)::Vector
     return v1 ./ euclidean(v1)
 end
 
-function normalize(data::Matrix)::Matrix
+function normalize(data::Matrix)::Matrix 
     df = similar(data)
     _, p = size(df)
     for i = 1:p
         df[:, i] = normalize(data[:, i])
     end
     return df
-end
+end 
 
 
 function apply_columns(fs::Array{F,1}, data) where {F<:Function}
