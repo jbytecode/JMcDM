@@ -27,7 +27,7 @@ end
 
 
 """
-        vikor(decisionMat, weights, fns; v = 0.5)
+        vikor(decisionMat, weights, fns; v = 0.5, normalization)
 
 Apply VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian) method for a given matrix and weights.
 
@@ -36,6 +36,7 @@ Apply VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian) me
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `v::Float64`: Optional algorithm parameter. Default is 0.5.
+ - `normalization{<:Function}`: Optional normalization function. Default is Normalizations.inversemaxminrangenormalization.
 
 # Description 
 vikor() applies the VIKOR method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.

@@ -26,7 +26,7 @@ WaspasMethod()::WaspasMethod = WaspasMethod(0.5)
 
 
 """
-        waspas(decisionMat, weights, fns; lambda = 0.5)
+        waspas(decisionMat, weights, fns; lambda = 0.5, normalization)
 
 Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix and weights.
 
@@ -35,6 +35,7 @@ Apply WASPAS (Weighted Aggregated Sum Product ASsessment ) for a given matrix an
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
+ - `normalization{<:Function}`: Normalization function. Default is Normalizations.dividebycolumnmaxminnormalization.
 
 # Description 
 waspas() applies the WASPAS method to rank n alterntives subject to m criteria which are supposed to be 

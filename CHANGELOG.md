@@ -1,5 +1,6 @@
 ### 0.7.7 (Upcoming release)
 
+- Update documentation to method which takes optional normalization argument.
 
 ### 0.7.6
 

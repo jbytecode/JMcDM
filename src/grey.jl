@@ -29,7 +29,7 @@ end
 
 
 """
-        grey(decisionMat, weights, fs; zeta)
+        grey(decisionMat, weights, fs; zeta, normalization)
 
     Perform GRA (Grey Relational Analysis) for a given decision matrix and weights.
 
@@ -38,6 +38,7 @@ end
  - `weights::Array{Float64, 1}`: m-vector of weights for criteria.
  - `fs::Array{Function, 1}`: m-vector of functions that are either maximize or minimize for each single criterion.
  - `zeta::Float64`: zeta parameter for the algorithm. The default is 0.5.
+ - `normalization{<:Function}`: Optional normalization function.
  
 # Description 
 Applies GRA (Grey Relational Analysis).

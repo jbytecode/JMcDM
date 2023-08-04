@@ -20,7 +20,7 @@ end
 
 
 """
-        moosra(decisionMat, weights, fns; lambda = 0.5)
+        moosra(decisionMat, weights, fns; lambda = 0.5, normalization)
 
 Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) for a given matrix and weights.
 
@@ -28,6 +28,7 @@ Apply MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis
  - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
+ - `normalization{<:Function}`: Optional normalization function.
 
 
 # Description 

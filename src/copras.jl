@@ -22,13 +22,14 @@ end
 
 
 """
-    copras(decisionMat, weights, fs)
+    copras(decisionMat, weights, fs; normalization)
 Apply COPRAS (COmplex PRoportional ASsesment) method for a given matrix, weights and, type of criteria.
 
 # Arguments:
  - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fs::Array{<:Function,1}`: m-vector of type of criteria. The benefit criteria shown with "maximum", and the cost criteria shown with "minimum".
+ - `normalization{<:Function}`: Optional normalization function.
 
  # Description 
 copras() applies the COPRAS method to rank n alternatives subject to m criteria and criteria type vector.

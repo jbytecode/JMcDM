@@ -27,7 +27,7 @@ end
 
 
 """
-        topsis(decisionMat, weights, fns)
+        topsis(decisionMat, weights, fns; normalization)
 
 Apply TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method 
 for a given matrix and weights.
@@ -36,6 +36,7 @@ for a given matrix and weights.
  - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either minimize or maximize.
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 topsis() applies the TOPSIS method to rank n strategies subject to m criteria which are supposed to be either maximized or minimized.

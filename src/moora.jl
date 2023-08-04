@@ -31,7 +31,7 @@ end
 
 
 """
-        moora_ref(decisionMat, weights, fns)
+        moora_ref(decisionMat, weights, fns; normalization)
 
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
@@ -39,6 +39,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
  - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 moora() applies the MOORA method to rank n strategies subject to m criteria which are supposed to be 

@@ -19,13 +19,14 @@ end
 
 
 """
-        sd(decisionMat, fns)
+        sd(decisionMat, fns; normalization)
 
 Apply SD method for a given matrix and directions of optimization.
 
 # Arguments:
  - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 sd() applies the SD method to calculate weights for a set of given criteria.

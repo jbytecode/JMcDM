@@ -22,7 +22,7 @@ end
 
 
 """
-        rov(decisionMat, weights, fns)
+        rov(decisionMat, weights, fns; normalization)
 
 Apply ROV (Range of Value) for a given matrix and weights.
 
@@ -30,6 +30,7 @@ Apply ROV (Range of Value) for a given matrix and weights.
  - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns (directions of optimization). 
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 rov() applies the ROV method to rank n alternatives subject to m criteria which are supposed to be 

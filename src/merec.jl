@@ -20,13 +20,14 @@ end
 
 
 """
-merec(decisionMat, fns)
+merec(decisionMat, fns; normalization)
 
 Apply MEREC (MEthod based on the Removal Effects of Criteria) for a given matrix and criteria types.
 
 # Arguments:
  - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 merec() applies the MEREC method to calculate weights using a decision matrix with  
