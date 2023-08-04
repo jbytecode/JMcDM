@@ -1,6 +1,7 @@
 ### 0.7.7 (Upcoming release)
 
 - Update documentation to method which takes optional normalization argument.
+- Add optional normalization to SECA method.
 
 ### 0.7.6
 

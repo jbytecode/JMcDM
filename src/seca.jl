@@ -1,6 +1,8 @@
 module SECA
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
+
 using ..Utilities
 
 using ..JuMP, ..Ipopt
@@ -20,7 +22,7 @@ end
 
 
 """
-    seca(decisionMat::Matrix, fns::Array{F,1}, beta::Float64; epsilon::Float64=10^-3)::SECAResult where {F<:Function}
+    seca(decisionMat, fns:, beta; epsilon, normalization)
 
 Implement the SECA method for multi-criteria decision making.
 
@@ -28,7 +30,8 @@ Implement the SECA method for multi-criteria decision making.
 - `decisionMat::Matrix`: A matrix of decision criteria.
 - `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
 - `beta::Float64`: This coefficient affects the importance of reaching the reference points of criteria weights. Note that the output of model is dependent on the value of beta. It's recommended to try several values untill you barely see any change in the weights of each criterion.
-- `epsilon::Float64=10^-3`: a small positive parameter considered as a lower bound for criteria weights.
+- `epsilon::Float64 = 10^-3`: a small positive parameter considered as a lower bound for criteria weights.
+- `normalization{<:Function}`: Optional normalization function.
 
 # Description
 seca implements the SECA method for multi-criteria decision making and finds the weights
@@ -79,7 +82,8 @@ function seca(
     fns::Array{F,1},
     beta::Float64;
     epsilon::Float64 = 10^-3,
-)::SECAResult where {F<:Function}
+    normalization::G = Normalizations.groupeddividebymaxminnormalization
+)::SECAResult where {F<:Function, G<:Function}
 
     @assert beta ≥ 0 "beta should be greater than or equal to zero."
     @assert length(fns) == size(decisionMat, 2) "The number of functions should be equal to the number of criteria in the decision matrix."
@@ -89,16 +93,18 @@ function seca(
     n, m = size(decisionMat)
 
     # Amatrix construction
-    Amat = similar(decisionMat)
-    max_idx, min_idx = fns .== maximum, fns .== minimum
-    # Normalize the decision matrix based on the concept of BC and NC
+    #Amat = similar(decisionMat)
+    #max_idx, min_idx = fns .== maximum, fns .== minimum
+    ## Normalize the decision matrix based on the concept of BC and NC
+#
+    #if !all(iszero, max_idx)
+    #    Amat[:, max_idx] .= decisionMat[:, max_idx] ./ maximum(decisionMat[:, max_idx])
+    #end
+    #if !all(iszero, min_idx)
+    #    Amat[:, min_idx] .= minimum(decisionMat[:, min_idx]) ./ decisionMat[:, min_idx]
+    #end
+    Amat = Normalizations.groupeddividebymaxminnormalization(decisionMat, fns)
 
-    if !all(iszero, max_idx)
-        Amat[:, max_idx] .= decisionMat[:, max_idx] ./ maximum(decisionMat[:, max_idx])
-    end
-    if !all(iszero, min_idx)
-        Amat[:, min_idx] .= minimum(decisionMat[:, min_idx]) ./ decisionMat[:, min_idx]
-    end
 
     # Calculate σᴺ and πᴺ
     σⱼ = map(eachcol(Amat)) do col

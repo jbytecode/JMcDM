@@ -114,6 +114,29 @@ function dividebycolumnmaxminnormalization(mat::Matrix, fns)
 end 
 
 
+"""
+    groupeddividebymaxminnormalization(mat::Matrix, fns)
+
+    Default normalization method for seca.
+"""
+function groupeddividebymaxminnormalization(mat::Matrix, fns)
+    Amat = similar(mat)
+
+    max_idx, min_idx = fns .== maximum, fns .== minimum
+    
+    # Normalize the decision matrix based on the concept of BC and NC
+
+    if !all(iszero, max_idx)
+        Amat[:, max_idx] .= mat[:, max_idx] ./ maximum(mat[:, max_idx])
+    end
+
+    if !all(iszero, min_idx)
+        Amat[:, min_idx] .= minimum(mat[:, min_idx]) ./ mat[:, min_idx]
+    end
+
+    return Amat
+end 
+
 
 """
     inversedividebycolumnmaxminnormalization(mat::Matrix, fns)
