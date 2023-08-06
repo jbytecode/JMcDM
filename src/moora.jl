@@ -170,24 +170,18 @@ function moora_ratio(
     fns::Array{F,1};
     normalization::G = Normalizations.vectornormnormalization
 )::MooraResult where {F<:Function, G<:Function}
-    w = unitize(weights)
+    
+w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
+   
+    weightednormalizedMat = similar(decisionMat)
 
-    mat = Matrix(decisionMat)
-    
-    #normalizedMatrix = similar(mat)
-    
-    weightednormalizedMat = similar(mat)
+    zerotype = eltype(decisionMat)
 
-    zerotype = eltype(mat)
+    normalizedMatrix = normalization(decisionMat, fns)
 
-    normalizedMatrix = normalization(mat, fns)
-
-    for i = 1:ncriteria
-        #normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
-        weightednormalizedMat[:, i] = normalizedMatrix[:, i] .* w[i]
-    end
+    weightednormalizedMat = Utilities.weightise(normalizedMatrix, w)
 
     scores = zeros(zerotype, nalternatives)
 

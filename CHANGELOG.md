@@ -1,7 +1,11 @@
-### 0.7.7 (Upcoming release)
+### 0.7.8 (Upcoming release)
+
+
+### 0.7.7
 
 - Update documentation to method which takes optional normalization argument.
 - Add optional normalization to SECA method.
+- Add optional normalization to Moora ref and ratio methods.
 
 ### 0.7.6
 
