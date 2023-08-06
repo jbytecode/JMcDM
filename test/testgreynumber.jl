@@ -20,6 +20,10 @@
         @test 5 - GreyNumber(2, 3) == GreyNumber(2, 3)
     end
 
+    @testset "Negative operator - Unary minus" begin 
+        @test -GreyNumber(1, 2) == GreyNumber(-2, -1)
+    end 
+
     @testset "Asterix operator" begin
         @test GreyNumber(1, 2) * GreyNumber(3, 4) == GreyNumber(3, 8)
         @test GreyNumber(2, 3) * -1 == GreyNumber(-3, -2)

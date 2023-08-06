@@ -2,7 +2,7 @@
 
 - Add normalization option to WPM method
 - XYZMethod() now defines the default normalization for the possible copeland calls.
-
+- Test code coverage increased.
 
 ### 0.7.7
 

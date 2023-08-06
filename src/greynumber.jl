@@ -113,8 +113,6 @@ end
 function Base.:≤(g1::GreyNumber, g2::GreyNumber)::Bool
     if g1.a <= g2.a
         return true
-    elseif g1.a == g2.a
-        return g1.b <= g2.b
     else
         return false
     end
@@ -133,8 +131,6 @@ end
 function Base.:≥(g1::GreyNumber, g2::GreyNumber)::Bool
     if g1.a >= g2.a
         return true
-    elseif g1.a == g2.a
-        return g1.b >= g2.b
     else
         return false
     end

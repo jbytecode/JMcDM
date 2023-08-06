@@ -284,4 +284,35 @@
         @test result["Copeland"] == [3, 1, -1, -3]
     end
 
+
+    @testset "Copeland with method names - 2" begin
+        decmat = hcat(
+            [1.0, 2, 3, 4],
+            [5.0, 6, 7, 8],
+            [10.0, 11, 12, 13],
+            [20.0, 30, 40, 360]
+        )
+
+        weights = [0.25, 0.25, 0.25, 0.25]
+        fns = [maximum, maximum, maximum, minimum]
+
+        met = [
+            TopsisMethod(),
+            ArasMethod(),
+            CocosoMethod(),
+            CodasMethod(),
+            CoprasMethod(),
+            EdasMethod(),
+            MabacMethod(),
+            MaircaMethod(),
+            MarcosMethod(),
+            MooraMethod(),
+            MoosraMethod()
+        ]
+
+        result = copeland(decmat, weights, fns, met)
+
+        @test result["Copeland"] == [3, 1, -3, -1]
+    end
+
 end

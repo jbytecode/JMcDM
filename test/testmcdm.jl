@@ -511,6 +511,12 @@
 
     end
 
+    @testset "AHP - RI" begin 
+        @test iszero(ahp_RI(1))
+        @test iszero(ahp_RI(2))
+        @test ahp_RI(16) == 1.59
+    end 
+
 
     @testset "AHP - Consistency" begin
 
