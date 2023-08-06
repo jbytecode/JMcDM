@@ -95,7 +95,6 @@ function moora_ref(
 
     nalternatives, ncriteria = size(decisionMat)
 
-    # normalizedMat = normalize(decisionMat)
     normalizedMat = normalization(decisionMat, fns)
 
     weightednormalizedMat = Utilities.weightise(normalizedMat, w)
@@ -106,22 +105,6 @@ function moora_ref(
 
     refmat = similar(weightednormalizedMat)
 
-    #=
-    # This implementation is buggy and will be removed 
-    # in later releases. 
-    # note: the problem is fns[rowind] is non-sense
-    # because fns are due to columns not rows.
-    for rowind in 1:nalternatives
-        if fns[rowind] == maximum 
-            refmat[rowind, :] .= cmaxs - weightednormalizedMat[rowind, :]
-        elseif fns[rowind] == minimum
-            refmat[rowind, :] .= weightednormalizedMat[rowind, :] - cmins
-        else
-            @warn fns[rowind]
-            error("Function must be either maximize or minimize")
-        end
-    end
-    =#
 
     for rowind = 1:nalternatives
         for colind = 1:ncriteria
@@ -158,7 +141,7 @@ end
 
 
 """
-        moora_ratio(decisionMat, weights, fns)
+        moora_ratio(decisionMat, weights, fns, normalization)
 
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
@@ -166,6 +149,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
  - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
+ - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
 moora() applies the MOORA method to rank n strategies subject to m criteria which are supposed to be 
@@ -183,20 +167,25 @@ and MULTI-MOORA methods." Alphanumeric Journal 4.1 (2016): 17-26.
 function moora_ratio(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::MooraResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.vectornormnormalization
+)::MooraResult where {F<:Function, G<:Function}
     w = unitize(weights)
 
     nalternatives, ncriteria = size(decisionMat)
 
     mat = Matrix(decisionMat)
-    normalizedMatrix = similar(mat)
+    
+    #normalizedMatrix = similar(mat)
+    
     weightednormalizedMat = similar(mat)
 
     zerotype = eltype(mat)
 
+    normalizedMatrix = normalization(mat, fns)
+
     for i = 1:ncriteria
-        normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
+        #normalizedMatrix[:, i] = mat[:, i] ./ sqrt(sum(mat[:, i] .^ 2.0))
         weightednormalizedMat[:, i] = normalizedMatrix[:, i] .* w[i]
     end
 
@@ -231,7 +220,7 @@ end
 
 
 """
-        moora_ratio(decisionMat, weights, fns; method = :reference)
+        moora_ratio(decisionMat, weights, fns; method = :reference, normalization)
 
 Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given matrix and weights.
 
@@ -240,6 +229,7 @@ Apply MOORA (Multi-Objective Optimization By Ratio Analysis) method for a given 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of function that are either maximum or minimum.
  - `method::Symbol`: Either `:reference` or `:ratio`. By default, it is `:reference`.
+ - `normalization{<:Function}`: Optional normalization function.
 
 
 # Description 
@@ -266,11 +256,12 @@ function moora(
     weights::Array{Float64,1},
     fns::Array{F,1};
     method::Symbol = :reference,
-)::MooraResult where {F<:Function}
+    normalization::G = Normalizations.vectornormnormalization
+)::MooraResult where {F<:Function, G<:Function}
     if method == :reference
-        return moora_ref(decisionMat, weights, fns)
+        return moora_ref(decisionMat, weights, fns, normalization = normalization)
     elseif method == :ratio
-        return moora_ratio(decisionMat, weights, fns)
+        return moora_ratio(decisionMat, weights, fns, normalization = normalization)
     else
         @error "Method not found: " method
         @error "Moora is defined for methods :reference and :ratio"
