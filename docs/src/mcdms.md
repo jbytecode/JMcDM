@@ -132,6 +132,16 @@ JMcDM.merec
 JMcDM.piv
 ```
 
+## PSI
+```@docs
+JMcDM.psi
+```
+
+## ROV
+```@docs
+JMcDM.rov
+```
+
 ## SECA
 ```@docs
 JMcDM.seca
