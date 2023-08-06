@@ -142,6 +142,16 @@ JMcDM.psi
 JMcDM.rov
 ```
 
+## MOOSRA
+```@docs
+JMcDM.moosra
+```
+
+## SD
+```@docs
+JMcDM.sd
+```
+
 ## SECA
 ```@docs
 JMcDM.seca
