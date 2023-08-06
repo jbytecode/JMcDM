@@ -9,7 +9,11 @@ using ..Utilities
 
 
 
-struct CoprasMethod <: MCDMMethod end
+struct CoprasMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+CoprasMethod() = CoprasMethod(Normalizations.dividebycolumnsumnormalization)
 
 struct COPRASResult <: MCDMResult
     decisionMatrix::Matrix

@@ -18,7 +18,11 @@ struct MAIRCAResult <: MCDMResult
 end
 
 
-struct MaircaMethod <: MCDMMethod end
+struct MaircaMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+MaircaMethod() = MaircaMethod(Normalizations.maxminrangenormalization)
 
 
 """

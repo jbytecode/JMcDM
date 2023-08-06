@@ -9,8 +9,11 @@ using ..Utilities
 
 
 
-struct CriticMethod <: MCDMMethod end
+struct CriticMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
 
+CriticMethod() = CriticMethod(Normalizations.maxminrangenormalization)
 
 struct CRITICResult <: MCDMResult
     decisionMatrix::Matrix

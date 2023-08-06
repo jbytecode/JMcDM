@@ -8,7 +8,11 @@ using ..Utilities
 
 
 
-struct ArasMethod <: MCDMMethod end
+struct ArasMethod <: MCDMMethod 
+    normalization::G where {G<: Function}
+end
+
+ArasMethod() = ArasMethod(Normalizations.dividebycolumnsumnormalization)
 
 struct ARASResult <: MCDMResult
     referenceRow::Vector

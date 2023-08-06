@@ -1,5 +1,8 @@
 ### 0.7.8 (Upcoming release)
 
+- Add normalization option to WPM method
+- XYZMethod() now defines the default normalization for the possible copeland calls.
+
 
 ### 0.7.7
 

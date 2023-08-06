@@ -8,7 +8,11 @@ export TopsisMethod, TopsisResult, topsis
 
 
 
-struct TopsisMethod <: MCDMMethod end
+struct TopsisMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+TopsisMethod() = TopsisMethod(Normalizations.vectornormnormalization)
 
 struct TopsisResult <: MCDMResult
     decisionMatrix::Matrix

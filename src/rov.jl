@@ -9,7 +9,11 @@ using ..Utilities
 
 
 
-struct ROVMethod <: MCDMMethod end
+struct ROVMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+ROVMethod() = ROVMethod(Normalizations.maxminrangenormalization)
 
 struct ROVResult <: MCDMResult
     uminus::Vector

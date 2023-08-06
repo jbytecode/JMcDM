@@ -1,13 +1,19 @@
 module WPM
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
-using ..Utilities
 
+import ..Normalizations
+
+using ..Utilities
 
 
 export WPMMethod, WPMResult, wpm
 
-struct WPMMethod <: MCDMMethod end
+struct WPMMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+WPMMethod() = WPMMethod(Normalizations.dividebycolumnmaxminnormalization)
 
 struct WPMResult <: MCDMResult
     decisionMatrix::Matrix
@@ -30,6 +36,7 @@ Apply WPM (Weighted Product Method) for a given matrix and weights.
  - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `normalization{<:Function}`: Optional normalization function. 
 
 # Description 
 wpm() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
@@ -77,35 +84,38 @@ Zavadskas, E. K., Turskis, Z., Antucheviciene, J., & Zakarevicius, A. (2012). Op
 function wpm(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1},
-)::WPMResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.dividebycolumnmaxminnormalization
+)::WPMResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
 
     zerotype = eltype(decisionMat)
 
-    normalizedDecisionMat = similar(decisionMat)
     w = unitize(weights)
 
-    colminmax = zeros(zerotype, col)
+    normalizedDecisionMat = normalization(decisionMat, fns)
+    #@inbounds for i = 1:col
+    #    colminmax[i] = decisionMat[:, i] |> fns[i]
+    #    if fns[i] == maximum
+    #        normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
+    #    elseif fns[i] == minimum
+    #        normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
+    #    end
+    #end
 
-    @inbounds for i = 1:col
-        colminmax[i] = decisionMat[:, i] |> fns[i]
-        if fns[i] == maximum
-            normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-        elseif fns[i] == minimum
-            normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-        end
-    end
     scoreMat = similar(normalizedDecisionMat)
+
     for i = 1:col
         scoreMat[:, i] = normalizedDecisionMat[:, i] .^ w[i]
     end
 
     scores = zeros(zerotype, row)
+
     for i = 1:row
         scores[i] = prod(scoreMat[i, :])
     end
+
     rankings = sortperm(scores)
 
     bestIndex = rankings |> last

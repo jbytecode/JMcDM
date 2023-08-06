@@ -9,7 +9,11 @@ using ..Utilities
 
 
 
-struct MoosraMethod <: MCDMMethod end
+struct MoosraMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+MoosraMethod() = MoosraMethod(Normalizations.dividebyallnormnormalization)
 
 struct MoosraResult <: MCDMResult
     scores::Vector

@@ -18,7 +18,11 @@ struct PSIResult <: MCDMResult
     bestIndex::Int
 end
 
-struct PSIMethod <: MCDMMethod end
+struct PSIMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+PSIMethod() = PSIMethod(Normalizations.dividebycolumnmaxminnormalization)
 
 
 

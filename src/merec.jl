@@ -9,7 +9,11 @@ using ..Utilities
 
 
 
-struct MERECMethod <: MCDMMethod end
+struct MERECMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+MERECMethod() = MERECMethod(Normalizations.inversedividebycolumnmaxminnormalization)
 
 
 struct MERECResult <: MCDMResult

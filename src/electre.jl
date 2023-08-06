@@ -22,7 +22,11 @@ struct ElectreResult <: MCDMResult
     bestIndex::Tuple
 end
 
-struct ElectreMethod <: MCDMMethod end
+struct ElectreMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+ElectreMethod() = ElectreMethod(Normalizations.vectornormnormalization)
 
 
 

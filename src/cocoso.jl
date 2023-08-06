@@ -11,9 +11,10 @@ using ..Utilities
 
 struct CocosoMethod <: MCDMMethod
     lambda::Float64
+    normalization::G where {G<:Function}
 end
 
-CocosoMethod()::CocosoMethod = CocosoMethod(0.5)
+CocosoMethod()::CocosoMethod = CocosoMethod(0.5, Normalizations.maxminrangenormalization)
 
 struct CoCoSoResult <: MCDMResult
     decisionMatrix::Matrix

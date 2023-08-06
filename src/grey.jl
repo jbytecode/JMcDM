@@ -12,9 +12,10 @@ using ..Utilities
 
 struct GreyMethod <: MCDMMethod
     zeta::Float64
+    normalization::G where {G <: Function}
 end
 
-GreyMethod()::GreyMethod = GreyMethod(0.5)
+GreyMethod()::GreyMethod = GreyMethod(0.5, Normalizations.maxminrangenormalization)
 
 struct GreyResult <: MCDMResult
     referenceRow::Array{Float64,1}

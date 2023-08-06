@@ -22,7 +22,11 @@ struct MABACResult <: MCDMResult
 end
 
 
-struct MabacMethod <: MCDMMethod end
+struct MabacMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+MabacMethod() = MabacMethod(Normalizations.maxminrangenormalization)
 
 
 """

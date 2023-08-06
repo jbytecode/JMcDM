@@ -12,10 +12,11 @@ using ..Utilities
 # method is either :reference or :ratio
 struct MooraMethod <: MCDMMethod
     method::Symbol
+    normalization::G where {G <: Function}
 end
 
 
-MooraMethod()::MooraMethod = MooraMethod(:ratio)
+MooraMethod()::MooraMethod = MooraMethod(:ratio, Normalizations.vectornormnormalization)
 
 struct MooraResult <: MCDMResult
     mooraType::Symbol

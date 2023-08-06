@@ -9,7 +9,11 @@ export saw, SawResult, SawMethod
 
 
 
-struct SawMethod <: MCDMMethod end
+struct SawMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+SawMethod() = SawMethod(Normalizations.dividebycolumnmaxminnormalization)
 
 struct SawResult <: MCDMResult
     decisionMatrix::Matrix

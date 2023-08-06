@@ -20,9 +20,10 @@ end
 
 struct CodasMethod <: MCDMMethod
     tau::Float64
+    normalization::G where {G<:Function}
 end
 
-CodasMethod()::CodasMethod = CodasMethod(0.02)
+CodasMethod()::CodasMethod = CodasMethod(0.02, Normalizations.dividebycolumnmaxminnormalization)
 
 
 

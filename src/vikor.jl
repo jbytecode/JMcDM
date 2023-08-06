@@ -8,9 +8,10 @@ using ..Utilities
 
 struct VikorMethod <: MCDMMethod
     v::Float64
+    normalization::G where {G <: Function}
 end
 
-VikorMethod()::VikorMethod = VikorMethod(0.5)
+VikorMethod()::VikorMethod = VikorMethod(0.5, Normalizations.inversemaxminrangenormalization)
 
 struct VikorResult <: MCDMResult
     decisionMatrix::Matrix

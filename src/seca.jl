@@ -9,7 +9,11 @@ using ..JuMP, ..Ipopt
 
 export seca, SECAResult, SECAMethod
 
-struct SECAMethod <: MCDMMethod end
+struct SECAMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
+
+SECAMethod() = SECAMethod(Normalizations.groupeddividebymaxminnormalization)
 
 struct SECAResult <: MCDMResult
     decisionMatrix::Matrix
@@ -92,18 +96,8 @@ function seca(
     ϵ = epsilon
     n, m = size(decisionMat)
 
-    # Amatrix construction
-    #Amat = similar(decisionMat)
-    #max_idx, min_idx = fns .== maximum, fns .== minimum
-    ## Normalize the decision matrix based on the concept of BC and NC
-#
-    #if !all(iszero, max_idx)
-    #    Amat[:, max_idx] .= decisionMat[:, max_idx] ./ maximum(decisionMat[:, max_idx])
-    #end
-    #if !all(iszero, min_idx)
-    #    Amat[:, min_idx] .= minimum(decisionMat[:, min_idx]) ./ decisionMat[:, min_idx]
-    #end
-    Amat = Normalizations.groupeddividebymaxminnormalization(decisionMat, fns)
+
+    Amat = normalization(decisionMat, fns)
 
 
     # Calculate σᴺ and πᴺ

@@ -19,9 +19,10 @@ end
 
 struct WaspasMethod <: MCDMMethod
     lambda::Float64
+    normalization::G where {G <: Function}
 end
 
-WaspasMethod()::WaspasMethod = WaspasMethod(0.5)
+WaspasMethod()::WaspasMethod = WaspasMethod(0.5, Normalizations.dividebycolumnmaxminnormalization)
 
 
 

@@ -19,8 +19,11 @@ struct PIVResult <: MCDMResult
     bestIndex::Int64
 end
 
-struct PIVMethod <: MCDMMethod end
+struct PIVMethod <: MCDMMethod 
+    normalization::G where {G <: Function}
+end
 
+PIVMethod() = PIVMethod(Normalizations.vectornormnormalization)
 
 
 """
