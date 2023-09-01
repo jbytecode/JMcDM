@@ -40,7 +40,20 @@
         Test.@test_throws ErrorException GreyNumber(1, 1) / GreyNumber(0, 0)
     end
 
+    @testset "isnan" begin 
+        @test isnan(GreyNumber(NaN64, NaN64))
+        @test isnan(GreyNumber(0.0, NaN64))
+        @test isnan(GreyNumber(NaN64, 0.0))
+    end 
+
+    @testset "isfinite" begin 
+        @test isfinite(GreyNumber(1.0))
+        @test isfinite(GreyNumber(1.0, 5.0))
+        @test !isfinite(GreyNumber(Inf64))
+    end 
+
     @testset "one and ones" begin
+        @test one(GreyNumber(10.0)) == GreyNumber(1.0, 1.0) 
         @test one(GreyNumber) == GreyNumber(1.0, 1.0)
         @test ones(GreyNumber, 2) == [GreyNumber(1), GreyNumber(1)]
         @test ones(GreyNumber, (2, 2)) ==
@@ -159,4 +172,13 @@
         @test g[2] <= 1.0
         @test g[2] >= 0.0
     end
+
+    @testset "System of equations" begin 
+        a = [GreyNumber(1.0) GreyNumber(1.0); GreyNumber(1.0) GreyNumber(2.0)]
+        b = [GreyNumber(10.0), GreyNumber(25.0)]
+        result = a \ b 
+        @test result == GreyNumber[
+            GreyNumber(GreyNumber(-5.0, -5.0), GreyNumber(-5.0, -5.0)), 
+            GreyNumber(GreyNumber(15.0, 15.0), GreyNumber(15.0, 15.0))]
+    end 
 end

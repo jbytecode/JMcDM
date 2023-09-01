@@ -265,6 +265,10 @@ function Base.one(::Type{GreyNumber})
     return GreyNumber(1.0, 1.0)
 end
 
+function Base.one(::GreyNumber)
+    return GreyNumber(1.0, 1.0)
+end 
+
 
 function Base.ones(::Type{GreyNumber}, n::Int)::Array{GreyNumber,1}
     gs = Array{GreyNumber,1}(undef, n)
@@ -350,6 +354,14 @@ function Base.rand(::Type{GreyNumber}, n::Integer, m::Integer)::Array{GreyNumber
     end
     return gs
 end
+
+function Base.isnan(g::GreyNumber)::Bool
+    return isnan(g.a) || isnan(g.b)
+end 
+
+function Base.isfinite(g::GreyNumber)::Bool 
+    return isfinite(g.a) || isfinite(g.b)
+end 
 
 
 
