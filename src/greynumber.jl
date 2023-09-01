@@ -363,10 +363,22 @@ function Base.isfinite(g::GreyNumber)::Bool
 	return isfinite(g.a) || isfinite(g.b)
 end
 
+function simplify(n::Number)
+	return n
+end 
+
+function simplify(g::GreyNumber)::Union{Number, GreyNumber}
+	if g.a == g.b 
+		return simplify(g.a)
+	else 
+		return g
+	end 
+end 
+
 
 export GreyNumber
 export kernel
 export whitenizate
-
+export simplify
 
 end # module

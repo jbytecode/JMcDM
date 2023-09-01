@@ -1,9 +1,13 @@
-### 0.7.8 (Upcoming release)
+### 0.7.9 (Upcoming release)
+
+
+### 0.7.8
 
 - Add normalization option to WPM method
 - XYZMethod() now defines the default normalization for the possible copeland calls.
 - Test code coverage increased.
 - Added isfinite(), isnan(), one() for GreyNumber.
+- Added simplify() for GreyNumber.
 
 ### 0.7.7
 

@@ -181,4 +181,19 @@
 			GreyNumber(GreyNumber(-5.0, -5.0), GreyNumber(-5.0, -5.0)),
 			GreyNumber(GreyNumber(15.0, 15.0), GreyNumber(15.0, 15.0))]
 	end
+
+	@testset "Simplify" begin 
+		@testset "Simplify matrix" begin 
+		v = GreyNumber[
+			GreyNumber(GreyNumber(-5.0, -5.0), GreyNumber(-5.0, -5.0)),
+			GreyNumber(GreyNumber(15.0, 15.0), GreyNumber(15.0, 15.0))]
+		result = simplify.(v)
+		
+		@test result == [-5.0, 15.0]
+		end 
+
+		@testset "Simplify basic" begin 
+			@test simplify(GreyNumber(5.0, 5.0)) == 5.0
+		end 
+	end 
 end
