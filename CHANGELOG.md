@@ -1,4 +1,8 @@
-### 0.7.9 (Upcoming release)
+### 0.7.10 (Upcoming release)
+
+
+
+### 0.7.9
 
 - Add LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting) method for automatic calculation of weights.
 
