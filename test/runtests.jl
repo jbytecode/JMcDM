@@ -1,12 +1,10 @@
 using Test
 
-
 using JuMP, Ipopt, JMcDM
 
 import JMcDM.Game: game
 import JMcDM.DataEnvelop: dataenvelop
 import JMcDM.SECA: seca
-
 
 const testGreyNumbers = true
 const testUtilityFunctions = true
@@ -16,18 +14,15 @@ const testLPBasedFunctions = true
 const testGreyMCDMFunctions = true
 const testSummary = true
 
-
 if testGreyNumbers
     @info "Grey Numbers tests ..."
     include("./testgreynumber.jl")
 end
 
-
 if testUtilityFunctions
     @info "Utility tests ..."
     include("./testutility.jl")
 end
-
 
 if testSCDMFunctions
     @info "SCDM tests ..."

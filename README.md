@@ -126,8 +126,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
 - PIV (Proximity Indexed Value) method
 - SECA (Simultaneous Evaluation of Criteria and Alternatives)
-
-
+- LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
 
 ### SCDM Tools
 
@@ -144,7 +143,6 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 ### Game
 
 - Game solver for zero sum games
-
 
 ## Unimplemented methods
 - UTA
