@@ -29,6 +29,7 @@ julia> subtypes(MCDMMethod)
  EdasMethod
  ElectreMethod
  GreyMethod
+ LOPCOWMethod
  MERECMethod
  MabacMethod
  MaircaMethod
@@ -106,6 +107,8 @@ function mcdm(
         # psi method does not use weights
         psi(df, fns)
     elseif method isa MERECMethod
+        merec(df, fns)
+    elseif method isa LOPCOWMethod
         merec(df, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)

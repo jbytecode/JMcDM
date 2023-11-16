@@ -30,10 +30,6 @@ function __init__()
     end
 end
 
-
-
-
-
 # Abstract Types 
 abstract type MCDMResult end
 abstract type SCDMResult end
@@ -86,7 +82,6 @@ struct MCDMSetting
     fns::Array{F,1} where {F<:Function}
 end
 
-
 # includes 
 include("greynumber.jl")
 include("utilities.jl")
@@ -117,6 +112,7 @@ include("codas.jl")
 include("psi.jl")
 include("moosra.jl")
 include("merec.jl")
+include("lopcow.jl")
 
 include("summary.jl")
 
@@ -127,9 +123,6 @@ include("rov.jl")
 include("piv.jl")
 
 include("copeland.jl")
-
-
-
 
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
@@ -161,7 +154,7 @@ import .Entropy: entropy, EntropyResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
-
+import .LOPCOW: lopcow, LOPCOWResult, LOPCOWMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -202,7 +195,7 @@ export MoosraMethod
 export ROVMethod
 export MERECMethod
 export PIVMethod
-
+export LOPCOWMethod
 
 export MCDMSetting
 
@@ -236,8 +229,7 @@ export PSIResult
 export MoosraResult
 export MERECResult
 export PIVResult
-
-
+export LOPCOWResult
 
 #  export SCDM types
 export SCDMResult
@@ -250,8 +242,6 @@ export SavageResult
 export HurwiczResult
 export MLEResult
 export ExpectedRegretResult
-
-
 
 
 # export utility functions
@@ -292,7 +282,7 @@ export psi
 export moosra
 export merec
 export piv
-
+export lopcow
 
 #  export SCDM tools
 export laplace
@@ -304,8 +294,6 @@ export savage
 export hurwicz
 export mle
 export expectedregret
-
-
 
 #  export summary function
 export summary
