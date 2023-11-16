@@ -109,7 +109,7 @@ function mcdm(
     elseif method isa MERECMethod
         merec(df, fns)
     elseif method isa LOPCOWMethod
-        merec(df, fns)
+        lopcow(df, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)
     else
