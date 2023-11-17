@@ -113,6 +113,7 @@ include("psi.jl")
 include("moosra.jl")
 include("merec.jl")
 include("lopcow.jl")
+include("ocra.jl")
 
 include("summary.jl")
 
@@ -155,6 +156,7 @@ import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
 import .LOPCOW: lopcow, LOPCOWResult, LOPCOWMethod
+import .OCRA: ocra, OCRAResult, OCRAMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -196,6 +198,8 @@ export ROVMethod
 export MERECMethod
 export PIVMethod
 export LOPCOWMethod
+export OCRAMethod
+
 
 export MCDMSetting
 
@@ -230,6 +234,7 @@ export MoosraResult
 export MERECResult
 export PIVResult
 export LOPCOWResult
+export OCRAResult
 
 #  export SCDM types
 export SCDMResult
@@ -283,6 +288,7 @@ export moosra
 export merec
 export piv
 export lopcow
+export ocra
 
 #  export SCDM tools
 export laplace
