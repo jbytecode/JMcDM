@@ -94,39 +94,40 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 
 ### MCDM Tools
 
-- TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
-- ELECTRE (Elimination and Choice Translating Reality)
-- DEMATEL (The Decision Making Trial and Evaluation Laboratory)
-- MOORA Reference (Multi-Objective Optimization By Ratio Analysis)
-- MOORA Ratio
-- VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
 - AHP (Analytic Hierarchy Process)
-- DEA (Data Envelopment Analysis)
-- GRA (Grey Relational Analysis)
-- Non-dominated Sorting 
-- SAW (Simple Additive Weighting) (aka WSM)
 - ARAS (Additive Ratio Assessment)
-- WPM (Weighted Product Model)
-- WASPAS (Weighted Aggregated Sum Product ASsessment)
-- EDAS (Evaluation based on Distance from Average Solution)
-- MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
-- MABAC (Multi-Attributive Border Approximation area Comparison)
-- MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
-- COPRAS (COmplex PRoportional ASsessment)
-- PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)
 - CoCoSo (Combined Compromise Solution)
-- CRITIC (CRiteria Importance Through Intercriteria Correlation)
-- Entropy
 - CODAS (COmbinative Distance-based ASsessment)
 - Copeland (For combining multiple ordering results)
-- SD Method for determining weights of criteria
-- ROV (Range of Value) Method
-- PSI (Preference Selection Index) Method
-- MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) Method
-- MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
-- PIV (Proximity Indexed Value) method
-- SECA (Simultaneous Evaluation of Criteria and Alternatives)
+- COPRAS (COmplex PRoportional ASsessment)
+- CRITIC (CRiteria Importance Through Intercriteria Correlation)
+- DEA (Data Envelopment Analysis)
+- DEMATEL (The Decision Making Trial and Evaluation Laboratory)
+- EDAS (Evaluation based on Distance from Average Solution)
+- ELECTRE (Elimination and Choice Translating Reality)
+- Entropy
+- GRA (Grey Relational Analysis)
 - LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
+- MABAC (Multi-Attributive Border Approximation area Comparison)
+- MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
+- MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
+- MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
+- MOORA Ratio
+- MOORA Reference (Multi-Objective Optimization By Ratio Analysis)
+- MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) Method
+- Non-dominated Sorting
+- OCRA (Operational Competitiveness RAting) 
+- PIV (Proximity Indexed Value) method
+- PROMETHEE (Preference Ranking Organization METHod for Enrichment of Evaluations)
+- PSI (Preference Selection Index) Method
+- ROV (Range of Value) Method
+- SAW (Simple Additive Weighting) (aka WSM)
+- SD Method for determining weights of criteria
+- SECA (Simultaneous Evaluation of Criteria and Alternatives)
+- TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
+- VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
+- WASPAS (Weighted Aggregated Sum Product ASsessment)
+- WPM (Weighted Product Model)
 
 ### SCDM Tools
 
@@ -145,18 +146,18 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - Game solver for zero sum games
 
 ## Unimplemented methods
-- UTA
-- MAUT
-- STEM
-- PAPRIKA
 - ANP (Analytical Network Process)
+- COMET
 - Goal Programming
 - MACBETH
-- COMET
-- SWARA
+- MAUT
 - ORESTE
+- PAPRIKA
 - SMAA
+- STEM
+- SWARA
 - TODIM
+- UTA
 
 - will be updated soon. 
 

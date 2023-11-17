@@ -36,6 +36,7 @@ julia> subtypes(MCDMMethod)
  MarcosMethod
  MooraMethod
  MoosraMethod
+ OCRAMethod
  PIVMethod
  PSIMethod
  PrometheeMethod
@@ -110,6 +111,8 @@ function mcdm(
         merec(df, fns)
     elseif method isa LOPCOWMethod
         lopcow(df, fns)
+    elseif method isa OCRAMethod
+        ocra(df, w, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)
     else
