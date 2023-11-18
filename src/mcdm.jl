@@ -29,23 +29,24 @@ julia> subtypes(MCDMMethod)
  EdasMethod
  ElectreMethod
  GreyMethod
+ LMAWMethod
  LOPCOWMethod
- MERECMethod
  MabacMethod
  MaircaMethod
  MarcosMethod
+ MERECMethod
  MooraMethod
  MoosraMethod
  OCRAMethod
  PIVMethod
- PSIMethod
  PrometheeMethod
+ PSIMethod
  ROVMethod
  SawMethod
  TopsisMethod
  VikorMethod
- WPMMethod
  WaspasMethod
+ WPMMethod
 
 
 julia> # mcdm() for Topsis:
@@ -113,6 +114,8 @@ function mcdm(
         lopcow(df, fns)
     elseif method isa OCRAMethod
         ocra(df, w, fns)
+    elseif method isa OCRAMethod
+        lmaw(df, w, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)
     else
