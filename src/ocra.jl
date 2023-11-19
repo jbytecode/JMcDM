@@ -14,10 +14,12 @@ struct OCRAResult <: MCDMResult
     bestIndex::Int64
 end
 
+struct OCRAMethod <: MCDMMethod end
+
 """
     ocra(decisionMat, weights, fns)
 
-Apply ORCA (Operational Competitiveness RAting) for a given matrix and weights.
+Apply OCRA (Operational Competitiveness RAting) for a given matrix and weights.
 
 # Arguments:
  - `decisionMat::Matrix`: m × n matrix of objective values for n alternatives and m criteria 
@@ -78,7 +80,6 @@ julia> result.scores
 
 julia> result.bestIndex
 7
-
 ```
 
 # References
@@ -86,7 +87,6 @@ julia> result.bestIndex
 - Parkan, C. (1994). Operational competitiveness ratings of production units. Managerial and Decision Economics, 15(3), 201–221. doi:10.1002/mde.4090150303 
 - Parkan, C. (2003). Measuring the effect of a new point of sale system on the performance of drugstore operations. Computers & Operations Research, 30(5), 729–744. doi:10.1016/s0305-0548(02)00047-3 
 - Kundakcı, N. (2017). An Integrated Multi-Criteria Decision Making Approach for Tablet Computer Selection. European Journal of Multidisciplinary Studies, 2(5), 31-43.
-
 """
 function ocra(
     decisionMat::Matrix,
