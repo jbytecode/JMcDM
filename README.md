@@ -107,6 +107,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - ELECTRE (Elimination and Choice Translating Reality)
 - Entropy
 - GRA (Grey Relational Analysis)
+- LMAW (Logarithm Methodology of Additive Weights)
 - LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
 - MABAC (Multi-Attributive Border Approximation area Comparison)
 - MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)

@@ -114,6 +114,7 @@ include("moosra.jl")
 include("merec.jl")
 include("lopcow.jl")
 include("ocra.jl")
+include("lmaw.jl")
 
 include("summary.jl")
 
@@ -157,6 +158,7 @@ import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
 import .LOPCOW: lopcow, LOPCOWResult, LOPCOWMethod
 import .OCRA: ocra, OCRAResult, OCRAMethod
+import .LMAW: lmaw, LMAWResult, LMAWMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -199,6 +201,7 @@ export MERECMethod
 export PIVMethod
 export LOPCOWMethod
 export OCRAMethod
+export LMAWMethod
 
 
 export MCDMSetting
@@ -235,6 +238,7 @@ export MERECResult
 export PIVResult
 export LOPCOWResult
 export OCRAResult
+export LMAWResult
 
 #  export SCDM types
 export SCDMResult
@@ -289,6 +293,7 @@ export merec
 export piv
 export lopcow
 export ocra
+export lmaw
 
 #  export SCDM tools
 export laplace
