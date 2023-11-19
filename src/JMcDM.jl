@@ -171,7 +171,6 @@ import .Utilities: *
 using .Utilities
 
 # export imported functions
-export DataFrame
 export Utilities
 
 # export MCDM methods
