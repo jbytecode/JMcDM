@@ -1,5 +1,6 @@
 ### 0.7.10 (Upcoming release)
 
+- Add LMAW (Logarithm Methodology of Additive Weights) for new MCDM tool.
 
 
 ### 0.7.9

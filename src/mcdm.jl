@@ -114,7 +114,7 @@ function mcdm(
         lopcow(df, fns)
     elseif method isa OCRAMethod
         ocra(df, w, fns)
-    elseif method isa OCRAMethod
+    elseif method isa LMAWMethod
         lmaw(df, w, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)
