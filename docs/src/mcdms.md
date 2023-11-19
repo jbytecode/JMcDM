@@ -157,3 +157,20 @@ JMcDM.sd
 JMcDM.seca
 ```
 
+## OCRA 
+```@docs
+JMcDM.ocra
+```
+
+## OCRA
+```@docs
+JMcDM.ocra
+```
+
+## LOPCOW
+```@docs
+JMcDM.lopcow
+```
+
+
+
