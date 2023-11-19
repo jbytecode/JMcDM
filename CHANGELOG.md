@@ -1,7 +1,10 @@
-### 0.7.10 (Upcoming release)
+### 0.7.11 (Upcoming release)
 
-- Add LMAW (Logarithm Methodology of Additive Weights) for new MCDM tool.
 
+### 0.7.10 
+
+- Add LMAW (Logarithm Methodology of Additive Weights) as a new MCDM tool.
+- add OCRA (Operational Competitiveness RAting)  a new MCDM tool.
 
 ### 0.7.9
 
