@@ -157,14 +157,10 @@ JMcDM.sd
 JMcDM.seca
 ```
 
-## OCRA 
-```@docs
-JMcDM.ocra
-```
 
-## OCRA
+## LMAW
 ```@docs
-JMcDM.ocra
+JMcDM.lmaw
 ```
 
 ## LOPCOW
