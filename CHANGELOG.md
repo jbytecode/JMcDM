@@ -1,5 +1,10 @@
-### 0.7.11 (Upcoming release)
+### 0.7.12 (Upcoming release)
 
+
+
+### 0.7.11
+
+- ARAS, EDAS, and WASPAS results are now holding more inner-calculation results.
 
 ### 0.7.10 
 

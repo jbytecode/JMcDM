@@ -12,6 +12,8 @@ struct WASPASResult <: MCDMResult
     decisionMatrix::Matrix
     normalizedDecisionMatrix::Matrix
     weights::Array{Float64,1}
+    scoresWPM::Vector
+    scoresWSM::Vector
     scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
@@ -132,7 +134,15 @@ function waspas(
     bestIndex = rankings |> last
 
     result =
-        WASPASResult(decisionMat, normalizedDecisionMat, w, scores, rankings, bestIndex)
+        WASPASResult(
+            decisionMat, 
+            normalizedDecisionMat,
+            w, 
+            scoresWPM, 
+            scoresWSM,
+            scores, 
+            rankings, 
+            bestIndex)
 
     return result
 end

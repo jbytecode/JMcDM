@@ -4,6 +4,8 @@ module ARAS
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
 import ..Normalizations
 
+import ..Utilities: weightise
+
 using ..Utilities
 
 
@@ -18,6 +20,7 @@ struct ARASResult <: MCDMResult
     referenceRow::Vector
     extendMat::Matrix
     normalizedMat::Matrix
+    weightedNormalizedMat::Matrix
     optimalitydegrees::Vector
     scores::Vector
     orderings::Array{Int64,1}
@@ -100,6 +103,7 @@ function aras(
     end
 
     normalizedMat = normalization(extendMat, fs)
+    weightednormalizedmatrix = weightise(normalizedMat, w)
     
 
     optimality_degrees = Vector(undef, nrows + 1)
@@ -119,6 +123,7 @@ function aras(
         referenceRow,
         extendMat,
         normalizedMat,
+        weightednormalizedmatrix,
         optimality_degrees,
         utility_degrees,
         orderings,

@@ -3,6 +3,9 @@ module EDAS
 export edas, EdasMethod, EDASResult
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+
+import ..Utilities: weightise
+
 using ..Utilities
 
 
@@ -12,6 +15,12 @@ struct EdasMethod <: MCDMMethod end
 struct EDASResult <: MCDMResult
     decisionMatrix::Matrix
     weights::Array{Float64,1}
+    NDAMatrix::Matrix 
+    PDAMatrix::Matrix
+    weightedNDAMatrix::Matrix
+    weightedPDAMatrix::Matrix
+    SN::Vector 
+    SP::Vector
     scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
@@ -116,6 +125,10 @@ function edas(
         end
     end
 
+    weightedPDAMatrix = weightise(PDAMatrix, w)
+    weightedNDAMatrix = weightise(NDAMatrix, w)
+
+
     SP = zeros(eltype(df), row)
     SN = zeros(eltype(df), row)
 
@@ -133,7 +146,18 @@ function edas(
 
     bestIndex = rankings |> last
 
-    result = EDASResult(decisionMat, w, scores, rankings, bestIndex)
+    result = EDASResult(
+        decisionMat, 
+        w,
+        NDAMatrix,
+        PDAMatrix,
+        weightedNDAMatrix,
+        weightedPDAMatrix,
+        SN,
+        SP, 
+        scores, 
+        rankings, 
+        bestIndex)
 
     return result
 end
