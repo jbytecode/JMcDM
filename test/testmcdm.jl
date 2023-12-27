@@ -1572,5 +1572,11 @@
             ],
             atol = tol,
         )
+
+        # Including minimum function
+        fns = [maximum, maximum, minimum]
+        result2 = todim(decisionMat, weights, fns)
+        @test result2 isa TODIMResult
+        
     end
 end
