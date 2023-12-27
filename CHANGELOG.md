@@ -1,5 +1,6 @@
 ### 0.7.12 (Upcoming release)
 
+- Implementation of TODIM method as a new MCDM tool.
 
 
 ### 0.7.11
