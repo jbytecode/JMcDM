@@ -13,15 +13,6 @@ struct TODIMResult <: MCDMResult
     bestIndex::Int64
 end
 
-function Base.show(io::IO, result::TODIMResult)
-  println(io, "Scores:")
-  println(io, result.scores)
-  println(io, "Ordering: ")
-  println(io, result.ranking)
-  println(io, "Best indice:")
-  println(io, result.bestIndex)
-end
-
 """
     AMatConstructor(decisionMat::Matrix, fns::Array{F,1})::Matrix where {F<:Function}
 
