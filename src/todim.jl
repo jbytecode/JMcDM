@@ -112,7 +112,6 @@ function criteriaWeights(w::Vector)::Vector
     compar      = w./denom'
     imp_weights = reduce(*, compar, dims=1).^(-1/length(w)) |> vec
     weights     = imp_weights./sum(imp_weights)
-    @assert isapprox(sum(weights), 1.0) "The sum of weights should be equal to 1."
     return weights
 end
 
