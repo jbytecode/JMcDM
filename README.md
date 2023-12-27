@@ -36,7 +36,7 @@ Please type
 
 ```julia
 julia> ]
-(@v1.7) pkg> add JMcDM
+(@v1.10) pkg> add JMcDM
 ```
 
 or
@@ -51,7 +51,7 @@ and type
 
 ```julia
 julia> ]
-(@v1.7) pkg> develop .
+(@v1.10) pkg> develop .
 ``` 
 
 to start developing new methods.
