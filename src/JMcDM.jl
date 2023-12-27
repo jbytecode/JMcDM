@@ -5,7 +5,7 @@ module JMcDM
 using Requires
 
 
-# Modules Game, DataEnvelop, and SECA are activated 
+# Modules Game, DataEnvelop, and SECA are activated
 # whenever the JuMP and Ipopt packages are required
 # manually by the user.
 export game, dataenvelop
@@ -30,13 +30,13 @@ function __init__()
     end
 end
 
-# Abstract Types 
+# Abstract Types
 abstract type MCDMResult end
 abstract type SCDMResult end
 abstract type MCDMMethod end
 
 """
-    struct MCDMSetting 
+    struct MCDMSetting
         df::Matrix
         weights::Array{Float64, 1}
         fns::Array{Function, 1}
@@ -49,11 +49,11 @@ abstract type MCDMMethod end
 - `weights::Array{Float64,1}`: Array of weights for each criterion.
 - `fns::Array{<:Function, 1}`: Array of functions. The elements are either minimum or maximum.
 
-# Description 
+# Description
 Many methods including Topsis, Electre, Waspas, etc., use a decision matrix, weights, and directions
 of optimizations in types of Matrix and Vector, respectively. The type MCDMSetting simply
 holds these information to pass them into methods easly. Once a MCDMSetting object is created, the problem
-can be passed into several methods like topsis(setting), electre(setting), waspas(setting), etc.  
+can be passed into several methods like topsis(setting), electre(setting), waspas(setting), etc.
 
 # Examples
 
@@ -82,7 +82,7 @@ struct MCDMSetting
     fns::Array{F,1} where {F<:Function}
 end
 
-# includes 
+# includes
 include("greynumber.jl")
 include("utilities.jl")
 include("normalizations.jl")
@@ -115,6 +115,7 @@ include("merec.jl")
 include("lopcow.jl")
 include("ocra.jl")
 include("lmaw.jl")
+include("todim.jl")
 
 include("summary.jl")
 
@@ -159,6 +160,7 @@ import .PIV: piv, PIVResult, PIVMethod
 import .LOPCOW: lopcow, LOPCOWResult, LOPCOWMethod
 import .OCRA: ocra, OCRAResult, OCRAMethod
 import .LMAW: lmaw, LMAWResult, LMAWMethod
+import .TODIM: todim, TODIMResult, TODIMMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -201,6 +203,7 @@ export PIVMethod
 export LOPCOWMethod
 export OCRAMethod
 export LMAWMethod
+export TODIMMethod
 
 
 export MCDMSetting
@@ -238,6 +241,7 @@ export PIVResult
 export LOPCOWResult
 export OCRAResult
 export LMAWResult
+export TODIMResult
 
 #  export SCDM types
 export SCDMResult
@@ -293,6 +297,7 @@ export piv
 export lopcow
 export ocra
 export lmaw
+export todim
 
 #  export SCDM tools
 export laplace

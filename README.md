@@ -129,6 +129,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
 - WASPAS (Weighted Aggregated Sum Product ASsessment)
 - WPM (Weighted Product Model)
+- TODIM (the Portuguese acronym for multicriteria, interactive decision-making)
 
 ### SCDM Tools
 
@@ -157,7 +158,6 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - SMAA
 - STEM
 - SWARA
-- TODIM
 - UTA
 
 - will be updated soon. 

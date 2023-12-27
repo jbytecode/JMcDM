@@ -2,13 +2,13 @@
 
     @testset "mcdm() with default method" begin
         tol = 0.00001
-        
+
         mat = hcat(
             Float64[9, 8, 7],
             Float64[7, 7, 8],
             Float64[6, 9, 6],
             Float64[7, 6, 6])
-        
+
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
@@ -234,8 +234,8 @@
         Float64[7, 7, 8],
         Float64[6, 9, 6],
         Float64[7, 6, 6])
-        
-        
+
+
         w = Float64[4, 2, 6, 8]
 
         fns = [maximum, maximum, maximum, maximum]
@@ -375,7 +375,7 @@
         @testset "MOORA Ratio" begin
             """
             Reference for the example:
-            KUNDAKCI, Nilsen. "Combined multi-criteria decision making approach based on MACBETH 
+            KUNDAKCI, Nilsen. "Combined multi-criteria decision making approach based on MACBETH
             and MULTI-MOORA methods." Alphanumeric Journal 4.1 (2016): 17-26.
             """
             tol = 0.001
@@ -508,11 +508,11 @@
 
     end
 
-    @testset "AHP - RI" begin 
+    @testset "AHP - RI" begin
         @test iszero(ahp_RI(1))
         @test iszero(ahp_RI(2))
         @test ahp_RI(16) == 1.59
-    end 
+    end
 
     @testset "AHP - Consistency" begin
 
@@ -1424,7 +1424,7 @@
       @test result.bestIndex == 1
       @test isapprox(result.scores, [0.86004480, 0.83316666, 0.83316666], atol = tol)
     end
-    
+
     @testset "LOPCOW" begin
         tol = 0.0001
         decmat = [
@@ -1547,5 +1547,36 @@
         result2 = lmaw(setting)
         @test result2 isa LMAWResult
         @test result2.scores == result.scores
+    end
+
+    @testset "TODIM" begin
+        tol = 0.0001
+        decisionMat = [
+          10  11  12
+          7   8   9
+          4   5   6
+          1   2   3
+        ]
+        weights = fill(1/3, 3)
+        fns = [maximum, maximum, maximum]
+
+        result = todim(decisionMat, weights, fns)
+        @test result isa TODIMResult
+        @test isapprox(
+            result.scores,
+            [
+              1.0,
+              0.75,
+              0.375,
+              0.0
+            ],
+            atol = tol,
+        )
+
+        # Including minimum function
+        fns = [maximum, maximum, minimum]
+        result2 = todim(decisionMat, weights, fns)
+        @test result2 isa TODIMResult
+        
     end
 end
