@@ -227,6 +227,11 @@ Ordering:
 Best indice:
 7
 ```
+
+# References
+1. Gomes, L. F. A. M., & Lima, M. M. P. P. (1991). TODIMI: Basics and application to multicriteria ranking. Found. Comput. Decis. Sci, 16(3-4), 1-16.
+
+2. Alali, F., & Tolga, A. C. (2019). Portfolio allocation with the TODIM method. Expert Systems with Applications, 124, 341-348.
 """
 function todim(
     decisionMat::Matrix,
