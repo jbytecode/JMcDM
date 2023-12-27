@@ -174,4 +174,7 @@ JMcDM.lopcow
 JMcDM.ocra
 ```
 
-
+## TODIM
+```@docs
+JMcDM.todim
+```
