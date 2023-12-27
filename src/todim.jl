@@ -1,5 +1,6 @@
 module TODIM
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+import ..Normalizations
 
 export TODIMMethod, TODIMResult, todim
 
@@ -82,57 +83,6 @@ function AMatConstructor(decisionMat::Matrix, fns::Array{F,1})::Matrix where {F<
 end
 
 """
-    normalizedAMatrix!(AMatrix::Matrix)::Matrix where {F<:Function}
-
-Apply min max normalization to the A matrix using the following formula:
-``N_{ij} = \\frac{A_{ij} - min(A_j)}{max(A_j) - min(A_j)}``
-
-# Arguments
-- `AMatrix::Matrix`: A matrix of decision criteria that is comprised of values in the range \
-of 1 to 10.
-
-# Returns
-- `Matrix`: A matrix of decision criteria that is comprised of values in the range of 0 to 1.
-
-# Example
-```julia
-julia> mat = [
-           1.0     0.9925;
-           0.8696  0.8271;
-           0.7391  0.8684;
-           0.5217  0.7895;
-           0.6522  0.9135;
-           0.6087  0.8346;
-           0.913   0.185
-       ];
-
-julia> fns = [maximum, minimum];
-
-julia> foo = AMatConstructor(mat, fns);
-
-julia> bar = normalizedAMatrix!(foo)
-7×2 Matrix{Float64}:
- 1.0       0.0
- 0.666667  0.666667
- 0.555556  0.333333
- 0.0       0.888889
- 0.333333  0.222222
- 0.222222  0.555556
- 0.888889  1.0
-```
-"""
-function normalizedAMatrix!(AMatrix::Matrix)::Matrix
-    n, m     = size(AMatrix)
-    for j in 1:m
-        max_ = maximum(AMatrix[:,j])
-        min_ = minimum(AMatrix[:,j])
-        # Apply min max normalization
-        AMatrix[:,j] .= (AMatrix[:,j] .- min_)./(max_ .- min_)
-    end
-    return AMatrix
-end
-
-"""
     criteriaWeights!(w::Vector)::Vector
 
 Evaluate the importance of each criterion using AHP approach.
@@ -195,13 +145,15 @@ julia> w2 = criteriaWeights(w);
 
 julia> A = AMatConstructor(mat, [maximum, minimum]);
 
-julia> normalizedAMatrix!(A);
+julia> using JMcDM.Normalizations
+
+julia> A = Normalizations.maxminrangenormalization(A, [maximum, minimum]);
 
 julia> dominanceEvaluator(A, w2)
 3×3 Matrix{Float64}:
-  0.0       0.885714   0.542857
- -0.885714  0.0       -0.342857
- -0.542857  0.342857   0.0
+  0.0       -0.714286  -0.142857
+  0.714286   0.0        0.571429
+  0.142857  -0.571429   0.0
 ```
 """
 function dominanceEvaluator(AMatrix::Matrix, aᵣ::Vector)::Matrix
@@ -244,6 +196,10 @@ in the columns and alternatives are in the rows.
 - `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as \
 `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
 
+## Keyword Arguments
+- `normalization{<:Function}`: Optional normalization function. Default is min-max \
+  normalization (available as `Normalizations.maxminrangenormalization`).
+
 # Returns
 - `TODIMResult`: A TODIMResult object that holds multiple outputs including scores and best \
 index.
@@ -276,11 +232,12 @@ Best indice:
 function todim(
     decisionMat::Matrix,
     weights::Array{<:Real,1},
-    fns::Array{F,1}
-) where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.maxminrangenormalization
+) where {F<:Function, G<:Function}
 
     AMatrix    = AMatConstructor(decisionMat, fns)
-    normalizedAMatrix!(AMatrix)
+    AMatrix    = normalization(AMatrix, fns)
     aᵣ         = criteriaWeights(weights)
     aDominance = dominanceEvaluator(AMatrix, aᵣ)
     scores     = rankEvaluator(aDominance)
