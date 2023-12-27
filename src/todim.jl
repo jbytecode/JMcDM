@@ -213,9 +213,6 @@ function dominanceEvaluator(AMatrix::Matrix, aᵣ::Vector)::Matrix
             break
         end
         for j in i+1:n
-            if i == j
-                continue
-            end
             aDominance[i,j] = sum((AMatrix[i,:] .- AMatrix[j,:]).*aᵣ)
         end
     end
