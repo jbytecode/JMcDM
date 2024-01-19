@@ -1,5 +1,8 @@
-### 0.7.13 (Upcoming release)
+### 0.7.14 (Upcoming release)
 
+### 0.7.13
+
+- Fix docstring of todim method (delete the special characters).
 
 ### 0.7.12 
 
