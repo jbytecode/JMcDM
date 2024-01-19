@@ -18,16 +18,16 @@ end
     AMatConstructor(decisionMat::Matrix, fns::Array{F,1})::Matrix where {F<:Function}
 
 Construct the A matrix for TODIM method.
-A matrix is a matrix of decision criteria that is comprised of values in the range of 1 to \
-10. `AMatConstructor` assigns a score of 10 to an alternative if the corresponding value of \
-alternative is among the top 10% of the values of that criterion and assigns a score of 9 \
-to an alternative if the corresponding value of alternative is among the top [80% 90%) of \
+A matrix is a matrix of decision criteria that is comprised of values in the range of 1 to 
+10. `AMatConstructor` assigns a score of 10 to an alternative if the corresponding value of 
+alternative is among the top 10% of the values of that criterion and assigns a score of 9 
+to an alternative if the corresponding value of alternative is among the top [80% 90%) of 
 the values of that criterion and so on.
 
 # Arguments
 - `decisionMat::Matrix`: A matrix of decision criteria. It's assumed that the criteria are
   in the columns and alternatives are in the rows.
-- `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as \
+- `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as 
 `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
 
 # Returns
@@ -48,7 +48,7 @@ julia> mat = [
 julia> fns = [maximum, minimum];
 
 julia> A = AMatConstructor(mat, fns)
-7×2 Matrix{Float64}:
+7x2 Matrix{Float64}:
  10.0   1.0
   7.0   7.0
   6.0   4.0
@@ -123,7 +123,7 @@ Evaluate the dominance of each alternative over the others using the following f
 If `δ(i,j) > 0`, then `i` dominates `j`. If `δ(i,j) < 0`, then `j` dominates `i`. If `δ(i,j) = 0`, then `i` and `j` are indifferent.
 
 # Arguments
-- `AMatrix::Matrix`: A matrix of decision criteria that is comprised of values in the range \
+- `AMatrix::Matrix`: A matrix of decision criteria that is comprised of values in the range 
 of 0 to 1.
 - `aᵣ::Vector`: A vector of relative weights of criteria.
 
@@ -149,7 +149,7 @@ julia> using JMcDM.Normalizations
 julia> A = Normalizations.maxminrangenormalization(A, [maximum, minimum]);
 
 julia> dominanceEvaluator(A, w2)
-3×3 Matrix{Float64}:
+3x3 Matrix{Float64}:
   0.0       -0.714286  -0.142857
   0.714286   0.0        0.571429
   0.142857  -0.571429   0.0
@@ -189,18 +189,18 @@ end
 Run TODIM method for a given desicion matrix, criteria weights and identity of criteria.
 
 # Arguments
-- `decisionMat::Matrix`: A matrix of decision criteria. It's assumed that the criteria are \
+- `decisionMat::Matrix`: A matrix of decision criteria. It's assumed that the criteria are 
 in the columns and alternatives are in the rows.
 - `weights::Vector`: A vector of weights of criteria.
-- `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as \
+- `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as 
 `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
 
 ## Keyword Arguments
-- `normalization{<:Function}`: Optional normalization function. Default is min-max \
+- `normalization{<:Function}`: Optional normalization function. Default is min-max 
   normalization (available as `Normalizations.maxminrangenormalization`).
 
 # Returns
-- `TODIMResult`: A TODIMResult object that holds multiple outputs including scores and best \
+- `TODIMResult`: A TODIMResult object that holds multiple outputs including scores and best 
 index.
 
 # Example
