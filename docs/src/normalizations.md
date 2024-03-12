@@ -56,5 +56,11 @@ JMcDM.Normalizations.inversedividebycolumnmaxminnormalization
 JMcDM.Normalizations.dividebyallnormnormalization
 ```
 
+## Null Normalization
+```@docs
+JMcDM.Normalizations.nullnormalization
+```
+
+
 
 
