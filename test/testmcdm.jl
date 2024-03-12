@@ -42,7 +42,7 @@
         @test isapprox(
             result.scores,
             [15.714285714285714, 20.499999999999996, 20.999999999999996, 39.0],
-            atol = tol,
+            atol=tol,
         )
 
         @test result.rankings == [1, 2, 3, 4]
@@ -75,7 +75,7 @@
         @test isapprox(
             [1.1487059780663555, 1.252775986851622, 1.0884916686098811],
             result.scores,
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, w, fns)
@@ -111,12 +111,12 @@
                 0.3640727272727273,
                 0.6560048841354725,
             ],
-            atol = tol,
+            atol=tol,
         )
         @test isapprox(
             result1.uplus,
             [0.03331764705882352, 0.0472, 0.06255882352941176, 0.029700000000000004],
-            atol = tol,
+            atol=tol,
         )
 
         @test isapprox(
@@ -127,7 +127,7 @@
                 0.21331577540106955,
                 0.34285244206773624,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         @test result1.ranks == [4, 2, 3, 1]
@@ -141,44 +141,68 @@
     end
 
     @testset "SD" begin
-        tol = 0.01
-        mat = [
-            391152 251165 2063102 912 18784 0.009 0.049 0.196
-            181681 118972 1310114 525 12087 0.009 0.042 0.157
-            156478 105801 993245 708 12279 0.01 0.041 0.177
-            57145 34707 339417 210 3733 0.013 0.055 0.268
-            34947 17568 340159 77 2015 0.014 0.043 0.204
-            32667 19308 201372 48 1091 0.008 0.029 0.217
-            28945 18033 117762 48 886 0.007 0.021 0.178
-            18893 13816 139431 35 943 0.01 0.035 0.213
-            18191 9088 47664 43 731 0.01 0.021 0.186
-            12852 4185 64770 3 376 0.011 0.075 0.285
-            10878 7107 11200 1 78 0.003 0.033 0.198
-            4958 1730 4656 7 274 0.017 0.053 0.215
-            3901 2318 15598 17 357 0.023 0.001 0.155
-            2742 1042 52632 1 106 0.022 0.1 0.384
-            1734 771 1894 1 33 0.011 0.125 0.709
-            1677 568 1941 1 39 0.011 0.129 0.633
-        ]
 
-        fns = [maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum]
+        @testset "SD with example" begin
+            tol = 0.01
+            mat = [
+                391152 251165 2063102 912 18784 0.009 0.049 0.196
+                181681 118972 1310114 525 12087 0.009 0.042 0.157
+                156478 105801 993245 708 12279 0.01 0.041 0.177
+                57145 34707 339417 210 3733 0.013 0.055 0.268
+                34947 17568 340159 77 2015 0.014 0.043 0.204
+                32667 19308 201372 48 1091 0.008 0.029 0.217
+                28945 18033 117762 48 886 0.007 0.021 0.178
+                18893 13816 139431 35 943 0.01 0.035 0.213
+                18191 9088 47664 43 731 0.01 0.021 0.186
+                12852 4185 64770 3 376 0.011 0.075 0.285
+                10878 7107 11200 1 78 0.003 0.033 0.198
+                4958 1730 4656 7 274 0.017 0.053 0.215
+                3901 2318 15598 17 357 0.023 0.001 0.155
+                2742 1042 52632 1 106 0.022 0.1 0.384
+                1734 771 1894 1 33 0.011 0.125 0.709
+                1677 568 1941 1 39 0.011 0.129 0.633
+            ]
 
-        result = sd(mat, fns)
+            fns = [maximum, maximum, maximum, minimum, minimum, minimum, maximum, maximum]
 
-        @test result isa SDResult
-        @test isapprox(
-            result.weights,
-            [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
-            atol = tol,
-        )
+            result = sd(mat, fns)
 
-        result1 = sd(mat, fns)
-        @test result1 isa SDResult
-        @test isapprox(
-            result1.weights,
-            [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
-            atol = tol,
-        )
+            @test result isa SDResult
+            @test isapprox(
+                result.weights,
+                [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
+                atol=tol,
+            )
+
+            result1 = sd(mat, fns)
+            @test result1 isa SDResult
+            @test isapprox(
+                result1.weights,
+                [0.116, 0.117, 0.125, 0.137, 0.133, 0.116, 0.125, 0.131],
+                atol=tol,
+            )
+        end
+
+
+        @testset "SD without normalization" begin
+            eps = 0.001
+            decmat = hcat(
+                [105000.0, 120000, 150000, 115000, 135000],
+                [105.0, 110, 120, 105, 115],
+                [10.0, 15, 12, 20, 15],
+                [4.0, 4, 3, 4, 5],
+                [300.0, 500, 550, 600, 400],
+                [10.0, 8, 12, 9, 9],
+            )
+            functionlist = [minimum, maximum, minimum, maximum, maximum, minimum]
+
+            sdresult = sd(decmat, functionlist, normalization=Normalizations.nullnormalization)
+            w = sdresult.weights
+
+            expected = [0.9925358892853197, 0.00036602915026898945, 0.0002123191795668205, 3.9701435571412785e-5, 0.006760910856275223, 8.515009299808652e-5]
+
+            @test isapprox(w, expected, atol=eps)
+        end
     end
 
     @testset "Grey Relational Analysis" begin
@@ -210,7 +234,7 @@
                 0.5762820512820512,
                 0.650952380952381,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         @test result.bestIndex == 2
@@ -230,10 +254,10 @@
     @testset "TOPSIS" begin
         tol = 0.00001
         decmat = hcat(
-        Float64[9, 8, 7],
-        Float64[7, 7, 8],
-        Float64[6, 9, 6],
-        Float64[7, 6, 6])
+            Float64[9, 8, 7],
+            Float64[7, 7, 8],
+            Float64[6, 9, 6],
+            Float64[7, 6, 6])
 
 
         w = Float64[4, 2, 6, 8]
@@ -244,7 +268,7 @@
 
         @test isa(result, TopsisResult)
         @test result.bestIndex == 2
-        @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol = tol)
+        @test isapprox(result.scores, [0.3876870, 0.6503238, 0.0834767], atol=tol)
 
         setting = MCDMSetting(decmat, w, fns)
         result2 = topsis(setting)
@@ -274,10 +298,10 @@
         @test isa(result, VikorResult)
         @test result.bestIndex == 4
 
-        @test isapprox(result.scores[1], 0.74, atol = tol)
-        @test isapprox(result.scores[2], 0.73, atol = tol)
-        @test isapprox(result.scores[3], 1.0, atol = tol)
-        @test isapprox(result.scores[4], 0.0, atol = tol)
+        @test isapprox(result.scores[1], 0.74, atol=tol)
+        @test isapprox(result.scores[2], 0.73, atol=tol)
+        @test isapprox(result.scores[3], 1.0, atol=tol)
+        @test isapprox(result.scores[4], 0.0, atol=tol)
 
         setting = MCDMSetting(Amat, w, fns)
         result2 = vikor(setting)
@@ -308,9 +332,9 @@
         @test isapprox(
             result.C,
             [0.36936937, 0.01501502, -2.47347347, 2.08908909],
-            atol = tol,
+            atol=tol,
         )
-        @test isapprox(result.D, [0.1914244, -0.1903929, 2.8843076, -2.8853391], atol = tol)
+        @test isapprox(result.D, [0.1914244, -0.1903929, 2.8843076, -2.8853391], atol=tol)
 
         setting = MCDMSetting(Amat, w, fns)
         result2 = electre(setting)
@@ -357,7 +381,7 @@
             @test isapprox(
                 result.scores,
                 [0.33159387, 0.29014464, 0.37304311, 0.01926526],
-                atol = tol,
+                atol=tol,
             )
 
             setting = MCDMSetting(Amat, w, fns)
@@ -403,18 +427,18 @@
                 178000 4.2 32 2 3 2 3 180 110
             ]
 
-            result = moora(mat, w, fns, method = :ratio)
+            result = moora(mat, w, fns, method=:ratio)
 
             @test result isa MooraResult
-            @test isapprox(0.13489413914936565, result.scores[1], atol = tol)
-            @test isapprox(0.11647832078367353, result.scores[2], atol = tol)
-            @test isapprox(0.0627565796439602, result.scores[3], atol = tol)
-            @test isapprox(0.06656348556629459, result.scores[4], atol = tol)
-            @test isapprox(0.06687625630547807, result.scores[5], atol = tol)
-            @test isapprox(0.10685768975933238, result.scores[6], atol = tol)
-            @test isapprox(0.03301387703317765, result.scores[7], atol = tol)
-            @test isapprox(0.06114965130074492, result.scores[8], atol = tol)
-            @test isapprox(0.031152492476171283, result.scores[9], atol = tol)
+            @test isapprox(0.13489413914936565, result.scores[1], atol=tol)
+            @test isapprox(0.11647832078367353, result.scores[2], atol=tol)
+            @test isapprox(0.0627565796439602, result.scores[3], atol=tol)
+            @test isapprox(0.06656348556629459, result.scores[4], atol=tol)
+            @test isapprox(0.06687625630547807, result.scores[5], atol=tol)
+            @test isapprox(0.10685768975933238, result.scores[6], atol=tol)
+            @test isapprox(0.03301387703317765, result.scores[7], atol=tol)
+            @test isapprox(0.06114965130074492, result.scores[8], atol=tol)
+            @test isapprox(0.031152492476171283, result.scores[9], atol=tol)
         end
     end
 
@@ -436,7 +460,7 @@
 
         result = dematel(K)
 
-        @test isapprox(result.threshold, 0.062945, atol = tol)
+        @test isapprox(result.threshold, 0.062945, atol=tol)
 
         @test isapprox(
             result.c,
@@ -452,7 +476,7 @@
                 0.5960514,
                 0.2937537,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         @test isapprox(
@@ -469,7 +493,7 @@
                 0.6484014,
                 0.5164858,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         @test isapprox(
@@ -486,7 +510,7 @@
                 1.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0
                 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0
             ],
-            atol = tol,
+            atol=tol,
         )
 
         @test isapprox(
@@ -503,7 +527,7 @@
                 0.092654758940811,
                 0.06250830916550884,
             ],
-            atol = tol,
+            atol=tol,
         )
 
     end
@@ -536,11 +560,11 @@
 
         @test result.isConsistent
 
-        @test isapprox(result.CR, 0.07359957154133831, atol = tol)
+        @test isapprox(result.CR, 0.07359957154133831, atol=tol)
 
-        @test isapprox(result.CI, 0.10377539587328702, atol = tol)
+        @test isapprox(result.CI, 0.10377539587328702, atol=tol)
 
-        @test isapprox(result.lambda_max, 8.72642777111301, atol = tol)
+        @test isapprox(result.lambda_max, 8.72642777111301, atol=tol)
 
         @test isapprox(
             result.pc,
@@ -554,7 +578,7 @@
                 8.946071053879708
                 8.62559534857526
             ],
-            atol = tol,
+            atol=tol,
         )
     end
 
@@ -634,7 +658,7 @@
         @test isapprox(
             result.scores,
             [0.2801050, 0.1482273, 0.3813036, 0.1903641],
-            atol = tol,
+            atol=tol,
         )
     end
 
@@ -701,7 +725,7 @@
             @test isapprox(
                 result.scores,
                 [0.681277, 0.725151, 0.709871, 0.784976],
-                atol = tol,
+                atol=tol,
             )
 
             result2 = saw(decmat, weights, fns)
@@ -711,7 +735,7 @@
             @test isapprox(
                 result2.scores,
                 [0.681277, 0.725151, 0.709871, 0.784976],
-                atol = tol,
+                atol=tol,
             )
 
         end
@@ -734,7 +758,7 @@
             @test isapprox(
                 result.scores,
                 [0.553228, 0.713485, 0.837428, 0.514657, 0.579342],
-                atol = tol,
+                atol=tol,
             )
             @test result.bestIndex == 3
             @test result.ranking == [3, 2, 5, 1, 4]
@@ -773,7 +797,7 @@
         @test isapprox(
             result.scores,
             [0.81424068, 0.89288620, 0.76415790, 0.84225462, 0.86540635],
-            atol = tol,
+            atol=tol,
         )
         @test result.bestIndex == 2
 
@@ -814,7 +838,7 @@
                 0.7873956894791,
                 0.7674278741782,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -850,7 +874,7 @@
         @test isapprox(
             result.scores,
             [0.805021, 0.775060, 0.770181, 0.796424, 0.788239],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -896,7 +920,7 @@
                 0.641691,
                 0.385194,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -932,7 +956,7 @@
         @test isapprox(
             result.scores,
             [0.684865943528, 0.672767106696, 0.662596906139, 0.661103207660],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, Fns)
@@ -969,7 +993,7 @@
         @test isapprox(
             result.scores,
             [-0.31132, -0.10898, 0.20035, 0.04218, 0.34452, 0.20035],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -1004,7 +1028,7 @@
         @test isapprox(
             result.scores,
             [0.1206454, 0.0806646, 0.1458627, 0.1454237],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -1112,7 +1136,7 @@
                 0.88253,
                 1.00000,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -1172,7 +1196,7 @@
             @test isapprox(
                 result.scores,
                 [0.07, -0.15, -0.06, -0.05, 0.10, 0.0, 0.03, 0.06],
-                atol = tol,
+                atol=tol,
             )
             @test result.bestIndex == 5
 
@@ -1208,7 +1232,7 @@
 
         fns = [maximum, minimum, maximum, maximum, maximum]
 
-        result = cocoso(decmat, weights, fns, lambda = lambda)
+        result = cocoso(decmat, weights, fns, lambda=lambda)
         @test result isa CoCoSoResult
         @test isapprox(
             result.scores,
@@ -1221,7 +1245,7 @@
                 1.4431429073391682,
                 2.519094173200623,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, weights, fns)
@@ -1251,7 +1275,7 @@
         @test isapprox(
             result.w,
             [0.16883925, 0.418444976, 0.249124763, 0.163591012],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, zeros(4), fns)
@@ -1289,7 +1313,7 @@
                 0.04776330969,
                 0.04776330969,
             ],
-            atol = tol,
+            atol=tol,
         )
 
     end
@@ -1323,7 +1347,7 @@
                 -1.17167677,
                 0.188656204,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, w, fns)
@@ -1357,7 +1381,7 @@
                 0.40156136388773117,
                 0.009120377734419302,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, zeros(4), fns)
@@ -1401,45 +1425,45 @@
                 0.43595371718873477,
                 0.3580651803072459,
             ],
-            atol = tol,
+            atol=tol,
         )
         @test result.bestIndex == 1
         @test result.ranking == [1, 3, 7, 2, 4, 6, 5]
     end
 
     @testset "SECA" begin
-      tol = 0.00001
-      decmat = hcat(
-        Float64[9, 8, 7],
-        Float64[7, 7, 8],
-        Float64[6, 9, 6],
-        Float64[7, 6, 6])
+        tol = 0.00001
+        decmat = hcat(
+            Float64[9, 8, 7],
+            Float64[7, 7, 8],
+            Float64[6, 9, 6],
+            Float64[7, 6, 6])
 
-      beta = 0.5
-      fns = [maximum, maximum, maximum, maximum]
+        beta = 0.5
+        fns = [maximum, maximum, maximum, maximum]
 
-      result = seca(decmat, fns, beta)
+        result = seca(decmat, fns, beta)
 
-      @test isa(result, SECAResult)
-      @test result.bestIndex == 1
-      @test isapprox(result.scores, [0.86004480, 0.83316666, 0.83316666], atol = tol)
+        @test isa(result, SECAResult)
+        @test result.bestIndex == 1
+        @test isapprox(result.scores, [0.86004480, 0.83316666, 0.83316666], atol=tol)
     end
 
     @testset "LOPCOW" begin
         tol = 0.0001
         decmat = [
-            21.8  14.1  10.7  1.6  1.8   770.0  12750.0  18.0   5100.0  1.5     9.1    1.054  4.196  29.407   7.03   15.08    9.705;
-            16.4   8.5  13.9  1.2  1.3   524.0  12087.0   5.7   2941.0  2.208  15.2    1.123  3.86    5.228  14.724  32.103  19.0;
-            14.5   7.0   2.3  0.2  0.2   238.0   3265.0   1.9    320.0  2.32   16.202  1.008  3.095   5.549  17.34   65.129  32.056;
-            18.2  10.3  11.4  1.2  1.1   835.0  16037.0  21.3   4332.0  0.875   9.484  0.856  2.191  23.75   13.1    58.157  27.46;
-            18.5   8.1  11.1  1.0  1.1   504.0   9464.0   1.4   1743.0  2.95    0.7    0.479  2.44    8.77   13.48   33.45   17.68;
-            18.7  11.4  10.8  1.3  1.5  1227.0  24053.0  20.0   6521.0  0.733   1.6    0.857  2.377   4.985  11.743  26.732  24.485;
-            18.5  12.6  10.8  1.4  1.8   912.0  18800.0  18.2   5300.0  1.29    8.27   0.558  0.635   5.22   13.829  31.914   7.515;
-            16.4   6.7  12.6  0.9  0.9   951.0  16767.0  22.0   3917.0  2.46    3.9    0.724  0.568   4.491  14.357  28.869   7.313;
-            15.2   6.3   6.9  0.5  0.5  1013.0  20170.0  10.97  4060.0  1.67    1.7    0.704  2.96    3.24   10.029  60.981  23.541
-            ]
+            21.8 14.1 10.7 1.6 1.8 770.0 12750.0 18.0 5100.0 1.5 9.1 1.054 4.196 29.407 7.03 15.08 9.705;
+            16.4 8.5 13.9 1.2 1.3 524.0 12087.0 5.7 2941.0 2.208 15.2 1.123 3.86 5.228 14.724 32.103 19.0;
+            14.5 7.0 2.3 0.2 0.2 238.0 3265.0 1.9 320.0 2.32 16.202 1.008 3.095 5.549 17.34 65.129 32.056;
+            18.2 10.3 11.4 1.2 1.1 835.0 16037.0 21.3 4332.0 0.875 9.484 0.856 2.191 23.75 13.1 58.157 27.46;
+            18.5 8.1 11.1 1.0 1.1 504.0 9464.0 1.4 1743.0 2.95 0.7 0.479 2.44 8.77 13.48 33.45 17.68;
+            18.7 11.4 10.8 1.3 1.5 1227.0 24053.0 20.0 6521.0 0.733 1.6 0.857 2.377 4.985 11.743 26.732 24.485;
+            18.5 12.6 10.8 1.4 1.8 912.0 18800.0 18.2 5300.0 1.29 8.27 0.558 0.635 5.22 13.829 31.914 7.515;
+            16.4 6.7 12.6 0.9 0.9 951.0 16767.0 22.0 3917.0 2.46 3.9 0.724 0.568 4.491 14.357 28.869 7.313;
+            15.2 6.3 6.9 0.5 0.5 1013.0 20170.0 10.97 4060.0 1.67 1.7 0.704 2.96 3.24 10.029 60.981 23.541
+        ]
 
-        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum, minimum, minimum, minimum, minimum, minimum, minimum ]
+        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum, minimum, minimum, minimum, minimum, minimum, minimum]
 
         result = lopcow(decmat, fns)
         @test result isa LOPCOWResult
@@ -1464,7 +1488,7 @@
                 0.0532072757707825,
                 0.0534046062018556,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decmat, zeros(17), fns)
@@ -1476,19 +1500,19 @@
     @testset "OCRA" begin
         tol = 0.0001
         decisionMat = [
-            8.0  16.0  1.5  1.2   4200.0  5.0  5.0  314.0  185.0;
-            8.0  16.0  1.0  1.3   4200.0  5.0  4.0  360.0  156.0;
-           10.1  16.0  2.0  1.3   4060.0  5.0  3.0  503.0  160.0;
-           10.1   8.0  1.0  1.5   5070.0  2.0  4.0  525.0  200.0;
-           10.0  16.0  2.0  1.2   6350.0  5.0  3.0  560.0  190.0;
-           10.1  16.0  1.0  1.2   5500.0  2.0  2.0  521.0  159.0;
-           10.1  64.0  2.0  1.7   5240.0  5.0  3.0  770.0  199.0;
-            7.0  32.0  1.0  1.8   3000.0  3.0  4.0  364.0  157.0;
-           10.1  16.0  1.0  1.3   3540.0  5.0  3.0  510.0  171.0;
-            9.7  16.0  2.0  1.83  7500.0  6.0  2.0  550.0  170.0
+            8.0 16.0 1.5 1.2 4200.0 5.0 5.0 314.0 185.0;
+            8.0 16.0 1.0 1.3 4200.0 5.0 4.0 360.0 156.0;
+            10.1 16.0 2.0 1.3 4060.0 5.0 3.0 503.0 160.0;
+            10.1 8.0 1.0 1.5 5070.0 2.0 4.0 525.0 200.0;
+            10.0 16.0 2.0 1.2 6350.0 5.0 3.0 560.0 190.0;
+            10.1 16.0 1.0 1.2 5500.0 2.0 2.0 521.0 159.0;
+            10.1 64.0 2.0 1.7 5240.0 5.0 3.0 770.0 199.0;
+            7.0 32.0 1.0 1.8 3000.0 3.0 4.0 364.0 157.0;
+            10.1 16.0 1.0 1.3 3540.0 5.0 3.0 510.0 171.0;
+            9.7 16.0 2.0 1.83 7500.0 6.0 2.0 550.0 170.0
         ]
-        fns = [maximum,maximum,maximum,maximum,maximum,maximum,maximum,minimum,minimum]
-        weights =[0.167, 0.039, 0.247, 0.247, 0.116, 0.02, 0.056, 0.027, 0.081]
+        fns = [maximum, maximum, maximum, maximum, maximum, maximum, maximum, minimum, minimum]
+        weights = [0.167, 0.039, 0.247, 0.247, 0.116, 0.02, 0.056, 0.027, 0.081]
 
         result = ocra(decisionMat, weights, fns)
         @test result isa OCRAResult
@@ -1506,7 +1530,7 @@
                 0.0000000000000000,
                 0.4787485498471800,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decisionMat, weights, fns)
@@ -1518,12 +1542,12 @@
     @testset "LMAW" begin
         tol = 0.0001
         decisionMat = [
-            647.34	6.24	49.87	19.46	212.58	6.75;
-            115.64	3.24	16.26	 9.69	207.59	3.00;
-            373.61	5.00	26.43	12.00	184.62	3.74;
-             37.63	2.48	 2.85	 9.25	142.50	3.24;
-            858.01	4.74	62.85	45.96	267.95	4.00;
-            222.92	3.00	19.24	21.46	221.38	3.49
+            647.34 6.24 49.87 19.46 212.58 6.75;
+            115.64 3.24 16.26 9.69 207.59 3.00;
+            373.61 5.00 26.43 12.00 184.62 3.74;
+            37.63 2.48 2.85 9.25 142.50 3.24;
+            858.01 4.74 62.85 45.96 267.95 4.00;
+            222.92 3.00 19.24 21.46 221.38 3.49
         ]
         weights = [0.215, 0.126, 0.152, 0.091, 0.19, 0.226]
         fns = [maximum, maximum, minimum, minimum, minimum, maximum]
@@ -1540,7 +1564,7 @@
                 4.73416833375772,
                 4.702247270959649,
             ],
-            atol = tol,
+            atol=tol,
         )
 
         setting = MCDMSetting(decisionMat, weights, fns)
@@ -1552,12 +1576,12 @@
     @testset "TODIM" begin
         tol = 0.0001
         decisionMat = [
-          10  11  12
-          7   8   9
-          4   5   6
-          1   2   3
+            10 11 12
+            7 8 9
+            4 5 6
+            1 2 3
         ]
-        weights = fill(1/3, 3)
+        weights = fill(1 / 3, 3)
         fns = [maximum, maximum, maximum]
 
         result = todim(decisionMat, weights, fns)
@@ -1565,18 +1589,18 @@
         @test isapprox(
             result.scores,
             [
-              1.0,
-              0.75,
-              0.375,
-              0.0
+                1.0,
+                0.75,
+                0.375,
+                0.0
             ],
-            atol = tol,
+            atol=tol,
         )
 
         # Including minimum function
         fns = [maximum, maximum, minimum]
         result2 = todim(decisionMat, weights, fns)
         @test result2 isa TODIMResult
-        
+
     end
 end

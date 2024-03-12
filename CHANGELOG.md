@@ -1,4 +1,9 @@
-### 0.7.14 (Upcoming release)
+### 0.7.15 (Upcoming Release)
+
+
+### 0.7.14 
+
+- Implement nullnormalization for disabling normalization
 
 ### 0.7.13
 

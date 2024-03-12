@@ -3,6 +3,16 @@ module Normalizations
 import ..Utilities: normalize, colmins, colmaxs
 
 """
+    nullnormalization(data::Matrix, fns)::Matrix
+
+Default normalization method for disabling normalization
+"""
+function nullnormalization(data::Matrix, fns)::Matrix 
+    return data
+end
+
+
+"""
     vectornormnormalization(data::Matrix, fns)::Matrix
 
 Default normalization method for Topsis and Moora 
