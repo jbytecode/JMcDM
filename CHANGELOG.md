@@ -1,5 +1,7 @@
 ### 0.7.15 (Upcoming Release)
 
+- Export more inner state variables of critic method. 
+
 
 ### 0.7.14 
 

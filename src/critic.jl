@@ -18,6 +18,8 @@ CriticMethod() = CriticMethod(Normalizations.maxminrangenormalization)
 struct CRITICResult <: MCDMResult
     decisionMatrix::Matrix
     w::Vector
+    correlationmatrix::Matrix
+    scores::Vector
 end
 
 
@@ -73,25 +75,13 @@ function critic(
     normalization::G = Normalizations.maxminrangenormalization
     )::CRITICResult where {F<:Function, G<:Function}
 
-    row, col = size(decisionMat)
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
+    _ , col = size(decisionMat)
+    #colMax = colmaxs(decisionMat)
+    #colMin = colmins(decisionMat)
 
     A = similar(decisionMat)
 
     zerotype = eltype(decisionMat[:, 1])
-
-    #for i = 1:row
-    #    for j = 1:col
-    #        if fns[j] == maximum
-    #            @inbounds A[i, j] =
-    #                (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
-    #        elseif fns[j] == minimum
-    #            @inbounds A[i, j] =
-    #                (colMax[j] - decisionMat[i, j]) / (colMax[j] - colMin[j])
-    #        end
-    #    end
-    #end
 
     normalizedMat = normalization(decisionMat, fns)
 
@@ -109,7 +99,11 @@ function critic(
         w[i] = scores[i] ./ sum(scores)
     end
 
-    result = CRITICResult(decisionMat, w)
+    result = CRITICResult(
+        decisionMat,
+         w,
+         corMat,
+         scores)
 
     return result
 end
