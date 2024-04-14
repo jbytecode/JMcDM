@@ -63,22 +63,18 @@ julia> weights = [0.221, 0.159, 0.175, 0.127, 0.117, 0.201];
 
 julia> fns = [maximum, minimum, minimum, maximum, minimum, maximum];
 
-julia> lambda = 0.5;
-
-julia> result = cocoso(decmat, weights, fns, lambda);
+julia> result = cocoso(decmat, weights, fns, lambda = 0.5);
 
 julia> result.scores
-7-element Array{Float64,1}:
- 2.0413128390265998
- 2.787989783418825
- 2.8823497955972495
- 2.4160457689259287
- 1.2986918936013303
- 1.4431429073391682
- 2.519094173200623
+5-element Vector{Float64}:
+ 1.922475728710679
+ 1.8144169615649441
+ 1.8374089377955838
+ 2.1842047284481
+ 1.6232623861380282
 
 julia> result.bestIndex
-3
+4
 ```
 # References
 
