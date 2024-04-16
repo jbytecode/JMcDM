@@ -166,6 +166,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 
 ```julia
 julia> using JMcDM
+julia> using DataFrames
 julia> df = DataFrame(
 :age        => [6.0, 4, 12],
 :size       => [140.0, 90, 140],
@@ -176,7 +177,6 @@ julia> df = DataFrame(
 
 
 ```julia
-julia> using DataFrames
 julia> df
 3×5 DataFrame
  Row │ age      size     price     distance  population 
