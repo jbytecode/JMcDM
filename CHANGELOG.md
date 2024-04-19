@@ -1,5 +1,7 @@
 ### 0.7.16 (Upcoming Release)
 
+- Remove legacy normalization in Waspas
+
 
 ### 0.7.15
 

@@ -101,15 +101,6 @@ function waspas(
     zerotype = eltype(decisionMat)
 
     normalizedDecisionMat = normalization(decisionMat, fns)
-    #colminmax = zeros(zerotype, col)
-    #for i = 1:col
-    #    colminmax[i] = decisionMat[:, i] |> fns[i]
-    #    if fns[i] == maximum
-    #        normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-    #    elseif fns[i] == minimum
-    #        normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-    #    end
-    #end
 
     scoreMat = similar(normalizedDecisionMat)
     for i = 1:col
