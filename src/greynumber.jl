@@ -96,6 +96,12 @@ function Base.exp(g::GreyNumber)::GreyNumber
 	return GreyNumber(exp(g.a), exp(g.b))
 end
 
+
+"""
+Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
+and its application in multi-objective optimization with interval objectives." 
+Computers & Industrial Engineering 74 (2014): 169-178.
+"""
 function Base.isless(g1::GreyNumber, g2::GreyNumber)::Bool
 	if g1.a < g2.a
 		return true
@@ -106,15 +112,19 @@ function Base.isless(g1::GreyNumber, g2::GreyNumber)::Bool
 	end
 end
 
+
+
 function Base.isless(g::GreyNumber, scalar::T)::Bool where {T <: Real}
 	return g < GreyNumber(scalar, scalar)
 end
+
+
 
 function Base.:≤(g1::GreyNumber, g2::GreyNumber)::Bool
 	if g1.a <= g2.a
 		return true
 	else
-		return false
+		return g1.b <= g2.b
 	end
 end
 
@@ -132,7 +142,7 @@ function Base.:≥(g1::GreyNumber, g2::GreyNumber)::Bool
 	if g1.a >= g2.a
 		return true
 	else
-		return false
+		return g1.b >= g2.b
 	end
 end
 
