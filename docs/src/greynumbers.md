@@ -1,7 +1,7 @@
 # Multiple-criteria Decision Making Tools with Grey Numbers 
 
 
-# A grey number
+## A grey number
 
 ```julia
 julia> a = GreyNumber(1, 4)
@@ -33,6 +33,18 @@ false
 
 julia> a * -1
 GreyNumber(-4, -1)
+```
+
+
+## whitenize
+```@docs
+JMcDM.whitenize
+```
+
+
+## kernel
+```@docs
+JMcDM.kernel
 ```
 
 # MCDM Tools with Grey Numbers 

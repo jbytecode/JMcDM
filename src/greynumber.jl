@@ -233,15 +233,62 @@ function Base.getindex(g::GreyNumber, index::Int)::Real
 end
 
 
+"""
 
+	kernel(g::GreyNumber)::Float64
+
+# Description
+
+Calculate the kernel of a grey number
+
+# Arguments
+
+- `g::GreyNumber`: A grey number
+
+
+# Examples
+
+```julia
+julia> g = GreyNumber(1, 2)
+GreyNumber(1, 2)
+
+julia> kernel(g)
+1.5
+```
+"""
 function kernel(g::GreyNumber)::Float64
 	return (g.a + g.b) / 2.0
 end
 
+
+"""
+
+	whitenizate(g::GreyNumber; t::Float64 = 0.5):: Float64
+
+# Description
+
+Whitenizate a grey number
+
+# Arguments
+
+- `g::GreyNumber`: A grey number
+- `t::Float64`: A value between 0 and 1. Default is 0.5.
+
+# Examples
+
+```julia
+julia> g = GreyNumber(1, 2)
+GreyNumber(1, 2)
+
+julia> whitenizate(g)
+1.5
+```
+"""
 function whitenizate(g::GreyNumber; t::Float64 = 0.5)::Float64
 	@assert 0.0 <= t <= 1.0
 	return g.a * t + g.b * (1.0 - t)
 end
+
 
 function Base.zero(::Type{GreyNumber})
 	return GreyNumber(0.0, 0.0)
