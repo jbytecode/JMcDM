@@ -38,7 +38,7 @@ GreyNumber(-4, -1)
 
 ## whitenize
 ```@docs
-JMcDM.whitenize
+JMcDM.whitenizate
 ```
 
 
