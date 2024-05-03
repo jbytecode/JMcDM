@@ -1,6 +1,8 @@
 ### 0.7.16 (Upcoming Release)
 
 - Remove legacy normalization in Waspas
+- Add documentation for Grey Numbers
+- Add citations to operations on Grey Numbers
 
 
 ### 0.7.15
