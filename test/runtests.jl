@@ -14,38 +14,23 @@ const testLPBasedFunctions  =  true
 const testGreyMCDMFunctions =  true
 const testSummary           =  true
 
-if testGreyNumbers
-    @info "Grey Numbers tests ..."
-    include("./testgreynumber.jl")
-end
+testGreyNumbers && include("./testgreynumber.jl")
 
-if testUtilityFunctions
-    @info "Utility tests ..."
-    include("./testutility.jl")
-end
+testUtilityFunctions && include("./testutility.jl")
 
-if testSCDMFunctions
-    @info "SCDM tests ..."
-    include("./testscdm.jl")
-end # Test SCDM Tools 
+testSCDMFunctions && include("./testscdm.jl")
 
-if testMCDMFunctions
-    @info "MCDM Tests ..."
+
+testMCDMFunctions && let 
     include("./testmcdm.jl")
     include("./testcopeland.jl")
-end  # Test MCDM Tools
+end  
 
-if testGreyMCDMFunctions
-    @info "Grey MCDM Tests ..."
-    include("./testgreymcdm.jl")
-end # Test Grey MCDM Tools
+testGreyMCDMFunctions && include("./testgreymcdm.jl")
 
-if testLPBasedFunctions
-    @info "LP Based Tests (takes time) ..."
-    include("./testlp.jl")
-end # Test LP Based Tools
 
-if testSummary
-    @info "Summary Tests ..."
-    include("./testsummary.jl")
-end # Test Summary Tools
+testLPBasedFunctions && include("./testlp.jl")
+
+
+testSummary && include("./testsummary.jl")
+ 

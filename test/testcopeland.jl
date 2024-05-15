@@ -1,4 +1,4 @@
-@testset "Copeland" begin
+@testset "Copeland" begin verbose = true 
 
     @testset "Copeland Example 1" begin
         """

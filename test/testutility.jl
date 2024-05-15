@@ -1,4 +1,4 @@
-@testset "Utility functions" begin
+@testset "Utility functions" verbose = true begin
     @testset "Identity matrix" begin
         @test JMcDM.I(2) == [1.0 0; 0 1]
         @test JMcDM.I(3) == [1.0 0 0; 0 1 0; 0 0 1]

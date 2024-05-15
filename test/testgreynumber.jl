@@ -1,4 +1,4 @@
-@testset "Test GreyNumbers" begin
+@testset "Test GreyNumbers" verbose = true begin
 
 	@testset "Constructor" begin
 		@test GreyNumber() == GreyNumber(0, 0)
@@ -196,4 +196,16 @@
 			@test simplify(GreyNumber(5.0, 5.0)) == 5.0
 		end 
 	end 
+
+	@testset "Center" begin 
+		@test center(GreyNumber(1.0, 2.0)) == 1.5
+		@test center(GreyNumber(1.0, 1.0)) == 1.0
+		@test center(GreyNumber(1.0, 3.0)) == 2.0
+	end 
+
+	@testset "Radius" begin 
+		@test radius(GreyNumber(1.0, 2.0)) == 0.5
+		@test radius(GreyNumber(1.0, 1.0)) == 0.0
+		@test radius(GreyNumber(1.0, 3.0)) == 1.0
+	end
 end

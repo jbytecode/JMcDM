@@ -1,6 +1,6 @@
 using Test
 
-@testset "MCDM with Grey Numbers" begin
+@testset "MCDM with Grey Numbers" verbose = true begin
 
     @testset "Topsis with Grey Numbers" begin
         atol = 0.001

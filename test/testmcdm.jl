@@ -1,4 +1,4 @@
-@testset "MCDM functions" begin
+@testset "MCDM functions" verbose = true begin
 
 	@testset "mcdm() with default method" begin
 		tol = 0.00001

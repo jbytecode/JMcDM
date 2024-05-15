@@ -1,5 +1,5 @@
-@testset "Single Criterion Decision Making Functions" begin
-    @testset "Single Criterion Decision Making tools" begin
+@testset "Single Criterion Decision Making Functions" verbose = true begin
+    @testset "Single Criterion Decision Making tools" verbose = true begin
         @testset "Laplace" begin
 
             tol = 0.00001

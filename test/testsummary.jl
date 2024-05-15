@@ -1,4 +1,4 @@
-@testset "Summary" begin
+@testset "Summary" verbose = true begin
     tol = 0.0001
     
     dmat = hcat(

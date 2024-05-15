@@ -1,5 +1,5 @@
-@testset "LP Based Functions (Takes time...)" begin
-    @testset "Zero Sum Games" begin
+@testset "LP Based Functions (Takes time...)" verbose = true begin
+    @testset "Zero Sum Games" verbose = true begin
         @testset "Game" begin
 
             tol = 0.00001
