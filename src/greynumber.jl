@@ -97,52 +97,70 @@ function Base.exp(g::GreyNumber)::GreyNumber
 end
 
 
+
+function center(g::GreyNumber)::Float64
+	return (g.a + g.b) / 2.0
+end
+
+function radius(g::GreyNumber)::Float64
+	return (g.b - g.a) / 2.0
+end
+
 """
 Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
 and its application in multi-objective optimization with interval objectives." 
 Computers & Industrial Engineering 74 (2014): 169-178.
 """
 function Base.isless(g1::GreyNumber, g2::GreyNumber)::Bool
-	if g1.a < g2.a
-		return true
-	elseif g1.a == g2.a
-		return g1.b < g2.b
-	else
-		return false
-	end
+	return (g1 <= g2) && (g1 != g2)
 end
 
 
-
+"""
+Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
+and its application in multi-objective optimization with interval objectives." 
+Computers & Industrial Engineering 74 (2014): 169-178.
+"""
 function Base.isless(g::GreyNumber, scalar::T)::Bool where {T <: Real}
 	return g < GreyNumber(scalar, scalar)
 end
 
-
-
+"""
+Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
+and its application in multi-objective optimization with interval objectives." 
+Computers & Industrial Engineering 74 (2014): 169-178.
+"""
 function Base.:≤(g1::GreyNumber, g2::GreyNumber)::Bool
-	if g1.a <= g2.a
-		return true
+	ac, aw = center(g1), radius(g1)
+	bc, bw = center(g2), radius(g2)
+	if ac != bc 
+		return ac < bc
 	else
-		return g1.b <= g2.b
+		return aw <= bw
 	end
 end
 
+"""
+Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
+and its application in multi-objective optimization with interval objectives." 
+Computers & Industrial Engineering 74 (2014): 169-178.
+"""
 function Base.:>(g1::GreyNumber, g2::GreyNumber)::Bool
-	if g1.a > g2.a
-		return true
-	elseif g1.a == g2.a
-		return g1.b > g2.b
-	else
-		return false
-	end
+	return (g1 >= g2) && (g1 != g2)
 end
 
+"""
+Bhunia, Asoke Kumar, and Subhra Sankha Samanta. "A study of interval metric 
+and its application in multi-objective optimization with interval objectives." 
+Computers & Industrial Engineering 74 (2014): 169-178.
+"""
 function Base.:≥(g1::GreyNumber, g2::GreyNumber)::Bool
-	if g1.a >= g2.a
-		return true
+	ac, aw = center(g1), radius(g1)
+	bc, bw = center(g2), radius(g2)
+	if ac != bc 
+		return ac > bc
 	else
-		return g1.b >= g2.b
+		return aw <= bw
 	end
 end
 
@@ -437,5 +455,7 @@ export GreyNumber
 export kernel
 export whitenizate
 export simplify
+export center 
+export radius
 
 end # module

@@ -167,7 +167,7 @@ import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
 import .SCDM:
     laplace, maximax, maximin, minimax, minimin, savage, hurwicz, mle, expectedregret
 
-import .GreyNumbers: GreyNumber, kernel, whitenizate, simplify
+import .GreyNumbers: GreyNumber, kernel, whitenizate, simplify, center, radius
 
 import .Utilities: *
 using .Utilities
@@ -319,7 +319,7 @@ import JMcDM.Copeland: copeland
 export copeland
 
 # export Grey Number elements
-export GreyNumber, kernel, whitenizate, simplify
+export GreyNumber, kernel, whitenizate, simplify, center, radius
 
 export Normalizations
 

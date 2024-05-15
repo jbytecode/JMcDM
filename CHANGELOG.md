@@ -3,6 +3,7 @@
 - Remove legacy normalization in Waspas
 - Add documentation for Grey Numbers
 - Add citations to operations on Grey Numbers
+- Binary comparison operators are redefined as in the citation given
 
 
 ### 0.7.15
