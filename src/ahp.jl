@@ -241,7 +241,7 @@ A8 = [
 	1/8 1/6 1/3 1
 ]
 
-julia> as = [A1, A2, A3, A4, A5, A6, A7, A8
+julia> as = [A1, A2, A3, A4, A5, A6, A7, A8]
 julia> result = ahp(as, K)
 ```
 
