@@ -1,5 +1,8 @@
 ### 0.7.17 (Upcoming release)
 
+- The type changed as `comparisonMatrixList::Vector{Matrix{Float64}}` insted of `comparisonMatrixList::Vector` in ahp (#62).
+
+
 
 ### 0.7.16
 
