@@ -1,6 +1,11 @@
-### 0.7.18 (Upcoming release)
+### 0.7.19 (Upcoming release)
+
+
+### 0.7.18 
 
 - Implement CILOS (The Criterion Impact Loss Method) for determining weights objectively.
+- Separate MCDM tests into folders
+
 
 ### 0.7.17
 

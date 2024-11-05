@@ -19,7 +19,7 @@ end
 """
     cilos(decisionMat::Matrix, fs::Array{Function, 1}; normalization::Function = Normalizations.dividebycolumnsumnormalization)::CILOSResult
 
-    CILOS method for MCDM problems.
+    CILOS (The Criterion Impact Loss) method for MCDM problems.
     
 # Arguments
 
@@ -31,6 +31,26 @@ end
 
     CILOS is a method for MCDM problems. It is based on the concept of the ideal solution. The method
     is proposed by Zavadskas and Podvezko. The method is used to find the weights of the criteria.
+
+# Output
+
+- `CILOSResult`: A struct that contains the results of the algorithm steps.
+
+# Example 
+
+```julia
+decmat = Float64[
+            3 100 10 7;
+            2.5 80 8 5;
+            1.8 50 20 11;
+            2.2 70 12 9]
+
+dirs = [minimum, maximum, minimum, maximum]
+
+result = cilos(decmat, dirs)
+
+println(result.weights)
+```
 
 # Reference
 
