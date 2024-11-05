@@ -1,6 +1,6 @@
 ### 0.7.18 (Upcoming release)
 
-
+- Implement CILOS (The Criterion Impact Loss Method) for determining weights objectively.
 
 ### 0.7.17
 

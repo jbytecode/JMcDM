@@ -130,6 +130,9 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - WASPAS (Weighted Aggregated Sum Product ASsessment)
 - WPM (Weighted Product Model)
 - TODIM (the Portuguese acronym for multicriteria, interactive decision-making)
+- CILOS (The Criterion Impact Loss Method)
+
+
 
 ### SCDM Tools
 

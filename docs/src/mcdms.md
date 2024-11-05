@@ -178,3 +178,9 @@ JMcDM.ocra
 ```@docs
 JMcDM.todim
 ```
+
+## CILOS
+```@docs 
+JMcDM.cilos
+```
+

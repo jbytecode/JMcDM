@@ -14,6 +14,8 @@ const testLPBasedFunctions  =  true
 const testGreyMCDMFunctions =  true
 const testSummary           =  true
 
+include("testcilos.jl")
+
 testGreyNumbers && include("./testgreynumber.jl")
 
 testUtilityFunctions && include("./testutility.jl")
