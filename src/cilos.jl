@@ -83,7 +83,7 @@ function cilos(
     highestvaluerows = [argmax(normalizedmatrix[:, j]) for j in 1:m]
     columnmax = [maximum(normalizedmatrix[:, j]) for j in 1:m]
 
-    for i in 1:n  
+    for i in 1:m  
         A[i, :] = normalizedmatrix[highestvaluerows[i], :]
     end 
 

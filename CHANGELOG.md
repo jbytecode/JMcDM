@@ -1,5 +1,8 @@
-### 0.7.19 (Upcoming release)
+### 0.7.20 (Upcoming release)
 
+### 0.7.19
+
+- Fix clos().
 
 ### 0.7.18 
 
