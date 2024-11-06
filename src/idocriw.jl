@@ -53,6 +53,11 @@ julia> result = idocriw(decmat, dirs)
 
 julia> result.weights
 ```
+
+# Reference
+
+- Zavadskas, Edmundas Kazimieras, and Valentinas Podvezko. "Integrated determination of objective criteria weights in MCDM." International Journal of Information Technology & Decision Making 15.02 (2016): 267-283.
+
 """
 function idocriw(
     decisionMat::Matrix,

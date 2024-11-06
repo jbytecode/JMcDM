@@ -1,5 +1,7 @@
 ### 0.7.21 (Upcoming release)
 
+- Update documentation
+
 ### 0.7.20 
 
 - Implement IDOCRIW for automatic weight selection
