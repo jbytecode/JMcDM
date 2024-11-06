@@ -131,6 +131,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - WPM (Weighted Product Model)
 - TODIM (the Portuguese acronym for multicriteria, interactive decision-making)
 - CILOS (The Criterion Impact Loss Method)
+- IDOCRIW (Integrated Determination of Objective Criteria Weights)
 
 
 

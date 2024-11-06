@@ -125,6 +125,7 @@ include("sd.jl")
 include("rov.jl")
 include("piv.jl")
 include("cilos.jl")
+include("idocriw.jl")
 
 include("copeland.jl")
 
@@ -163,6 +164,7 @@ import .OCRA: ocra, OCRAResult, OCRAMethod
 import .LMAW: lmaw, LMAWResult, LMAWMethod
 import .TODIM: todim, TODIMResult, TODIMMethod
 import .CILOS: cilos, CILOSResult
+import .IDOCRIW: idocriw, IDOCRIWResult
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -245,6 +247,7 @@ export OCRAResult
 export LMAWResult
 export TODIMResult
 export CILOSResult
+export IDOCRIWResult
 
 #  export SCDM types
 export SCDMResult
@@ -302,6 +305,7 @@ export ocra
 export lmaw
 export todim
 export cilos
+export idocriw
 
 #  export SCDM tools
 export laplace

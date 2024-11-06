@@ -184,3 +184,7 @@ JMcDM.todim
 JMcDM.cilos
 ```
 
+## IDOCRIW
+```@docs 
+JMcDM.idocriw
+```

@@ -1,5 +1,6 @@
 @testset "MCDM functions" verbose = true begin
 
+	include("mcdm/testidocriw.jl")
 	include("mcdm/testcilos.jl")
 	include("mcdm/testmoosra.jl")
 	include("mcdm/testmcdm.jl")
@@ -35,5 +36,6 @@
 	include("mcdm/testocra.jl")
 	include("mcdm/testlmaw.jl")
 	include("mcdm/testtodim.jl")
+
 	
 end
