@@ -88,11 +88,11 @@ function bestworst(pref_to_best::Vector{Int}, pref_to_worst::Vector{Int})::BestW
     worstindices = indices[indices.!=worst_index]
 
     for i in bestindices
-        @constraint(model, abs(w[best_index] / w[i] - pref_to_best[i]) <= ε)
+        @NLconstraint(model, abs(w[best_index] / w[i] - pref_to_best[i]) <= ε)
     end
 
     for i in worstindices
-        @constraint(model, abs(w[i] / w[worst_index] - pref_to_worst[i]) <= ε)
+        @NLconstraint(model, abs(w[i] / w[worst_index] - pref_to_worst[i]) <= ε)
     end
 
     @constraint(model, sum(w) == 1)

@@ -1,6 +1,7 @@
 ### 0.7.21 (Upcoming release)
 
 - Update documentation
+- Initial implementation of the Best-Worst method.
 
 ### 0.7.20 
 
