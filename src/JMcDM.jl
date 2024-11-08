@@ -26,6 +26,11 @@ function __init__()
             include("dataenvelop.jl")
             import .DataEnvelop: dataenvelop, DataEnvelopResult
             export DataEnvelopResult
+
+            include("bestworst.jl")
+            import .BestWorstMethod: bestworst, BestWorstResult
+            export bestworst 
+            export BestWorstResult
         end
     end
 end

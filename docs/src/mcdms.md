@@ -188,3 +188,8 @@ JMcDM.cilos
 ```@docs 
 JMcDM.idocriw
 ```
+
+## Best-Worst
+```@docs
+JMcDM.bestworst
+```

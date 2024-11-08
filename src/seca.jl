@@ -75,6 +75,7 @@ Best indice:
 ```
 
 # Reference
+
 - [Simultaneous Evaluation of Criteria and Alternatives (SECA) for Multi-Criteria Decision-Making](http://dx.doi.org/10.15388/Informatica.2018.167)
 
 !!! warning "Dependencies"
