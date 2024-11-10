@@ -77,7 +77,9 @@ function bestworst(pref_to_best::Vector{Int}, pref_to_worst::Vector{Int})::BestW
 
     @variable(model, ε >= 0)
 
-    @variable(model, w[1:n] >= 0)
+    # Starting point of the weights on [0, 0, ..., 0] is not feasible 
+    # Set the initial values to 1/n
+    @variable(model, w[1:n] >= 0, start = 1/n)
 
     @objective(model, Min, ε)
 
