@@ -1,7 +1,11 @@
-### 0.7.21 (Upcoming release)
+### 0.7.22 (Upcoming release)
+
+
+### 0.7.21
 
 - Update documentation
 - Initial implementation of the Best-Worst method.
+- Fixed Best-Worst method's optimization stage inconsistency in Windows.
 
 ### 0.7.20 
 
