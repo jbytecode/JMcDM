@@ -10,6 +10,9 @@
 
         result = bestworst(pref_to_best, pref_to_worst)
 
+        # Test for the result is solved and feasible
+        @test result.is_solved_and_feasible
+
         @test isapprox(result.ε, 0.26, atol = eps)
 
         @test isapprox(result.weights, [0.071, 0.338, 0.589], atol = eps)

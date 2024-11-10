@@ -9,6 +9,7 @@ using ..JuMP, ..Ipopt
 struct BestWorstResult
     ε::Float64
     weights::Vector
+    is_solved_and_feasible::Bool
 end
 
 
@@ -90,18 +91,23 @@ function bestworst(pref_to_best::Vector{Int}, pref_to_worst::Vector{Int})::BestW
     worstindices = indices[indices.!=worst_index]
 
     for i in bestindices
-        @NLconstraint(model, abs(w[best_index] / w[i] - pref_to_best[i]) <= ε)
+        # abs(w[best_index] / w[i] - pref_to_best[i]) <= ε
+        @constraint(model, (w[best_index] / w[i] - pref_to_best[i]) <= ε)
+        @constraint(model, -ε <= (w[best_index] / w[i] - pref_to_best[i]))
     end
 
     for i in worstindices
-        @NLconstraint(model, abs(w[i] / w[worst_index] - pref_to_worst[i]) <= ε)
+        # abs(w[i] / w[worst_index] - pref_to_worst[i]) <= ε
+        @constraint(model, (w[i] / w[worst_index] - pref_to_worst[i]) <= ε)
+        @constraint(model, -ε <= (w[i] / w[worst_index] - pref_to_worst[i]))
     end
 
     @constraint(model, sum(w) == 1)
 
     optimize!(model)
 
-    result = BestWorstResult(value(ε), value.(w))
+    status = JuMP.is_solved_and_feasible(model)
+    result = BestWorstResult(value(ε), value.(w), status)
 
     return result
 end
