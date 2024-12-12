@@ -11,7 +11,12 @@ struct MarcosMethod <: MCDMMethod end
 
 struct MarcosResult <: MCDMResult
     decisionMatrix::Matrix
+    normalizedDecisionMat::Matrix
     weights::Array{Float64,1}
+    KPlus::Vector
+    KMinus::Vector
+    fKPlus::Vector
+    fKMinus::Vector
     scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
@@ -131,7 +136,17 @@ function marcos(
 
     bestIndex = rankings |> last
 
-    result = MarcosResult(decisionMat, w, scores, rankings, bestIndex)
+    result = MarcosResult(
+        decisionMat, 
+        normalizedDecisionMat,
+        w, 
+        KPlus, 
+        KMinus, 
+        fKPlus, 
+        fKMinus,
+        scores, 
+        rankings, 
+        bestIndex)
 
     return result
 end

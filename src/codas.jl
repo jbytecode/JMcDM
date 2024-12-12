@@ -11,9 +11,18 @@ using ..Utilities
 
 struct CODASResult <: MCDMResult
     decisionMatrix::Matrix
-    w::Array{Float64,1}
+    normalizedDecisionMat::Matrix
+    weightedNormalizedDecisionMat::Matrix
+    w::Vector{Float64}
+    E::Matrix
+    Euc::Vector
+    T::Matrix
+    Tax::Vector
+    EA::Matrix
+    TA::Matrix
+    RA::Matrix
     scores::Vector
-    ranking::Array{Int64,1}
+    ranking::Vector{Int64}
     bestIndex::Int64
 end
 
@@ -95,8 +104,7 @@ function codas(
     tau::Float64 = 0.02,
 )::CODASResult where {F<:Function, G<:Function}
 
-    #mat = convert(Matrix, decisionMat)
-    mat = Matrix(decisionMat)
+    #mat = Matrix(decisionMat)
 
     nrows, ncols = size(decisionMat)
     w = unitize(weight)
@@ -159,7 +167,21 @@ function codas(
     rankings = sortperm(scores)
     bestIndex = rankings |> last
 
-    result = CODASResult(decisionMat, w, scores, rankings, bestIndex)
+    result = CODASResult(
+        decisionMat, 
+        A,              # normalized matrix
+        wA,             # weighted normalized matrix
+        w, 
+        E, 
+        Euc,
+        T,
+        Tax,
+        EA, 
+        TA, 
+        RA,
+        scores, 
+        rankings, 
+        bestIndex)
 
     return result
 end
