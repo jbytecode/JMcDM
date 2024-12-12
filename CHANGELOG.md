@@ -1,6 +1,10 @@
-### 0.7.22 (Upcoming release)
+### 0.7.23 (Upcoming release)
 
-- Marcos and Codas has more verbose output object with more fields.
+
+
+### 0.7.22 
+
+- Marcos and Codas have more verbose output object with more fields.
 
 ### 0.7.21
 
