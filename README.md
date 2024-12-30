@@ -133,6 +133,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - CILOS (The Criterion Impact Loss Method)
 - IDOCRIW (Integrated Determination of Objective Criteria Weights)
 - Best-Worst Method
+- RAM (Root Assessment Method)
 
 
 ### SCDM Tools

@@ -1,5 +1,6 @@
 @testset "MCDM functions" verbose = true begin
 
+	include("mcdm/testram.jl")
 	include("mcdm/testbestworst.jl")
 	include("mcdm/testidocriw.jl")
 	include("mcdm/testcilos.jl")

@@ -193,3 +193,8 @@ JMcDM.idocriw
 ```@docs
 JMcDM.bestworst
 ```
+
+## RAM 
+```@docs
+JMcDM.ram
+```

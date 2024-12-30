@@ -131,6 +131,7 @@ include("rov.jl")
 include("piv.jl")
 include("cilos.jl")
 include("idocriw.jl")
+include("ram.jl")
 
 include("copeland.jl")
 
@@ -170,6 +171,7 @@ import .LMAW: lmaw, LMAWResult, LMAWMethod
 import .TODIM: todim, TODIMResult, TODIMMethod
 import .CILOS: cilos, CILOSResult
 import .IDOCRIW: idocriw, IDOCRIWResult
+import .RAM: ram, RAMResult, RAMMethod
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -213,6 +215,7 @@ export LOPCOWMethod
 export OCRAMethod
 export LMAWMethod
 export TODIMMethod
+export RAMMethod
 
 
 export MCDMSetting
@@ -253,6 +256,7 @@ export LMAWResult
 export TODIMResult
 export CILOSResult
 export IDOCRIWResult
+export RAMResult
 
 #  export SCDM types
 export SCDMResult
@@ -311,6 +315,7 @@ export lmaw
 export todim
 export cilos
 export idocriw
+export ram
 
 #  export SCDM tools
 export laplace
