@@ -46,21 +46,19 @@ Computes the Root Assessment Method (RAM) for the given decision matrix, weights
 # Output
 
 - RAMResult: A struct containing the following fields:
-    - decisionMatrix::Matrix: The decision matrix.
-    - normalizedMatrix::Matrix: The normalized decision matrix.
-    - weightedNormalizedMatrix::Matrix: The weighted normalized decision matrix.
-    - splusi::Vector: The s+ values for each alternative.
-    - sminusi::Vector: The s- values for each alternative.
-    - sqrvals::Vector: The square values for each alternative.
-    - norRI::Vector: The normalized relative importance values for each alternative.
-    - ranks::Vector: The ranks of the alternatives.
-    - bestindex::Int: The index of the best alternative.
+    - `decisionMatrix::Matrix`: The decision matrix.
+    - `normalizedMatrix::Matrix`: The normalized decision matrix.
+    - `weightedNormalizedMatrix::Matrix`: The weighted normalized decision matrix.
+    - `splusi::Vector`: The s+ values for each alternative.
+    - `sminusi::Vector`: The s- values for each alternative.
+    - `sqrvals::Vector`: The square values for each alternative.
+    - `norRI::Vector`: The normalized relative importance values for each alternative.
+    - `ranks::Vector`: The ranks of the alternatives.
+    - `bestindex::Int`: The index of the best alternative.
 
 # References
 
-- Sotoudeh-Anvari, Alireza. "Root Assessment Method (RAM): A novel multi-criteria decision 
-making method and its applications in sustainability challenges." 
-Journal of Cleaner Production 423 (2023): 138695.
+- Sotoudeh-Anvari, Alireza. "Root Assessment Method (RAM): A novel multi-criteria decision making method and its applications in sustainability challenges." Journal of Cleaner Production 423 (2023): 138695.
 """
 function ram(
     decisionMat::Matrix,
@@ -117,5 +115,9 @@ function ram(
     return result 
 end # end of function ram
 
+
+function ram(setting::MCDMSetting)::RAMResult
+    ram(setting.df, setting.weights, setting.fns)
+end
 
 end # end of module RAM
