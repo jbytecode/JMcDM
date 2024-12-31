@@ -1,6 +1,10 @@
-### 0.7.23 (Upcoming release)
+### 0.7.24 (Upcoming release)
+
+
+### 0.7.23 
 
 - RAM (Root Assessment Method) implemented.
+
 
 ### 0.7.22 
 

@@ -22,6 +22,7 @@ import ..SAW: SawMethod, saw
 import ..VIKOR: VikorMethod, vikor
 import ..WASPAS: WaspasMethod, waspas
 import ..WPM: WPMMethod, wpm
+import ..RAM: RAMMethod, ram
 
 
 
@@ -169,6 +170,10 @@ function copeland(
             dictt["Waspas"] = waspas(df, w, fns).scores |> sortperm |> invperm
         elseif methods[i] isa WPMMethod
             dictt["Wpm"] = wpm(df, w, fns).scores |> sortperm |> invperm
+        elseif methods[i] isa RAMMethod
+            dictt["Ram"] = ram(df, w, fns).scores |> sortperm |> invperm 
+        else
+            error("Method not implemented")
         end
     end
 

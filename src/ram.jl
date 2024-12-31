@@ -15,7 +15,7 @@ struct RAMResult <: MCDMResult
     weightedNormalizedMatrix::Matrix
     splusi::Vector
     sminusi::Vector
-    sqrvals::Vector
+    scores::Vector
     norRI::Vector
     ranks::Vector
     bestindex::Int
@@ -51,7 +51,7 @@ Computes the Root Assessment Method (RAM) for the given decision matrix, weights
     - `weightedNormalizedMatrix::Matrix`: The weighted normalized decision matrix.
     - `splusi::Vector`: The s+ values for each alternative.
     - `sminusi::Vector`: The s- values for each alternative.
-    - `sqrvals::Vector`: The square values for each alternative.
+    - `scores::Vector`: The square values for each alternative.
     - `norRI::Vector`: The normalized relative importance values for each alternative.
     - `ranks::Vector`: The ranks of the alternatives.
     - `bestindex::Int`: The index of the best alternative.
@@ -73,8 +73,11 @@ function ram(
 
     weighted_normalized_dec_mat = normalized_decmat .* weights'
 
-    siplus = zeros(eltype(decisionMat), n)
-    siminus = zeros(eltype(decisionMat), n)
+    etype = eltype(decisionMat)
+
+    siplus = zeros(etype, n)
+    
+    siminus = zeros(etype, n)
 
     for i in 1:n 
         for j in 1:m 
@@ -88,13 +91,13 @@ function ram(
         end
     end 
 
-    function sqrfn(index)
-        return (2.0 + siplus[index])^(1.0 / (2.0 + siminus[index]))
+    squarevals = (2.0 * one(etype) .+ siplus).^(1.0 ./ (2.0 * one(etype) .+ siminus))
+
+    norRI = let
+        mmin = minimum(squarevals)
+        mmax = maximum(squarevals)
+        (squarevals .- mmin)  ./ (mmax - mmin)
     end
-
-    squarevals = map(sqrfn, 1:n)
-
-    norRI = (squarevals .- minimum(squarevals))  ./ (maximum(squarevals) - minimum(squarevals))
 
     ranks = sortperm(norRI, rev = true) |> invperm
 

@@ -128,7 +128,7 @@
 
         @test isapprox(result.sminusi, sminusi; atol = eps)
 
-        @test isapprox(result.sqrvals, sqrvals; atol = eps)
+        @test isapprox(result.scores, sqrvals; atol = eps)
 
         @test isapprox(result.norRI, norRI; atol = eps)
 
