@@ -87,14 +87,13 @@ function aras(
     normalization::G = Normalizations.dividebycolumnsumnormalization 
 )::ARASResult where {F<:Function, G<: Function}
 
-    # mat = convert(Matrix, decisionMat)
-    mat = Matrix(decisionMat)
+    #mat = decisionMat
 
-    nrows, ncols = size(mat)
+    nrows, ncols = size(decisionMat)
     w = unitize(weights)
 
-    referenceRow = apply_columns(fs, mat)
-    extendMat = [mat; referenceRow']
+    referenceRow = apply_columns(fs, decisionMat)
+    extendMat = [decisionMat; referenceRow']
 
     for col = 1:ncols
         if fs[col] == minimum
@@ -103,6 +102,8 @@ function aras(
     end
 
     normalizedMat = normalization(extendMat, fs)
+    # Even not necessary, we provide the weighted normalized matrix
+    # Weightization is done by optimality degrees
     weightednormalizedmatrix = weightise(normalizedMat, w)
     
 

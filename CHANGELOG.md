@@ -1,5 +1,6 @@
 ### 0.7.24 (Upcoming release)
 
+- Remove some unnecessary lines in Aras. This will not reflect the results.
 
 ### 0.7.23 
 
