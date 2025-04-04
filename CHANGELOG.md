@@ -2,6 +2,7 @@
 
 - Remove some unnecessary lines in Aras. This will not reflect the results.
 - Remove some unnecessary lines in Copras and Edas.
+- Remove some unnecessary lines in Codas, Marcos, Merec, and Moosra.
 
 ### 0.7.23 
 
