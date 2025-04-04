@@ -87,8 +87,6 @@ function aras(
     normalization::G = Normalizations.dividebycolumnsumnormalization 
 )::ARASResult where {F<:Function, G<: Function}
 
-    #mat = decisionMat
-
     nrows, ncols = size(decisionMat)
     w = unitize(weights)
 
