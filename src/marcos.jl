@@ -82,32 +82,29 @@ function marcos(
     fns::Array{F,1}
 )::MarcosResult where {F<:Function}
 
-    # df = convert(Matrix, decisionMat)
-    df = Matrix(decisionMat)
-
-    row, col = size(df)
+    row, col = size(decisionMat)
 
     w = unitize(weights)
 
-    zerotype = eltype(df[1, :])
+    zerotype = eltype(decisionMat[1, :])
     AAI = zeros(zerotype, col)
     AI = zeros(zerotype, col)
 
-    temp = [df; AI'; AAI']
+    temp = [decisionMat; AI'; AAI']
 
     normalizedDecisionMat = similar(temp)
 
     @inbounds for i = 1:col
         if fns[i] == maximum
-            AI[i] = maximum(df[:, i])
+            AI[i] = maximum(decisionMat[:, i])
             temp[row+1, i] = AI[i]
-            AAI[i] = minimum(df[:, i])
+            AAI[i] = minimum(decisionMat[:, i])
             temp[row+2, i] = AAI[i]
             normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
         elseif fns[i] == minimum
-            AI[i] = minimum(df[:, i])
+            AI[i] = minimum(decisionMat[:, i])
             temp[row+1, i] = AI[i]
-            AAI[i] = maximum(df[:, i])
+            AAI[i] = maximum(decisionMat[:, i])
             temp[row+2, i] = AAI[i]
             normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
         end
