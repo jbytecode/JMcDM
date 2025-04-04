@@ -83,11 +83,11 @@ function moosra(
     end
 
     row, col = size(decisionMat)
-    dmat = Matrix(decisionMat)
-    zerotype = eltype(dmat[1, :])
+
+    zerotype = eltype(decisionMat[1, :])
 
     # normalizedDecisionMat = dmat ./ sqrt(sum(dmat .* dmat))
-    normalizedDecisionMat = normalization(dmat, fns)
+    normalizedDecisionMat = normalization(decisionMat, fns)
 
     w = unitize(weights)
 
