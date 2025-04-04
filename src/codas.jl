@@ -104,8 +104,6 @@ function codas(
     tau::Float64 = 0.02,
 )::CODASResult where {F<:Function, G<:Function}
 
-    #mat = Matrix(decisionMat)
-
     nrows, ncols = size(decisionMat)
     w = unitize(weight)
 
