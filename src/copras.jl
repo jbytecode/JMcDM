@@ -153,13 +153,11 @@ function copras(
     normalization::G = Normalizations.dividebycolumnsumnormalization
 )::COPRASResult where {F<:Function, G<:Function}
 
-    #mat = convert(Matrix, decisionMat)
-    mat = Matrix(decisionMat)
-
-    nrows, ncols = size(mat)
+    nrows, ncols = size(decisionMat)
     w = unitize(weights)
 
-    normalizedMat = normalization(mat, fns)
+    normalizedMat = normalization(decisionMat, fns)
+    
     for i in 1:ncols 
         normalizedMat[:,i] = normalizedMat[:, i] .* weights[i]
     end 

@@ -99,28 +99,25 @@ function edas(
     fns::Array{F,1},
 )::EDASResult where {F<:Function}
 
-    # df = convert(Matrix, decisionMat)
-    df = Matrix(decisionMat)
-
-    row, col = size(df)
+    row, col = size(decisionMat)
 
     w = unitize(weights)
 
 
-    PDAMatrix = similar(df)
-    NDAMatrix = similar(df)
+    PDAMatrix = similar(decisionMat)
+    NDAMatrix = similar(decisionMat)
 
-    AV = zeros(eltype(df), col)
+    AV = zeros(eltype(decisionMat), col)
 
     @inbounds for i = 1:col
-        AV[i] = mean(df[:, i])
+        AV[i] = mean(decisionMat[:, i])
         for j = 1:row
             if fns[i] == maximum
-                PDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
-                NDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
+                PDAMatrix[j, i] = max(zero(eltype(decisionMat)), decisionMat[j, i] - AV[i]) / AV[i]
+                NDAMatrix[j, i] = max(zero(eltype(decisionMat)), AV[i] - decisionMat[j, i]) / AV[i]
             elseif fns[i] == minimum
-                PDAMatrix[j, i] = max(zero(eltype(df)), AV[i] - df[j, i]) / AV[i]
-                NDAMatrix[j, i] = max(zero(eltype(df)), df[j, i] - AV[i]) / AV[i]
+                PDAMatrix[j, i] = max(zero(eltype(decisionMat)), AV[i] - decisionMat[j, i]) / AV[i]
+                NDAMatrix[j, i] = max(zero(eltype(decisionMat)), decisionMat[j, i] - AV[i]) / AV[i]
             end
         end
     end
@@ -129,8 +126,8 @@ function edas(
     weightedNDAMatrix = weightise(NDAMatrix, w)
 
 
-    SP = zeros(eltype(df), row)
-    SN = zeros(eltype(df), row)
+    SP = zeros(eltype(decisionMat), row)
+    SN = zeros(eltype(decisionMat), row)
 
     for i = 1:row
         SP[i] = w .* PDAMatrix[i, :] |> sum

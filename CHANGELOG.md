@@ -1,6 +1,7 @@
 ### 0.7.24 (Upcoming release)
 
 - Remove some unnecessary lines in Aras. This will not reflect the results.
+- Remove some unnecessary lines in Copras and Edas.
 
 ### 0.7.23 
 
