@@ -81,19 +81,9 @@ function merec(
     fs::Array{F,1};
     normalization::G = Normalizations.inversedividebycolumnmaxminnormalization
     )::MERECResult where {F<:Function, G<:Function}
-    mat = Matrix(decisionMat)
-    row, col = size(mat)
 
-    #NormalizeMatrix = zeros((row, col))
-    #@inbounds for i = 1:row
-    #    for j = 1:col
-    #        if fs[j] == maximum
-    #            NormalizeMatrix[i, j] = minimum(mat[:, j]) / mat[i, j]
-    #        elseif fs[j] == minimum
-    #            NormalizeMatrix[i, j] = mat[i, j] / maximum(mat[:, j])
-    #        end
-    #    end
-    #end
+    row, col = size(decisionMat)
+
     NormalizeMatrix = normalization(decisionMat, fs)
 
 
