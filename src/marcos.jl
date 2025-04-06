@@ -87,18 +87,13 @@ function marcos(
     normalization::G = Normalizations.marcosnormalization
 )::MarcosResult where {F<:Function, G<:Function}
 
-    row, col = size(decisionMat)
+    row, _ = size(decisionMat)
 
     w = unitize(weights)
 
     zerotype = eltype(decisionMat[1, :])
-    AAI = zeros(zerotype, col)
-    AI = zeros(zerotype, col)
-
-    temp = [decisionMat; AI'; AAI']
 
     normalizedDecisionMat = normalization(decisionMat, fns)
-
 
     S = zeros(zerotype, row + 2)
 
