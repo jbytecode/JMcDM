@@ -180,4 +180,42 @@ function dividebyallnormnormalization(mat::Matrix, fns)
 end 
 
 
+"""
+    marcosnormalization(decisionMat::Matrix, fns)
+
+Default normalization method for Marcos
+"""
+function marcosnormalization(decisionMat::Matrix, fns)
+
+    row, col = size(decisionMat)
+
+    zerotype = eltype(decisionMat[1, :])
+
+    AAI = zeros(zerotype, col)
+
+    AI = zeros(zerotype, col)
+
+    temp = [decisionMat; AI'; AAI']
+
+    normalizedDecisionMat = similar(temp)
+
+    @inbounds for i = 1:col
+        if fns[i] == maximum
+            AI[i] = maximum(decisionMat[:, i])
+            temp[row+1, i] = AI[i]
+            AAI[i] = minimum(decisionMat[:, i])
+            temp[row+2, i] = AAI[i]
+            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
+        elseif fns[i] == minimum
+            AI[i] = minimum(decisionMat[:, i])
+            temp[row+1, i] = AI[i]
+            AAI[i] = maximum(decisionMat[:, i])
+            temp[row+2, i] = AAI[i]
+            normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
+        end
+    end
+
+    return normalizedDecisionMat
+end 
+
 end #end of module Normalizations 

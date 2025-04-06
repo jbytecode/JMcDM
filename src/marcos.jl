@@ -3,6 +3,9 @@ module MARCOS
 export marcos, MarcosResult, MarcosMethod
 
 import ..MCDMMethod, ..MCDMResult, ..MCDMSetting
+
+import ..Normalizations
+
 using ..Utilities
 
 
@@ -25,7 +28,7 @@ end
 
 
 """
-        marcos(decisionMat, weights, fns)
+        marcos(decisionMat, weights, fns; normalization)
 
 Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution) for a given matrix and weights.
 
@@ -33,6 +36,7 @@ Apply MARCOS (Measurement Alternatives and Ranking according to COmpromise Solut
  - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
+ - `normalization{<:Function}`: Optional normalization function. Default is `Normalizations.marcosnormalization`.
 
 # Description 
 marcos() applies the MARCOS method to rank n alterntives subject to m criteria which are supposed to be 
@@ -79,8 +83,9 @@ Puška, A., Stojanović, I., Maksimović, A., & Osmanović, N. (2020). Evaluatio
 function marcos(
     decisionMat::Matrix,
     weights::Array{Float64,1},
-    fns::Array{F,1}
-)::MarcosResult where {F<:Function}
+    fns::Array{F,1};
+    normalization::G = Normalizations.marcosnormalization
+)::MarcosResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
 
@@ -92,23 +97,7 @@ function marcos(
 
     temp = [decisionMat; AI'; AAI']
 
-    normalizedDecisionMat = similar(temp)
-
-    @inbounds for i = 1:col
-        if fns[i] == maximum
-            AI[i] = maximum(decisionMat[:, i])
-            temp[row+1, i] = AI[i]
-            AAI[i] = minimum(decisionMat[:, i])
-            temp[row+2, i] = AAI[i]
-            normalizedDecisionMat[:, i] = temp[:, i] ./ AI[i]
-        elseif fns[i] == minimum
-            AI[i] = minimum(decisionMat[:, i])
-            temp[row+1, i] = AI[i]
-            AAI[i] = maximum(decisionMat[:, i])
-            temp[row+2, i] = AAI[i]
-            normalizedDecisionMat[:, i] = AI[i] ./ temp[:, i]
-        end
-    end
+    normalizedDecisionMat = normalization(decisionMat, fns)
 
 
     S = zeros(zerotype, row + 2)
