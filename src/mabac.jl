@@ -108,19 +108,6 @@ function mabac(
 
     zerotype = eltype(A)
 
-
-    #for i = 1:row
-    #    for j = 1:col
-    #        if fns[j] == maximum
-    #            @inbounds A[i, j] =
-    #                (decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j])
-    #        elseif fns[j] == minimum
-    #            @inbounds A[i, j] =
-    #                (decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j])
-    #        end
-    #    end
-    #end
-
     wA = Utilities.weightise((A .+ one(zerotype)), w)
 
     g = zeros(zerotype, col)
@@ -141,7 +128,7 @@ function mabac(
     bestIndex = rankings |> last
 
     result =
-        MABACResult(decisionMat, w, Matrix(wA), g, Matrix(Q), scores, rankings, bestIndex)
+        MABACResult(decisionMat, w, wA, g, Q, scores, rankings, bestIndex)
 
     return result
 end

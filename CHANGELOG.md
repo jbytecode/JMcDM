@@ -1,7 +1,7 @@
 ### 0.7.25 (Upcoming release)
 
 - Move Marcos's original normalization to a seperate function. Now Marcos can take any arbitrary normalization method as an optional argument.
-
+- Remove some unnecessary codes from LMAW, LOPCOW, MABAC, and MAIRCA. 
 
 ### 0.7.24
 

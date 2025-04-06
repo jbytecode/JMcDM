@@ -80,10 +80,6 @@ function lopcow(
     )::LOPCOWResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
-
-    A = similar(decisionMat)
 
     zerotype = eltype(decisionMat[:, 1])
 

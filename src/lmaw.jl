@@ -90,16 +90,21 @@ function lmaw(
 )::LMAWResult where {F<:Function, G<:Function}
 
     row, col = size(decisionMat)
+
     w = unitize(weights)
     
-    colMax = colmaxs(decisionMat)
-    colMin = colmins(decisionMat)
     A = normalization(decisionMat, fns) .+1
+
     zerotype = eltype(A)
+
     Q = zeros(zerotype, row, col)
+
     N = log.(A)
+
     a = log.(apply_columns(prod, A))
+
     scores = zeros(zerotype, row)
+    
     for j=1:col
         N[:,j] = N[:,j]./ a[j]
         Q[:,j] = (2 .* N[:,j] .^ w[j]) ./ ((2 .- N[:,j]) .^ w[j] + N[:,j] .^ w[j])

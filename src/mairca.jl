@@ -98,19 +98,6 @@ function mairca(
         T[:, i] .= w[i] * (one(zerotype) / row)
     end
 
-    #A = similar(decisionMat)
-    #for i = 1:row
-    #    for j = 1:col
-    #        if fns[j] == maximum
-    #            @inbounds A[i, j] =
-    #                T[i, j] * ((decisionMat[i, j] - colMin[j]) / (colMax[j] - colMin[j]))
-    #        elseif fns[j] == minimum
-    #            @inbounds A[i, j] =
-    #                T[i, j] * ((decisionMat[i, j] - colMax[j]) / (colMin[j] - colMax[j]))
-    #        end
-    #    end
-    #end
-
     A = normalization(decisionMat, fns)
     A = A .* T
 
