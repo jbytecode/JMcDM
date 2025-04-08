@@ -91,20 +91,11 @@ function psi(
     end
 
     row, col = size(decisionMat)
-    normalizedDecisionMat = similar(decisionMat)
 
     zerotype = eltype(decisionMat)
 
-    colminmax = zeros(zerotype, col)
+    #colminmax = zeros(zerotype, col)
 
-    #@inbounds for i = 1:col
-    #    colminmax[i] = decisionMat[:, i] |> fns[i]
-    #    if fns[i] == maximum
-    #        normalizedDecisionMat[:, i] = decisionMat[:, i] ./ colminmax[i]
-    #    elseif fns[i] == minimum
-    #        normalizedDecisionMat[:, i] = colminmax[i] ./ decisionMat[:, i]
-    #    end
-    #end
     normalizedDecisionMat = normalization(decisionMat, fns)
 
     pvs = zeros(zerotype, row)
