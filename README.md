@@ -152,20 +152,6 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 
 - Game solver for zero sum games
 
-## Unimplemented methods
-- ANP (Analytical Network Process)
-- COMET
-- Goal Programming
-- MACBETH
-- MAUT
-- ORESTE
-- PAPRIKA
-- SMAA
-- STEM
-- SWARA
-- UTA
-
-- will be updated soon. 
 
 ## Example
 
