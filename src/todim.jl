@@ -8,7 +8,11 @@ struct TODIMMethod <: MCDMMethod end
 
 struct TODIMResult <: MCDMResult
     decisionMatrix::Matrix
+    AMatrix::Matrix
+    NormalizedAMatrix::Matrix
     weights::Array{Float64,1}
+    criteriaWeights::Array{Float64,1}
+    dominanceMatrix::Matrix
     scores::Vector
     ranking::Array{Int64,1}
     bestIndex::Int64
@@ -236,13 +240,22 @@ function todim(
 ) where {F<:Function, G<:Function}
 
     AMatrix    = AMatConstructor(decisionMat, fns)
-    AMatrix    = normalization(AMatrix, fns)
+    ANorm      = normalization(AMatrix, fns)
     aᵣ         = criteriaWeights(weights)
-    aDominance = dominanceEvaluator(AMatrix, aᵣ)
+    aDominance = dominanceEvaluator(ANorm, aᵣ)
     scores     = rankEvaluator(aDominance)
     ranked     = sortperm(scores, rev=true)
     bestIndex  = ranked[1]
-    return TODIMResult(decisionMat, weights, scores, ranked, bestIndex)
+    return TODIMResult(
+        decisionMat, 
+        AMatrix,
+        ANorm,
+        weights, 
+        aᵣ,
+        aDominance,
+        scores, 
+        ranked, 
+        bestIndex)
 end
 
 end # module Todim

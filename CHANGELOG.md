@@ -1,5 +1,6 @@
 ### 0.7.25 (Upcoming release)
 
+- Update output of Todim.
 - Move Marcos's original normalization to a seperate function. Now Marcos can take any arbitrary normalization method as an optional argument.
 - Remove some unnecessary codes from LMAW, LOPCOW, MABAC, MAIRCA, and PSI. 
 
