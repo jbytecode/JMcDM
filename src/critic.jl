@@ -36,7 +36,7 @@ Apply CRITIC (Combined Compromise Solution) method for a given matrix and criter
 
 # Description 
 critic() applies the CRITIC method to calculate weights using a decision matrix with  
-n alterntives subject to m criteria which are supposed to be either maximized or minimized.
+n alternatives subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
 - `::CRITICResult`: CRITICResult object that holds multiple outputs including weighting and best index.
@@ -118,7 +118,7 @@ Apply CRITIC (Combined Compromise Solution) method for a given matrix and criter
  - `setting::MCDMSetting`: MCDMSetting object. 
  
 # Description 
-critic() applies the CRITIC method to rank n alterntives subject to m criteria which are supposed to be 
+critic() applies the CRITIC method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

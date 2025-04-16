@@ -31,7 +31,7 @@ Apply LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting) method f
 
 # Description 
 lopcow() applies the LOPCOW method to calculate objective weights using a decision matrix with  
-n alterntives subject to m criteria which are supposed to be either maximized or minimized.
+n alternatives subject to m criteria which are supposed to be either maximized or minimized.
 
 # Output 
 - `::LOPCOWResult`: LOPCOWResult object that holds multiple outputs including weighting and best index.
@@ -111,7 +111,7 @@ Apply LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting) method f
  - `setting::MCDMSetting`: MCDMSetting object. 
  
 # Description 
-lopcow() applies the LOPCOW method to rank n alterntives subject to m criteria which are supposed to be 
+lopcow() applies the LOPCOW method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

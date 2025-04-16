@@ -1,7 +1,7 @@
 """
         summary(decisionMat, weights, fns, methods)
 
-Apply more methods for a given decision problem. The methods accept standart number of arguments.   
+Apply more methods for a given decision problem. The methods accept standard number of arguments.   
 
 # Arguments:
  - `decisionMat::Matrix`: n × m matrix of objective values for n candidate (or strategy) and m criteria 
@@ -220,7 +220,7 @@ end
 """
         summary(setting, methods)
 
-Apply more methods for a given decision problem. The methods accept standart number of arguments.   
+Apply more methods for a given decision problem. The methods accept standard number of arguments.   
 
 # Arguments:
  - `setting::MCDMSetting`: MCDMSetting object. 

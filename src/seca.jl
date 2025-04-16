@@ -33,7 +33,7 @@ Implement the SECA method for multi-criteria decision making.
 # Arguments
 - `decisionMat::Matrix`: A matrix of decision criteria.
 - `fns::Array{F,1}`: A vector of functions that specifies the Beneficial Criteria (BC) as `maximum` and the non-Beneficial Criteria (NC) as `minimum`.
-- `beta::Float64`: This coefficient affects the importance of reaching the reference points of criteria weights. Note that the output of model is dependent on the value of beta. It's recommended to try several values untill you barely see any change in the weights of each criterion.
+- `beta::Float64`: This coefficient affects the importance of reaching the reference points of criteria weights. Note that the output of model is dependent on the value of beta. It's recommended to try several values until you barely see any change in the weights of each criterion.
 - `epsilon::Float64 = 10^-3`: a small positive parameter considered as a lower bound for criteria weights.
 - `normalization{<:Function}`: Optional normalization function.
 

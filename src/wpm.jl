@@ -33,13 +33,13 @@ end
 Apply WPM (Weighted Product Method) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
  - `normalization{<:Function}`: Optional normalization function. 
 
 # Description 
-wpm() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
+wpm() applies the WPM method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
@@ -134,7 +134,7 @@ Apply WPM (Weighted Product Method) for a given matrix and weights.
  - `setting::MCDMSetting`: MCDMSetting object. 
 
 # Description 
-wpm() applies the WPM method to rank n alterntives subject to m criteria which are supposed to be 
+wpm() applies the WPM method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

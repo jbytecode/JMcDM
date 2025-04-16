@@ -33,12 +33,12 @@ end
 Apply EDAS (Evaluation based on Distance from Average Solution) for a given matrix and weights.
 
 # Arguments:
- - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `weights::Array{Float64, 1}`: m-vector of weights that sum up to 1.0. If the sum of weights is not 1.0, it is automatically normalized.
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns. 
 
 # Description 
-edas() applies the EDAS method to rank n alterntives subject to m criteria which are supposed to be 
+edas() applies the EDAS method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
@@ -169,7 +169,7 @@ Apply EDAS (Evaluation based on Distance from Average Solution) for a given matr
  - `setting::MCDMSetting`: MCDMSetting object. 
  
 # Description 
-edas() applies the EDAS method to rank n alterntives subject to m criteria which are supposed to be 
+edas() applies the EDAS method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

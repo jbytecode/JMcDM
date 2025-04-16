@@ -190,7 +190,7 @@ end
 """
     todim(decisionMat::Matrix, weights::Vector, fns::Array{F,1})::TODIMResult where F<:Function
 
-Run TODIM method for a given desicion matrix, criteria weights and identity of criteria.
+Run TODIM method for a given decision matrix, criteria weights and identity of criteria.
 
 # Arguments
 - `decisionMat::Matrix`: A matrix of decision criteria. It's assumed that the criteria are 

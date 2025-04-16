@@ -1,7 +1,8 @@
 ### 0.7.25 (Upcoming release)
 
+- Fix typos in documentation.
 - Update output of Todim.
-- Move Marcos's original normalization to a seperate function. Now Marcos can take any arbitrary normalization method as an optional argument.
+- Move Marcos's original normalization to a separate function. Now Marcos can take any arbitrary normalization method as an optional argument.
 - Remove some unnecessary codes from LMAW, LOPCOW, MABAC, MAIRCA, and PSI. 
 
 ### 0.7.24
@@ -41,7 +42,7 @@
 
 ### 0.7.17
 
-- The type changed as `comparisonMatrixList::Vector{Matrix{Float64}}` insted of `comparisonMatrixList::Vector` in ahp (#62).
+- The type changed as `comparisonMatrixList::Vector{Matrix{Float64}}` instead of `comparisonMatrixList::Vector` in ahp (#62).
 
 
 ### 0.7.16

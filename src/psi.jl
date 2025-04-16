@@ -32,12 +32,12 @@ PSIMethod() = PSIMethod(Normalizations.dividebycolumnmaxminnormalization)
 Apply PSI (Preference Selection Index) method for a given matrix and directions of optimizations.
 
 # Arguments:
- - `decisionMat::Matrix`: n × m matrix of objective values for n alterntives and m criteria 
+ - `decisionMat::Matrix`: n × m matrix of objective values for n alternatives and m criteria 
  - `fns::Array{<:Function, 1}`: m-vector of functions to be applied on the columns.
  - `normalization{<:Function}`: Optional normalization function.
  
 # Description 
-psi() applies the PSI method to rank n alterntives subject to m criteria which are supposed to be 
+psi() applies the PSI method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
@@ -132,7 +132,7 @@ Apply PSI (Preference Selection Index) method for a given matrix and weights.
  - `setting::MCDMSetting`: MCDMSetting object. 
 
 # Description 
-psi() applies the PSI method to rank n alterntives subject to m criteria which are supposed to be 
+psi() applies the PSI method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

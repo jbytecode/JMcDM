@@ -32,7 +32,7 @@ and m columns for n and m strategies of row and column players, respectively.
 
 # Output 
 - `::Array{GameResult, 1}`: Vector of GameResult objects that holds mixed strategy probabilities for row 
-and column players and the value of game. If a pure strategy exists, than the propabilities vector is a one-hat vector.
+and column players and the value of game. If a pure strategy exists, than the probabilities vector is a one-hat vector.
 
 # Examples
 ```julia-repl

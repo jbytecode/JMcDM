@@ -99,7 +99,7 @@ end
     Sort multidimensional data using non-dominated sorting algorithm.
 
 # Arguments
-- `data::Matrix`: n x k desicion matrix with n cases and k criteria.
+- `data::Matrix`: n x k decision matrix with n cases and k criteria.
 - `fns::Array{<:Function, 1}`: Vector of functions with elements of maximum or minimum.
 
 # Output 

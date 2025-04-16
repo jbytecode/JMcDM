@@ -39,7 +39,7 @@ Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weight
  - `normalization{<:Function}`: Optional normalization function.
 
 # Description 
-cocoso() applies the CoCoSo method to rank n alterntives subject to m criteria which are supposed to be 
+cocoso() applies the CoCoSo method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 
@@ -140,7 +140,7 @@ Apply CoCoSo (Combined Compromise Solution) method for a given matrix and weight
  - `lambda::Float64`: joint criterion. 0<=lambda<=1, default=0.5.
 
 # Description 
-cocoso() applies the CoCoSo method to rank n alterntives subject to m criteria which are supposed to be 
+cocoso() applies the CoCoSo method to rank n alternatives subject to m criteria which are supposed to be 
 either maximized or minimized.
 
 # Output 

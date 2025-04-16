@@ -57,7 +57,7 @@ abstract type MCDMMethod end
 # Description
 Many methods including Topsis, Electre, Waspas, etc., use a decision matrix, weights, and directions
 of optimizations in types of Matrix and Vector, respectively. The type MCDMSetting simply
-holds these information to pass them into methods easly. Once a MCDMSetting object is created, the problem
+holds these information to pass them into methods easily. Once a MCDMSetting object is created, the problem
 can be passed into several methods like topsis(setting), electre(setting), waspas(setting), etc.
 
 # Examples
