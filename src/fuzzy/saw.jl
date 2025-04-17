@@ -6,6 +6,23 @@ struct FuzzySawResult
 end
 
 
+
+"""
+    fuzzysaw(decmat::Matrix{FuzzyType}, w::Vector{FuzzyType}, fns; defuzzificationmethod::DefuzzificationMethod = WeightedMaximum(0.5))
+
+# Description 
+
+    Fuzzy SAW method for fuzzy decision making.
+
+# Arguments
+- `decmat`: A matrix of fuzzy numbers.
+- `w`: A vector of weights.
+- `fns`: A vector of functions (either maximum or minimum).
+- `defuzzificationmethod`: The method used for defuzzification.
+
+# Returns
+- A FuzzySawResult object containing the normalized decision matrix, weighted normalized decision matrix, and scores.
+"""
 function fuzzysaw(
     decmat::Matrix{FuzzyType},
     w::Vector{FuzzyType},

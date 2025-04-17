@@ -5,6 +5,21 @@ struct FuzzyVikorResult
 end
 
 
+"""
+    fuzzyvikor(decmat::Matrix{Triangular}, w::Vector{Triangular}, fns::Vector{F}) -> FuzzyVikorResult
+
+# Description 
+
+The fuzzy VIKOR method is a multi-criteria decision-making method that uses fuzzy logic to evaluate alternatives based on multiple criteria.
+
+# Arguments
+- `decmat::Matrix{Triangular}`: A matrix of fuzzy numbers representing the decision matrix.
+- `w::Vector{Triangular}`: A vector of fuzzy numbers representing the weights of the criteria.
+- `fns::Vector{F}`: A vector of functions (either `maximum` or `minimum`) representing the type of each criterion.
+
+# Returns
+- `FuzzyVikorResult`: A struct containing the results of the fuzzy VIKOR method, including the positive ideal solution, negative ideal solution, and the Si values for each alternative.
+"""
 function fuzzyvikor(decmat::Matrix{Triangular},
     w::Vector{Triangular},
     fns::Vector{F})::FuzzyVikorResult where {F<:Function}

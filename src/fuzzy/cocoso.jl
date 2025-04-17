@@ -71,7 +71,28 @@ end
 
 
 
+"""
+    FuzzyCocoso(
+        decmat::Matrix{FuzzyType},
+        w::Vector{FuzzyType},
+        fns;
+        defuzzificationmethod::DefuzzificationMethod = WeightedMaximum(0.5),
+        lambda::Float64 = 0.5,
+    ) -> FuzzyCocosoResult where {FuzzyType<:FuzzyNumber}
 
+    Perform the fuzzy COCOSO method.
+
+# Arguments
+
+- `decmat`: The decision matrix.
+- `w`: The weights of the criteria.
+- `fns`: The direction of the criteria (maximum or minimum).
+- `defuzzificationmethod`: The defuzzification method to use.
+- `lambda`: The lambda parameter for the method.
+
+# Returns
+- `FuzzyCocosoResult`: A struct containing the results of the fuzzy COCOSO method.
+"""
 function fuzzycocoso(
     decmat::Matrix{FuzzyType},
     w::Vector{FuzzyType},

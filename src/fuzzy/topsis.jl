@@ -10,6 +10,24 @@ struct FuzzyTopsisResult
 end
 
 
+
+"""
+    fuzzytopsis(
+        decmat::Matrix{FuzzyType},
+        w::Vector{FuzzyType},
+        fns,
+    )::FuzzyTopsisResult where {FuzzyType<:FuzzyNumber}
+
+Fuzzy TOPSIS method for multi-criteria decision making.
+
+# Arguments
+- `decmat`: The decision matrix.
+- `w`: The weights of the criteria.
+- `fns`: The direction of the criteria (maximum or minimum).
+
+# Returns
+- `FuzzyTopsisResult`: A struct containing the results of the fuzzy TOPSIS method.
+"""
 function fuzzytopsis(
     decmat::Matrix{FuzzyType},
     w::Vector{FuzzyType},
