@@ -1,9 +1,14 @@
-### 0.7.25 (Upcoming release)
+### 0.8.0 (Upcoming release)
 
 - Fix typos in documentation.
 - Update output of Todim.
 - Move Marcos's original normalization to a separate function. Now Marcos can take any arbitrary normalization method as an optional argument.
 - Remove some unnecessary codes from LMAW, LOPCOW, MABAC, MAIRCA, and PSI. 
+- Add Fuzzy TOPSIS method.
+- Add Fuzzy VIKOR method.
+- Add Fuzzy EDAS method.
+- Add Fuzzy COCOSO method.
+- Add Fuzzy SAW method.
 
 ### 0.7.24
 

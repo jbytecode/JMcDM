@@ -1,6 +1,5 @@
 module JMcDM
 
-
 # Dependencies
 using Requires
 
@@ -134,6 +133,8 @@ include("idocriw.jl")
 include("ram.jl")
 
 include("copeland.jl")
+
+include("fuzzy/fuzzy.jl")
 
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
@@ -340,5 +341,7 @@ export copeland
 export GreyNumber, kernel, whitenizate, simplify, center, radius
 
 export Normalizations
+
+export Fuzzy # Export the whole module
 
 end # module
