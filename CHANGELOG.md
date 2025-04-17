@@ -1,4 +1,6 @@
-### 0.8.0 (Upcoming release)
+### 0.8.1 (Upcoming release)
+
+### 0.8.0 
 
 - Fix typos in documentation.
 - Update output of Todim.
