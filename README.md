@@ -92,7 +92,18 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 
 ## Implemented methods
 
-### MCDM Tools
+### Weighting methods
+
+- Custom Weights
+- CILOS (The Criterion Impact Loss Method)
+- CRITIC (CRiteria Importance Through Intercriteria Correlation)
+- Entropy
+- IDOCRIW (Integrated Determination of Objective Criteria Weights)
+- LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
+- MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
+- SD Method for determining weights of criteria
+
+### Classical MCDM Tools
 
 - AHP (Analytic Hierarchy Process)
 - ARAS (Additive Ratio Assessment)
@@ -100,19 +111,15 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - CODAS (COmbinative Distance-based ASsessment)
 - Copeland (For combining multiple ordering results)
 - COPRAS (COmplex PRoportional ASsessment)
-- CRITIC (CRiteria Importance Through Intercriteria Correlation)
 - DEA (Data Envelopment Analysis)
 - DEMATEL (The Decision Making Trial and Evaluation Laboratory)
 - EDAS (Evaluation based on Distance from Average Solution)
 - ELECTRE (Elimination and Choice Translating Reality)
-- Entropy
 - GRA (Grey Relational Analysis)
 - LMAW (Logarithm Methodology of Additive Weights)
-- LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
 - MABAC (Multi-Attributive Border Approximation area Comparison)
 - MAIRCA (Multi Attributive Ideal-Real Comparative Analysis)
 - MARCOS (Measurement Alternatives and Ranking according to COmpromise Solution)
-- MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
 - MOORA Ratio
 - MOORA Reference (Multi-Objective Optimization By Ratio Analysis)
 - MOOSRA (Multi-Objective Optimization on the basis of Simple Ratio Analysis) Method
@@ -123,17 +130,22 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - PSI (Preference Selection Index) Method
 - ROV (Range of Value) Method
 - SAW (Simple Additive Weighting) (aka WSM)
-- SD Method for determining weights of criteria
 - SECA (Simultaneous Evaluation of Criteria and Alternatives)
 - TOPSIS (Technique for Order Preference by Similarity to Ideal Solutions)
 - VIKOR (VlseKriterijumska Optimizcija I Kaompromisno Resenje in Serbian)
 - WASPAS (Weighted Aggregated Sum Product ASsessment)
 - WPM (Weighted Product Model)
 - TODIM (the Portuguese acronym for multicriteria, interactive decision-making)
-- CILOS (The Criterion Impact Loss Method)
-- IDOCRIW (Integrated Determination of Objective Criteria Weights)
 - Best-Worst Method
 - RAM (Root Assessment Method)
+
+### Fuzzy MCDM Tools
+
+- Fuzzy CoCoSo
+- Fuzzy EDAS 
+- Fuzzy TOPSIS
+- Fuzzy SAW
+- Fuzzy VIKOR
 
 
 ### SCDM Tools

@@ -19,7 +19,22 @@ mutable struct FuzzyEdasResult
     ranks::Vector
 end
 
+"""
+    fuzzyedas(decmat::Matrix{Triangular}, w::Vector{Triangular}, fns)
 
+    Fuzzy EDAS method for decision making.
+
+# Arguments
+
+- `decmat`: A matrix of triangular fuzzy numbers representing the decision matrix.
+- `w`: A vector of triangular fuzzy numbers representing the weights.
+- `fns`: A vector of functions (maximum or minimum) for each criterion.
+
+# Returns
+
+- An instance of `FuzzyEdasResult` containing the results of the EDAS method.
+
+"""
 function fuzzyedas(decmat::Matrix{Triangular}, w::Vector{Triangular}, fns)
 
     n, p = size(decmat)

@@ -1,6 +1,8 @@
 
 using Documenter, JMcDM, Ipopt, JuMP
 
+import JMcDM.Fuzzy 
+
 makedocs(
          format = Documenter.HTML(
                                   prettyurls = get(ENV, "CI", nothing) == "true",
@@ -16,7 +18,8 @@ makedocs(
                   "Data Envelopment" => "dataenvelop.md",
                   "SCDM" => "scdm.md",
 		  "Utility" => "utility.md",
-                  "Grey Numbers" => "greynumbers.md"
+                  "Grey Numbers" => "greynumbers.md",
+                  "Fuzzy Methods" => "fuzzy.md",
                  ]
         )
 
