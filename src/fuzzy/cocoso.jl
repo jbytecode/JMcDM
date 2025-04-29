@@ -140,8 +140,8 @@ function fuzzycocoso(
         trips = Array{Float64,1}(undef, arity(FuzzyType))
         for h = 1:thearity
             mysum = 0.0
-            for j = p:(-1):1
-                mysum += normalized_mat[i, j][h]^w[j][h]
+            for j = 1:p
+                mysum += normalized_mat[i, j][h]^w[j][thearity - h + 1]
             end
             trips[h] = mysum
         end
