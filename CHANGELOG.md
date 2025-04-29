@@ -1,4 +1,10 @@
-### 0.8.1 (Upcoming release)
+### 0.8.2 (Upcoming release)
+
+
+### 0.8.1
+
+- Fix indices in Fuzzy Cocoso
+ 
 
 ### 0.8.0 
 
