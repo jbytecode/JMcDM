@@ -1,4 +1,9 @@
-### 0.8.2 (Upcoming release)
+### 0.8.3 (Upcoming release)
+
+
+### 0.8.2 
+
+- Fix P(i) values in Fuzzy Cocoso 
 
 
 ### 0.8.1

@@ -230,7 +230,7 @@
 #                Triangular(0.1641, 0.2313, 0.3874),
 #                atol=atol,
 #            )
-#        end
+#      end
 #
 #        @testset "Weighted Normalized Decision Matrix" begin
 #            @test isapprox(
@@ -360,7 +360,7 @@
 #                @test isapprox(expectedScores[i], result.scores[i], atol=atol)
 #            end
 #        end
-#    end
+#end
 #
 #
 #
