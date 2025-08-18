@@ -1,6 +1,7 @@
 ### 0.8.3 (Upcoming release)
 
 - Remove redundant code in `sd`.
+- Remove redundant code in `saw`.
 
 
 ### 0.8.2 

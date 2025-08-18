@@ -84,17 +84,10 @@ function saw(
     normalization::G = Normalizations.dividebycolumnmaxminnormalization
 )::SawResult where {F<:Function, G<:Function}
 
-    n, p = size(decisionMat)
-
-
     w = unitize(weights)
-
-    zerotype = eltype(decisionMat)
-
 
     normalizedDecisionMat = normalization(decisionMat, fns)
  
-
     # scores = w * normalizedDecisionMat |> rowsums
     scores = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
 
