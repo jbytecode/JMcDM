@@ -1,5 +1,7 @@
 ### 0.8.3 (Upcoming release)
 
+- Remove redundant code in `sd`.
+
 
 ### 0.8.2 
 

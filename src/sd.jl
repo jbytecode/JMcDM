@@ -49,13 +49,10 @@ function sd(
     normalization::G = Normalizations.maxminrangenormalization
     )::SDResult where {F<:Function, G<:Function}
 
-    n, p = size(decisionMat)
+    _, p = size(decisionMat)
 
     decmat = decisionMat[:, :]
     normalizedMat = similar(decmat)
-
-    cmins = colmins(decisionMat)
-    cmaxs = colmaxs(decisionMat)
 
     normalizedMat = normalization(decisionMat, fns)
 
