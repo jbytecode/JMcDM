@@ -1,5 +1,13 @@
 module GreyNumbers
 
+export GreyNumber
+export kernel
+export whitenizate
+export simplify
+export center 
+export radius
+
+
 struct GreyNumber
 	a::Any
 	b::Any
@@ -451,11 +459,6 @@ function simplify(g::GreyNumber)::Union{Number, GreyNumber}
 end 
 
 
-export GreyNumber
-export kernel
-export whitenizate
-export simplify
-export center 
-export radius
+
 
 end # module

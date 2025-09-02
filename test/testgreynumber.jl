@@ -187,13 +187,13 @@
 		v = GreyNumber[
 			GreyNumber(GreyNumber(-5.0, -5.0), GreyNumber(-5.0, -5.0)),
 			GreyNumber(GreyNumber(15.0, 15.0), GreyNumber(15.0, 15.0))]
-		result = simplify.(v)
+		result = JMcDM.simplify.(v)
 		
 		@test result == [-5.0, 15.0]
 		end 
 
 		@testset "Simplify basic" begin 
-			@test simplify(GreyNumber(5.0, 5.0)) == 5.0
+			@test JMcDM.simplify(GreyNumber(5.0, 5.0)) == 5.0
 		end 
 	end 
 
