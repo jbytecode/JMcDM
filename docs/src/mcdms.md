@@ -6,6 +6,11 @@
 JMcDM.copeland
 ```
 
+## Borda Count
+```@docs
+JMcDM.borda
+```
+
 
 ## TOPSIS
 ```@docs

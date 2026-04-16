@@ -133,6 +133,7 @@ include("idocriw.jl")
 include("ram.jl")
 
 include("copeland.jl")
+include("borda.jl")
 
 include("fuzzy/fuzzy.jl")
 
@@ -173,6 +174,7 @@ import .TODIM: todim, TODIMResult, TODIMMethod
 import .CILOS: cilos, CILOSResult
 import .IDOCRIW: idocriw, IDOCRIWResult
 import .RAM: ram, RAMResult, RAMMethod
+import .Borda: borda
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
 import .SCDM: SavageResult, HurwiczResult, MLEResult, ExpectedRegretResult
@@ -317,6 +319,7 @@ export todim
 export cilos
 export idocriw
 export ram
+export borda
 
 #  export SCDM tools
 export laplace

@@ -3,6 +3,7 @@
 - Remove redundant code in `sd`.
 - Remove redundant code in `saw`.
 - Add Julia v1.12 to GitHub workflows.
+- Add Borda count method.
 
 
 ### 0.8.2 

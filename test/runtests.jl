@@ -15,6 +15,7 @@ const testGreyMCDMFunctions = true
 const testSummary           = true
 const testCopeland          = true
 const testFuzzy             = true
+const testBorda             = true
 
 testGreyNumbers && include("./testgreynumber.jl")
 
@@ -25,6 +26,8 @@ testSCDMFunctions && include("./testscdm.jl")
 testMCDMFunctions && include("./testmcdm.jl")
 
 testCopeland && include("./testcopeland.jl")
+
+testBorda && include("./testborda.jl")
 
 testGreyMCDMFunctions && include("./testgreymcdm.jl")
 
