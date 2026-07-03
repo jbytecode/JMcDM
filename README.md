@@ -139,6 +139,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - TODIM (the Portuguese acronym for multicriteria, interactive decision-making)
 - Best-Worst Method
 - RAM (Root Assessment Method)
+- CRADIS (Compromise Ranking of Alternatives from Distance to Ideal Solution) 
 
 ### Fuzzy MCDM Tools
 
