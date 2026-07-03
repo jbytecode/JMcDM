@@ -203,3 +203,8 @@ JMcDM.bestworst
 ```@docs
 JMcDM.ram
 ```
+
+## CRADIS
+```@docs
+JMcDM.cradis    
+```

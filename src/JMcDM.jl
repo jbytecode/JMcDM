@@ -134,6 +134,7 @@ include("ram.jl")
 
 include("copeland.jl")
 include("borda.jl")
+include("cradis.jl")
 
 include("fuzzy/fuzzy.jl")
 
@@ -174,6 +175,7 @@ import .TODIM: todim, TODIMResult, TODIMMethod
 import .CILOS: cilos, CILOSResult
 import .IDOCRIW: idocriw, IDOCRIWResult
 import .RAM: ram, RAMResult, RAMMethod
+import .CRADIS: cradis, CRADISMethod, CRADISResult
 import .Borda: borda
 
 import .SCDM: LaplaceResult, MaximinResult, MaximaxResult, MinimaxResult, MiniminResult
@@ -219,6 +221,7 @@ export OCRAMethod
 export LMAWMethod
 export TODIMMethod
 export RAMMethod
+export CradisMethod
 
 
 export MCDMSetting
@@ -260,6 +263,7 @@ export TODIMResult
 export CILOSResult
 export IDOCRIWResult
 export RAMResult
+export CRADISResult
 
 #  export SCDM types
 export SCDMResult
@@ -320,6 +324,7 @@ export cilos
 export idocriw
 export ram
 export borda
+export cradis
 
 #  export SCDM tools
 export laplace
