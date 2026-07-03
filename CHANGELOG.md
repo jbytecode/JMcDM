@@ -1,10 +1,14 @@
-### 0.8.3 (Upcoming release)
+### 0.8.4 (Upcoming release)
+
+
+### 0.8.3
 
 - Remove redundant code in `sd`.
 - Remove redundant code in `saw`.
 - Add Julia v1.12 to GitHub workflows.
 - Add Borda count method.
 - Add CRADIS method.
+- Export weighted normalized matrix from SAW.
 
 
 ### 0.8.2 

@@ -18,6 +18,7 @@ SawMethod() = SawMethod(Normalizations.dividebycolumnmaxminnormalization)
 struct SawResult <: MCDMResult
     decisionMatrix::Matrix
     normalizedDecisionMatrix::Matrix
+    weightedNormalizedDecisionMatrix::Matrix
     weights::Array{Float64,1}
     scores::Vector
     ranking::Array{Int64,1}
@@ -88,14 +89,15 @@ function saw(
 
     normalizedDecisionMat = normalization(decisionMat, fns)
  
-    # scores = w * normalizedDecisionMat |> rowsums
-    scores = Utilities.weightise(normalizedDecisionMat, w) |> rowsums
+    weightedNormalizedDecisionMat = Utilities.weightise(normalizedDecisionMat, w)
+
+    scores = weightedNormalizedDecisionMat |> rowsums
 
     rankings = scores |> sortperm |> reverse
 
     bestIndex = rankings |> first
 
-    result = SawResult(decisionMat, normalizedDecisionMat, w, scores, rankings, bestIndex)
+    result = SawResult(decisionMat, normalizedDecisionMat, weightedNormalizedDecisionMat, w, scores, rankings, bestIndex)
 
     return result
 end
