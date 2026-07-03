@@ -43,7 +43,7 @@ export cradis, CRADISMethod, CRADISResult
 
 """
 
-    cradis(decisionMat::Matrix, weights::Array{Float64,1}, fs::Array{F,1}; normalization::G=Normalizations.dividebycolumnmaxminnormalization) where {F<:Function,G<:Function}
+    cradis(decisionMat, weights, fs; normalization) 
 
 
 # Description
@@ -88,14 +88,8 @@ function cradis(
     idealAlternative = colmaxs(weightedNormalizedDecisionMat)
     antiIdealAlternative = colmins(weightedNormalizedDecisionMat)
 
-    dplus = Array{Float64,2}(undef, n, p)
-    dminus = Array{Float64,2}(undef, n, p)
-    for i in 1:n
-        for j in 1:p
-            dplus[i, j] = t_ideal - weightedNormalizedDecisionMat[i, j]
-            dminus[i, j] = weightedNormalizedDecisionMat[i, j] - t_anti_ideal
-        end
-    end
+    dplus = t_ideal .- weightedNormalizedDecisionMat
+    dminus = weightedNormalizedDecisionMat .- t_anti_ideal
 
     splus = rowsums(dplus)
     sminus = rowsums(dminus)
