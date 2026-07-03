@@ -31,7 +31,6 @@ struct CRADISResult <: MCDMResult
     sminus0::Float64
     kplus::Vector{Float64}
     kminus::Vector{Float64}
-    q::Vector{Float64}
     scores::Vector{Float64}
     ranking::Vector{Int64}
     bestIndex::Int64
@@ -76,8 +75,6 @@ function cradis(
     fs::Array{F,1};
     normalization::G=Normalizations.dividebycolumnmaxminnormalization)::CRADISResult where {F<:Function,G<:Function}
 
-    n, p = size(decisionMat)
-
     normalizedDecisionMat = normalization(decisionMat, fs)
 
     weightedNormalizedDecisionMat = weightise(normalizedDecisionMat, weights)
@@ -121,7 +118,6 @@ function cradis(
         sminus0,
         kplus,
         kminus,
-        q,
         q,
         ranking,
         bestIndex)

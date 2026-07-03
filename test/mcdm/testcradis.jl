@@ -123,7 +123,7 @@
     0.6785, 0.7469, 0.6634, 0.6845, 0.8039, 0.7515, 0.9650
     ]
 
-    q_expected = [
+    scores_expected = [
     0.8981, 0.8838, 0.7688, 0.8361, 0.7761, 0.8360, 0.9477, 0.8872, 0.9532, 0.8719,
     0.9013, 0.7393, 0.7927, 0.8769, 0.8254, 0.8030, 0.7946, 0.9198, 0.8937, 0.9350,
     0.7650, 0.8131, 0.7545, 0.7692, 0.8539, 0.8164, 0.9732
@@ -146,8 +146,8 @@
     @test isapprox(result.sminus, s_minus_expected, atol=eps)
     @test isapprox(result.kplus, k_plus_expected, atol=eps)
     @test isapprox(result.kminus, k_minus_expected, atol=eps)
-    @test isapprox(result.q, q_expected, atol=eps)
-    @test result.scores == result.q
+    @test isapprox(result.scores, scores_expected, atol=eps)
+
 
     @test result.bestIndex == 27
 
