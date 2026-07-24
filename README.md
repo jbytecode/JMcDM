@@ -140,6 +140,8 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - Best-Worst Method
 - RAM (Root Assessment Method)
 - CRADIS (Compromise Ranking of Alternatives from Distance to Ideal Solution) 
+- SPOTIS (Stable Preference Ordering Towards Ideal Solution)
+
 
 ### Fuzzy MCDM Tools
 

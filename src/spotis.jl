@@ -29,7 +29,8 @@ end
 
 # Description
 
-Implements the SPOTIS Rank Reversal Free Method for Multi-Criteria Decision-Making Support
+Implements the SPOTIS (Stable Preference Ordering Towards Ideal Solution) Rank Reversal
+Free Method for Multi-Criteria Decision-Making Support
 
 # Arguments 
 
@@ -41,7 +42,8 @@ Implements the SPOTIS Rank Reversal Free Method for Multi-Criteria Decision-Maki
 
 # Reference:
 
-- Dezert, Jean, et al. "The SPOTIS rank reversal free method for multi-criteria decision-making support." 2020 IEEE 23rd international conference on information fusion (FUSION). IEEE, 2020.
+- Dezert, Jean, et al. "The SPOTIS rank reversal free method for multi-criteria decision-making support." 
+  2020 IEEE 23rd international conference on information fusion (FUSION). IEEE, 2020.
 """
 function spotis(
     decisionMat::Matrix,
