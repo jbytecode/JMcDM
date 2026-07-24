@@ -1,7 +1,7 @@
 ### 0.8.4 (Upcoming release)
 
 - Simplify code and documentation of CRADIS method.
-
+- Implement SPOTIS method
 
 ### 0.8.3
 

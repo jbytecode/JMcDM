@@ -120,6 +120,7 @@ include("lopcow.jl")
 include("ocra.jl")
 include("lmaw.jl")
 include("todim.jl")
+include("spotis.jl")
 
 include("summary.jl")
 
@@ -140,6 +141,7 @@ include("fuzzy/fuzzy.jl")
 
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
+import .SPOTIS: spotis, SpotisMethod, SPOTISResult
 import .WPM: wpm, WPMResult, WPMMethod
 import .WASPAS: waspas, WASPASResult, WaspasMethod
 import .VIKOR: vikor, VikorMethod, VikorResult
@@ -222,6 +224,7 @@ export LMAWMethod
 export TODIMMethod
 export RAMMethod
 export CradisMethod
+export SpotisMethod
 
 
 export MCDMSetting
@@ -262,6 +265,7 @@ export LMAWResult
 export TODIMResult
 export CILOSResult
 export IDOCRIWResult
+export SPOTISResult
 export RAMResult
 export CRADISResult
 
@@ -325,6 +329,7 @@ export idocriw
 export ram
 export borda
 export cradis
+export spotis
 
 #  export SCDM tools
 export laplace

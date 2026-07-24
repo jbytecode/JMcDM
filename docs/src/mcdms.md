@@ -208,3 +208,9 @@ JMcDM.ram
 ```@docs
 JMcDM.cradis    
 ```
+
+## SPOTIS
+```@docs
+JMcDM.spotis    
+```
+

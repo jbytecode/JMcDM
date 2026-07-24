@@ -118,6 +118,8 @@ function mcdm(
         lmaw(df, w, fns)
     elseif method isa PIVMethod
         piv(df, w, fns)
+    elseif method isa SpotisMethod
+        spotis(df, w, fns, lowerbounds=method.lowerbounds, upperbounds=method.upperbounds)
     else
         error("Method is not defined")
     end
