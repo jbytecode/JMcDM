@@ -6,7 +6,7 @@
 - Simplify code and documentation of CRADIS method.
 - Implement SPOTIS method
 - Implement RIM method (reference ideal method in multicriteria decision making)
-
+- Implement ERVD method (Election based on Relative Value Distances)
 
 ### 0.8.3
 

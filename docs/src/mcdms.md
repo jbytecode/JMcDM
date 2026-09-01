@@ -218,3 +218,8 @@ JMcDM.spotis
 ```@docs
 JMcDM.rim    
 ```
+
+## ERVD
+```@docs
+JMcDM.ervd    
+```

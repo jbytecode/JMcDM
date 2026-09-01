@@ -69,6 +69,16 @@ function mcdm(
 
     if method isa TopsisMethod
         topsis(df, w, fns)
+    elseif method isa ERVDMethod
+        ervd(
+            df,
+            w,
+            fns,
+            method.referencePoints,
+            lambda=method.lambda,
+            alpha=method.alpha,
+            normalization=method.normalization,
+        )
     elseif method isa MoosraMethod
         moosra(df, w, fns)
     elseif method isa ElectreMethod

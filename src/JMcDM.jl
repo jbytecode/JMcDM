@@ -91,6 +91,7 @@ include("greynumber.jl")
 include("utilities.jl")
 include("normalizations.jl")
 include("topsis.jl")
+include("ervd.jl")
 include("vikor.jl")
 include("electre.jl")
 include("moora.jl")
@@ -142,6 +143,7 @@ include("fuzzy/fuzzy.jl")
 
 # imports from modules
 import .Topsis: topsis, TopsisMethod, TopsisResult
+import .ERVD: ervd, ERVDMethod, ERVDResult
 import .SPOTIS: spotis, SpotisMethod, SPOTISResult
 import .WPM: wpm, WPMResult, WPMMethod
 import .WASPAS: waspas, WASPASResult, WaspasMethod
@@ -211,6 +213,7 @@ export MooraMethod
 export PrometheeMethod
 export SawMethod
 export TopsisMethod
+export ERVDMethod
 export VikorMethod
 export WPMMethod
 export WaspasMethod
@@ -235,6 +238,7 @@ export MCDMSetting
 # export MCDM types
 export MCDMResult
 export TopsisResult
+export ERVDResult
 export VikorResult
 export ElectreResult
 export MooraResult
@@ -297,6 +301,7 @@ export makegrey
 
 #  export MCDM tools
 export topsis
+export ervd
 export vikor
 export electre
 export moora
