@@ -1,7 +1,12 @@
-### 0.8.4 (Upcoming release)
+### 0.8.5 (Upcoming release)
+
+
+### 0.8.4 
 
 - Simplify code and documentation of CRADIS method.
 - Implement SPOTIS method
+- Implement RIM method (reference ideal method in multicriteria decision making)
+
 
 ### 0.8.3
 

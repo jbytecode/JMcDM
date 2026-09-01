@@ -141,6 +141,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - RAM (Root Assessment Method)
 - CRADIS (Compromise Ranking of Alternatives from Distance to Ideal Solution) 
 - SPOTIS (Stable Preference Ordering Towards Ideal Solution)
+- RIM (Reference Ideal Method in Multicriteria Decision Making)
 
 
 ### Fuzzy MCDM Tools

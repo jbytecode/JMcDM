@@ -132,6 +132,7 @@ include("piv.jl")
 include("cilos.jl")
 include("idocriw.jl")
 include("ram.jl")
+include("rim.jl")
 
 include("copeland.jl")
 include("borda.jl")
@@ -177,6 +178,7 @@ import .TODIM: todim, TODIMResult, TODIMMethod
 import .CILOS: cilos, CILOSResult
 import .IDOCRIW: idocriw, IDOCRIWResult
 import .RAM: ram, RAMResult, RAMMethod
+import .RIM: rim, RIMResult, RimMethod
 import .CRADIS: cradis, CRADISMethod, CRADISResult
 import .Borda: borda
 
@@ -223,6 +225,7 @@ export OCRAMethod
 export LMAWMethod
 export TODIMMethod
 export RAMMethod
+export RimMethod
 export CradisMethod
 export SpotisMethod
 
@@ -268,6 +271,7 @@ export IDOCRIWResult
 export SPOTISResult
 export RAMResult
 export CRADISResult
+export RIMResult
 
 #  export SCDM types
 export SCDMResult
@@ -327,6 +331,7 @@ export todim
 export cilos
 export idocriw
 export ram
+export rim
 export borda
 export cradis
 export spotis

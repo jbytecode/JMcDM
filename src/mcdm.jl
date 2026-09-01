@@ -120,6 +120,8 @@ function mcdm(
         piv(df, w, fns)
     elseif method isa SpotisMethod
         spotis(df, w, fns, lowerbounds=method.lowerbounds, upperbounds=method.upperbounds)
+    elseif method isa RimMethod
+        rim(df, w, method.ranges, method.referenceIdeals)
     else
         error("Method is not defined")
     end

@@ -214,3 +214,7 @@ JMcDM.cradis
 JMcDM.spotis    
 ```
 
+## RIM
+```@docs
+JMcDM.rim    
+```
