@@ -142,6 +142,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - CRADIS (Compromise Ranking of Alternatives from Distance to Ideal Solution) 
 - SPOTIS (Stable Preference Ordering Towards Ideal Solution)
 - RIM (Reference Ideal Method in Multicriteria Decision Making)
+- ERVD (Election based on Relative Value Distances)
 
 
 ### Fuzzy MCDM Tools
