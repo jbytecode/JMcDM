@@ -144,6 +144,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - RIM (Reference Ideal Method in Multicriteria Decision Making)
 - ERVD (Election based on Relative Value Distances)
 - FUCA (Faire Un Choix Adéquat)
+- AROMAN (Alternative Ranking Order Method Accounting for Two-Step Normalization)
 
 ### Fuzzy MCDM Tools
 

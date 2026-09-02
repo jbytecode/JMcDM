@@ -228,3 +228,8 @@ JMcDM.ervd
 ```@docs
 JMcDM.fuca
 ```
+
+## AROMAN
+```@docs
+JMcDM.aroman
+```

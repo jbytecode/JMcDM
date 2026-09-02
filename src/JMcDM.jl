@@ -103,6 +103,7 @@ include("singlecriterion.jl")
 include("grey.jl")
 include("saw.jl")
 include("aras.jl")
+include("aroman.jl")
 include("wpm.jl")
 include("waspas.jl")
 include("edas.jl")
@@ -164,6 +165,7 @@ import .MAIRCA: mairca, MaircaMethod, MAIRCAResult
 import .MABAC: mabac, MABACResult, MabacMethod
 import .GREY: grey, GreyMethod, GreyResult
 import .ARAS: aras, ArasMethod, ARASResult
+import .AROMAN: aroman, AROMANMethod, AROMANResult
 import .COCOSO: cocoso, CocosoMethod, CoCoSoResult
 import .CODAS: codas, CodasMethod, CODASResult
 import .COPRAS: copras, CoprasMethod, COPRASResult
@@ -202,6 +204,7 @@ export Utilities
 # export MCDM methods
 export MCDMMethod
 export ArasMethod
+export AROMANMethod
 export CocosoMethod
 export CodasMethod
 export CoprasMethod
@@ -252,6 +255,7 @@ export NDSResult
 export GreyResult
 export SawResult
 export ARASResult
+export AROMANResult
 export WPMResult
 export WASPASResult
 export EDASResult
@@ -316,6 +320,7 @@ export nds
 export grey
 export saw
 export aras
+export aroman
 export wpm
 export waspas
 export edas

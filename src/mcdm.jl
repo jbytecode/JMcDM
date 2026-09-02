@@ -87,6 +87,8 @@ function mcdm(
         electre(df, w, fns)
     elseif method isa ArasMethod
         aras(df, w, fns)
+    elseif method isa AROMANMethod
+        aroman(df, w, fns, beta=method.beta, lambda=method.lambda)
     elseif method isa CocosoMethod
         cocoso(df, w, fns, lambda=method.lambda)
     elseif method isa CodasMethod
