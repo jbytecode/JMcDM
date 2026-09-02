@@ -43,10 +43,6 @@ julia> result.w
 
 # References
 
-Li, X., & Chi, G. (2009). Gini coefficient based weight determination method
-and its application in multi-criteria decision making. *2009 International
-Conference on Artificial Intelligence and Computational Intelligence*, 269-272.
-
 Öztaş, T., Adalı, E. A., Tuş, A., & Öztaş, G. Z. (2023). Ranking green
 universities from MCDM perspective: MABAC with Gini coefficient-based
 weighting method. *Process Integration and Optimization for Sustainability*,
