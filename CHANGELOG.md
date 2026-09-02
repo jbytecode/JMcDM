@@ -1,4 +1,6 @@
-### 0.8.5 (Upcoming release)
+### 0.8.6 (Upcoming release)
+
+### 0.8.5
 
 - Implement FUCA (Faire Un Choix Adéquat) 
 - Implement AROMAN (Alternative Ranking Order Method Accounting for Two-Step Normalization)
