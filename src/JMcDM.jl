@@ -115,6 +115,7 @@ include("promethee.jl")
 include("cocoso.jl")
 include("critic.jl")
 include("entropy.jl")
+include("gini.jl")
 include("codas.jl")
 include("psi.jl")
 include("moosra.jl")
@@ -174,6 +175,7 @@ import .CRITIC: critic, CRITICResult, CriticMethod
 import .ELECTRE: electre, ElectreMethod, ElectreResult
 import .DEMATEL: dematel, DematelResult
 import .Entropy: entropy, EntropyResult
+import .Gini: gini, GiniResult
 import .AHP: ahp, ahp_consistency, ahp_RI, AHPResult, AHPConsistencyResult
 import .MEREC: merec, MERECResult, MERECMethod
 import .PIV: piv, PIVResult, PIVMethod
@@ -267,6 +269,7 @@ export PrometheeResult
 export CoCoSoResult
 export CRITICResult
 export EntropyResult
+export GiniResult
 export CODASResult
 export SDResult
 export ROVResult
@@ -332,6 +335,7 @@ export promethee, prometLinear, prometVShape, prometUShape, prometQuasi, prometL
 export cocoso
 export critic
 export entropy
+export gini
 export codas
 export sd
 export rov

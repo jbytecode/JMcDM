@@ -233,3 +233,8 @@ JMcDM.fuca
 ```@docs
 JMcDM.aroman
 ```
+
+## Gini Coefficient
+```@docs
+JMcDM.gini
+```

@@ -103,6 +103,7 @@ Please check out the reference manual [here](https://jbytecode.github.io/JMcDM/)
 - LOPCOW (LOgarithmic Percentage Change-driven Objective Weighting)
 - MEREC (MEthod based on the Removal Effects of Criteria) for determining weights
 - SD Method for determining weights of criteria
+- GINI Coefficient Method
 
 ### Classical MCDM Tools
 
