@@ -223,3 +223,8 @@ JMcDM.rim
 ```@docs
 JMcDM.ervd    
 ```
+
+## FUCA
+```@docs
+JMcDM.fuca
+```

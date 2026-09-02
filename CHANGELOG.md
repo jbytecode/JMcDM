@@ -1,5 +1,6 @@
 ### 0.8.5 (Upcoming release)
 
+- Implement FUCA (Faire Un Choix Adéquat) 
 
 ### 0.8.4 
 

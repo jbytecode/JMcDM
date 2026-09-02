@@ -69,6 +69,8 @@ function mcdm(
 
     if method isa TopsisMethod
         topsis(df, w, fns)
+    elseif method isa FucaMethod
+        fuca(df, w, fns)
     elseif method isa ERVDMethod
         ervd(
             df,
