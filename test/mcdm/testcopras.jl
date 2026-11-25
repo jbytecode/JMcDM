@@ -105,3 +105,17 @@
     @test result3.scores == result.scores
     @test result3.bestIndex == result.bestIndex
 end
+
+@testset "COPRAS with benefit criteria only: Q = S+ (Podvezko 2011)" begin
+    # Sum normalization, weighted; without cost criteria Q is the weighted sum S+.
+    decmat = [
+        2.0 4.0
+        3.0 1.0
+        5.0 5.0
+    ]
+    w = [0.6, 0.4]
+    splus = [0.6 * 2 / 10 + 0.4 * 4 / 10, 0.6 * 3 / 10 + 0.4 * 1 / 10, 0.6 * 5 / 10 + 0.4 * 5 / 10]
+    result = copras(decmat, w, [maximum, maximum])
+    @test isapprox(result.scores, splus ./ maximum(splus), atol = 1e-12)
+    @test result.bestIndex == 3
+end

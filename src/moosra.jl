@@ -13,7 +13,7 @@ struct MoosraMethod <: MCDMMethod
     normalization::G where {G <: Function}
 end
 
-MoosraMethod() = MoosraMethod(Normalizations.dividebyallnormnormalization)
+MoosraMethod() = MoosraMethod(Normalizations.vectornormnormalization)
 
 struct MoosraResult <: MCDMResult
     scores::Vector
@@ -72,7 +72,7 @@ function moosra(
     decisionMat::Matrix,
     weights::Array{Float64,1},
     fns::Array{F,1};
-    normalization::G = Normalizations.dividebyallnormnormalization
+    normalization::G = Normalizations.vectornormnormalization
 )::MoosraResult where {F<:Function, G<:Function}
 
     mincounts = count(x -> x == minimum, fns)

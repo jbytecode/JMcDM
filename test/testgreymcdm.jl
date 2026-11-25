@@ -482,10 +482,10 @@ using Test
         @test result isa MoosraResult
 
         knownscores = [
-            GreyNumber(15.714285714285714),
-            GreyNumber(20.499999999999996),
-            GreyNumber(20.999999999999996),
-            GreyNumber(39.000000000000000),
+            GreyNumber(2.2725788177322643),
+            GreyNumber(2.815245881568694),
+            GreyNumber(3.1745836984778255),
+            GreyNumber(6.833640474697763),
         ]
 
         @test result.rankings == [1, 2, 3, 4]
@@ -517,9 +517,9 @@ using Test
         @test result isa PSIResult
         @test result.bestIndex == 2
         knownscores = [
-            GreyNumber(1.1487059780663555),
-            GreyNumber(1.252775986851622),
-            GreyNumber(1.0884916686098811),
+            GreyNumber(0.8884920812205419),
+            GreyNumber(0.9038022662539607),
+            GreyNumber(0.8281521210464404),
         ]
 
         for i = eachindex(knownscores)

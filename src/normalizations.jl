@@ -15,7 +15,7 @@ end
 """
     vectornormnormalization(data::Matrix, fns)::Matrix
 
-Default normalization method for Topsis and Moora 
+Default normalization method for Topsis, Moora and Moosra
 """
 function vectornormnormalization(data::Matrix, fns)::Matrix
     return normalize(data)
@@ -173,7 +173,7 @@ end
 """
     dividebyallnormnormalization(mat::Matrix, fns)
 
-Default normalization method for Moosra
+Divides all values by the Euclidean norm of the whole matrix.
 """
 function dividebyallnormnormalization(mat::Matrix, fns)
     return mat ./ sqrt(sum(mat .* mat))
