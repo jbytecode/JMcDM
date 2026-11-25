@@ -1,4 +1,9 @@
-### 0.8.6 (Upcoming release)
+### 0.8.7 (Upcoming release)
+
+
+### 0.8.6 
+
+- Bug fixes
 
 ### 0.8.5
 
