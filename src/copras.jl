@@ -179,8 +179,11 @@ function copras(
     Q = zeros(eltype(normalizedMat), nrows)
     Z = sum(1 ./ sMinus)
 
+    # Without cost criteria the cost term is absent and Q = S+ (Podvezko 2011).
+    hascost = any(f -> f == minimum, fns)
+
     for row = 1:nrows
-        Q[row] = sPlus[row] + (sum(sMinus) / (sMinus[row] * Z))
+        Q[row] = hascost ? sPlus[row] + (sum(sMinus) / (sMinus[row] * Z)) : sPlus[row]
     end
     scores = zeros(eltype(normalizedMat), nrows)
     scores = Q ./ maximum(Q)

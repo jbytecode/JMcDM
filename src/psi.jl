@@ -63,9 +63,9 @@ julia> fns = [maximum, minimum, minimum, maximum, minimum, maximum];
 
 julia> result = psi(decmat, fns)
 Scores:
-[1.1252480520930113, 0.762593438114615, 1.1060476892230147, 1.0059872302387025, 0.7865885089329105]
+[0.8421858156597993, 0.7833966527312931, 0.8011549399477343, 0.798758294297656, 0.8197548833703039]
 Ordering: (from worst to best)
-[2, 5, 4, 3, 1]
+[2, 4, 3, 5, 1]
 Best indices:
 1
 
@@ -98,9 +98,11 @@ function psi(
 
     normalizedDecisionMat = normalization(decisionMat, fns)
 
-    pvs = zeros(zerotype, row)
-    for i = 1:row
-        pvs[i] = PV(normalizedDecisionMat[i, :] |> collect)
+    # Preference variation, its deviation and the overall preference value are
+    # defined per criterion (Maniya and Bhatt 2010); psis are the criterion weights.
+    pvs = zeros(zerotype, col)
+    for j = 1:col
+        pvs[j] = PV(normalizedDecisionMat[:, j] |> collect)
     end
 
     phis = one(zerotype) .- pvs
@@ -110,7 +112,7 @@ function psi(
 
     Is = zeros(zerotype, row)
     for i = 1:row
-        Is[i] = psis[i] .* collect(normalizedDecisionMat[i, :]) |> sum
+        Is[i] = psis .* collect(normalizedDecisionMat[i, :]) |> sum
     end
 
     scores = Is
